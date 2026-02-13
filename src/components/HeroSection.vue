@@ -19,7 +19,7 @@
         <h1 class="hero__title">
           هر سند یک<br />
           <span class="hero__title-highlight">مسیر مشخص</span><br />
-          دارد
+          دارد.
         </h1>
 
         <p class="hero__description">
