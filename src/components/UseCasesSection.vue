@@ -2,7 +2,7 @@
   <section class="section section--use-cases" id="use-cases">
     <div class="section__container">
       <div class="section__header section__header--center">
-        <span class="section__badge">برای چه کسانی؟</span>
+        <span class="section__badge">✨برای چه کسانی؟</span>
         <div class="section__title-wrapper">
           <svg class="section__title-image" viewBox="0 0 48 48" fill="none">
             <circle cx="24" cy="16" r="6" stroke="#44936d" stroke-width="2" />
@@ -14,7 +14,7 @@
             <circle cx="36" cy="14" r="3" fill="#fcc015" />
           </svg>
           <h2 class="section__title">
-            طراحی‌شده برای کسانی که با اسناد زندگی می‌کنند
+            طراحی‌شده برای کسانی که با اسناد زندگی می‌کنند.
           </h2>
         </div>
       </div>

@@ -3,15 +3,15 @@
     <div class="section__container">
       <!-- Header -->
       <div class="section__header section__header--center">
-        <span class="section__badge">✨ امکانات</span>
+        <span class="section__badge">✨ویژگی‌ها </span>
         <h2 class="features__title">
           اسناد خود را با یک
           <span class="features__title-highlight">کلیک ساده</span>
-          به اشتراک بگذارید
+          به اشتراک بگذارید.
         </h2>
         <p class="features__subtitle">
-          به راحتی اسناد خود را با هر کسی به اشتراک بگذارید. فقط با یک کلیک، کد
-          شما آماده مشاهده، همکاری یا نمایش است—بدون نیاز به تنظیمات پیچیده.
+          بدون نیاز به تنظیمات پیچیده، به راحتی اسناد خود را با هر کسی به اشتراک
+          بگذارید. فقط با یک کلیک کد شما آماده مشاهده، همکاری یا نمایش است.
         </p>
       </div>
 
@@ -212,7 +212,7 @@ const rightBenefits = ref([
   }
 
   &__title-highlight {
-    color: $color-accent-secondary;
+    color: $color-accent-primary;
     position: relative;
   }
 
@@ -238,14 +238,44 @@ const rightBenefits = ref([
   &__list {
     display: flex;
     flex-direction: column;
-    gap: $spacing-lg;
+    gap: $spacing-md;
 
     &--left {
       padding-right: $spacing-lg;
+
+      .features__item {
+        &:nth-child(1) {
+          margin-top: 0;
+        }
+        &:nth-child(2) {
+          margin-top: $spacing-xl;
+        }
+        &:nth-child(3) {
+          margin-top: $spacing-lg;
+        }
+        &:nth-child(4) {
+          margin-top: $spacing-2xl;
+        }
+      }
     }
 
     &--right {
       padding-left: $spacing-lg;
+
+      .features__item {
+        &:nth-child(1) {
+          margin-top: $spacing-xl;
+        }
+        &:nth-child(2) {
+          margin-top: $spacing-lg;
+        }
+        &:nth-child(3) {
+          margin-top: $spacing-2xl;
+        }
+        &:nth-child(4) {
+          margin-top: $spacing-md;
+        }
+      }
     }
   }
 
@@ -548,6 +578,16 @@ const rightBenefits = ref([
       padding: 0;
       max-width: 600px;
       margin: 0 auto;
+
+      // Reset staggered margins on mobile
+      .features__item {
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(3),
+        &:nth-child(4) {
+          margin-top: 0;
+        }
+      }
     }
   }
 

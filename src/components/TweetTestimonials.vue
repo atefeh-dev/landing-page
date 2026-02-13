@@ -2,7 +2,7 @@
   <section class="section section--tweets" id="testimonials">
     <div class="section__container">
       <div class="section__header section__header--center">
-        <span class="section__badge">نظرات کاربران</span>
+        <span class="section__badge">✨نظرات کاربران</span>
         <div class="section__title-wrapper">
           <svg class="section__title-image" viewBox="0 0 48 48" fill="none">
             <path
@@ -18,10 +18,10 @@
               stroke-linecap="round"
             />
           </svg>
-          <h2 class="section__title">چه می‌گویند درباره مدیریت اسناد</h2>
+          <h2 class="section__title">درباره مدیریت اسناد چه می‌گویند؟</h2>
         </div>
         <p class="section__subtitle">
-          نظرات متخصصانی که اهمیت قراردادنویسی و مستندسازی را درک می‌کنند
+          نظرات متخصصانی که اهمیت قراردادنویسی و مستندسازی را درک می‌کنند.
         </p>
       </div>
 
@@ -121,11 +121,13 @@
         </div>
       </div>
     </div>
+    <TestimonialQuote />
   </section>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import TestimonialQuote from "./TestimonialQuote.vue";
 
 const tweets = [
   {

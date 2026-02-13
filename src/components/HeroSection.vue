@@ -34,7 +34,7 @@
           >
             در جریان انتشار باشید
           </button>
-          <a href="#approach" class="btn btn--secondary btn--large">
+          <a href="#philosophy" class="btn btn--secondary btn--large">
             بیشتر بدانید
           </a>
         </div>

@@ -2,7 +2,7 @@
   <section class="section section--philosophy" id="philosophy">
     <div class="section__container">
       <div class="section__header section__header--center">
-        <span class="section__badge">فلسفه محصول</span>
+        <span class="section__badge">✨فلسفه محصول</span>
         <div class="section__title-wrapper">
           <svg
             class="section__title-image"
@@ -37,7 +37,12 @@
               opacity="0.5"
             />
           </svg>
-          <h2 class="section__title">زونکن فقط یک فضای ذخیره‌سازی نیست.</h2>
+          <h2 class="section__title">
+            زونکن فقط یک
+
+            <span class="highlight">فضای ذخیره‌سازی</span>
+            نیست.
+          </h2>
         </div>
       </div>
 

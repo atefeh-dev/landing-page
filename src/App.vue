@@ -3,12 +3,10 @@
     <NavBar @scroll-to-cta="scrollToCta" />
     <HeroSection @scroll-to-cta="scrollToCta" />
     <PhilosophySection />
-    <ApproachSection />
     <ProblemsSection />
     <FeaturesSection />
     <UseCasesSection />
     <TweetTestimonials />
-    <TestimonialQuote />
     <FaqSection />
     <CtaSection ref="ctaSectionRef" />
     <FooterSection />
@@ -25,7 +23,6 @@ import ProblemsSection from "./components/ProblemsSection.vue";
 import FeaturesSection from "./components/FeaturesSection.vue";
 import UseCasesSection from "./components/UseCasesSection.vue";
 import TweetTestimonials from "./components/TweetTestimonials.vue";
-import TestimonialQuote from "./components/TestimonialQuote.vue";
 import FaqSection from "./components/FaqSection.vue";
 import CtaSection from "./components/CtaSection.vue";
 import FooterSection from "./components/FooterSection.vue";

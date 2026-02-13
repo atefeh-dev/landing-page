@@ -4,7 +4,7 @@
       <div class="footer__main">
         <div class="footer__brand">
           <h4 class="footer__logo">زونکن</h4>
-          <p class="footer__tagline">مسیر مشخص برای اسناد شما</p>
+          <p class="footer__tagline">مدیریت هوشمند اسناد</p>
         </div>
 
         <div class="footer__links">

@@ -2,6 +2,9 @@
 @use "reset";
 
 // Shared button component
+.highlight {
+  color: $color-accent-primary;
+}
 .btn {
   display: inline-flex;
   align-items: center;
