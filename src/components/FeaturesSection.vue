@@ -128,7 +128,7 @@ const leftFeatures = ref([
       <path d="M12 2v20M2 12h20"></path>
     </svg>`,
     title: "پیگیری پروژه‌ها و پیشرفت",
-    description: "همه چیز را در یک نگاه ببینید",
+    description: "همه چیز را در یک نگاه ببینید.",
   },
   {
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -136,7 +136,7 @@ const leftFeatures = ref([
       <path d="M12 6v6l4 2"></path>
     </svg>`,
     title: "میزبانی و همکاری کد",
-    description: "با تیم خود همکاری کنید",
+    description: "با تیم خود همکاری کنید.",
   },
   {
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -144,7 +144,7 @@ const leftFeatures = ref([
       <path d="M9 3v18"></path>
     </svg>`,
     title: "سازماندهی و اشتراک آسان",
-    description: "ساده و سریع سازماندهی کنید",
+    description: "ساده و سریع سازماندهی کنید.",
   },
   {
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -152,7 +152,7 @@ const leftFeatures = ref([
       <path d="M16 3v4M8 3v4"></path>
     </svg>`,
     title: "سازماندهی و اشتراک آسان",
-    description: "مدیریت حرفه‌ای پروژه‌ها",
+    description: "مدیریت حرفه‌ای پروژه‌ها.",
   },
 ]);
 
@@ -160,22 +160,22 @@ const rightBenefits = ref([
   {
     emoji: "📬",
     title: "به‌روزرسانی‌های فوری",
-    description: "در جریان آخرین تغییرات باشید",
+    description: "در جریان آخرین تغییرات باشید.",
   },
   {
     emoji: "🦊",
     title: "مدیریت پروژه‌ها و کد",
-    description: "کنترل کامل بر روی پروژه‌ها",
+    description: "کنترل کامل بر روی پروژه‌ها.",
   },
   {
     emoji: "📧",
     title: "همکاری ساختاریافته",
-    description: "کار تیمی بهتر و منظم‌تر",
+    description: "کار تیمی بهتر و منظم‌تر.",
   },
   {
     emoji: "📊",
     title: "مدیریت بصری پروژه",
-    description: "نمای واضح از پیشرفت کار",
+    description: "نمای واضح از پیشرفت کار.",
   },
 ]);
 </script>

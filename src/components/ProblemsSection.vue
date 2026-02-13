@@ -45,17 +45,17 @@ const problems = [
   {
     icon: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
     title: "قراردادهای شفاهی",
-    text: "قراردادهایی که شفاهی آغاز شدند و هیچ‌وقت به طور دقیق ثبت نشدند",
+    text: "قراردادهایی که شفاهی آغاز شدند و هیچ‌وقت به طور دقیق ثبت نشدند.",
   },
   {
     icon: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>`,
     title: "نسخه‌های مختلف",
-    text: "فایل‌هایی که چند نسخه مختلف داشتند و هیچ‌کس نمی‌دانست کدام نسخه نهایی است",
+    text: "فایل‌هایی که چند نسخه مختلف داشتند و هیچ‌کس نمی‌دانست کدام نسخه نهایی است.",
   },
   {
     icon: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
     title: "تغییرات گم‌شده",
-    text: "اصلاحاتی که در میان صدها پیام گم شدند و زمان زیادی برای پیدا کردنشان صرف شد",
+    text: "اصلاحاتی که در میان صدها پیام گم شدند و زمان زیادی برای پیدا کردنشان صرف شد.",
   },
 ];
 </script>
