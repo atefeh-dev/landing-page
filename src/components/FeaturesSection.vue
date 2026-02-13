@@ -15,7 +15,6 @@
         </p>
       </div>
 
-      ```
       <!-- Main Content -->
       <div class="features__content">
         <!-- Left Features -->
@@ -115,7 +114,6 @@
         </div>
       </div>
     </div>
-    ```
   </section>
 </template>
 
