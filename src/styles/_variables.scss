@@ -1,0 +1,62 @@
+// Colors - Dark Mode Palette
+$color-bg-primary: #0a0a0a;
+$color-bg-secondary: #111111;
+$color-bg-tertiary: #1a1a1a;
+$color-bg-elevated: #222222;
+$color-bg-overlay: rgba(0, 0, 0, 0.6);
+
+$color-border-subtle: rgba(255, 255, 255, 0.06);
+$color-border-medium: rgba(255, 255, 255, 0.1);
+$color-border-strong: rgba(255, 255, 255, 0.15);
+
+$color-text-primary: #ffffff;
+$color-text-secondary: rgba(255, 255, 255, 0.7);
+$color-text-tertiary: rgba(255, 255, 255, 0.5);
+$color-text-muted: rgba(255, 255, 255, 0.3);
+
+$color-accent-primary: #fcc015;
+$color-accent-secondary: #1434cb;
+$color-accent-glow: rgba(252, 192, 21, 0.15);
+$color-accent-subtle: rgba(252, 192, 21, 0.08);
+$color-success: #44936d;
+$color-info: #2d8ff0;
+
+// Spacing
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-md: 1.5rem;
+$spacing-lg: 2rem;
+$spacing-xl: 3rem;
+$spacing-2xl: 4rem;
+$spacing-3xl: 6rem;
+
+// Border Radius
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 16px;
+$radius-xl: 20px;
+$radius-full: 9999px;
+
+// Transitions
+$transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+$shadow-md:
+  0 4px 6px -1px rgba(0, 0, 0, 0.6),
+  0 2px 4px -1px rgba(0, 0, 0, 0.4);
+$shadow-lg:
+  0 10px 15px -3px rgba(0, 0, 0, 0.7),
+  0 4px 6px -2px rgba(0, 0, 0, 0.5);
+$shadow-xl:
+  0 20px 25px -5px rgba(0, 0, 0, 0.8),
+  0 10px 10px -5px rgba(0, 0, 0, 0.6);
+$shadow-accent: 0 8px 16px rgba(252, 192, 21, 0.25);
+$glow-accent: 0 0 20px rgba(252, 192, 21, 0.3);
+
+// Breakpoints
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1200px;

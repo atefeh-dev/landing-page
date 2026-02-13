@@ -1,0 +1,131 @@
+<template>
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__main">
+        <div class="footer__brand">
+          <h4 class="footer__logo">زونکن</h4>
+          <p class="footer__tagline">مسیر مشخص برای اسناد شما</p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__column">
+            <h4 class="footer__heading">محصول</h4>
+            <ul class="footer__list">
+              <li><a href="#features">ویژگی‌ها</a></li>
+              <li><a href="#use-cases">کاربردها</a></li>
+              <li><a href="#faq">راهنما</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h4 class="footer__heading">منابع</h4>
+            <ul class="footer__list">
+              <li><a href="#">وبلاگ</a></li>
+              <li><a href="#">مستندات</a></li>
+              <li><a href="#">پشتیبانی</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h4 class="footer__heading">شرکت</h4>
+            <ul class="footer__list">
+              <li><a href="#">درباره ما</a></li>
+              <li><a href="#">تماس</a></li>
+              <li><a href="#">حریم خصوصی</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copyright">
+          ساخته شده در ایران &bull; &copy; 2026 زونکن
+        </p>
+      </div>
+    </div>
+  </footer>
+</template>
+
+<style lang="scss" scoped>
+.footer {
+  background-color: $color-bg-secondary;
+  border-top: 1px solid $color-border-subtle;
+  padding: $spacing-3xl 0 $spacing-xl;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  &__main {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: $spacing-3xl;
+    margin-bottom: $spacing-xl;
+  }
+
+  &__logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: $spacing-sm;
+    letter-spacing: -0.02em;
+  }
+
+  &__tagline {
+    color: $color-text-secondary;
+    margin-bottom: $spacing-md;
+  }
+
+  &__links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-xl;
+  }
+
+  &__heading {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: $spacing-md;
+    color: $color-text-primary;
+  }
+
+  &__list {
+    li {
+      margin-bottom: $spacing-sm;
+    }
+
+    a {
+      color: $color-text-secondary;
+      transition: $transition-base;
+      display: inline-block;
+
+      &:hover {
+        color: $color-text-primary;
+        transform: translateX(-2px);
+      }
+    }
+  }
+
+  &__bottom {
+    padding-top: $spacing-xl;
+    border-top: 1px solid $color-border-subtle;
+    text-align: center;
+  }
+
+  &__copyright {
+    color: $color-text-tertiary;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .footer__main {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__links {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
