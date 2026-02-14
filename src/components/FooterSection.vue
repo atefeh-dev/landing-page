@@ -1,56 +1,73 @@
 <template>
   <footer class="footer">
     <div class="footer__container">
-      <div class="footer__main">
+      <div class="footer__content">
+        <!-- Brand -->
         <div class="footer__brand">
-          <h4 class="footer__logo">زونکن</h4>
-          <p class="footer__tagline">مدیریت هوشمند اسناد</p>
+          <p class="footer__brand-text">با افتخار ساخت ایران</p>
         </div>
 
-        <div class="footer__links">
-          <div class="footer__column">
-            <h4 class="footer__heading">محصول</h4>
-            <ul class="footer__list">
-              <li><a href="#features">ویژگی‌ها</a></li>
-              <li><a href="#use-cases">کاربردها</a></li>
-              <li><a href="#faq">راهنما</a></li>
-            </ul>
-          </div>
+        <!-- Logo -->
+        <div class="footer__logo">
+          <img src="../assets/logo.svg" alt="لوگوی زونکن" />
+        </div>
 
-          <div class="footer__column">
-            <h4 class="footer__heading">منابع</h4>
-            <ul class="footer__list">
-              <li><a href="#">وبلاگ</a></li>
-              <li><a href="#">مستندات</a></li>
-              <li><a href="#">پشتیبانی</a></li>
-            </ul>
-          </div>
-
-          <div class="footer__column">
-            <h4 class="footer__heading">شرکت</h4>
-            <ul class="footer__list">
-              <li><a href="#">درباره ما</a></li>
-              <li><a href="#">تماس</a></li>
-              <li><a href="#">حریم خصوصی</a></li>
-            </ul>
-          </div>
+        <!-- Social Links -->
+        <div class="footer__social">
+          <a
+            href="https://www.linkedin.com/company/zoonkan/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer__social-link"
+            aria-label="لینکدین"
+          >
+            <img src="../assets/social-linkedin.svg" alt="لینکدین" />
+          </a>
+          <a
+            href="https://www.instagram.com/zoonkanapp"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer__social-link"
+            aria-label="اینستاگرام"
+          >
+            <img src="../assets/social-instagram.svg" alt="اینستاگرام" />
+          </a>
+          <a
+            href="https://x.com/doclastapp"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer__social-link"
+            aria-label="توییتر"
+          >
+            <img src="../assets/x-social.svg" alt="توییتر" />
+          </a>
         </div>
       </div>
 
+      <!-- Copyright -->
       <div class="footer__bottom">
         <p class="footer__copyright">
-          ساخته شده در ایران &bull; &copy; 2026 زونکن
+          © {{ currentYear }} زونکن. تمامی حقوق محفوظ است.
         </p>
       </div>
     </div>
   </footer>
 </template>
 
+<script setup>
+import { computed } from "vue";
+
+const currentYear = computed(() => new Date().getFullYear());
+</script>
+
 <style lang="scss" scoped>
+@use "../styles/variables" as *;
+
 .footer {
   background-color: $color-bg-secondary;
   border-top: 1px solid $color-border-subtle;
-  padding: $spacing-3xl 0 $spacing-xl;
+  padding: $spacing-2xl 0 $spacing-lg;
+  position: relative;
 
   &__container {
     max-width: 1200px;
@@ -58,173 +75,215 @@
     padding: 0 2rem;
   }
 
-  &__main {
-    display: grid;
-    grid-template-columns: 2fr 3fr;
-    gap: $spacing-3xl;
-    margin-bottom: $spacing-xl;
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-xl;
+    padding-bottom: $spacing-xl;
+    border-bottom: 1px solid $color-border-subtle;
+  }
+
+  &__brand {
+    flex: 1;
+  }
+
+  &__brand-text {
+    color: $color-text-secondary;
+    font-size: 1rem;
+    font-weight: $font-weight-medium;
+    margin: 0;
   }
 
   &__logo {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: $spacing-sm;
-    letter-spacing: -0.02em;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  &__tagline {
-    color: $color-text-secondary;
-    margin-bottom: $spacing-md;
-  }
-
-  &__links {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: $spacing-xl;
-  }
-
-  &__heading {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: $spacing-md;
-    color: $color-text-primary;
-  }
-
-  &__list {
-    li {
-      margin-bottom: $spacing-sm;
-    }
-
-    a {
-      color: $color-text-secondary;
+    img {
+      width: 47px;
+      height: auto;
       transition: $transition-base;
-      display: inline-block;
 
       &:hover {
-        color: $color-text-primary;
-        transform: translateX(-2px);
+        opacity: 0.8;
+      }
+    }
+  }
+
+  &__social {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    transition: $transition-base;
+
+    img {
+      width: 20px;
+      height: 20px;
+      opacity: 0.7;
+      transition: $transition-base;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+
+      img {
+        opacity: 1;
       }
     }
   }
 
   &__bottom {
-    padding-top: $spacing-xl;
-    border-top: 1px solid $color-border-subtle;
+    padding-top: $spacing-lg;
     text-align: center;
   }
 
   &__copyright {
     color: $color-text-tertiary;
     font-size: 0.875rem;
+    margin: 0;
   }
 }
 
-// Tablet optimization
+// Tablet (portrait and smaller)
 @media (max-width: $breakpoint-lg) {
   .footer {
-    padding: $spacing-2xl 0 $spacing-lg;
-  }
-
-  .footer__container {
-    padding: 0 1.5rem;
-  }
-
-  .footer__main {
-    gap: $spacing-xl;
-    margin-bottom: $spacing-lg;
-  }
-
-  .footer__links {
-    gap: $spacing-lg;
-  }
-
-  .footer__bottom {
-    padding-top: $spacing-lg;
-  }
-}
-
-// Mobile optimization
-@media (max-width: $breakpoint-md) {
-  .footer {
     padding: $spacing-xl 0 $spacing-md;
-  }
 
-  .footer__container {
-    padding: 0 1rem;
-  }
-
-  .footer__main {
-    grid-template-columns: 1fr;
-    gap: $spacing-lg;
-    margin-bottom: $spacing-md;
-  }
-
-  .footer__brand {
-    text-align: center;
-    padding-bottom: $spacing-md;
-    border-bottom: 1px solid $color-border-subtle;
-  }
-
-  .footer__links {
-    grid-template-columns: repeat(3, 1fr);
-    gap: $spacing-md;
-  }
-
-  .footer__column {
-    text-align: center;
-  }
-
-  .footer__heading {
-    font-size: 0.875rem;
-    margin-bottom: $spacing-sm;
-  }
-
-  .footer__list {
-    li {
-      margin-bottom: 0.5rem;
+    &__container {
+      padding: 0 1.5rem;
     }
 
-    a {
-      font-size: 0.875rem;
+    &__content {
+      gap: $spacing-lg;
+      padding-bottom: $spacing-lg;
+    }
 
-      &:hover {
-        transform: none;
+    &__brand-text {
+      font-size: 0.9375rem;
+    }
+
+    &__logo img {
+      width: 42px;
+    }
+
+    &__social {
+      gap: $spacing-sm;
+    }
+
+    &__social-link {
+      width: 38px;
+      height: 38px;
+
+      img {
+        width: 18px;
+        height: 18px;
       }
     }
-  }
 
-  .footer__bottom {
-    padding-top: $spacing-md;
-  }
-
-  .footer__copyright {
-    font-size: 0.75rem;
+    &__bottom {
+      padding-top: $spacing-md;
+    }
   }
 }
 
-// Small mobile optimization
+// Mobile
 @media (max-width: $breakpoint-sm) {
   .footer {
     padding: $spacing-lg 0 $spacing-sm;
-  }
 
-  .footer__links {
-    grid-template-columns: 1fr;
-    gap: $spacing-sm;
-    max-width: 200px;
-    margin: 0 auto;
-  }
+    &__container {
+      padding: 0 1.5rem;
+    }
 
-  .footer__column {
-    padding: $spacing-sm 0;
+    &__content {
+      flex-direction: column;
+      gap: $spacing-md;
+      padding-bottom: $spacing-md;
+      text-align: center;
+    }
 
-    &:not(:last-child) {
-      border-bottom: 1px solid $color-border-subtle;
+    &__brand {
+      flex: none;
+      width: 100%;
+    }
+
+    &__brand-text {
+      font-size: 0.875rem;
+    }
+
+    &__logo {
+      order: -1;
+
+      img {
+        width: 38px;
+      }
+    }
+
+    &__social {
+      flex: none;
+      width: 100%;
+      justify-content: center;
+      gap: $spacing-sm;
+    }
+
+    &__social-link {
+      width: 36px;
+      height: 36px;
+
+      img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    &__bottom {
+      padding-top: $spacing-sm;
+    }
+
+    &__copyright {
+      font-size: 0.75rem;
     }
   }
+}
 
-  .footer__list li {
-    margin-bottom: 0.375rem;
+// Extra small mobile
+@media (max-width: 375px) {
+  .footer {
+    &__container {
+      padding: 0 1rem;
+    }
+
+    &__brand-text {
+      font-size: 0.8125rem;
+    }
+
+    &__logo img {
+      width: 35px;
+    }
+
+    &__social-link {
+      width: 34px;
+      height: 34px;
+
+      img {
+        width: 15px;
+        height: 15px;
+      }
+    }
   }
 }
 </style>
