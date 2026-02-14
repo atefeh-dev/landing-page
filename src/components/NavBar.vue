@@ -5,21 +5,21 @@
         <a href="#hero" class="nav__logo-link">
           <span class="nav__logo-text">
             <img src="/src/assets/logo-dark-mode.svg" alt="زونکن" />
+            <img src="/src/assets/logotype.svg" alt="زونکن" />
           </span>
         </a>
+      </div>
+      <div class="nav__menu">
+        <a href="#philosophy" class="nav__link">فلسفه محصول</a>
+        <a href="#problems" class="nav__link">رویکرد</a>
+        <a href="#features" class="nav__link">ویژگی‌ها</a>
+        <a href="#use-cases" class="nav__link">کاربردها</a>
+        <!-- <a href="#testimonials" class="nav__link">نظرات کاربران</a> -->
+        <a href="#faq" class="nav__link">سوالات متداول</a>
       </div>
 
       <!-- Desktop Menu -->
       <div class="nav__actions">
-        <div class="nav__menu">
-          <a href="#philosophy" class="nav__link">فلسفه محصول</a>
-          <a href="#problems" class="nav__link">رویکرد</a>
-          <a href="#features" class="nav__link">ویژگی‌ها</a>
-          <a href="#use-cases" class="nav__link">کاربردها</a>
-          <a href="#testimonials" class="nav__link">نظرات کاربران</a>
-          <a href="#faq" class="nav__link">سوالات متداول</a>
-        </div>
-
         <button
           class="btn btn--primary nav__cta-btn"
           @click="$emit('scroll-to-cta')"
@@ -165,6 +165,8 @@ onBeforeUnmount(() => {
     font-weight: 800;
     color: $color-text-primary;
     letter-spacing: -0.02em;
+    display: flex;
+    gap: 0.5rem;
   }
 
   &__logo-text img {

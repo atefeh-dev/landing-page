@@ -3,28 +3,24 @@
     <div class="hero__container">
       <div class="hero__content">
         <div class="hero__badge">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-          </svg>
-          <span>ساده اما قدرتمند</span>
+          <span class="hero__badge--news">
+            <img src="../assets/green-dot.svg" />
+            <span> چه خبر؟ </span>
+          </span>
+
+          <span> از امروز لیست انتظار باز است</span>
         </div>
 
         <h1 class="hero__title">
-          هر سند یک<br />
-          <span class="hero__title-highlight">مسیر مشخص</span><br />
+          اینجا، هر سند <br />
+          <span class="hero__title-highlight">یک مسیر مشخص </span>
           دارد.
         </h1>
 
         <p class="hero__description">
-          زونکن به شما کمک می‌کند قراردادها و اسنادتان را از ایجاد تا تایید
-          نهایی پیگیری کنید. دیگر نگران نسخه‌های مختلف یا تغییرات گم‌شده نباشید.
+          ما زونکن را ساختیم چون سال‌ها با اسناد، قراردادها و فایل‌هایی کار
+          کردیم که هیچ مسیر مشخصی نداشتند. زونکن تلاشی است برای اینکه اسناد، از
+          همان ابتدا در مسیر درست قرار بگیرند.
         </p>
 
         <div class="hero__cta">
@@ -32,32 +28,19 @@
             class="btn btn--primary btn--large"
             @click="$emit('scroll-to-cta')"
           >
-            در جریان انتشار باشید
+            به لیست انتظار بپیوندید
           </button>
-          <a href="#philosophy" class="btn btn--secondary btn--large">
-            بیشتر بدانید
-          </a>
         </div>
 
-        <p class="hero__note">
-          رایگان برای همیشه &bull; بدون نیاز به کارت اعتباری
-        </p>
+        <p class="hero__note">هیچ وقت اسپم ارسال نمی کنیم. خیالتون راحت</p>
       </div>
 
       <div class="hero__visual">
-        <video
+        <img
+          src="/src/assets/demo.png"
+          alt="نمایی از زونکن"
           class="hero__video"
-          autoplay
-          loop
-          muted
-          playsinline
-          poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%231a1a1a' width='400' height='300'/%3E%3C/svg%3E"
-        >
-          <source
-            src="https://tally.so/videos/demo/intro.mp4#t=15"
-            type="video/mp4"
-          />
-        </video>
+        />
         <div class="hero__video-overlay"></div>
       </div>
     </div>
@@ -66,6 +49,14 @@
 
 <script setup>
 defineEmits(["scroll-to-cta"]);
+import PageWithCurlImg from "@/assets/pagewithcurl.svg";
+import PageFacingUp1Img from "@/assets/pagefacingup.svg";
+import PageFacingUp2Img from "@/assets/page-facing-up.svg";
+import MemoImg from "@/assets/memo.svg";
+import ClipboardImg from "@/assets/clipboard.svg";
+import BookmarkTabImg from "@/assets/bookmark-tabs.svg";
+import ScrollImg from "@/assets/scroll.svg";
+import ZoonkanDemo from "@/assets/demo.png";
 </script>
 
 <style lang="scss" scoped>
@@ -111,26 +102,33 @@ defineEmits(["scroll-to-cta"]);
   &__badge {
     display: inline-flex;
     align-items: center;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: linear-gradient(
-      135deg,
-      $color-accent-subtle 0%,
-      rgba(252, 192, 21, 0.03) 100%
-    );
-    border: 1px solid $color-border-medium;
-    border-radius: $radius-full;
-    color: $color-accent-primary;
+    padding: 0.25rem 0.625rem;
+    border: 1px solid $color-border-primary;
+    border-radius: $radius-sm;
+    color: $color-text-hero;
     font-size: 0.875rem;
     font-weight: 600;
     margin-bottom: $spacing-lg;
     backdrop-filter: blur(10px);
     animation: fadeInUp 0.6s ease-out 0.1s backwards;
+
+    &--news {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: $color-text-hero;
+      padding: 0.25rem 0.5rem;
+      border-radius: $radius-sm;
+      border: 1px solid $color-border-primary;
+    }
   }
 
   &__title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 800;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
     line-height: 1.1;
     margin-bottom: $spacing-lg;
     letter-spacing: -0.02em;
@@ -144,9 +142,9 @@ defineEmits(["scroll-to-cta"]);
   }
 
   &__description {
-    font-size: 1.25rem;
-    line-height: 1.7;
-    color: $color-text-secondary;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-regular;
+    color: #e9d7fe;
     margin-bottom: $spacing-xl;
     max-width: 500px;
     animation: fadeInUp 0.6s ease-out 0.3s backwards;

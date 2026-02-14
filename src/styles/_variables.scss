@@ -13,6 +13,9 @@ $color-text-primary: #ffffff;
 $color-text-secondary: rgba(255, 255, 255, 0.7);
 $color-text-tertiary: rgba(255, 255, 255, 0.5);
 $color-text-muted: rgba(255, 255, 255, 0.3);
+$color-text-hero: #cecfd2;
+
+$color-border-primary: #373a41;
 
 $color-accent-primary: #fcc015;
 $color-accent-secondary: #1434cb;
@@ -20,6 +23,22 @@ $color-accent-glow: rgba(252, 192, 21, 0.15);
 $color-accent-subtle: rgba(252, 192, 21, 0.08);
 $color-success: #44936d;
 $color-info: #2d8ff0;
+
+//font-sizes
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-md: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-xs: 1.5rem;
+$font-size-sm: 1.875rem;
+$font-size-md: 2.25rem;
+
+// font-weights
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
 
 // Spacing
 $spacing-xs: 0.5rem;
