@@ -296,7 +296,7 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: $spacing-lg;
+    padding: $spacing-sm;
     border-bottom: 1px solid $color-border-subtle;
   }
 
@@ -315,10 +315,10 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: $spacing-md $spacing-lg;
+    padding: 0.875rem 0.75rem;
     color: $color-text-secondary;
     font-weight: 500;
-    font-size: 1.125rem;
+    font-size: $font-size-md;
     transition: $transition-base;
     border-right: 3px solid transparent;
 
