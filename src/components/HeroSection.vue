@@ -54,20 +54,30 @@
         </p>
 
         <div class="hero__cta">
-          <input
-            type="email"
-            class="hero__email-input"
-            placeholder="پست الکترونیک خود را وارد نمایید"
-          />
+          <div class="hero__input-wrapper">
+            <input
+              v-model="email"
+              type="email"
+              class="hero__email-input"
+              :class="{ 'hero__email-input--error': showError }"
+              placeholder="پست الکترونیک خود را وارد نمایید"
+              @blur="handleBlur"
+              @input="handleInput"
+            />
+            <p v-if="showError" class="hero__error-message">
+              {{ errorMessage }}
+            </p>
+          </div>
           <button
             class="btn btn--primary btn--large"
-            @click="$emit('scroll-to-cta')"
+            :disabled="isSubmitting"
+            @click="handleSubmit"
           >
-            به لیست انتظار بپیوندید
+            {{ isSubmitting ? "در حال ارسال..." : "به لیست انتظار بپیوندید" }}
           </button>
         </div>
 
-        <p class="hero__note">هیچ وقت اسپم ارسال نمی‌کنیم. خیالتون راحت.</p>
+        <p class="hero__note">هیچ وقت اسپم ارسال نمی‌کنیم. خیالتون راحت</p>
       </div>
 
       <!-- Browser mockup showing the demo -->
@@ -83,7 +93,65 @@
 </template>
 
 <script setup>
-defineEmits(["scroll-to-cta"]);
+import { ref, computed } from "vue";
+
+const emit = defineEmits(["scroll-to-cta"]);
+
+const email = ref("");
+const touched = ref(false);
+const isSubmitting = ref(false);
+
+// Email validation regex
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Computed validation
+const isEmailValid = computed(() => {
+  if (!email.value) return false;
+  return emailRegex.test(email.value);
+});
+
+const showError = computed(() => {
+  return touched.value && !isEmailValid.value && email.value.length > 0;
+});
+
+const errorMessage = computed(() => {
+  if (!touched.value || !email.value) return "";
+  if (!isEmailValid.value) return "لطفاً یک آدرس ایمیل معتبر وارد کنید";
+  return "";
+});
+
+// Handle blur event
+const handleBlur = () => {
+  touched.value = true;
+};
+
+// Handle button click
+const handleSubmit = () => {
+  touched.value = true;
+
+  if (!isEmailValid.value) {
+    // Don't proceed if email is invalid
+    return;
+  }
+
+  isSubmitting.value = true;
+
+  // Emit the event to parent
+  emit("scroll-to-cta", email.value);
+
+  // Reset after a short delay (simulating submission)
+  setTimeout(() => {
+    isSubmitting.value = false;
+  }, 1000);
+};
+
+// Handle input change
+const handleInput = () => {
+  // Only show validation if user has already touched the field
+  if (!touched.value && email.value.length > 0) {
+    touched.value = true;
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -116,15 +184,15 @@ defineEmits(["scroll-to-cta"]);
     animation: float 20s infinite ease-in-out;
 
     &--1 {
-      top: 21%;
-      left: 27%;
+      top: 13%;
+      left: 8%;
       animation-delay: 0s;
       animation-duration: 18s;
       transform: rotate(-15deg);
     }
 
     &--2 {
-      top: 16%;
+      top: 9%;
       left: 25%;
       animation-delay: -3s;
       animation-duration: 22s;
@@ -134,8 +202,8 @@ defineEmits(["scroll-to-cta"]);
     }
 
     &--3 {
-      top: 22%;
-      left: 67%;
+      top: 15%;
+      left: 75%;
       animation-delay: -6s;
       animation-duration: 20s;
       transform: rotate(-25deg);
@@ -144,16 +212,16 @@ defineEmits(["scroll-to-cta"]);
     }
 
     &--4 {
-      top: 15%;
-      right: 25%;
+      top: 11%;
+      right: 8%;
       animation-delay: -9s;
       animation-duration: 24s;
       transform: rotate(12deg);
     }
 
     &--5 {
-      bottom: 83%;
-      left: 36%;
+      top: 22%;
+      left: 18%;
       animation-delay: -12s;
       animation-duration: 19s;
       transform: rotate(18deg);
@@ -162,8 +230,8 @@ defineEmits(["scroll-to-cta"]);
     }
 
     &--6 {
-      bottom: 83%;
-      right: 33%;
+      top: 28%;
+      right: 15%;
       animation-delay: -15s;
       animation-duration: 21s;
       transform: rotate(-8deg);
@@ -172,8 +240,8 @@ defineEmits(["scroll-to-cta"]);
     }
 
     &--7 {
-      bottom: 79%;
-      right: 65%;
+      top: 14%;
+      right: 62%;
       animation-delay: -18s;
       animation-duration: 23s;
       transform: rotate(22deg);
@@ -230,7 +298,7 @@ defineEmits(["scroll-to-cta"]);
     font-size: $font-size-5xl;
     font-weight: $font-weight-bold;
     line-height: 1.2;
-    margin-bottom: $spacing-lg;
+    margin-bottom: $spacing-md;
     letter-spacing: -0.02em;
     animation: fadeInUp 0.6s ease-out 0.2s backwards;
     color: $color-text-primary;
@@ -243,10 +311,11 @@ defineEmits(["scroll-to-cta"]);
   }
 
   &__description {
-    font-size: 1.125rem;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-regular;
     line-height: 1.6;
-    color: $color-text-secondary;
-    margin-bottom: $spacing-xl;
+    color: #e9d7fe;
+    margin-bottom: $spacing-md;
     margin-left: auto;
     margin-right: auto;
     animation: fadeInUp 0.6s ease-out 0.3s backwards;
@@ -259,18 +328,32 @@ defineEmits(["scroll-to-cta"]);
     animation: fadeInUp 0.6s ease-out 0.4s backwards;
     flex-wrap: nowrap;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
     max-width: 700px;
 
     .btn {
       flex-shrink: 0;
+      white-space: nowrap;
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
     }
   }
 
-  &__email-input {
+  &__input-wrapper {
     flex: 1;
-    padding: 0.75rem 0.875rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  &__email-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
     font-size: 1rem;
     font-family: inherit;
     background: rgba(255, 255, 255, 0.05);
@@ -295,6 +378,23 @@ defineEmits(["scroll-to-cta"]);
       border-color: $color-accent-primary;
       box-shadow: 0 0 0 3px rgba(252, 192, 21, 0.1);
     }
+
+    &--error {
+      border-color: #ef4444;
+
+      &:focus {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      }
+    }
+  }
+
+  &__error-message {
+    font-size: 0.875rem;
+    color: #ef4444;
+    margin: 0;
+    text-align: right;
+    animation: slideDown 0.2s ease-out;
   }
 
   &__note {
@@ -438,6 +538,17 @@ defineEmits(["scroll-to-cta"]);
   }
 }
 
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 // Tablet
 @media (max-width: $breakpoint-lg) {
   .hero {
@@ -447,16 +558,6 @@ defineEmits(["scroll-to-cta"]);
 
     &__visual {
       max-width: 700px;
-    }
-
-    &__cta {
-      flex-direction: column;
-      width: 100%;
-    }
-
-    &__email-input {
-      width: 100%;
-      min-width: unset;
     }
 
     &__icon {
@@ -474,6 +575,20 @@ defineEmits(["scroll-to-cta"]);
         width: 55px;
         height: 55px;
       }
+    }
+  }
+}
+
+// Medium tablets - keep side-by-side layout
+@media (max-width: $breakpoint-md) and (min-width: calc($breakpoint-sm + 1px)) {
+  .hero {
+    &__cta {
+      gap: $spacing-sm;
+    }
+
+    &__email-input {
+      padding: 0.75rem 0.875rem;
+      font-size: 0.9375rem;
     }
   }
 }
@@ -507,14 +622,20 @@ defineEmits(["scroll-to-cta"]);
       flex-direction: column;
       gap: $spacing-sm;
       width: 100%;
+      align-items: stretch;
 
       .btn {
         width: 100%;
       }
     }
 
+    &__input-wrapper {
+      width: 100%;
+    }
+
     &__email-input {
       width: 100%;
+      padding: 0.75rem 1rem;
     }
 
     &__icon {
@@ -575,9 +696,13 @@ defineEmits(["scroll-to-cta"]);
       justify-content: center;
     }
 
+    &__input-wrapper {
+      width: 100%;
+    }
+
     &__email-input {
       font-size: 0.875rem;
-      padding: 0.625rem 1rem;
+      padding: 0.625rem 0.875rem;
     }
 
     &__browser-url span {

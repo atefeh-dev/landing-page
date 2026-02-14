@@ -166,7 +166,7 @@ onBeforeUnmount(() => {
     color: $color-text-primary;
     letter-spacing: -0.02em;
     display: flex;
-    gap: 0.5rem;
+    gap: $spacing-xs;
   }
 
   &__logo-text img {
