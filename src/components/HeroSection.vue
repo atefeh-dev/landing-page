@@ -53,29 +53,7 @@
           همان ابتدا در مسیر درست قرار بگیرند.
         </p>
 
-        <div class="hero__cta">
-          <div class="hero__input-wrapper">
-            <input
-              v-model="email"
-              type="email"
-              class="hero__email-input"
-              :class="{ 'hero__email-input--error': showError }"
-              placeholder="پست الکترونیک خود را وارد نمایید"
-              @blur="handleBlur"
-              @input="handleInput"
-            />
-            <p v-if="showError" class="hero__error-message">
-              {{ errorMessage }}
-            </p>
-          </div>
-          <button
-            class="btn btn--primary btn--large"
-            :disabled="isSubmitting"
-            @click="handleSubmit"
-          >
-            {{ isSubmitting ? "در حال ارسال..." : "به لیست انتظار بپیوندید" }}
-          </button>
-        </div>
+        <EmailForm @submit="handleSubmit" />
 
         <p class="hero__note">هیچ وقت اسپم ارسال نمی‌کنیم. خیالتون راحت</p>
       </div>
@@ -94,6 +72,7 @@
 
 <script setup>
 import { ref, computed } from "vue";
+import EmailForm from "./EmailForm.vue";
 
 const emit = defineEmits(["scroll-to-cta"]);
 
@@ -401,6 +380,7 @@ const handleInput = () => {
     font-size: 0.875rem;
     color: $color-text-tertiary;
     animation: fadeInUp 0.6s ease-out 0.5s backwards;
+    margin-top: 0.25rem;
     text-align: right;
   }
 
