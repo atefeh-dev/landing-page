@@ -4,9 +4,8 @@
     <HeroSection @scroll-to-cta="scrollToCta" />
     <PhilosophySection />
     <TweetTestimonials />
-    <ProblemsSection />
     <FeaturesSection />
-    <UseCasesSection />
+    <CustomerSection />
     <FaqSection />
     <CtaSection ref="ctaSectionRef" />
     <FooterSection />
@@ -18,10 +17,8 @@ import { ref } from "vue";
 import NavBar from "./components/NavBar.vue";
 import HeroSection from "./components/HeroSection.vue";
 import PhilosophySection from "./components/PhilosophySection.vue";
-import ApproachSection from "./components/ApproachSection.vue";
-import ProblemsSection from "./components/ProblemsSection.vue";
 import FeaturesSection from "./components/FeaturesSection.vue";
-import UseCasesSection from "./components/UseCasesSection.vue";
+import CustomerSection from "./components/CustomerSection.vue";
 import TweetTestimonials from "./components/TweetTestimonials.vue";
 import FaqSection from "./components/FaqSection.vue";
 import CtaSection from "./components/CtaSection.vue";
