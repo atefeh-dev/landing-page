@@ -23,6 +23,9 @@ $color-accent-glow: rgba(252, 192, 21, 0.15);
 $color-accent-subtle: rgba(252, 192, 21, 0.08);
 $color-success: #44936d;
 $color-info: #2d8ff0;
+$color-badge-fill: #2c1c5f;
+$color-badge-text: #d6bbfb;
+$color-badge-stroke: #53389e;
 
 //font-sizes
 $font-size-xs: 0.75rem;
@@ -46,7 +49,7 @@ $spacing-xs: 0.5rem;
 $spacing-sm: 1rem;
 $spacing-md: 1.5rem;
 $spacing-lg: 2rem;
-$spacing-xl: 3rem;
+$spacing-xl: 3.125rem;
 $spacing-2xl: 4rem;
 $spacing-3xl: 6rem;
 $spacing-gap: 3.125rem;

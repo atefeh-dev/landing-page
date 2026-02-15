@@ -83,7 +83,7 @@
   }
 
   &__header {
-    margin-bottom: $spacing-xl;
+    // margin-bottom: $spacing-xl;
     position: relative;
 
     &--center {
@@ -93,18 +93,14 @@
 
   &__badge {
     display: inline-block;
-    padding: 0.5rem 1rem;
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.05) 0%,
-      rgba(255, 255, 255, 0.02) 100%
-    );
-    border: 1px solid $color-border-medium;
+    padding: 0.625rem 0.75rem;
+    background: $color-badge-fill;
+    border: 1px solid $color-badge-stroke;
     border-radius: $radius-full;
-    color: $color-text-secondary;
+    color: $color-badge-text;
     font-size: 0.875rem;
     font-weight: 600;
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-xl;
     backdrop-filter: blur(10px);
   }
 
