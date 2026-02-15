@@ -1,15 +1,17 @@
 <template>
-  <section class="features section" id="features">
+  <section class="features section" id="features" ref="sectionRef">
     <div class="section__container">
       <!-- Header -->
       <div class="section__header section__header--center">
-        <span class="section__badge">✨ویژگی‌ها </span>
-        <h2 class="features__title">
+        <span class="section__badge" :class="{ 'in-view': isVisible }"
+          >✨ویژگی‌ها
+        </span>
+        <h2 class="features__title" :class="{ 'in-view': isVisible }">
           اسناد خود را با یک
           <span class="features__title-highlight">کلیک ساده</span>
           به اشتراک بگذارید.
         </h2>
-        <p class="features__subtitle">
+        <p class="features__subtitle" :class="{ 'in-view': isVisible }">
           بدون نیاز به تنظیمات پیچیده، به راحتی اسناد خود را با هر کسی به اشتراک
           بگذارید. فقط با یک کلیک کد شما آماده مشاهده، همکاری یا نمایش است.
         </p>
@@ -23,6 +25,7 @@
             class="features__item"
             v-for="(feature, index) in leftFeatures"
             :key="index"
+            :class="{ 'in-view': isVisible }"
           >
             <div class="features__item-icon" v-html="feature.icon"></div>
             <div class="features__item-text">
@@ -102,6 +105,7 @@
             class="features__item"
             v-for="(benefit, index) in rightBenefits"
             :key="index"
+            :class="{ 'in-view': isVisible }"
           >
             <div class="features__item-emoji">{{ benefit.emoji }}</div>
             <div class="features__item-text">
@@ -119,6 +123,10 @@
 
 <script setup>
 import { ref } from "vue";
+import { useScrollAnimation } from "@/composables/useScrollAnimation";
+
+const sectionRef = ref(null);
+const { isVisible } = useScrollAnimation(sectionRef);
 
 const leftFeatures = ref([
   {
@@ -207,6 +215,7 @@ const rightBenefits = ref([
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: $spacing-md;
+    animation: fadeInUp 0.6s ease-out 0.1s backwards;
   }
 
   &__title-highlight {
@@ -220,6 +229,7 @@ const rightBenefits = ref([
     max-width: 700px;
     margin: 0 auto $spacing-3xl;
     line-height: 1.6;
+    animation: fadeInUp 0.6s ease-out 0.2s backwards;
   }
 
   &__content {
@@ -290,6 +300,31 @@ const rightBenefits = ref([
     border-radius: $radius-md;
     transition: $transition-base;
     backdrop-filter: blur(10px);
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+
+    &.in-view {
+      animation: fadeInUp 0.6s ease-out forwards;
+
+      &:nth-child(1) {
+        animation-delay: 0.3s;
+      }
+
+      &:nth-child(2) {
+        animation-delay: 0.35s;
+      }
+
+      &:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      &:nth-child(4) {
+        animation-delay: 0.45s;
+      }
+    }
 
     &:hover {
       background: linear-gradient(

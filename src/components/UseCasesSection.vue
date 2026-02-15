@@ -1,9 +1,11 @@
 <template>
-  <section class="section section--use-cases" id="use-cases">
+  <section class="section section--use-cases" id="use-cases" ref="sectionRef">
     <div class="section__container">
       <div class="section__header section__header--center">
-        <span class="section__badge">✨برای چه کسانی؟</span>
-        <div class="section__title-wrapper">
+        <span class="section__badge" :class="{ 'in-view': isVisible }"
+          >✨برای چه کسانی؟</span
+        >
+        <div class="section__title-wrapper" :class="{ 'in-view': isVisible }">
           <svg class="section__title-image" viewBox="0 0 48 48" fill="none">
             <circle cx="24" cy="16" r="6" stroke="#44936d" stroke-width="2" />
             <path
@@ -13,14 +15,19 @@
             />
             <circle cx="36" cy="14" r="3" fill="#fcc015" />
           </svg>
-          <h2 class="section__title">
+          <h2 class="section__title" :class="{ 'in-view': isVisible }">
             طراحی‌شده برای کسانی که با اسناد زندگی می‌کنند.
           </h2>
         </div>
       </div>
 
       <div class="use-cases">
-        <div class="use-case" v-for="(useCase, index) in useCases" :key="index">
+        <div
+          class="use-case"
+          v-for="(useCase, index) in useCases"
+          :key="index"
+          :class="{ 'in-view': isVisible }"
+        >
           <div class="use-case__content">
             <h3 class="use-case__title">{{ useCase.title }}</h3>
             <ul class="use-case__list">
@@ -34,6 +41,12 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+import { useScrollAnimation } from "@/composables/useScrollAnimation";
+
+const sectionRef = ref(null);
+const { isVisible } = useScrollAnimation(sectionRef);
+
 const useCases = [
   {
     title: "طراحان و خلاق‌ها",
@@ -91,6 +104,27 @@ const useCases = [
   gap: $spacing-md;
   transition: $transition-base;
   position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+
+  &.in-view {
+    animation: fadeInUp 0.6s ease-out forwards;
+
+    &:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+  }
 
   &::before {
     content: "";
@@ -107,6 +141,9 @@ const useCases = [
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
     mask-composite: exclude;
     opacity: 0;
     transition: $transition-base;
@@ -149,6 +186,17 @@ const useCases = [
         font-weight: bold;
       }
     }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

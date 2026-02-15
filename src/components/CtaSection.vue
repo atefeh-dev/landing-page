@@ -1,14 +1,16 @@
 <template>
-  <section class="section section--cta" ref="ctaEl">
+  <section class="section section--cta" ref="sectionRef">
     <div class="section__container section__container--narrow">
-      <div class="cta">
-        <h2 class="cta__title">ما هنوز در حال ساختن هستیم.</h2>
-        <p class="cta__description">
+      <div class="cta" :class="{ 'in-view': isVisible }">
+        <h2 class="cta__title" :class="{ 'in-view': isVisible }">
+          ما هنوز در حال ساختن هستیم.
+        </h2>
+        <p class="cta__description" :class="{ 'in-view': isVisible }">
           <span class="highlight">زونکن</span> در ابتدای مسیر است. ما آن را با
           کمک آدم‌های واقعی توسعه می‌دهیم، گوش می‌دهیم، اصلاح می‌کنیم و جلو
           می‌رویم.
         </p>
-        <p class="cta__description">
+        <p class="cta__description" :class="{ 'in-view': isVisible }">
           اگر همراه این مسیر باشید، نظر شما بخشی از شکل‌گیری زونکن خواهد بود.
         </p>
 
@@ -21,10 +23,10 @@
 <script setup>
 import { ref } from "vue";
 import EmailForm from "./EmailForm.vue";
+import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
-const ctaEl = ref(null);
-
-defineExpose({ ctaEl });
+const sectionRef = ref(null);
+const { isVisible } = useScrollAnimation(sectionRef);
 
 const scrollToForm = () => {
   // Scroll to hero section form
@@ -48,6 +50,15 @@ const scrollToForm = () => {
   padding: $spacing-3xl $spacing-xl;
   max-width: 800px;
   margin: 0 auto;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+
+  &.in-view {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
 
   &__title {
     font-size: clamp(1.75rem, 4vw, 2.25rem);
@@ -55,6 +66,15 @@ const scrollToForm = () => {
     margin-bottom: $spacing-lg;
     color: $color-text-primary;
     line-height: 1.3;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+
+    &.in-view {
+      animation: fadeInUp 0.6s ease-out 0.1s forwards;
+    }
   }
 
   &__description {
@@ -65,6 +85,15 @@ const scrollToForm = () => {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+
+    &.in-view {
+      animation: fadeInUp 0.6s ease-out 0.2s forwards;
+    }
 
     &:last-of-type {
       margin-bottom: $spacing-xl;
@@ -77,6 +106,17 @@ const scrollToForm = () => {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

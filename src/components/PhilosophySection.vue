@@ -1,10 +1,12 @@
 <template>
-  <section class="section section--philosophy" id="philosophy">
+  <section class="section section--philosophy" id="philosophy" ref="sectionRef">
     <div class="section__container">
       <div class="section__header section__header--center">
-        <span class="section__badge">فلسفه</span>
-        <div class="section__title-wrapper">
-          <h2 class="section__title">
+        <span class="section__badge" :class="{ 'in-view': isVisible }"
+          >فلسفه</span
+        >
+        <div class="section__title-wrapper" :class="{ 'in-view': isVisible }">
+          <h2 class="section__title" :class="{ 'in-view': isVisible }">
             مشکل فقط
             <span class="highlight">نگهداری فایل</span>
             نیست
@@ -14,7 +16,7 @@
 
       <!-- Problem Cards -->
       <div class="philosophy__cards">
-        <div class="philosophy__card">
+        <div class="philosophy__card" :class="{ 'in-view': isVisible }">
           <div class="philosophy__card-icon">
             <img src="../assets/notion.svg" alt="Notion" />
           </div>
@@ -23,7 +25,7 @@
           </p>
         </div>
 
-        <div class="philosophy__card">
+        <div class="philosophy__card" :class="{ 'in-view': isVisible }">
           <div class="philosophy__card-icon philosophy__card-icon--slack">
             <img src="../assets/slack.svg" alt="Slack" />
           </div>
@@ -32,7 +34,7 @@
           </p>
         </div>
 
-        <div class="philosophy__card">
+        <div class="philosophy__card" :class="{ 'in-view': isVisible }">
           <div class="philosophy__card-icon philosophy__card-icon--slack">
             <img src="../assets/slack.svg" alt="Slack" />
           </div>
@@ -42,7 +44,7 @@
         </div>
       </div>
 
-      <p class="philosophy__text">
+      <p class="philosophy__text" :class="{ 'in-view': isVisible }">
         این‌ها چیزهایی بود که خودمان تجربه کردیم، قبل از اینکه به فکر ساخت
         <span class="highlight">زونکن</span>
         بیفتیم.
@@ -51,7 +53,13 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import { useScrollAnimation } from "@/composables/useScrollAnimation";
+
+const sectionRef = ref(null);
+const { isVisible } = useScrollAnimation(sectionRef);
+</script>
 
 <style lang="scss" scoped>
 @use "../styles/variables" as *;
@@ -83,6 +91,27 @@
   text-align: center;
   gap: 0;
   transition: $transition-base;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+
+  &.in-view {
+    animation: fadeInUp 0.6s ease-out forwards;
+
+    &:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+  }
 }
 
 .philosophy__card-icon {
@@ -117,6 +146,26 @@
   margin: 0 auto;
   text-align: center;
   padding: 0 $spacing-lg;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+
+  &.in-view {
+    animation: fadeInUp 0.6s ease-out 0.25s forwards;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 // Tablet

@@ -1,19 +1,19 @@
 <template>
-  <footer class="footer">
+  <footer class="footer" ref="sectionRef">
     <div class="footer__container">
-      <div class="footer__content">
+      <div class="footer__content" :class="{ 'in-view': isVisible }">
         <!-- Brand -->
-        <div class="footer__brand">
+        <div class="footer__brand" :class="{ 'in-view': isVisible }">
           <p class="footer__brand-text">با افتخار ساخت ایران</p>
         </div>
 
         <!-- Logo -->
-        <div class="footer__logo">
+        <div class="footer__logo" :class="{ 'in-view': isVisible }">
           <img src="../assets/logo.svg" alt="لوگوی زونکن" />
         </div>
 
         <!-- Social Links -->
-        <div class="footer__social">
+        <div class="footer__social" :class="{ 'in-view': isVisible }">
           <a
             href="https://www.linkedin.com/company/zoonkan/"
             target="_blank"
@@ -55,7 +55,11 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
+import { useScrollAnimation } from "@/composables/useScrollAnimation";
+
+const sectionRef = ref(null);
+const { isVisible } = useScrollAnimation(sectionRef);
 
 const currentYear = computed(() => new Date().getFullYear());
 </script>
@@ -82,10 +86,28 @@ const currentYear = computed(() => new Date().getFullYear());
     gap: $spacing-xl;
     padding-bottom: $spacing-xl;
     border-bottom: 1px solid $color-border-subtle;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+
+    &.in-view {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
   }
 
   &__brand {
     flex: 1;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+
+    &.in-view {
+      animation: fadeInUp 0.6s ease-out 0.1s forwards;
+    }
   }
 
   &__brand-text {
@@ -99,6 +121,15 @@ const currentYear = computed(() => new Date().getFullYear());
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition:
+      opacity 0.3s ease-out,
+      transform 0.3s ease-out;
+
+    &.in-view {
+      animation: slideDown 0.3s ease-out forwards;
+    }
 
     img {
       width: 47px;
@@ -117,6 +148,15 @@ const currentYear = computed(() => new Date().getFullYear());
     justify-content: flex-end;
     align-items: center;
     gap: $spacing-md;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+
+    &.in-view {
+      animation: fadeInUp 0.6s ease-out 0.15s forwards;
+    }
   }
 
   &__social-link {
@@ -257,6 +297,28 @@ const currentYear = computed(() => new Date().getFullYear());
     &__copyright {
       font-size: 0.75rem;
     }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

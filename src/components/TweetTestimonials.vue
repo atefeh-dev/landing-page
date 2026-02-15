@@ -1,10 +1,12 @@
 <template>
-  <section class="section section--tweets" id="testimonials">
+  <section class="section section--tweets" id="testimonials" ref="sectionRef">
     <div class="section__container">
       <div class="section__header section__header--center">
-        <span class="section__badge">مشکلات از زبان افراد در فضای مجازی </span>
-        <div class="section__title-wrapper">
-          <h2 class="section__title">
+        <span class="section__badge" :class="{ 'in-view': isVisible }"
+          >مشکلات از زبان افراد در فضای مجازی
+        </span>
+        <div class="section__title-wrapper" :class="{ 'in-view': isVisible }">
+          <h2 class="section__title" :class="{ 'in-view': isVisible }">
             ما برای توسعه‌ی
             <span class="highlight">زونکن</span>
             از نیازهای واقعی الهام می‌گیریم.
@@ -12,7 +14,7 @@
         </div>
       </div>
 
-      <div class="tweets-carousel">
+      <div class="tweets-carousel" :class="{ 'in-view': isVisible }">
         <div class="tweets-carousel__track">
           <div
             v-for="(tweet, index) in tweets"
@@ -122,6 +124,10 @@ import Avatar1 from "../assets/avatar1.png";
 import Avatar2 from "../assets/avatar2.png";
 import Avatar3 from "../assets/avatar3.png";
 import Avatar4 from "../assets/avatar4.png";
+import { useScrollAnimation } from "@/composables/useScrollAnimation";
+
+const sectionRef = ref(null);
+const { isVisible } = useScrollAnimation(sectionRef);
 
 const tweets = [
   {
@@ -224,6 +230,15 @@ onBeforeUnmount(() => {
 
 .tweets-carousel {
   margin-top: $spacing-xl;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+
+  &.in-view {
+    animation: fadeInUp 0.6s ease-out 0.2s forwards;
+  }
 
   &__track {
     position: relative;

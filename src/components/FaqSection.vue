@@ -1,9 +1,9 @@
 <template>
-  <section class="section section--faq" id="faq">
+  <section class="section section--faq" id="faq" ref="sectionRef">
     <div class="section__container section__container--narrow">
       <div class="section__header section__header--center">
-        <div class="section__title-wrapper">
-          <h2 class="section__title">
+        <div class="section__title-wrapper" :class="{ 'in-view': isVisible }">
+          <h2 class="section__title" :class="{ 'in-view': isVisible }">
             پرسش‌هایی که ممکن است در ذهن شما هم باشد.
           </h2>
         </div>
@@ -14,7 +14,10 @@
           class="faq-item"
           v-for="(item, index) in faqs"
           :key="index"
-          :class="{ 'faq-item--active': activeFaq === index }"
+          :class="{
+            'faq-item--active': activeFaq === index,
+            'in-view': isVisible,
+          }"
         >
           <button class="faq-item__question" @click="toggleFaq(index)">
             <img
@@ -44,6 +47,10 @@
 import { ref } from "vue";
 import PlusIcon from "@/assets/plus.svg";
 import MinusIcon from "@/assets/minus.svg";
+import { useScrollAnimation } from "@/composables/useScrollAnimation";
+
+const sectionRef = ref(null);
+const { isVisible } = useScrollAnimation(sectionRef);
 
 const activeFaq = ref(null); // All closed by default
 
@@ -121,6 +128,7 @@ function toggleFaq(index) {
   font-weight: 700;
   border-radius: $radius-sm;
   box-shadow: 0 4px 12px rgba(233, 30, 140, 0.3);
+  animation: slideDown 0.3s ease-out;
 }
 
 .faq {
@@ -133,9 +141,42 @@ function toggleFaq(index) {
   background: $color-bg-secondary;
   border: 1px solid $color-border-subtle;
   border-radius: $radius-lg;
-  margin-bottom: $spacing-md;
+  margin-bottom: $spacing-sm;
   overflow: hidden;
   transition: $transition-base;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+
+  &.in-view {
+    animation: fadeInUp 0.6s ease-out forwards;
+
+    &:nth-child(1) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.25s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    &:nth-child(4) {
+      animation-delay: 0.35s;
+    }
+
+    &:nth-child(5) {
+      animation-delay: 0.4s;
+    }
+
+    &:nth-child(6) {
+      animation-delay: 0.45s;
+    }
+  }
 
   &:hover {
     border-color: $color-border-medium;

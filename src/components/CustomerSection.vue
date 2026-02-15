@@ -1,17 +1,19 @@
 <template>
-  <section class="section section--customers" id="customers">
+  <section class="section section--customers" id="customers" ref="sectionRef">
     <div class="section__container">
       <div class="customers">
         <!-- Content -->
-        <div class="customers__content">
-          <span class="customers__badge">مشتریان</span>
+        <div class="customers__content" :class="{ 'in-view': isVisible }">
+          <span class="customers__badge" :class="{ 'in-view': isVisible }"
+            >مشتریان</span
+          >
 
-          <h2 class="customers__title">
+          <h2 class="customers__title" :class="{ 'in-view': isVisible }">
             برای کسانی که می‌خواهند
             <span class="customers__title-highlight">منظم‌تر کار کنند</span>
           </h2>
 
-          <div class="customers__description">
+          <div class="customers__description" :class="{ 'in-view': isVisible }">
             <p>
               زونکن امروز بیشتر برای افراد مستقل و کسب‌وکارهای کوچک طراحی شده؛
               جایی که نظم در اسناد، تفاوت بزرگی ایجاد می‌کند.
@@ -23,7 +25,7 @@
           </div>
         </div>
         <!-- Dashboard Image -->
-        <div class="customers__visual">
+        <div class="customers__visual" :class="{ 'in-view': isVisible }">
           <div class="customers__image-wrapper">
             <img
               :src="DashboardImg"
@@ -38,7 +40,12 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import DashboardImg from "@/assets/dashboard.png";
+import { useScrollAnimation } from "@/composables/useScrollAnimation";
+
+const sectionRef = ref(null);
+const { isVisible } = useScrollAnimation(sectionRef);
 </script>
 
 <style lang="scss" scoped>
@@ -62,6 +69,15 @@ import DashboardImg from "@/assets/dashboard.png";
     position: relative;
     margin-left: -5%;
     max-width: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+
+    &.in-view {
+      animation: fadeInUp 0.6s ease-out 0.2s forwards;
+    }
   }
 
   &__image-wrapper {
@@ -133,6 +149,15 @@ import DashboardImg from "@/assets/dashboard.png";
     max-width: 600px;
     padding-right: 2rem;
     text-align: right;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+
+    &.in-view {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
   }
 
   &__badge {
@@ -150,6 +175,15 @@ import DashboardImg from "@/assets/dashboard.png";
     font-size: 0.9375rem;
     font-weight: $font-weight-semibold;
     margin-bottom: $spacing-lg;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition:
+      opacity 0.3s ease-out,
+      transform 0.3s ease-out;
+
+    &.in-view {
+      animation: slideDown 0.3s ease-out forwards;
+    }
   }
 
   &__title {
@@ -158,6 +192,15 @@ import DashboardImg from "@/assets/dashboard.png";
     line-height: 1.3;
     margin-bottom: $spacing-lg;
     color: $color-text-primary;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+
+    &.in-view {
+      animation: fadeInUp 0.6s ease-out 0.1s forwards;
+    }
   }
 
   &__title-highlight {
@@ -169,6 +212,15 @@ import DashboardImg from "@/assets/dashboard.png";
     font-size: 1.125rem;
     line-height: 1.8;
     color: $color-text-secondary;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+
+    &.in-view {
+      animation: fadeInUp 0.6s ease-out 0.15s forwards;
+    }
 
     p {
       margin-bottom: $spacing-md;
@@ -176,6 +228,28 @@ import DashboardImg from "@/assets/dashboard.png";
       &:last-child {
         margin-bottom: 0;
       }
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }
