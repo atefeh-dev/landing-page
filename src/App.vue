@@ -3,10 +3,10 @@
     <NavBar @scroll-to-cta="scrollToCta" />
     <HeroSection @scroll-to-cta="scrollToCta" />
     <PhilosophySection />
+    <TweetTestimonials />
     <ProblemsSection />
     <FeaturesSection />
     <UseCasesSection />
-    <TweetTestimonials />
     <FaqSection />
     <CtaSection ref="ctaSectionRef" />
     <FooterSection />
