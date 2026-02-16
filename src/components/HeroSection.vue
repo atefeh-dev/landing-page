@@ -142,7 +142,8 @@ const handleInput = () => {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background: $color-bg-primary;
+  background: #0a0a0a; // Pure dark - establishes foundation
+
   position: relative;
   overflow: hidden;
 

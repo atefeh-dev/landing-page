@@ -96,7 +96,8 @@ function toggleFaq(index) {
 @use "../styles/variables" as *;
 
 .section--faq {
-  background: $color-bg-primary;
+  // Deep with purple undertone
+  background: linear-gradient(180deg, #111111 0%, #0d0a0f 50%, #0a0a0a 100%);
   position: relative;
   overflow: hidden;
   margin-top: $spacing-2xl;

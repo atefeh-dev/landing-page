@@ -1,12 +1,11 @@
 <template>
-  <section class="section section--tweets" id="testimonials" ref="sectionRef">
+  <section class="section section--tweets" id="testimonials">
     <div class="section__container">
+      <!-- Badge and Title -->
       <div class="section__header section__header--center">
-        <span class="section__badge" :class="{ 'in-view': isVisible }"
-          >مشکلات از زبان افراد در فضای مجازی
-        </span>
-        <div class="section__title-wrapper" :class="{ 'in-view': isVisible }">
-          <h2 class="section__title" :class="{ 'in-view': isVisible }">
+        <span class="section__badge">مشکلات از زبان افراد در فضای مجازی</span>
+        <div class="section__title-wrapper">
+          <h2 class="section__title">
             ما برای توسعه‌ی
             <span class="highlight">زونکن</span>
             از نیازهای واقعی الهام می‌گیریم.
@@ -14,348 +13,363 @@
         </div>
       </div>
 
-      <div class="tweets-carousel" :class="{ 'in-view': isVisible }">
-        <div class="tweets-carousel__track">
+      ```
+      <div class="tweets-scroller">
+        <!-- Row 1 - Scrolls Left -->
+        <div class="tweets-scroller__row">
           <div
-            v-for="(tweet, index) in tweets"
-            :key="index"
-            class="tweet-card"
-            :class="{
-              'tweet-card--active': index === activeIndex,
-              'tweet-card--prev': index === prevIndex,
-              'tweet-card--next': index === nextIndex,
-            }"
+            class="tweets-scroller__track"
+            @mouseenter="pauseRow1"
+            @mouseleave="resumeRow1"
           >
-            <div class="tweet-card__header">
-              <img
-                :src="tweet.avatar"
-                :alt="tweet.name"
-                class="tweet-card__avatar"
-              />
-              <div class="tweet-card__author">
-                <div class="tweet-card__name-wrapper">
-                  <span class="tweet-card__name">{{ tweet.name }}</span>
-                  <svg
-                    class="tweet-card__verified"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36-6.2 6.77z"
-                    />
-                  </svg>
+            <div
+              v-for="(tweet, index) in [...row1Tweets, ...row1Tweets]"
+              :key="`row1-${index}`"
+              class="tweet-card"
+            >
+              <div class="tweet-card__header">
+                <img
+                  :src="tweet.avatar"
+                  :alt="tweet.name"
+                  class="tweet-card__avatar"
+                />
+                <div class="tweet-card__author">
+                  <div class="tweet-card__name-wrapper">
+                    <span class="tweet-card__name">{{ tweet.name }}</span>
+                    <svg
+                      class="tweet-card__verified"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36-6.2 6.77z"
+                      />
+                    </svg>
+                  </div>
+                  <span class="tweet-card__handle">{{ tweet.handle }}</span>
                 </div>
-                <span class="tweet-card__handle">{{ tweet.handle }}</span>
               </div>
-              <div class="tweet-card__platform">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            <p class="tweet-card__text">{{ tweet.text }}</p>
-
-            <div class="tweet-card__footer">
-              <span class="tweet-card__date">{{ tweet.date }}</span>
-              <div class="tweet-card__stats">
-                <span class="tweet-card__stat">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path
-                      d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"
-                    />
-                  </svg>
-                  {{ tweet.retweets }}
-                </span>
-                <span class="tweet-card__stat tweet-card__stat--likes">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-                    />
-                  </svg>
-                  {{ tweet.likes }}
-                </span>
-              </div>
+              <p class="tweet-card__text">{{ tweet.text }}</p>
             </div>
           </div>
         </div>
 
-        <div class="tweets-carousel__dots">
-          <button
-            v-for="(_, index) in tweets"
-            :key="index"
-            class="tweets-carousel__dot"
-            :class="{ 'tweets-carousel__dot--active': index === activeIndex }"
-            @click="goTo(index)"
-            :aria-label="'رفتن به نظر ' + (index + 1)"
-          ></button>
+        <!-- Row 2 - Scrolls Right -->
+        <div class="tweets-scroller__row">
+          <div
+            class="tweets-scroller__track tweets-scroller__track--reverse"
+            @mouseenter="pauseRow2"
+            @mouseleave="resumeRow2"
+          >
+            <div
+              v-for="(tweet, index) in [...row2Tweets, ...row2Tweets]"
+              :key="`row2-${index}`"
+              class="tweet-card"
+            >
+              <div class="tweet-card__header">
+                <img
+                  :src="tweet.avatar"
+                  :alt="tweet.name"
+                  class="tweet-card__avatar"
+                />
+                <div class="tweet-card__author">
+                  <div class="tweet-card__name-wrapper">
+                    <span class="tweet-card__name">{{ tweet.name }}</span>
+                    <svg
+                      class="tweet-card__verified"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36-6.2 6.77z"
+                      />
+                    </svg>
+                  </div>
+                  <span class="tweet-card__handle">{{ tweet.handle }}</span>
+                </div>
+              </div>
+              <p class="tweet-card__text">{{ tweet.text }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    ```
   </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { ref } from "vue";
 import Avatar1 from "../assets/avatar1.png";
 import Avatar2 from "../assets/avatar2.png";
 import Avatar3 from "../assets/avatar3.png";
 import Avatar4 from "../assets/avatar4.png";
-import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
-const sectionRef = ref(null);
-const { isVisible } = useScrollAnimation(sectionRef);
-
-const tweets = [
+const row1Tweets = [
   {
     name: "فرهاد هستم",
     handle: "@farhadex",
     avatar: Avatar1,
     text: "وقتی دارین قرارداد طراحی وب میبندین از همون اول همه چیز رو واضح مشخص کنین",
-    date: "10:32 AM · 1 Jan 2012",
-    retweets: 12,
-    likes: 45,
   },
   {
     name: "شهاب جوانمردی",
     handle: "@vagheanke",
     avatar: Avatar2,
     text: "هر وقت بدون قرارداد کاری انجام دادید، پیش فرض‌تون این باشه که قراره رایگان تموم بشه",
-    date: "7:36 AM · 21 Apr 2018",
-    retweets: 23,
-    likes: 421,
   },
   {
     name: "یک دوست",
     handle: "@yekdoost",
     avatar: Avatar3,
-    text: "هرکاری که خارج از قرارداد در یک محیط کاری انجام بشه بدون استثنا به سوتفاهم بین کارفرما و کارمند در آینده منجر میشه",
-    date: "3:15 PM · 8 Mar 2020",
-    retweets: 7,
-    likes: 89,
+    text: "هرکاری که خارج از قرارداد انجام بشه بدون استثنا به سوتفاهم منجر میشه",
   },
+  {
+    name: "رضا محمدی",
+    handle: "@reza_dev",
+    avatar: Avatar4,
+    text: "فکر می‌کردم قرارداد فقط برای پروژه‌های بزرگ لازمه، اشتباه بزرگی بود",
+  },
+  {
+    name: "نیلوفر کریمی",
+    handle: "@niloofar_k",
+    avatar: Avatar1,
+    text: "وقتی همه چیز مکتوب نباشه، هر طرف یه چیزی یادش میاد",
+  },
+  {
+    name: "امیر حسینی",
+    handle: "@amir_hosseini",
+    avatar: Avatar2,
+    text: "یه قرارداد ساده از صدتا توافق شفاهی بهتره",
+  },
+  {
+    name: "پریسا احمدی",
+    handle: "@parisa_a",
+    avatar: Avatar3,
+    text: "یه ایمیل ساده می‌تونه جلوی انقدر دردسر رو بگیره",
+  },
+  {
+    name: "مهدی رضایی",
+    handle: "@mahdi_rez",
+    avatar: Avatar4,
+    text: "مستندسازی درست نصف مشکلات رو حل می‌کنه",
+  },
+  {
+    name: "سمیرا موسوی",
+    handle: "@samira_m",
+    avatar: Avatar1,
+    text: "اولین باری که بدون قرارداد کار کردم، چقدر پشیمون شدم",
+  },
+  {
+    name: "علیرضا کریمی",
+    handle: "@alireza_k",
+    avatar: Avatar2,
+    text: "حتی با دوستان صمیمی هم باید همه چیز روی کاغذ بیاری",
+  },
+];
+
+const row2Tweets = [
   {
     name: "سارا احمدی",
     handle: "@sara_ahmadi",
     avatar: Avatar4,
-    text: "یه قرارداد خوب باید هم حق کارفرما رو حفظ کنه هم حق مجری رو. مستندسازی درست یعنی آرامش خاطر دو طرف.",
-    date: "11:20 AM · 15 Jun 2021",
-    retweets: 8,
-    likes: 134,
+    text: "قرارداد خوب باید حق کارفرما و مجری رو حفظ کنه",
   },
   {
     name: "علی رضایی",
-    handle: "@ali_rezaei_dev",
+    handle: "@ali_rezaei",
     avatar: Avatar1,
-    text: "تو پروژه‌های فریلنسری، مهم‌ترین چیزی که یاد گرفتم این بود: همه چیز رو مکتوب کن. حافظه آدما ضعیفه ولی اسناد می‌مونن.",
-    date: "9:45 PM · 3 Nov 2022",
-    retweets: 15,
-    likes: 289,
+    text: "همه چیز رو مکتوب کن، حافظه آدما ضعیفه",
   },
   {
     name: "مینا کریمی",
     handle: "@mina_karimi",
     avatar: Avatar2,
-    text: "مشکل اصلی فریلنسرها نبود مهارت نیست، نبود مستندسازی درسته. وقتی همه چیز مکتوب باشه، اختلافات به حداقل می‌رسه.",
-    date: "2:30 PM · 22 Sep 2023",
-    retweets: 31,
-    likes: 456,
+    text: "مشکل اصلی نبود مستندسازیه، نه نبود مهارت",
+  },
+  {
+    name: "محمد رستمی",
+    handle: "@mohammad_dev",
+    avatar: Avatar3,
+    text: "اسناد مکتوب مهم‌ترین ابزار کاری من شدن",
+  },
+  {
+    name: "زهرا موسوی",
+    handle: "@zahra_m",
+    avatar: Avatar4,
+    text: "قرارداد یعنی احترام به وقت و حق هر دو طرف",
+  },
+  {
+    name: "حسین اکبری",
+    handle: "@hosein_akbari",
+    avatar: Avatar1,
+    text: "با دوستان نزدیک هم باید مکتوب باشه",
+  },
+  {
+    name: "فاطمه نوری",
+    handle: "@fatemeh_n",
+    avatar: Avatar2,
+    text: "قرارداد ساده جلوی هزاران ساعت بحث رو می‌گیره",
+  },
+  {
+    name: "کامران صادقی",
+    handle: "@kamran_s",
+    avatar: Avatar3,
+    text: "وقتی مشخصه، کسی نمی‌تونه بگه یادم نیست",
+  },
+  {
+    name: "ندا حسینی",
+    handle: "@neda_h",
+    avatar: Avatar4,
+    text: "مستندسازی یعنی صداقت در کار",
+  },
+  {
+    name: "بهزاد مرادی",
+    handle: "@behzad_m",
+    avatar: Avatar1,
+    text: "سند مکتوب از هزارتا قول شفاهی بهتره",
   },
 ];
 
-const activeIndex = ref(0);
-let intervalId = null;
-
-const prevIndex = computed(() => {
-  return (activeIndex.value - 1 + tweets.length) % tweets.length;
-});
-
-const nextIndex = computed(() => {
-  return (activeIndex.value + 1) % tweets.length;
-});
-
-function goTo(index) {
-  activeIndex.value = index;
-  resetInterval();
-}
-
-function nextSlide() {
-  activeIndex.value = (activeIndex.value + 1) % tweets.length;
-}
-
-function resetInterval() {
-  if (intervalId) clearInterval(intervalId);
-  intervalId = setInterval(nextSlide, 4000);
-}
-
-onMounted(() => {
-  resetInterval();
-});
-
-onBeforeUnmount(() => {
-  if (intervalId) clearInterval(intervalId);
-});
+const pauseRow1 = (e) => {
+  e.currentTarget.style.animationPlayState = "paused";
+};
+const resumeRow1 = (e) => {
+  e.currentTarget.style.animationPlayState = "running";
+};
+const pauseRow2 = (e) => {
+  e.currentTarget.style.animationPlayState = "paused";
+};
+const resumeRow2 = (e) => {
+  e.currentTarget.style.animationPlayState = "running";
+};
 </script>
 
 <style lang="scss" scoped>
 @use "../styles/variables" as *;
 
 .section--tweets {
-  background-color: $color-bg-primary;
+  background: #0a0a0a;
+  padding: $spacing-3xl 0;
   overflow: hidden;
 }
 
-.tweets-carousel {
-  margin-top: $spacing-xl;
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.6s ease-out,
-    transform 0.6s ease-out;
+.tweets-scroller {
+  margin-top: $spacing-2xl;
+  position: relative;
 
-  &.in-view {
-    animation: fadeInUp 0.6s ease-out 0.2s forwards;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 200px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(
+      90deg,
+      #0a0a0a 0%,
+      rgba(10, 10, 10, 0.9) 20%,
+      rgba(10, 10, 10, 0.4) 60%,
+      transparent 100%
+    );
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(10, 10, 10, 0.4) 40%,
+      rgba(10, 10, 10, 0.9) 80%,
+      #0a0a0a 100%
+    );
+  }
+
+  &__row {
+    overflow: hidden;
+    margin-bottom: $spacing-lg;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   &__track {
-    position: relative;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 380px;
-    perspective: 1200px;
-  }
+    gap: $spacing-md;
+    width: fit-content;
+    animation: scrollLeft 70s linear infinite;
 
-  &__dots {
-    display: flex;
-    justify-content: center;
-    gap: $spacing-xs;
-    margin-top: $spacing-xl;
-  }
-
-  &__dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 1px solid $color-border-medium;
-    background: transparent;
-    cursor: pointer;
-    transition: $transition-base;
-    padding: 0;
-
-    &--active {
-      background: $color-accent-primary;
-      border-color: $color-accent-primary;
-      transform: scale(1.2);
-    }
-
-    &:hover:not(&--active) {
-      border-color: $color-border-strong;
-      background: $color-bg-elevated;
+    &--reverse {
+      animation: scrollRight 70s linear infinite;
     }
   }
 }
 
 .tweet-card {
-  position: absolute;
-  width: 500px;
-  max-width: 90vw;
-  background: $color-bg-secondary;
-  border: 1px solid $color-border-medium;
-  border-radius: $radius-xl;
-  padding: $spacing-lg;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  transform: scale(0.85) translateX(0);
-  pointer-events: none;
-  box-shadow: $shadow-md;
+  flex: 0 0 360px;
+  width: 360px;
+  background: #111111;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  &--active {
-    opacity: 1;
-    transform: scale(1) translateX(0);
-    z-index: 3;
-    pointer-events: auto;
+  &:hover {
+    border-color: #fcc015;
+    background: rgba(252, 192, 21, 0.05);
+    transform: translateY(-6px);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.7),
+      0 0 0 1px rgba(252, 192, 21, 0.5);
 
-    &:hover {
-      border-color: $color-border-strong;
-      background: rgba(255, 255, 255, 0.03);
-      transform: scale(1.02) translateY(-4px);
-      box-shadow: $shadow-lg;
+    .tweet-card__avatar {
+      border-color: #fcc015;
     }
-  }
-
-  &--prev {
-    opacity: 0.3;
-    transform: scale(0.88) translateX(120%);
-    z-index: 2;
-    filter: blur(2px);
-  }
-
-  &--next {
-    opacity: 0.3;
-    transform: scale(0.88) translateX(-120%);
-    z-index: 2;
-    filter: blur(2px);
   }
 
   &__header {
     display: flex;
-    align-items: flex-start;
-    gap: $spacing-sm;
-    margin-bottom: $spacing-md;
+    gap: 0.75rem;
+    margin-bottom: 0.875rem;
   }
 
   &__avatar {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    flex-shrink: 0;
     object-fit: cover;
-    border: 2px solid $color-border-medium;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: border-color 0.3s ease;
   }
 
   &__author {
-    display: flex;
-    flex-direction: column;
     flex: 1;
     min-width: 0;
-    gap: 0.125rem;
   }
 
   &__name-wrapper {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.375rem;
+    margin-bottom: 0.25rem;
   }
 
   &__name {
     font-weight: 700;
     font-size: 0.9375rem;
-    color: $color-text-primary;
-    line-height: 1.3;
+    color: #ffffff;
   }
 
   &__verified {
@@ -364,200 +378,88 @@ onBeforeUnmount(() => {
   }
 
   &__handle {
-    font-size: 0.9375rem;
-    color: $color-text-tertiary;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.5);
     direction: ltr;
     text-align: right;
-  }
-
-  &__platform {
-    color: $color-text-muted;
-    flex-shrink: 0;
-    margin-top: 0.25rem;
-    transition: $transition-base;
-  }
-
-  &:hover &__platform {
-    color: $color-text-secondary;
   }
 
   &__text {
-    font-size: 1.0625rem;
-    line-height: 1.6;
-    color: $color-text-primary;
-    margin-bottom: $spacing-lg;
-    font-weight: 400;
-  }
-
-  &__footer {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-md;
-  }
-
-  &__date {
     font-size: 0.9375rem;
-    color: $color-text-tertiary;
-    direction: ltr;
-    text-align: right;
-  }
-
-  &__stats {
-    display: flex;
-    gap: $spacing-lg;
-    padding-top: $spacing-sm;
-    border-top: 1px solid $color-border-subtle;
-  }
-
-  &__stat {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    color: $color-text-tertiary;
-    transition: $transition-base;
-    font-weight: 600;
-
-    svg {
-      opacity: 0.7;
-    }
-
-    &:hover {
-      color: #00ba7c;
-
-      svg {
-        opacity: 1;
-      }
-    }
-
-    &--likes {
-      &:hover {
-        color: #f91880;
-      }
-    }
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
   }
 }
 
-// Tablet
+@keyframes scrollLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scrollRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(50%);
+  }
+}
+
 @media (max-width: $breakpoint-lg) {
-  .tweets-carousel__track {
-    min-height: 360px;
+  .tweets-scroller::before,
+  .tweets-scroller::after {
+    width: 150px;
   }
-
   .tweet-card {
-    width: 450px;
-    padding: $spacing-md $spacing-lg;
-
-    &--prev,
-    &--next {
-      opacity: 0.2;
-      transform: scale(0.85) translateX(110%);
-    }
-
-    &--next {
-      transform: scale(0.85) translateX(-110%);
-    }
-  }
-}
-
-// Tablet Portrait
-@media (max-width: $breakpoint-md) {
-  .tweets-carousel__track {
-    min-height: 340px;
-  }
-
-  .tweet-card {
-    width: 400px;
-
-    &--prev,
-    &--next {
-      opacity: 0;
-    }
-
-    &__text {
-      font-size: 1rem;
-    }
-  }
-}
-
-// Mobile
-@media (max-width: $breakpoint-sm) {
-  .tweets-carousel {
-    margin-top: $spacing-xl;
-
-    &__track {
-      min-height: 320px;
-    }
-
-    &__dots {
-      margin-top: $spacing-md;
-    }
-  }
-
-  .tweet-card {
+    flex: 0 0 340px;
     width: 340px;
-    padding: $spacing-md;
+  }
+}
 
-    &__avatar {
-      width: 40px;
-      height: 40px;
+@media (max-width: $breakpoint-md) {
+  .tweets-scroller::before,
+  .tweets-scroller::after {
+    width: 100px;
+  }
+  .tweet-card {
+    flex: 0 0 320px;
+    width: 320px;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .tweets-scroller {
+    margin-top: $spacing-xl;
+    &::before,
+    &::after {
+      width: 60px;
     }
-
+    &__row {
+      margin-bottom: $spacing-sm;
+    }
+    &__track {
+      gap: $spacing-sm;
+      animation-duration: 50s;
+    }
+  }
+  .tweet-card {
+    flex: 0 0 280px;
+    width: 280px;
+    padding: 1rem;
+    &__avatar {
+      width: 38px;
+      height: 38px;
+    }
     &__name {
       font-size: 0.875rem;
     }
-
-    &__handle {
-      font-size: 0.8125rem;
-    }
-
-    &__verified {
-      width: 16px;
-      height: 16px;
-    }
-
-    &__platform svg {
-      width: 16px;
-      height: 16px;
-    }
-
-    &__text {
-      font-size: 0.9375rem;
-      margin-bottom: $spacing-md;
-    }
-
-    &__date {
-      font-size: 0.8125rem;
-    }
-
-    &__stats {
-      gap: $spacing-md;
-    }
-
-    &__stat {
-      font-size: 0.8125rem;
-      gap: 0.375rem;
-
-      svg {
-        width: 14px;
-        height: 14px;
-      }
-    }
-  }
-}
-
-// Extra small mobile
-@media (max-width: 375px) {
-  .tweet-card {
-    width: 300px;
-    padding: $spacing-sm $spacing-md;
-
     &__text {
       font-size: 0.875rem;
-    }
-
-    &__stats {
-      gap: $spacing-sm;
     }
   }
 }

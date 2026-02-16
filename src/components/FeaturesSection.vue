@@ -188,12 +188,7 @@ const rightBenefits = ref([
 
 <style lang="scss" scoped>
 .features {
-  background: linear-gradient(
-    180deg,
-    $color-bg-primary 0%,
-    $color-bg-secondary 50%,
-    $color-bg-primary 100%
-  );
+  background: linear-gradient(180deg, #111111 0%, #0d0a0f 50%, #0a0a0a 100%);
   position: relative;
   overflow: hidden;
 

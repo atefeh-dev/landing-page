@@ -188,15 +188,34 @@ onBeforeUnmount(() => {
     position: relative;
     white-space: nowrap;
 
+    // &::after {
+    //   content: "";
+    //   position: absolute;
+    //   bottom: -4px;
+    //   right: 0;
+    //   width: 0;
+    //   height: 2px;
+    //   background-color: $color-accent-primary;
+    //   transition: $transition-base;
+    // }
     &::after {
       content: "";
       position: absolute;
-      bottom: -4px;
+      bottom: -0.5rem;
       right: 0;
       width: 0;
-      height: 2px;
-      background-color: $color-accent-primary;
-      transition: $transition-base;
+      height: 3px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        $color-accent-primary 50%,
+        transparent 100%
+      );
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &:hover::after {
+      width: 100%;
     }
 
     &:hover {
