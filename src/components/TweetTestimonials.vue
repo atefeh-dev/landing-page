@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      ```
+      
       <div class="tweets-scroller">
         <!-- Row 1 - Scrolls Left -->
         <div class="tweets-scroller__row">
@@ -23,7 +23,7 @@
             @mouseleave="resumeRow1"
           >
             <div
-              v-for="(tweet, index) in [...row1Tweets, ...row1Tweets]"
+              v-for="(tweet, index) in [...row1Tweets]"
               :key="`row1-${index}`"
               class="tweet-card"
             >
@@ -64,7 +64,7 @@
             @mouseleave="resumeRow2"
           >
             <div
-              v-for="(tweet, index) in [...row2Tweets, ...row2Tweets]"
+              v-for="(tweet, index) in [...row2Tweets]"
               :key="`row2-${index}`"
               class="tweet-card"
             >
@@ -98,7 +98,7 @@
         </div>
       </div>
     </div>
-    ```
+    
   </section>
 </template>
 
@@ -329,7 +329,6 @@ const resumeRow2 = (e) => {
   &:hover {
     border-color: #fcc015;
     background: rgba(252, 192, 21, 0.05);
-    transform: translateY(-6px);
     box-shadow:
       0 20px 40px rgba(0, 0, 0, 0.7),
       0 0 0 1px rgba(252, 192, 21, 0.5);
@@ -393,10 +392,10 @@ const resumeRow2 = (e) => {
 
 @keyframes scrollLeft {
   from {
-    transform: translateX(0);
+    transform: translateX(50%);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(0%);
   }
 }
 
