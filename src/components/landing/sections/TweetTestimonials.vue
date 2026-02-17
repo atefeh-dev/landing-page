@@ -1,14 +1,13 @@
 <template>
-  <section class="section section--tweets" id="testimonials" ref="sectionRef">
+  <section class="section section--tweets" id="experiences" ref="sectionRef">
     <div class="section__container">
       <div class="section__header section__header--center">
-        <span class="section__badge" :class="slideDown()"
-          >مشکلات از زبان افراد در فضای مجازی</span
-        >
+        <span class="section__badge" :class="slideDown()"> تجربه ها </span>
         <div class="section__title-wrapper" :class="reveal(1)">
           <h2 class="section__title">
-            ما برای توسعه‌ی <span class="highlight">زونکن</span>
-            از نیازهای واقعی الهام می‌گیریم.
+            سوءتفاهم و کاغذبازی‌های بی‌پایان یک الگوست، و ما با
+            <span class="highlight">زونکن</span>
+            راه حلش رو ساختیم.
           </h2>
         </div>
       </div>
@@ -98,7 +97,8 @@
       </div>
 
       <p class="section__conclusion" :class="reveal(4)">
-        وقتی این تجربه‌ها تکرار می‌شود، دیگر اتفاق نیست. یک الگوست.
+        ما برای توسعه‌ی <span class="highlight">زونکن</span>
+        از نیازهای واقعی الهام می‌گیریم.
       </p>
     </div>
   </section>
@@ -258,7 +258,9 @@ const resumeRow2 = (e) => {
 <style lang="scss" scoped>
 .section--tweets {
   background: #0a0a0a;
-  overflow: hidden;
+  // overflow:hidden removed — was breaking flex layout
+  padding-top: calc($nav-height - $spacing-xl);
+  padding-bottom: $spacing-3xl;
 }
 
 .tweets-scroller {
@@ -311,7 +313,6 @@ const resumeRow2 = (e) => {
     gap: $spacing-md;
     width: fit-content;
     animation: scrollLeft 70s linear infinite;
-
     &--reverse {
       animation: scrollRight 70s linear infinite;
     }
@@ -358,18 +359,16 @@ const resumeRow2 = (e) => {
     flex: 1;
     min-width: 0;
   }
-
   &__name-row {
     display: flex;
     align-items: center;
     gap: 0.375rem;
     margin-bottom: 0.25rem;
   }
-
   &__name {
     font-weight: 700;
     font-size: 0.9375rem;
-    color: #ffffff;
+    color: #fff;
   }
   &__verified {
     color: #1d9bf0;
@@ -389,7 +388,7 @@ const resumeRow2 = (e) => {
 
 @keyframes scrollLeft {
   from {
-    transform: translateX();
+    transform: translateX(0);
   }
   to {
     transform: translateX(50%);
@@ -429,8 +428,12 @@ const resumeRow2 = (e) => {
 }
 
 @media (max-width: $breakpoint-sm) {
+  .section--tweets {
+    padding-top: calc($nav-height + $spacing-xl);
+    padding-bottom: $spacing-xl;
+  }
+
   .tweets-scroller {
-    margin-top: $spacing-xl;
     &::before,
     &::after {
       width: 60px;

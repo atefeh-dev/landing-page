@@ -18,9 +18,8 @@
 
       <div class="nav__menu">
         <a href="#philosophy" class="nav__link">مسئله</a>
-        <a href="#testimonials" class="nav__link"> تجربه ها</a>
+        <a href="#experiences" class="nav__link"> تجربه ها</a>
         <a href="#approach" class="nav__link">رویکرد</a>
-        <a href="#features" class="nav__link">ویژگی‌ها</a>
         <a href="#customers" class="nav__link">مخاطبان</a>
         <a href="#faq" class="nav__link">سوالات متداول</a>
       </div>
@@ -69,7 +68,7 @@
           <a href="#customers" class="nav__mobile-link" @click="closeMenu"
             >مشتریان</a
           >
-          <a href="#testimonials" class="nav__mobile-link" @click="closeMenu"
+          <a href="#experiences" class="nav__mobile-link" @click="closeMenu"
             >نظرات کاربران</a
           >
           <a href="#faq" class="nav__mobile-link" @click="closeMenu"

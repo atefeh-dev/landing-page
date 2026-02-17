@@ -6,7 +6,7 @@
     <div class="section__container">
       <div class="customers">
         <div class="customers__content" :class="reveal()">
-          <span class="section__badge" :class="slideDown(1)">مشتریان</span>
+          <span class="section__badge" :class="slideDown(1)">مخاطبان</span>
 
           <h2 class="customers__title" :class="reveal(2)">
             برای کسانی که می‌خواهند

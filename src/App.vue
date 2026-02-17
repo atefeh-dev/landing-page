@@ -5,7 +5,7 @@
     <main>
       <HeroSection />
       <PhilosophySection />
-      <TweetTestimonials />
+      <Tweetexperiences />
       <CustomersSection />
       <FaqSection />
       <CtaSection ref="ctaRef" />
@@ -21,7 +21,7 @@ import { ref } from "vue";
 import NavBar from "@/components/landing/sections/NavBar.vue";
 import HeroSection from "@/components/landing/sections/HeroSection.vue";
 import PhilosophySection from "@/components/landing/sections/PhilosophySection.vue";
-import TweetTestimonials from "@/components/landing/sections/TweetTestimonials.vue";
+import Tweetexperiences from "@/components/landing/sections/TweetTestimonials.vue";
 import CustomersSection from "@/components/landing/sections/CustomerSection.vue";
 import FaqSection from "@/components/landing/sections/FaqSection.vue";
 import CtaSection from "@/components/landing/sections/CtaSection.vue";

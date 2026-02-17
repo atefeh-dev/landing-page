@@ -1,5 +1,5 @@
 <template>
-  <section class="section section--tweets" id="testimonials" ref="sectionRef">
+  <section class="section section--tweets" id="experiences" ref="sectionRef">
     <div class="section__container">
       <div class="section__header section__header--center">
         <span class="section__badge" :class="{ 'in-view': isVisible }"
