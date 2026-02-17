@@ -4,12 +4,12 @@
       <div class="nav__logo">
         <a href="#hero" class="nav__logo-link">
           <img
-            src="/src/assets/logo-dark-mode.svg"
+            src="@/assets/brand/logo-dark-mode.svg"
             alt="زونکن"
             class="nav__logo-icon"
           />
           <img
-            src="/src/assets/logotype.svg"
+            src="@/assets/brand/logotype.svg"
             alt="زونکن"
             class="nav__logo-type"
           />
@@ -20,7 +20,7 @@
         <a href="#philosophy" class="nav__link">فلسفه محصول</a>
         <a href="#approach" class="nav__link">رویکرد</a>
         <a href="#features" class="nav__link">ویژگی‌ها</a>
-        <a href="#customers" class="nav__link">مشتریان</a>
+        <a href="#customers" class="nav__link">مخاطبان</a>
         <a href="#faq" class="nav__link">سوالات متداول</a>
       </div>
 
@@ -94,14 +94,13 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
-import BaseButton from "./BaseButton.vue";
+import BaseButton from "@/components/base/BaseButton.vue";
 
 const emit = defineEmits(["scroll-to-cta"]);
 
 const scrolled = ref(false);
 const mobileMenuOpen = ref(false);
 
-// FIX: window.pageYOffset is deprecated → window.scrollY
 function handleScroll() {
   scrolled.value = window.scrollY > 100;
 }
@@ -116,7 +115,6 @@ function closeMenu() {
   document.body.style.overflow = "";
 }
 
-// FIX: single handler for both desktop + mobile CTA
 function handleCta() {
   emit("scroll-to-cta");
 }
@@ -134,9 +132,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
-// FIX: was missing — caused SCSS compile error on all $color-* variables
-@use "../styles/variables" as *;
-
 .nav {
   position: fixed;
   top: 0;

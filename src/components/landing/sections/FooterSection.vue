@@ -1,28 +1,16 @@
 <template>
   <footer class="footer" ref="sectionRef">
     <div class="footer__container">
-      <div
-        class="footer__content animate-fade-up"
-        :class="{ 'in-view': isVisible }"
-      >
-        <div
-          class="footer__brand animate-fade-up animate-delay-1"
-          :class="{ 'in-view': isVisible }"
-        >
+      <div class="footer__content" :class="reveal()">
+        <div class="footer__brand" :class="reveal(1)">
           <p class="footer__brand-text">با افتخار ساخت ایران</p>
         </div>
 
-        <div
-          class="footer__logo animate-slide-down"
-          :class="{ 'in-view': isVisible }"
-        >
-          <img src="../assets/logo.svg" alt="لوگوی زونکن" />
+        <div class="footer__logo" :class="slideDown()">
+          <img src="../assets/brand/logo.svg" alt="لوگوی زونکن" />
         </div>
 
-        <div
-          class="footer__social animate-fade-up animate-delay-2"
-          :class="{ 'in-view': isVisible }"
-        >
+        <div class="footer__social" :class="reveal(2)">
           <a
             href="https://www.linkedin.com/company/zoonkan/"
             target="_blank"
@@ -30,7 +18,7 @@
             class="footer__social-link"
             aria-label="لینکدین"
           >
-            <img src="../assets/social-linkedin.svg" alt="لینکدین" />
+            <img src="../assets/social/social-linkedin.svg" alt="لینکدین" />
           </a>
           <a
             href="https://www.instagram.com/zoonkanapp"
@@ -39,7 +27,7 @@
             class="footer__social-link"
             aria-label="اینستاگرام"
           >
-            <img src="../assets/social-instagram.svg" alt="اینستاگرام" />
+            <img src="../assets/social/social-instagram.svg" alt="اینستاگرام" />
           </a>
           <a
             href="https://x.com/doclastapp"
@@ -48,7 +36,7 @@
             class="footer__social-link"
             aria-label="توییتر"
           >
-            <img src="../assets/x-social.svg" alt="توییتر" />
+            <img src="../assets/social/x-social.svg" alt="توییتر" />
           </a>
         </div>
       </div>
@@ -67,16 +55,13 @@ import { computed, ref } from "vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 const sectionRef = ref(null);
-const { isVisible } = useScrollAnimation(sectionRef);
+const { reveal, slideDown } = useScrollAnimation(sectionRef);
 
 const currentYear = computed(() => new Date().getFullYear());
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/variables" as *;
-
 .footer {
-  // FIX: was background-color (longhand) — use shorthand to match all other sections
   background: $color-bg-secondary;
   border-top: 1px solid $color-border-subtle;
   padding: $spacing-2xl 0 $spacing-lg;
@@ -171,7 +156,6 @@ const currentYear = computed(() => new Date().getFullYear());
 @media (max-width: $breakpoint-lg) {
   .footer {
     padding: $spacing-xl 0 $spacing-md;
-
     &__container {
       padding: 0 1.5rem;
     }
@@ -188,7 +172,6 @@ const currentYear = computed(() => new Date().getFullYear());
     &__social {
       gap: $spacing-sm;
     }
-
     &__social-link {
       width: 38px;
       height: 38px;
@@ -197,7 +180,6 @@ const currentYear = computed(() => new Date().getFullYear());
         height: 18px;
       }
     }
-
     &__bottom {
       padding-top: $spacing-md;
     }
@@ -207,18 +189,15 @@ const currentYear = computed(() => new Date().getFullYear());
 @media (max-width: $breakpoint-sm) {
   .footer {
     padding: $spacing-lg 0 $spacing-sm;
-
     &__container {
       padding: 0 1.5rem;
     }
-
     &__content {
       flex-direction: column;
       gap: $spacing-md;
       padding-bottom: $spacing-md;
       text-align: center;
     }
-
     &__brand {
       flex: none;
       width: 100%;
@@ -232,14 +211,12 @@ const currentYear = computed(() => new Date().getFullYear());
         width: 38px;
       }
     }
-
     &__social {
       flex: none;
       width: 100%;
       justify-content: center;
       gap: $spacing-sm;
     }
-
     &__social-link {
       width: 36px;
       height: 36px;
@@ -248,7 +225,6 @@ const currentYear = computed(() => new Date().getFullYear());
         height: 16px;
       }
     }
-
     &__bottom {
       padding-top: $spacing-sm;
     }
@@ -269,7 +245,6 @@ const currentYear = computed(() => new Date().getFullYear());
     &__logo img {
       width: 35px;
     }
-
     &__social-link {
       width: 34px;
       height: 34px;

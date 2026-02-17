@@ -1,10 +1,11 @@
 <template>
+  <!-- FIX: v-bind="$attrs" comes FIRST so explicit props always take precedence -->
   <button
+    v-bind="$attrs"
     class="btn"
     :class="[`btn--${variant}`, `btn--${size}`, { 'btn--loading': loading }]"
     :type="type"
     :disabled="disabled || loading"
-    v-bind="$attrs"
   >
     <span v-if="loading" class="btn__spinner" aria-hidden="true" />
     <slot />
@@ -41,8 +42,6 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/variables" as *;
-
 .btn {
   display: inline-flex;
   align-items: center;
@@ -58,8 +57,6 @@ defineProps({
   transition: $transition-base;
   position: relative;
   overflow: hidden;
-
-  // ── Variants ──────────────────────────────
 
   &--primary {
     padding: 0.75rem 1.25rem;
@@ -106,8 +103,6 @@ defineProps({
     }
   }
 
-  // ── Sizes ─────────────────────────────────
-
   &--md {
     padding: 0.625rem 1rem;
     font-size: 0.9375rem;
@@ -118,16 +113,12 @@ defineProps({
     font-size: 1rem;
   }
 
-  // ── States ────────────────────────────────
-
   &:disabled,
   &--loading {
     opacity: 0.6;
     cursor: not-allowed;
     pointer-events: none;
   }
-
-  // ── Spinner ───────────────────────────────
 
   &__spinner {
     width: 14px;

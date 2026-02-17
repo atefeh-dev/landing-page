@@ -1,18 +1,11 @@
 <template>
-  <section class="section section--tweets" id="features" ref="sectionRef">
+  <section class="section section--tweets" id="testimonials" ref="sectionRef">
     <div class="section__container">
       <div class="section__header section__header--center">
-        <!-- FIX: added missing animations on header (was inconsistent with all other sections) -->
-        <span
-          class="section__badge animate-slide-down"
-          :class="{ 'in-view': isVisible }"
+        <span class="section__badge" :class="slideDown()"
+          >مشکلات از زبان افراد در فضای مجازی</span
         >
-          مشکلات از زبان افراد در فضای مجازی
-        </span>
-        <div
-          class="section__title-wrapper animate-fade-up animate-delay-1"
-          :class="{ 'in-view': isVisible }"
-        >
+        <div class="section__title-wrapper" :class="reveal(1)">
           <h2 class="section__title">
             ما برای توسعه‌ی <span class="highlight">زونکن</span>
             از نیازهای واقعی الهام می‌گیریم.
@@ -20,11 +13,8 @@
         </div>
       </div>
 
-      <div
-        class="tweets-scroller animate-fade-up animate-delay-2"
-        :class="{ 'in-view': isVisible }"
-      >
-        <!-- Row 1 - Scrolls Left -->
+      <div class="tweets-scroller" :class="reveal(2)">
+        <!-- Row 1 — scrolls left -->
         <div class="tweets-scroller__row">
           <div
             class="tweets-scroller__track"
@@ -43,7 +33,7 @@
                   class="tweet-card__avatar"
                 />
                 <div class="tweet-card__author">
-                  <div class="tweet-card__name-wrapper">
+                  <div class="tweet-card__name-row">
                     <span class="tweet-card__name">{{ tweet.name }}</span>
                     <svg
                       class="tweet-card__verified"
@@ -65,7 +55,7 @@
           </div>
         </div>
 
-        <!-- Row 2 - Scrolls Right -->
+        <!-- Row 2 — scrolls right -->
         <div class="tweets-scroller__row">
           <div
             class="tweets-scroller__track tweets-scroller__track--reverse"
@@ -84,7 +74,7 @@
                   class="tweet-card__avatar"
                 />
                 <div class="tweet-card__author">
-                  <div class="tweet-card__name-wrapper">
+                  <div class="tweet-card__name-row">
                     <span class="tweet-card__name">{{ tweet.name }}</span>
                     <svg
                       class="tweet-card__verified"
@@ -113,13 +103,13 @@
 <script setup>
 import { ref } from "vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
-import Avatar1 from "../assets/avatar1.png";
-import Avatar2 from "../assets/avatar2.png";
-import Avatar3 from "../assets/avatar3.png";
-import Avatar4 from "../assets/avatar4.png";
+import Avatar1 from "@/assets/images/avatars/avatar1.png";
+import Avatar2 from "@/assets/images/avatars/avatar2.png";
+import Avatar3 from "@/assets/images/avatars/avatar3.png";
+import Avatar4 from "@/assets/images/avatars/avatar4.png";
 
 const sectionRef = ref(null);
-const { isVisible } = useScrollAnimation(sectionRef);
+const { reveal, slideDown } = useScrollAnimation(sectionRef);
 
 const row1Tweets = [
   {
@@ -262,8 +252,6 @@ const resumeRow2 = (e) => {
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/variables" as *;
-
 .section--tweets {
   background: #0a0a0a;
   overflow: hidden;
@@ -342,7 +330,6 @@ const resumeRow2 = (e) => {
     box-shadow:
       0 20px 40px rgba(0, 0, 0, 0.7),
       0 0 0 1px rgba(252, 192, 21, 0.5);
-
     .tweet-card__avatar {
       border-color: #fcc015;
     }
@@ -368,7 +355,7 @@ const resumeRow2 = (e) => {
     min-width: 0;
   }
 
-  &__name-wrapper {
+  &__name-row {
     display: flex;
     align-items: center;
     gap: 0.375rem;
@@ -388,7 +375,6 @@ const resumeRow2 = (e) => {
     font-size: 0.875rem;
     color: rgba(255, 255, 255, 0.5);
     direction: ltr;
-    text-align: right;
   }
   &__text {
     font-size: 0.9375rem;
@@ -397,24 +383,21 @@ const resumeRow2 = (e) => {
   }
 }
 
-// BUG FIX: Previous keyframes were both scrolling RIGHT.
-// scrollLeft: content moves left → translateX goes negative
-// scrollRight: content starts at -50% and returns to 0 (seamless loop)
 @keyframes scrollLeft {
   from {
-    transform: translateX(50%);
+    transform: translateX();
   }
   to {
-    transform: translateX(0);
+    transform: translateX(50%);
   }
 }
 
 @keyframes scrollRight {
   from {
-    transform: translateX(0%);
+    transform: translateX(50%);
   }
   to {
-    transform: translateX(50%);
+    transform: translateX(0);
   }
 }
 
@@ -430,7 +413,6 @@ const resumeRow2 = (e) => {
 }
 
 @media (max-width: $breakpoint-md) {
-  // FIX: was .tweets-scroller__after (wrong — that's not a valid selector)
   .tweets-scroller::before,
   .tweets-scroller::after {
     width: 100px;

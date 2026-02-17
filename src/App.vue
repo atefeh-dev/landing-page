@@ -13,15 +13,14 @@
 
 <script setup>
 import { ref } from "vue";
-import NavBar from "./components/NavBar.vue";
-import HeroSection from "./components/HeroSection.vue";
-import PhilosophySection from "./components/PhilosophySection.vue";
-import FeaturesSection from "./components/FeaturesSection.vue";
-import CustomerSection from "./components/CustomerSection.vue";
-import TweetTestimonials from "./components/TweetTestimonials.vue";
-import FaqSection from "./components/FaqSection.vue";
-import CtaSection from "./components/CtaSection.vue";
-import FooterSection from "./components/FooterSection.vue";
+import NavBar from "@/components/landing/sections/NavBar.vue";
+import HeroSection from "@/components/landing/sections/HeroSection.vue";
+import PhilosophySection from "@/components/landing/sections/PhilosophySection.vue";
+import CustomerSection from "@/components/landing/sections/CustomerSection.vue";
+import TweetTestimonials from "@/components/landing/sections/TweetTestimonials.vue";
+import FaqSection from "@/components/landing/sections/FaqSection.vue";
+import CtaSection from "@/components/landing/sections/CtaSection.vue";
+import FooterSection from "@/components/landing/sections/FooterSection.vue";
 
 const ctaSectionRef = ref(null);
 

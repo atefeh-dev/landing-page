@@ -2,16 +2,8 @@
   <section class="section section--faq" id="faq" ref="sectionRef">
     <div class="section__container section__container--narrow">
       <div class="section__header section__header--center">
-        <span
-          class="section__badge animate-slide-down"
-          :class="{ 'in-view': isVisible }"
-        >
-          سوالات متداول
-        </span>
-        <div
-          class="section__title-wrapper animate-fade-up"
-          :class="{ 'in-view': isVisible }"
-        >
+        <span class="section__badge" :class="slideDown(1)">سوالات متداول</span>
+        <div class="section__title-wrapper" :class="reveal()">
           <h2 class="section__title">
             پرسش‌هایی که ممکن است در ذهن شما هم باشد.
           </h2>
@@ -22,12 +14,11 @@
         <div
           v-for="(item, index) in faqs"
           :key="index"
-          class="faq-item animate-fade-up"
-          :class="{
-            'faq-item--active': activeFaq === index,
-            'in-view': isVisible,
-            [`animate-delay-${Math.min(index + 1, 6)}`]: true,
-          }"
+          class="faq-item"
+          :class="[
+            { 'faq-item--active': activeFaq === index },
+            reveal(Math.min(index + 1, 6)),
+          ]"
         >
           <button class="faq-item__question" @click="toggleFaq(index)">
             <img
@@ -44,7 +35,7 @@
             :class="{ 'faq-item__answer-wrapper--open': activeFaq === index }"
           >
             <div class="faq-item__answer">
-              <p v-html="item.answer"></p>
+              <p v-html="item.answer" />
             </div>
           </div>
         </div>
@@ -55,46 +46,47 @@
 
 <script setup>
 import { ref } from "vue";
-import PlusIcon from "@/assets/plus.svg";
-import MinusIcon from "@/assets/minus.svg";
+import PlusIcon from "@/assets/ui/plus.svg";
+import MinusIcon from "@/assets/ui/minus.svg";
+
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 const sectionRef = ref(null);
-const { isVisible } = useScrollAnimation(sectionRef);
+const { reveal, slideDown } = useScrollAnimation(sectionRef);
 
 const activeFaq = ref(null);
 
 const faqs = [
   {
-    question: "آیا استفاده از زونکن رایگان است؟",
+    question: "آیا استفاده از زونکن رایگان است?",
     answer:
-      '<span class="highlight">شروع به استفاده از زونکن برای همیشه رایگان است</span> ولی بر اساس سیاست مصرف منصفانه ممکن است برای مدتی رایگان باشد و یا با توجه به تعداد تنظیم اسناد تا سقف مجاز رایگان بودن آن تعیین شود.',
+      '<span class="highlight">شروع به استفاده از زونکن برای همیشه رایگان است</span> ولی بر اساس سیاست مصرف منصفانه ممکن است برای مدتی رایگان باشد.',
   },
   {
-    question: "استفاده از قالب‌های عمومی در زونکن به چه صورت است؟",
+    question: "استفاده از قالب‌های عمومی در زونکن به چه صورت است?",
     answer:
-      '<span class="highlight">قالب‌های عمومی در زونکن کاملاً رایگان و در دسترس همه کاربران هستند</span> و می‌توانید از آن‌ها برای ایجاد اسناد خود استفاده کنید. این قالب‌ها توسط تیم ما و جامعه کاربران تهیه شده‌اند.',
+      '<span class="highlight">قالب‌های عمومی در زونکن کاملاً رایگان و در دسترس همه کاربران هستند</span> و می‌توانید از آن‌ها برای ایجاد اسناد خود استفاده کنید.',
   },
   {
-    question: "آیا امکان تنظیم قالب اختصاصی خودمان در زونکن وجود دارد؟",
+    question: "آیا امکان تنظیم قالب اختصاصی خودمان در زونکن وجود دارد?",
     answer:
       '<span class="highlight">بله، امکان ایجاد و ذخیره قالب‌های اختصاصی برای شما وجود دارد</span>. این قالب‌ها فقط برای شما و تیم شما قابل دسترسی خواهند بود.',
   },
   {
     question:
-      "آیا افرادی که اسناد تنظیم شده را امضا می‌کنند باید عضو زونکن شوند؟",
+      "آیا افرادی که اسناد تنظیم شده را امضا می‌کنند باید عضو زونکن شوند?",
     answer:
       '<span class="highlight">خیر، امضاکنندگان نیازی به ثبت‌نام در زونکن ندارند</span>. آن‌ها می‌توانند از طریق لینک ارسال شده، اسناد را مشاهده و امضا کنند.',
   },
   {
-    question: "نگهداری و امنیت اسناد من در زونکن چگونه تضمین می‌شود؟",
+    question: "نگهداری و امنیت اسناد من در زونکن چگونه تضمین می‌شود?",
     answer:
-      '<span class="highlight">تمام اسناد شما با پروتکل‌های امنیتی پیشرفته رمزنگاری می‌شوند</span>. ما از استانداردهای بین‌المللی برای حفظ امنیت و حریم خصوصی اطلاعات شما استفاده می‌کنیم.',
+      '<span class="highlight">تمام اسناد شما با پروتکل‌های امنیتی پیشرفته رمزنگاری می‌شوند</span>. ما از استانداردهای بین‌المللی برای حفظ امنیت استفاده می‌کنیم.',
   },
   {
-    question: "چه زمانی می‌توانم از خدمات زونکن استفاده کنم؟",
+    question: "چه زمانی می‌توانم از خدمات زونکن استفاده کنم?",
     answer:
-      '<span class="highlight">زونکن در حال حاضر در مرحله توسعه قرار دارد</span>. با ثبت‌نام در لیست انتظار، از اولین افرادی خواهید بود که به محض عرضه محصول، دسترسی خواهید داشت.',
+      '<span class="highlight">زونکن در حال حاضر در مرحله توسعه قرار دارد</span>. با ثبت‌نام در لیست انتظار، از اولین افرادی خواهید بود که دسترسی خواهید داشت.',
   },
 ];
 
@@ -104,8 +96,6 @@ function toggleFaq(index) {
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/variables" as *;
-
 .section--faq {
   background: linear-gradient(180deg, #111111 0%, #0d0a0f 50%, #0a0a0a 100%);
   position: relative;
@@ -125,9 +115,6 @@ function toggleFaq(index) {
   border-radius: $radius-lg;
   margin-bottom: $spacing-sm;
   overflow: hidden;
-  // FIX: $transition-base here was conflicting with the animate utility which also
-  // sets transition on the element. Keep only the hover/border transition scoped
-  // to properties that aren't animation-related.
   transition:
     border-color 0.3s ease,
     background 0.3s ease,
@@ -137,7 +124,6 @@ function toggleFaq(index) {
     border-color: $color-border-medium;
     background: rgba(255, 255, 255, 0.02);
   }
-
   &--active {
     border-color: $color-border-medium;
     box-shadow: $shadow-sm;
@@ -182,7 +168,6 @@ function toggleFaq(index) {
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
-
     &--open {
       grid-template-rows: 1fr;
     }
@@ -200,7 +185,6 @@ function toggleFaq(index) {
     p {
       margin: 0;
     }
-
     .faq-item__answer-wrapper--open & {
       padding-bottom: $spacing-lg;
     }
@@ -211,14 +195,12 @@ function toggleFaq(index) {
   .faq {
     padding: 0;
   }
-
   .faq-item {
     &__question {
       padding: $spacing-md $spacing-lg;
       font-size: 1.0625rem;
       gap: $spacing-md;
     }
-
     &__answer {
       padding: 0 $spacing-lg;
       font-size: 1rem;
@@ -226,7 +208,6 @@ function toggleFaq(index) {
         padding-bottom: $spacing-md;
       }
     }
-
     &__icon {
       width: 22px;
       height: 22px;
@@ -238,13 +219,11 @@ function toggleFaq(index) {
   .faq-item {
     margin-bottom: $spacing-sm;
     border-radius: $radius-md;
-
     &__question {
       padding: $spacing-md;
       font-size: 1rem;
       gap: $spacing-sm;
     }
-
     &__answer {
       padding: 0 $spacing-md;
       font-size: 0.9375rem;
@@ -253,7 +232,6 @@ function toggleFaq(index) {
         padding-bottom: $spacing-md;
       }
     }
-
     &__icon {
       width: 20px;
       height: 20px;

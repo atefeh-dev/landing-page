@@ -33,7 +33,7 @@
 
 <script setup>
 import { ref } from "vue";
-import EmailForm from "./EmailForm.vue";
+import EmailForm from "@/components/landing/sections/EmailForm.vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 const sectionRef = ref(null);
@@ -41,8 +41,6 @@ const { isVisible } = useScrollAnimation(sectionRef);
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/variables" as *;
-
 .section--cta {
   background: $color-bg-primary;
 }

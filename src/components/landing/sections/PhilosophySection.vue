@@ -2,56 +2,36 @@
   <section class="section section--philosophy" id="philosophy" ref="sectionRef">
     <div class="section__container">
       <div class="section__header section__header--center">
-        <span
-          class="section__badge animate-slide-down"
-          :class="{ 'in-view': isVisible }"
-        >
-          فلسفه
-        </span>
-
-        <div
-          class="section__title-wrapper animate-fade-up animate-delay-1"
-          :class="{ 'in-view': isVisible }"
-        >
+        <span class="section__badge" :class="slideDown()">فلسفه</span>
+        <div class="section__title-wrapper" :class="reveal(1)">
           <h2 class="section__title">
-            مشکل فقط
-            <span class="highlight">نگهداری فایل</span>
-            نیست
+            مشکل فقط <span class="highlight">نگهداری فایل</span> نیست
           </h2>
         </div>
       </div>
 
       <div class="philosophy__cards">
-        <div
-          class="philosophy__card animate-fade-up animate-delay-1"
-          :class="{ 'in-view': isVisible }"
-        >
+        <div class="philosophy__card" :class="reveal(1)">
           <div class="philosophy__card-icon">
-            <img src="../assets/notion.svg" alt="Notion" />
+            <img src="@/assets/ui/notion.svg" alt="Notion" />
           </div>
           <p class="philosophy__card-text">
             اصلاحاتی که در پیام‌ها و ایمیل‌ها گم شدند.
           </p>
         </div>
 
-        <div
-          class="philosophy__card animate-fade-up animate-delay-2"
-          :class="{ 'in-view': isVisible }"
-        >
+        <div class="philosophy__card" :class="reveal(2)">
           <div class="philosophy__card-icon">
-            <img src="../assets/slack.svg" alt="Slack" />
+            <img src="@/assets/ui/slack.svg" alt="Slack" />
           </div>
           <p class="philosophy__card-text">
             فایل‌هایی که نمی‌دانستیم آخرین نسخه‌شان کدام است.
           </p>
         </div>
 
-        <div
-          class="philosophy__card animate-fade-up animate-delay-3"
-          :class="{ 'in-view': isVisible }"
-        >
+        <div class="philosophy__card" :class="reveal(3)">
           <div class="philosophy__card-icon">
-            <img src="../assets/slack.svg" alt="Slack" />
+            <img src="@/assets/ui/slack.svg" alt="Slack" />
           </div>
           <p class="philosophy__card-text">
             قراردادهایی که شفاهی شروع شدند و بعداً سوءتفاهم ساختند.
@@ -59,13 +39,9 @@
         </div>
       </div>
 
-      <p
-        class="philosophy__text animate-fade-up animate-delay-4"
-        :class="{ 'in-view': isVisible }"
-      >
+      <p class="philosophy__text" :class="reveal(4)">
         این‌ها چیزهایی بود که خودمان تجربه کردیم، قبل از اینکه به فکر ساخت
-        <span class="highlight">زونکن</span>
-        بیفتیم.
+        <span class="highlight">زونکن</span> بیفتیم.
       </p>
     </div>
   </section>
@@ -76,12 +52,10 @@ import { ref } from "vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 const sectionRef = ref(null);
-const { isVisible } = useScrollAnimation(sectionRef);
+const { reveal, slideDown } = useScrollAnimation(sectionRef);
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/variables" as *;
-
 .section--philosophy {
   background: linear-gradient(180deg, #111111 0%, #0d0a0f 50%, #0a0a0a 100%);
   position: relative;
@@ -102,11 +76,9 @@ const { isVisible } = useScrollAnimation(sectionRef);
   flex-direction: column;
   align-items: center;
   text-align: center;
-  // FIX: removed redundant gap: 0 (browser default)
 }
 
 .philosophy__card-icon {
-  // FIX: removed display:flex + align-items + justify-content — img is inline, no flex needed here
   width: 80px;
   height: 80px;
   border-radius: $radius-md;
@@ -127,7 +99,7 @@ const { isVisible } = useScrollAnimation(sectionRef);
 }
 
 .philosophy__text {
-  font-size: $font-size-2xl;
+  font-size: $font-size-3xl;
   line-height: 1.8;
   color: $color-text-secondary;
   max-width: 700px;
@@ -142,12 +114,10 @@ const { isVisible } = useScrollAnimation(sectionRef);
     margin-bottom: $spacing-2xl;
     padding: 0 $spacing-md;
   }
-
   .philosophy__card {
     padding: $spacing-lg $spacing-md;
     gap: $spacing-md;
   }
-
   .philosophy__card-icon {
     width: 70px;
     height: 70px;
@@ -156,7 +126,6 @@ const { isVisible } = useScrollAnimation(sectionRef);
       height: 42px;
     }
   }
-
   .philosophy__card-text {
     font-size: 1rem;
   }
@@ -170,14 +139,12 @@ const { isVisible } = useScrollAnimation(sectionRef);
     grid-template-columns: repeat(2, 1fr);
     gap: $spacing-md;
     margin-bottom: $spacing-xl;
-
     .philosophy__card:last-child {
       grid-column: 1 / -1;
       max-width: 500px;
       margin: 0 auto;
     }
   }
-
   .philosophy__card {
     padding: $spacing-md;
   }
@@ -203,18 +170,15 @@ const { isVisible } = useScrollAnimation(sectionRef);
     gap: $spacing-md;
     margin-bottom: $spacing-lg;
     padding: 0;
-
     .philosophy__card:last-child {
       grid-column: auto;
       max-width: 100%;
     }
   }
-
   .philosophy__card {
     padding: $spacing-md;
     gap: $spacing-md;
   }
-
   .philosophy__card-icon {
     width: 60px;
     height: 60px;
@@ -223,7 +187,6 @@ const { isVisible } = useScrollAnimation(sectionRef);
       height: 36px;
     }
   }
-
   .philosophy__card-text {
     font-size: 0.875rem;
     line-height: 1.6;

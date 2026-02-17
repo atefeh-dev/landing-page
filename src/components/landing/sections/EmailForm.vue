@@ -27,8 +27,8 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import BaseInput from "./BaseInput.vue";
-import BaseButton from "./BaseButton.vue";
+import BaseInput from "@/components/base/BaseInput.vue";
+import BaseButton from "@/components/base/BaseButton.vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 const props = defineProps({
@@ -84,8 +84,6 @@ const handleSubmit = () => {
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/variables" as *;
-
 .email-form {
   width: 100%;
 

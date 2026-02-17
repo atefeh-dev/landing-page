@@ -2,60 +2,59 @@
   <section class="hero" id="hero" ref="sectionRef">
     <div class="hero__floating-icons">
       <img
-        src="../assets/pagewithcurl.svg"
+        src="@/assets/icons/pagewithcurl.svg"
         alt=""
         class="hero__icon hero__icon--1"
       />
       <img
-        src="../assets/pagefacingup.svg"
+        src="@/assets/icons/pagefacingup.svg"
         alt=""
         class="hero__icon hero__icon--2"
       />
-      <img src="../assets/memo.svg" alt="" class="hero__icon hero__icon--3" />
       <img
-        src="../assets/clipboard.svg"
+        src="@/assets/icons/memo.svg"
+        alt=""
+        class="hero__icon hero__icon--3"
+      />
+      <img
+        src="@/assets/icons/clipboard.svg"
         alt=""
         class="hero__icon hero__icon--4"
       />
       <img
-        src="../assets/page-facing-up.svg"
+        src="@/assets/icons/page-facing-up.svg"
         alt=""
         class="hero__icon hero__icon--5"
       />
       <img
-        src="../assets/bookmark-tabs.svg"
+        src="@/assets/icons/bookmark-tabs.svg"
         alt=""
         class="hero__icon hero__icon--6"
       />
-      <img src="../assets/scroll.svg" alt="" class="hero__icon hero__icon--7" />
+      <img
+        src="@/assets/icons/scroll.svg"
+        alt=""
+        class="hero__icon hero__icon--7"
+      />
     </div>
 
     <div class="hero__container">
       <div class="hero__content">
-        <div
-          class="hero__badge animate-fade-up animate-delay-1"
-          :class="{ 'in-view': isVisible }"
-        >
+        <div class="hero__badge" :class="reveal(1)">
           <span class="hero__badge--news">
-            <img src="../assets/green-dot.svg" alt="" />
+            <img src="@/assets/ui/green-dot.svg" alt="" />
             <span>چه خبر؟</span>
           </span>
           <span>از امروز لیست انتظار باز است</span>
         </div>
 
-        <h1
-          class="hero__title animate-fade-up animate-delay-2"
-          :class="{ 'in-view': isVisible }"
-        >
+        <h1 class="hero__title" :class="reveal(2)">
           اینجا، هر سند <br />
           <span class="hero__title-highlight">یک مسیر مشخص</span>
           دارد
         </h1>
 
-        <p
-          class="hero__description animate-fade-up animate-delay-3"
-          :class="{ 'in-view': isVisible }"
-        >
+        <p class="hero__description" :class="reveal(3)">
           ما زونکن را ساختیم چون سال‌ها با اسناد، قراردادها و فایل‌هایی کار
           کردیم که هیچ مسیر مشخصی نداشتند. زونکن تلاشی است برای اینکه اسناد، از
           همان ابتدا در مسیر درست قرار بگیرند.
@@ -63,20 +62,14 @@
 
         <EmailForm @submit="handleSubmit" />
 
-        <p
-          class="hero__note animate-fade-up animate-delay-5"
-          :class="{ 'in-view': isVisible }"
-        >
+        <p class="hero__note" :class="reveal(5)">
           هیچ وقت اسپم ارسال نمی‌کنیم. خیالتون راحت
         </p>
       </div>
 
-      <div
-        class="hero__visual animate-fade-up animate-delay-6"
-        :class="{ 'in-view': isVisible }"
-      >
+      <div class="hero__visual" :class="reveal(6)">
         <img
-          src="/src/assets/demo.png"
+          src="@/assets/images/demo.png"
           alt="نمایی از زونکن"
           class="hero__demo-image"
         />
@@ -87,21 +80,18 @@
 
 <script setup>
 import { ref } from "vue";
-import EmailForm from "./EmailForm.vue";
+import EmailForm from "@/components/landing/sections/EmailForm.vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 defineEmits(["scroll-to-cta"]);
 
-// threshold 0 so hero triggers immediately on mount
 const sectionRef = ref(null);
-const { isVisible } = useScrollAnimation(sectionRef, 0);
+const { reveal } = useScrollAnimation(sectionRef, 0); // threshold 0 → triggers immediately
 
 const handleSubmit = () => {};
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/variables" as *;
-
 .hero {
   padding-top: 8rem;
   padding-bottom: $spacing-3xl;
@@ -205,7 +195,6 @@ const handleSubmit = () => {};
     max-width: 700px;
   }
 
-  // FIX: removed duplicate font-size + font-weight declarations
   &__badge {
     display: inline-flex;
     align-items: center;
@@ -223,10 +212,10 @@ const handleSubmit = () => {};
       display: inline-flex;
       align-items: center;
       gap: 0.25rem;
-      color: $color-text-hero;
       padding: 0.25rem 0.5rem;
       border-radius: $radius-sm;
       border: 1px solid $color-border-primary;
+      color: $color-text-hero;
     }
   }
 
@@ -244,7 +233,6 @@ const handleSubmit = () => {};
     display: inline-block;
   }
 
-  // FIX: removed redundant margin-left/right auto — text-align: center on parent handles it
   &__description {
     font-size: $font-size-xl;
     line-height: 1.6;
@@ -309,12 +297,10 @@ const handleSubmit = () => {};
     &__content {
       max-width: 100%;
     }
-
     &__title {
       font-size: clamp(1.75rem, 8vw, 2rem);
       margin-bottom: $spacing-md;
     }
-
     &__description {
       font-size: 1rem;
       margin-bottom: $spacing-lg;

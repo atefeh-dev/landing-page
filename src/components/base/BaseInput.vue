@@ -56,8 +56,6 @@ defineEmits(["update:modelValue", "blur"]);
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/variables" as *;
-
 .input {
   display: flex;
   flex-direction: column;

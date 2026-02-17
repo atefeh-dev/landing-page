@@ -1,30 +1,19 @@
+<!-- ─────────────────────────────────────────────
+     CustomersSection.vue
+────────────────────────────────────────────── -->
 <template>
   <section class="section section--customers" id="customers" ref="sectionRef">
     <div class="section__container">
       <div class="customers">
-        <div
-          class="customers__content animate-fade-up"
-          :class="{ 'in-view': isVisible }"
-        >
-          <span
-            class="section__badge animate-slide-down animate-delay-1"
-            :class="{ 'in-view': isVisible }"
-          >
-            مشتریان
-          </span>
+        <div class="customers__content" :class="reveal()">
+          <span class="section__badge" :class="slideDown(1)">مشتریان</span>
 
-          <h2
-            class="customers__title animate-fade-up animate-delay-2"
-            :class="{ 'in-view': isVisible }"
-          >
+          <h2 class="customers__title" :class="reveal(2)">
             برای کسانی که می‌خواهند
             <span class="customers__title-highlight">منظم‌تر کار کنند</span>
           </h2>
 
-          <div
-            class="customers__description animate-fade-up animate-delay-3"
-            :class="{ 'in-view': isVisible }"
-          >
+          <div class="customers__description" :class="reveal(3)">
             <p>
               زونکن امروز بیشتر برای افراد مستقل و کسب‌وکارهای کوچک طراحی شده؛
               جایی که نظم در اسناد، تفاوت بزرگی ایجاد می‌کند.
@@ -36,10 +25,7 @@
           </div>
         </div>
 
-        <div
-          class="customers__visual animate-fade-up animate-delay-4"
-          :class="{ 'in-view': isVisible }"
-        >
+        <div class="customers__visual" :class="reveal(4)">
           <div class="customers__image-wrapper">
             <img
               :src="DashboardImg"
@@ -55,16 +41,14 @@
 
 <script setup>
 import { ref } from "vue";
-import DashboardImg from "@/assets/dashboard.png";
+import DashboardImg from "@/assets/images/dashboard.png";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 const sectionRef = ref(null);
-const { isVisible } = useScrollAnimation(sectionRef);
+const { reveal, slideDown } = useScrollAnimation(sectionRef);
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/variables" as *;
-
 .section--customers {
   background: $color-bg-primary;
   position: relative;
@@ -181,7 +165,6 @@ const { isVisible } = useScrollAnimation(sectionRef);
 @media (max-width: $breakpoint-lg) {
   .customers {
     gap: $spacing-2xl;
-
     &__visual {
       flex: 0 0 45%;
       margin-left: -3%;
@@ -190,12 +173,10 @@ const { isVisible } = useScrollAnimation(sectionRef);
       max-width: 500px;
       padding-right: 1.5rem;
     }
-
     &__title {
       font-size: clamp(1.5rem, 4vw, 2rem);
       margin-bottom: $spacing-md;
     }
-
     &__description {
       font-size: 1.0625rem;
       p {
@@ -209,20 +190,16 @@ const { isVisible } = useScrollAnimation(sectionRef);
   .section--customers {
     padding: $spacing-2xl 0;
   }
-
   .customers {
     flex-direction: column;
     gap: $spacing-xl;
     padding: 0 1.5rem;
-
     &__visual {
       flex: none;
       width: 100%;
       max-width: 600px;
-      // FIX: was margin-left: 0 followed by margin: 0 auto (conflict) — use margin only
       margin: 0 auto;
     }
-
     &__image-wrapper {
       border-radius: $radius-xl;
       border: 1px solid $color-border-subtle;
@@ -230,7 +207,6 @@ const { isVisible } = useScrollAnimation(sectionRef);
         display: none;
       }
     }
-
     &__content {
       flex: none;
       max-width: 600px;
@@ -238,7 +214,6 @@ const { isVisible } = useScrollAnimation(sectionRef);
       padding-right: 0;
       margin: 0 auto;
     }
-
     &__badge {
       margin-bottom: $spacing-md;
     }
@@ -255,28 +230,23 @@ const { isVisible } = useScrollAnimation(sectionRef);
   .section--customers {
     padding: $spacing-xl 0;
   }
-
   .customers {
     padding: 0 1.5rem;
     gap: $spacing-lg;
-
     &__visual {
       max-width: 100%;
     }
     &__image-wrapper {
       border-radius: $radius-md;
     }
-
     &__badge {
       font-size: 0.875rem;
       padding: 0.375rem 1rem;
     }
-
     &__title {
       font-size: clamp(1.5rem, 6vw, 1.75rem);
       margin-bottom: $spacing-md;
     }
-
     &__description {
       font-size: 1rem;
       p {

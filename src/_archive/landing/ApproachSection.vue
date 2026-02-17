@@ -39,8 +39,6 @@ const { isVisible } = useScrollAnimation(sectionRef);
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/variables" as *;
-
 .section--approach {
   background: linear-gradient(
     180deg,
@@ -52,8 +50,10 @@ const { isVisible } = useScrollAnimation(sectionRef);
 .approach-text {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+
   &.in-view {
     animation: fadeInUp 0.6s ease-out 0.2s forwards;
   }
@@ -69,5 +69,4 @@ const { isVisible } = useScrollAnimation(sectionRef);
     transform: translateY(0);
   }
 }
-</style>
 </style>

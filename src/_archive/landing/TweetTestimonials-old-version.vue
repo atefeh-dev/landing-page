@@ -221,8 +221,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/variables" as *;
-
 .section--tweets {
   background-color: #0a0a0a;
   overflow: hidden;
