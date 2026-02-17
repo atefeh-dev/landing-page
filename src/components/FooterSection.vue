@@ -1,19 +1,28 @@
 <template>
   <footer class="footer" ref="sectionRef">
     <div class="footer__container">
-      <div class="footer__content" :class="{ 'in-view': isVisible }">
-        <!-- Brand -->
-        <div class="footer__brand" :class="{ 'in-view': isVisible }">
+      <div
+        class="footer__content animate-fade-up"
+        :class="{ 'in-view': isVisible }"
+      >
+        <div
+          class="footer__brand animate-fade-up animate-delay-1"
+          :class="{ 'in-view': isVisible }"
+        >
           <p class="footer__brand-text">با افتخار ساخت ایران</p>
         </div>
 
-        <!-- Logo -->
-        <div class="footer__logo" :class="{ 'in-view': isVisible }">
+        <div
+          class="footer__logo animate-slide-down"
+          :class="{ 'in-view': isVisible }"
+        >
           <img src="../assets/logo.svg" alt="لوگوی زونکن" />
         </div>
 
-        <!-- Social Links -->
-        <div class="footer__social" :class="{ 'in-view': isVisible }">
+        <div
+          class="footer__social animate-fade-up animate-delay-2"
+          :class="{ 'in-view': isVisible }"
+        >
           <a
             href="https://www.linkedin.com/company/zoonkan/"
             target="_blank"
@@ -44,7 +53,6 @@
         </div>
       </div>
 
-      <!-- Copyright -->
       <div class="footer__bottom">
         <p class="footer__copyright">
           © {{ currentYear }} زونکن. تمامی حقوق محفوظ است.
@@ -68,10 +76,10 @@ const currentYear = computed(() => new Date().getFullYear());
 @use "../styles/variables" as *;
 
 .footer {
-  background-color: $color-bg-secondary;
+  // FIX: was background-color (longhand) — use shorthand to match all other sections
+  background: $color-bg-secondary;
   border-top: 1px solid $color-border-subtle;
   padding: $spacing-2xl 0 $spacing-lg;
-  position: relative;
 
   &__container {
     max-width: 1200px;
@@ -86,28 +94,10 @@ const currentYear = computed(() => new Date().getFullYear());
     gap: $spacing-xl;
     padding-bottom: $spacing-xl;
     border-bottom: 1px solid $color-border-subtle;
-    opacity: 0;
-    transform: translateY(20px);
-    transition:
-      opacity 0.6s ease-out,
-      transform 0.6s ease-out;
-
-    &.in-view {
-      animation: fadeInUp 0.6s ease-out forwards;
-    }
   }
 
   &__brand {
     flex: 1;
-    opacity: 0;
-    transform: translateY(20px);
-    transition:
-      opacity 0.6s ease-out,
-      transform 0.6s ease-out;
-
-    &.in-view {
-      animation: fadeInUp 0.6s ease-out 0.1s forwards;
-    }
   }
 
   &__brand-text {
@@ -121,21 +111,11 @@ const currentYear = computed(() => new Date().getFullYear());
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition:
-      opacity 0.3s ease-out,
-      transform 0.3s ease-out;
-
-    &.in-view {
-      animation: slideDown 0.3s ease-out forwards;
-    }
 
     img {
       width: 47px;
       height: auto;
       transition: $transition-base;
-
       &:hover {
         opacity: 0.8;
       }
@@ -148,15 +128,6 @@ const currentYear = computed(() => new Date().getFullYear());
     justify-content: flex-end;
     align-items: center;
     gap: $spacing-md;
-    opacity: 0;
-    transform: translateY(20px);
-    transition:
-      opacity 0.6s ease-out,
-      transform 0.6s ease-out;
-
-    &.in-view {
-      animation: fadeInUp 0.6s ease-out 0.15s forwards;
-    }
   }
 
   &__social-link {
@@ -179,7 +150,6 @@ const currentYear = computed(() => new Date().getFullYear());
     &:hover {
       background: rgba(255, 255, 255, 0.1);
       transform: translateY(-2px);
-
       img {
         opacity: 1;
       }
@@ -198,7 +168,6 @@ const currentYear = computed(() => new Date().getFullYear());
   }
 }
 
-// Tablet (portrait and smaller)
 @media (max-width: $breakpoint-lg) {
   .footer {
     padding: $spacing-xl 0 $spacing-md;
@@ -206,20 +175,16 @@ const currentYear = computed(() => new Date().getFullYear());
     &__container {
       padding: 0 1.5rem;
     }
-
     &__content {
       gap: $spacing-lg;
       padding-bottom: $spacing-lg;
     }
-
     &__brand-text {
       font-size: 0.9375rem;
     }
-
     &__logo img {
       width: 42px;
     }
-
     &__social {
       gap: $spacing-sm;
     }
@@ -227,7 +192,6 @@ const currentYear = computed(() => new Date().getFullYear());
     &__social-link {
       width: 38px;
       height: 38px;
-
       img {
         width: 18px;
         height: 18px;
@@ -240,7 +204,6 @@ const currentYear = computed(() => new Date().getFullYear());
   }
 }
 
-// Mobile
 @media (max-width: $breakpoint-sm) {
   .footer {
     padding: $spacing-lg 0 $spacing-sm;
@@ -260,14 +223,11 @@ const currentYear = computed(() => new Date().getFullYear());
       flex: none;
       width: 100%;
     }
-
     &__brand-text {
       font-size: 0.875rem;
     }
-
     &__logo {
       order: -1;
-
       img {
         width: 38px;
       }
@@ -283,7 +243,6 @@ const currentYear = computed(() => new Date().getFullYear());
     &__social-link {
       width: 36px;
       height: 36px;
-
       img {
         width: 16px;
         height: 16px;
@@ -293,46 +252,20 @@ const currentYear = computed(() => new Date().getFullYear());
     &__bottom {
       padding-top: $spacing-sm;
     }
-
     &__copyright {
       font-size: 0.75rem;
     }
   }
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-// Extra small mobile
 @media (max-width: 375px) {
   .footer {
     &__container {
       padding: 0 1rem;
     }
-
     &__brand-text {
       font-size: 0.8125rem;
     }
-
     &__logo img {
       width: 35px;
     }
@@ -340,7 +273,6 @@ const currentYear = computed(() => new Date().getFullYear());
     &__social-link {
       width: 34px;
       height: 34px;
-
       img {
         width: 15px;
         height: 15px;

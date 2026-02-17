@@ -2,8 +2,17 @@
   <section class="section section--faq" id="faq" ref="sectionRef">
     <div class="section__container section__container--narrow">
       <div class="section__header section__header--center">
-        <div class="section__title-wrapper" :class="{ 'in-view': isVisible }">
-          <h2 class="section__title" :class="{ 'in-view': isVisible }">
+        <span
+          class="section__badge animate-slide-down"
+          :class="{ 'in-view': isVisible }"
+        >
+          سوالات متداول
+        </span>
+        <div
+          class="section__title-wrapper animate-fade-up"
+          :class="{ 'in-view': isVisible }"
+        >
+          <h2 class="section__title">
             پرسش‌هایی که ممکن است در ذهن شما هم باشد.
           </h2>
         </div>
@@ -11,12 +20,13 @@
 
       <div class="faq">
         <div
-          class="faq-item"
           v-for="(item, index) in faqs"
           :key="index"
+          class="faq-item animate-fade-up"
           :class="{
             'faq-item--active': activeFaq === index,
             'in-view': isVisible,
+            [`animate-delay-${Math.min(index + 1, 6)}`]: true,
           }"
         >
           <button class="faq-item__question" @click="toggleFaq(index)">
@@ -52,7 +62,7 @@ import { useScrollAnimation } from "@/composables/useScrollAnimation";
 const sectionRef = ref(null);
 const { isVisible } = useScrollAnimation(sectionRef);
 
-const activeFaq = ref(null); // All closed by default
+const activeFaq = ref(null);
 
 const faqs = [
   {
@@ -87,6 +97,7 @@ const faqs = [
       '<span class="highlight">زونکن در حال حاضر در مرحله توسعه قرار دارد</span>. با ثبت‌نام در لیست انتظار، از اولین افرادی خواهید بود که به محض عرضه محصول، دسترسی خواهید داشت.',
   },
 ];
+
 function toggleFaq(index) {
   activeFaq.value = activeFaq.value === index ? null : index;
 }
@@ -96,40 +107,10 @@ function toggleFaq(index) {
 @use "../styles/variables" as *;
 
 .section--faq {
-  // Deep with purple undertone
   background: linear-gradient(180deg, #111111 0%, #0d0a0f 50%, #0a0a0a 100%);
   position: relative;
   overflow: hidden;
   margin-top: $spacing-2xl;
-
-  .section__container {
-    position: relative;
-    z-index: 1;
-  }
-}
-
-.section__title-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: $spacing-md;
-  flex-wrap: wrap;
-}
-
-.section__title-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 50px;
-  height: 36px;
-  padding: 0 $spacing-md;
-  background: linear-gradient(135deg, #e91e8c 0%, #c2158f 100%);
-  color: #ffffff;
-  font-size: 1.25rem;
-  font-weight: 700;
-  border-radius: $radius-sm;
-  box-shadow: 0 4px 12px rgba(233, 30, 140, 0.3);
-  animation: slideDown 0.3s ease-out;
 }
 
 .faq {
@@ -144,40 +125,13 @@ function toggleFaq(index) {
   border-radius: $radius-lg;
   margin-bottom: $spacing-sm;
   overflow: hidden;
-  transition: $transition-base;
-  opacity: 0;
-  transform: translateY(20px);
+  // FIX: $transition-base here was conflicting with the animate utility which also
+  // sets transition on the element. Keep only the hover/border transition scoped
+  // to properties that aren't animation-related.
   transition:
-    opacity 0.6s ease-out,
-    transform 0.6s ease-out;
-
-  &.in-view {
-    animation: fadeInUp 0.6s ease-out forwards;
-
-    &:nth-child(1) {
-      animation-delay: 0.2s;
-    }
-
-    &:nth-child(2) {
-      animation-delay: 0.25s;
-    }
-
-    &:nth-child(3) {
-      animation-delay: 0.3s;
-    }
-
-    &:nth-child(4) {
-      animation-delay: 0.35s;
-    }
-
-    &:nth-child(5) {
-      animation-delay: 0.4s;
-    }
-
-    &:nth-child(6) {
-      animation-delay: 0.45s;
-    }
-  }
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 
   &:hover {
     border-color: $color-border-medium;
@@ -216,7 +170,7 @@ function toggleFaq(index) {
     height: 24px;
     flex-shrink: 0;
     opacity: 0.7;
-    transition: $transition-base;
+    transition: opacity $transition-base;
   }
 
   &:hover &__icon {
@@ -253,14 +207,7 @@ function toggleFaq(index) {
   }
 }
 
-// Tablet
 @media (max-width: $breakpoint-lg) {
-  .section__title-badge {
-    min-width: 46px;
-    height: 34px;
-    font-size: 1.125rem;
-  }
-
   .faq {
     padding: 0;
   }
@@ -272,15 +219,9 @@ function toggleFaq(index) {
       gap: $spacing-md;
     }
 
-    &__answer-wrapper {
-      transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
     &__answer {
       padding: 0 $spacing-lg;
       font-size: 1rem;
-      transition: padding-bottom 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-
       .faq-item__answer-wrapper--open & {
         padding-bottom: $spacing-md;
       }
@@ -293,25 +234,7 @@ function toggleFaq(index) {
   }
 }
 
-// Mobile
 @media (max-width: $breakpoint-sm) {
-  .section--faq {
-    &::before {
-      height: 140px;
-    }
-
-    &::after {
-      height: 100px;
-    }
-  }
-
-  .section__title-badge {
-    min-width: 42px;
-    height: 32px;
-    font-size: 1rem;
-    padding: 0 $spacing-sm;
-  }
-
   .faq-item {
     margin-bottom: $spacing-sm;
     border-radius: $radius-md;
@@ -322,16 +245,10 @@ function toggleFaq(index) {
       gap: $spacing-sm;
     }
 
-    &__answer-wrapper {
-      transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
     &__answer {
       padding: 0 $spacing-md;
       font-size: 0.9375rem;
       line-height: 1.7;
-      transition: padding-bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
       .faq-item__answer-wrapper--open & {
         padding-bottom: $spacing-md;
       }
@@ -340,29 +257,6 @@ function toggleFaq(index) {
     &__icon {
       width: 20px;
       height: 20px;
-    }
-  }
-}
-
-// Extra small mobile
-@media (max-width: 375px) {
-  .faq-item {
-    &__question {
-      font-size: 0.9375rem;
-      padding: $spacing-sm $spacing-md;
-    }
-
-    &__answer-wrapper {
-      transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    &__answer {
-      font-size: 0.875rem;
-      transition: padding-bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-      .faq-item__answer-wrapper--open & {
-        padding-bottom: $spacing-sm;
-      }
     }
   }
 }

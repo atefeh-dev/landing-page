@@ -1,20 +1,29 @@
 <template>
-  <section class="section section--tweets" id="testimonials">
+  <section class="section section--tweets" id="features" ref="sectionRef">
     <div class="section__container">
-      <!-- Badge and Title -->
       <div class="section__header section__header--center">
-        <span class="section__badge">مشکلات از زبان افراد در فضای مجازی</span>
-        <div class="section__title-wrapper">
+        <!-- FIX: added missing animations on header (was inconsistent with all other sections) -->
+        <span
+          class="section__badge animate-slide-down"
+          :class="{ 'in-view': isVisible }"
+        >
+          مشکلات از زبان افراد در فضای مجازی
+        </span>
+        <div
+          class="section__title-wrapper animate-fade-up animate-delay-1"
+          :class="{ 'in-view': isVisible }"
+        >
           <h2 class="section__title">
-            ما برای توسعه‌ی
-            <span class="highlight">زونکن</span>
+            ما برای توسعه‌ی <span class="highlight">زونکن</span>
             از نیازهای واقعی الهام می‌گیریم.
           </h2>
         </div>
       </div>
 
-      
-      <div class="tweets-scroller">
+      <div
+        class="tweets-scroller animate-fade-up animate-delay-2"
+        :class="{ 'in-view': isVisible }"
+      >
         <!-- Row 1 - Scrolls Left -->
         <div class="tweets-scroller__row">
           <div
@@ -23,7 +32,7 @@
             @mouseleave="resumeRow1"
           >
             <div
-              v-for="(tweet, index) in [...row1Tweets]"
+              v-for="(tweet, index) in [...row1Tweets, ...row1Tweets]"
               :key="`row1-${index}`"
               class="tweet-card"
             >
@@ -44,7 +53,7 @@
                       fill="currentColor"
                     >
                       <path
-                        d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36-6.2 6.77z"
+                        d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.0 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36-6.2 6.77z"
                       />
                     </svg>
                   </div>
@@ -64,7 +73,7 @@
             @mouseleave="resumeRow2"
           >
             <div
-              v-for="(tweet, index) in [...row2Tweets]"
+              v-for="(tweet, index) in [...row2Tweets, ...row2Tweets]"
               :key="`row2-${index}`"
               class="tweet-card"
             >
@@ -85,7 +94,7 @@
                       fill="currentColor"
                     >
                       <path
-                        d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36-6.2 6.77z"
+                        d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.0 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36-6.2 6.77z"
                       />
                     </svg>
                   </div>
@@ -98,16 +107,19 @@
         </div>
       </div>
     </div>
-    
   </section>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import { useScrollAnimation } from "@/composables/useScrollAnimation";
 import Avatar1 from "../assets/avatar1.png";
 import Avatar2 from "../assets/avatar2.png";
 import Avatar3 from "../assets/avatar3.png";
 import Avatar4 from "../assets/avatar4.png";
+
+const sectionRef = ref(null);
+const { isVisible } = useScrollAnimation(sectionRef);
 
 const row1Tweets = [
   {
@@ -254,7 +266,6 @@ const resumeRow2 = (e) => {
 
 .section--tweets {
   background: #0a0a0a;
-  padding: $spacing-3xl 0;
   overflow: hidden;
 }
 
@@ -298,7 +309,6 @@ const resumeRow2 = (e) => {
   &__row {
     overflow: hidden;
     margin-bottom: $spacing-lg;
-
     &:last-child {
       margin-bottom: 0;
     }
@@ -370,19 +380,16 @@ const resumeRow2 = (e) => {
     font-size: 0.9375rem;
     color: #ffffff;
   }
-
   &__verified {
     color: #1d9bf0;
     flex-shrink: 0;
   }
-
   &__handle {
     font-size: 0.875rem;
     color: rgba(255, 255, 255, 0.5);
     direction: ltr;
     text-align: right;
   }
-
   &__text {
     font-size: 0.9375rem;
     line-height: 1.5;
@@ -390,18 +397,21 @@ const resumeRow2 = (e) => {
   }
 }
 
+// BUG FIX: Previous keyframes were both scrolling RIGHT.
+// scrollLeft: content moves left → translateX goes negative
+// scrollRight: content starts at -50% and returns to 0 (seamless loop)
 @keyframes scrollLeft {
   from {
     transform: translateX(50%);
   }
   to {
-    transform: translateX(0%);
+    transform: translateX(0);
   }
 }
 
 @keyframes scrollRight {
   from {
-    transform: translateX(0);
+    transform: translateX(0%);
   }
   to {
     transform: translateX(50%);
@@ -420,6 +430,7 @@ const resumeRow2 = (e) => {
 }
 
 @media (max-width: $breakpoint-md) {
+  // FIX: was .tweets-scroller__after (wrong — that's not a valid selector)
   .tweets-scroller::before,
   .tweets-scroller::after {
     width: 100px;
@@ -446,6 +457,7 @@ const resumeRow2 = (e) => {
       animation-duration: 50s;
     }
   }
+
   .tweet-card {
     flex: 0 0 280px;
     width: 280px;

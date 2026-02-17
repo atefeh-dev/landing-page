@@ -4,7 +4,6 @@
     <HeroSection @scroll-to-cta="scrollToCta" />
     <PhilosophySection />
     <TweetTestimonials />
-    <FeaturesSection />
     <CustomerSection />
     <FaqSection />
     <CtaSection ref="ctaSectionRef" />

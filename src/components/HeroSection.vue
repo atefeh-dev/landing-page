@@ -1,6 +1,5 @@
 <template>
-  <section class="hero" id="hero">
-    <!-- Floating document icons background -->
+  <section class="hero" id="hero" ref="sectionRef">
     <div class="hero__floating-icons">
       <img
         src="../assets/pagewithcurl.svg"
@@ -33,21 +32,30 @@
 
     <div class="hero__container">
       <div class="hero__content">
-        <div class="hero__badge">
+        <div
+          class="hero__badge animate-fade-up animate-delay-1"
+          :class="{ 'in-view': isVisible }"
+        >
           <span class="hero__badge--news">
             <img src="../assets/green-dot.svg" alt="" />
-            <span> چه خبر؟ </span>
+            <span>چه خبر؟</span>
           </span>
-          <span> از امروز لیست انتظار باز است</span>
+          <span>از امروز لیست انتظار باز است</span>
         </div>
 
-        <h1 class="hero__title">
+        <h1
+          class="hero__title animate-fade-up animate-delay-2"
+          :class="{ 'in-view': isVisible }"
+        >
           اینجا، هر سند <br />
-          <span class="hero__title-highlight">یک مسیر مشخص </span>
+          <span class="hero__title-highlight">یک مسیر مشخص</span>
           دارد
         </h1>
 
-        <p class="hero__description">
+        <p
+          class="hero__description animate-fade-up animate-delay-3"
+          :class="{ 'in-view': isVisible }"
+        >
           ما زونکن را ساختیم چون سال‌ها با اسناد، قراردادها و فایل‌هایی کار
           کردیم که هیچ مسیر مشخصی نداشتند. زونکن تلاشی است برای اینکه اسناد، از
           همان ابتدا در مسیر درست قرار بگیرند.
@@ -55,11 +63,18 @@
 
         <EmailForm @submit="handleSubmit" />
 
-        <p class="hero__note">هیچ وقت اسپم ارسال نمی‌کنیم. خیالتون راحت</p>
+        <p
+          class="hero__note animate-fade-up animate-delay-5"
+          :class="{ 'in-view': isVisible }"
+        >
+          هیچ وقت اسپم ارسال نمی‌کنیم. خیالتون راحت
+        </p>
       </div>
 
-      <!-- Browser mockup showing the demo -->
-      <div class="hero__visual">
+      <div
+        class="hero__visual animate-fade-up animate-delay-6"
+        :class="{ 'in-view': isVisible }"
+      >
         <img
           src="/src/assets/demo.png"
           alt="نمایی از زونکن"
@@ -71,66 +86,17 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import EmailForm from "./EmailForm.vue";
+import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
-const emit = defineEmits(["scroll-to-cta"]);
+defineEmits(["scroll-to-cta"]);
 
-const email = ref("");
-const touched = ref(false);
-const isSubmitting = ref(false);
+// threshold 0 so hero triggers immediately on mount
+const sectionRef = ref(null);
+const { isVisible } = useScrollAnimation(sectionRef, 0);
 
-// Email validation regex
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-// Computed validation
-const isEmailValid = computed(() => {
-  if (!email.value) return false;
-  return emailRegex.test(email.value);
-});
-
-const showError = computed(() => {
-  return touched.value && !isEmailValid.value && email.value.length > 0;
-});
-
-const errorMessage = computed(() => {
-  if (!touched.value || !email.value) return "";
-  if (!isEmailValid.value) return "لطفاً یک آدرس ایمیل معتبر وارد کنید";
-  return "";
-});
-
-// Handle blur event
-const handleBlur = () => {
-  touched.value = true;
-};
-
-// Handle button click
-const handleSubmit = () => {
-  touched.value = true;
-
-  if (!isEmailValid.value) {
-    // Don't proceed if email is invalid
-    return;
-  }
-
-  isSubmitting.value = true;
-
-  // Emit the event to parent
-  emit("scroll-to-cta", email.value);
-
-  // Reset after a short delay (simulating submission)
-  setTimeout(() => {
-    isSubmitting.value = false;
-  }, 1000);
-};
-
-// Handle input change
-const handleInput = () => {
-  // Only show validation if user has already touched the field
-  if (!touched.value && email.value.length > 0) {
-    touched.value = true;
-  }
-};
+const handleSubmit = () => {};
 </script>
 
 <style lang="scss" scoped>
@@ -142,12 +108,10 @@ const handleInput = () => {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background: #0a0a0a; // Pure dark - establishes foundation
-
+  background: #0a0a0a;
   position: relative;
   overflow: hidden;
 
-  // Floating document icons
   &__floating-icons {
     position: absolute;
     inset: 0;
@@ -170,7 +134,6 @@ const handleInput = () => {
       animation-duration: 18s;
       transform: rotate(-15deg);
     }
-
     &--2 {
       top: 9%;
       left: 25%;
@@ -180,7 +143,6 @@ const handleInput = () => {
       width: 60px;
       height: 60px;
     }
-
     &--3 {
       top: 15%;
       left: 75%;
@@ -190,7 +152,6 @@ const handleInput = () => {
       width: 70px;
       height: 70px;
     }
-
     &--4 {
       top: 11%;
       right: 8%;
@@ -198,7 +159,6 @@ const handleInput = () => {
       animation-duration: 24s;
       transform: rotate(12deg);
     }
-
     &--5 {
       top: 22%;
       left: 18%;
@@ -208,7 +168,6 @@ const handleInput = () => {
       width: 65px;
       height: 65px;
     }
-
     &--6 {
       top: 28%;
       right: 15%;
@@ -218,7 +177,6 @@ const handleInput = () => {
       width: 75px;
       height: 75px;
     }
-
     &--7 {
       top: 14%;
       right: 62%;
@@ -247,11 +205,10 @@ const handleInput = () => {
     max-width: 700px;
   }
 
+  // FIX: removed duplicate font-size + font-weight declarations
   &__badge {
     display: inline-flex;
     align-items: center;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-medium;
     gap: 0.5rem;
     padding: 0.25rem 0.625rem;
     border: 1px solid $color-border-primary;
@@ -261,7 +218,6 @@ const handleInput = () => {
     font-weight: 600;
     margin-bottom: $spacing-lg;
     backdrop-filter: blur(10px);
-    animation: fadeInUp 0.6s ease-out 0.1s backwards;
 
     &--news {
       display: inline-flex;
@@ -280,245 +236,58 @@ const handleInput = () => {
     line-height: 1.2;
     margin-bottom: $spacing-md;
     letter-spacing: -0.02em;
-    animation: fadeInUp 0.6s ease-out 0.2s backwards;
     color: $color-text-primary;
   }
 
   &__title-highlight {
     color: $color-accent-primary;
-    position: relative;
     display: inline-block;
   }
 
+  // FIX: removed redundant margin-left/right auto — text-align: center on parent handles it
   &__description {
     font-size: $font-size-xl;
-    font-weight: $font-weight-regular;
     line-height: 1.6;
     color: #e9d7fe;
     margin-bottom: $spacing-md;
-    margin-left: auto;
-    margin-right: auto;
-    animation: fadeInUp 0.6s ease-out 0.3s backwards;
-  }
-
-  &__cta {
-    display: flex;
-    gap: $spacing-md;
-    margin-bottom: $spacing-xs;
-    animation: fadeInUp 0.6s ease-out 0.4s backwards;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: flex-start;
-    width: 100%;
-    max-width: 700px;
-
-    .btn {
-      flex-shrink: 0;
-      white-space: nowrap;
-
-      &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-    }
-  }
-
-  &__input-wrapper {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    min-width: 0;
-  }
-
-  &__email-input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    font-family: inherit;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid $color-border-medium;
-    border-radius: $radius-md;
-    color: $color-text-primary;
-    transition: $transition-base;
-    text-align: right;
-
-    &::placeholder {
-      color: $color-text-tertiary;
-    }
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: $color-border-strong;
-    }
-
-    &:focus {
-      outline: none;
-      background: rgba(255, 255, 255, 0.1);
-      border-color: $color-accent-primary;
-      box-shadow: 0 0 0 3px rgba(252, 192, 21, 0.1);
-    }
-
-    &--error {
-      border-color: #ef4444;
-
-      &:focus {
-        border-color: #ef4444;
-        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-      }
-    }
-  }
-
-  &__error-message {
-    font-size: 0.875rem;
-    color: #ef4444;
-    margin: 0;
-    text-align: right;
-    animation: slideDown 0.2s ease-out;
   }
 
   &__note {
     font-size: 0.875rem;
     color: $color-text-tertiary;
-    animation: fadeInUp 0.6s ease-out 0.5s backwards;
     margin-top: 0.25rem;
     text-align: right;
   }
 
-  // Browser mockup
   &__visual {
-    position: relative;
-    animation: fadeInUp 0.6s ease-out 0.6s backwards;
     width: 100%;
     max-width: 900px;
   }
 
-  &__browser {
-    background: $color-bg-secondary;
-    border-radius: $radius-lg;
-    overflow: hidden;
-    box-shadow: $shadow-xl;
-    border: 1px solid $color-border-subtle;
-  }
-
-  &__browser-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.75rem 1rem;
-    background: rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid $color-border-subtle;
-  }
-
-  &__browser-dots {
-    display: flex;
-    gap: 0.5rem;
-    flex-shrink: 0;
-  }
-
-  &__dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-
-    &--red {
-      background: #ff5f57;
-    }
-
-    &--yellow {
-      background: #ffbd2e;
-    }
-
-    &--green {
-      background: #28c840;
-    }
-  }
-
-  &__browser-controls {
-    display: flex;
-    gap: 0.5rem;
-    color: $color-text-tertiary;
-    flex-shrink: 0;
-
-    svg {
-      opacity: 0.6;
-    }
-  }
-
-  &__browser-url {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: $radius-sm;
-    color: $color-text-tertiary;
-    font-size: 0.875rem;
-    min-width: 0;
-
-    span {
-      flex: 1;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    svg {
-      flex-shrink: 0;
-      opacity: 0.6;
-    }
-  }
-
-  &__browser-actions {
-    display: flex;
-    gap: 0.5rem;
-    color: $color-text-tertiary;
-    flex-shrink: 0;
-
-    svg {
-      opacity: 0.6;
-    }
-  }
-
-  &__browser-content {
-    background: rgba(255, 255, 255, 0.02);
-    aspect-ratio: 16 / 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
   &__demo-image {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
     opacity: 0.9;
   }
 }
 
-// Tablet
 @media (max-width: $breakpoint-lg) {
   .hero {
     &__content {
       max-width: 600px;
     }
-
     &__visual {
       max-width: 700px;
     }
-
     &__icon {
       width: 60px;
       height: 60px;
-
       &--2,
       &--5 {
         width: 50px;
         height: 50px;
       }
-
       &--3,
       &--7 {
         width: 55px;
@@ -528,21 +297,6 @@ const handleInput = () => {
   }
 }
 
-// Medium tablets - keep side-by-side layout
-@media (max-width: $breakpoint-md) and (min-width: calc($breakpoint-sm + 1px)) {
-  .hero {
-    &__cta {
-      gap: $spacing-sm;
-    }
-
-    &__email-input {
-      padding: 0.75rem 0.875rem;
-      font-size: 0.9375rem;
-    }
-  }
-}
-
-// Mobile
 @media (max-width: $breakpoint-sm) {
   .hero {
     padding-top: 6rem;
@@ -552,7 +306,6 @@ const handleInput = () => {
       padding: 0 1.5rem;
       gap: $spacing-xl;
     }
-
     &__content {
       max-width: 100%;
     }
@@ -567,95 +320,20 @@ const handleInput = () => {
       margin-bottom: $spacing-lg;
     }
 
-    &__cta {
-      flex-direction: column;
-      gap: $spacing-sm;
-      width: 100%;
-      align-items: stretch;
-
-      .btn {
-        width: 100%;
-      }
-    }
-
-    &__input-wrapper {
-      width: 100%;
-    }
-
-    &__email-input {
-      width: 100%;
-      padding: 0.75rem 1rem;
-    }
-
     &__icon {
       width: 50px;
       height: 50px;
       opacity: 0.3;
-
       &--2,
       &--5 {
         width: 40px;
         height: 40px;
       }
-
       &--3,
       &--6,
       &--7 {
-        display: none; // Hide some icons on mobile to reduce clutter
+        display: none;
       }
-    }
-
-    &__browser-header {
-      padding: 0.5rem;
-      gap: 0.5rem;
-    }
-
-    &__browser-controls,
-    &__browser-actions {
-      display: none; // Hide on mobile for cleaner look
-    }
-
-    &__browser-url {
-      padding: 0.375rem 0.75rem;
-      font-size: 0.75rem;
-    }
-
-    &__dot {
-      width: 10px;
-      height: 10px;
-    }
-  }
-}
-
-// Extra small mobile
-@media (max-width: 375px) {
-  .hero {
-    &__container {
-      padding: 0 1rem;
-    }
-
-    &__content {
-      max-width: 100%;
-    }
-
-    &__badge {
-      font-size: 0.75rem;
-      padding: 0.25rem 0.5rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    &__input-wrapper {
-      width: 100%;
-    }
-
-    &__email-input {
-      font-size: 0.875rem;
-      padding: 0.625rem 0.875rem;
-    }
-
-    &__browser-url span {
-      font-size: 0.7rem;
     }
   }
 }

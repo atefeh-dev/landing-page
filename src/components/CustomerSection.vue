@@ -2,18 +2,29 @@
   <section class="section section--customers" id="customers" ref="sectionRef">
     <div class="section__container">
       <div class="customers">
-        <!-- Content -->
-        <div class="customers__content" :class="{ 'in-view': isVisible }">
-          <span class="customers__badge" :class="{ 'in-view': isVisible }"
-            >مشتریان</span
+        <div
+          class="customers__content animate-fade-up"
+          :class="{ 'in-view': isVisible }"
+        >
+          <span
+            class="section__badge animate-slide-down animate-delay-1"
+            :class="{ 'in-view': isVisible }"
           >
+            مشتریان
+          </span>
 
-          <h2 class="customers__title" :class="{ 'in-view': isVisible }">
+          <h2
+            class="customers__title animate-fade-up animate-delay-2"
+            :class="{ 'in-view': isVisible }"
+          >
             برای کسانی که می‌خواهند
             <span class="customers__title-highlight">منظم‌تر کار کنند</span>
           </h2>
 
-          <div class="customers__description" :class="{ 'in-view': isVisible }">
+          <div
+            class="customers__description animate-fade-up animate-delay-3"
+            :class="{ 'in-view': isVisible }"
+          >
             <p>
               زونکن امروز بیشتر برای افراد مستقل و کسب‌وکارهای کوچک طراحی شده؛
               جایی که نظم در اسناد، تفاوت بزرگی ایجاد می‌کند.
@@ -24,8 +35,11 @@
             </p>
           </div>
         </div>
-        <!-- Dashboard Image -->
-        <div class="customers__visual" :class="{ 'in-view': isVisible }">
+
+        <div
+          class="customers__visual animate-fade-up animate-delay-4"
+          :class="{ 'in-view': isVisible }"
+        >
           <div class="customers__image-wrapper">
             <img
               :src="DashboardImg"
@@ -53,7 +67,6 @@ const { isVisible } = useScrollAnimation(sectionRef);
 
 .section--customers {
   background: $color-bg-primary;
-  padding: $spacing-3xl 0;
   position: relative;
   overflow: hidden;
 }
@@ -62,22 +75,45 @@ const { isVisible } = useScrollAnimation(sectionRef);
   display: flex;
   align-items: center;
   gap: $spacing-3xl;
-  position: relative;
+
+  &__content {
+    flex: 0 0 auto;
+    max-width: 600px;
+    width: 100%;
+    padding-right: 2rem;
+    text-align: right;
+  }
+
+  &__title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: $font-weight-bold;
+    line-height: 1.3;
+    margin-bottom: $spacing-lg;
+    color: $color-text-primary;
+  }
+
+  &__title-highlight {
+    color: $color-accent-primary;
+    display: block;
+  }
+
+  &__description {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: $color-text-secondary;
+
+    p {
+      margin-bottom: $spacing-md;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 
   &__visual {
     flex: 0 0 50%;
     position: relative;
     margin-left: -5%;
-    max-width: none;
-    opacity: 0;
-    transform: translateY(20px);
-    transition:
-      opacity 0.6s ease-out,
-      transform 0.6s ease-out;
-
-    &.in-view {
-      animation: fadeInUp 0.6s ease-out 0.2s forwards;
-    }
   }
 
   &__image-wrapper {
@@ -93,7 +129,6 @@ const { isVisible } = useScrollAnimation(sectionRef);
       rgba(255, 255, 255, 0.02) 100%
     );
 
-    // Gradient overlay from left
     &::before {
       content: "";
       position: absolute;
@@ -117,7 +152,6 @@ const { isVisible } = useScrollAnimation(sectionRef);
       z-index: 2;
     }
 
-    // Subtle accent glow
     &::after {
       content: "";
       position: absolute;
@@ -142,119 +176,8 @@ const { isVisible } = useScrollAnimation(sectionRef);
     position: relative;
     z-index: 0;
   }
-
-  &__content {
-    flex: 0 0 auto;
-    width: 100%;
-    max-width: 600px;
-    padding-right: 2rem;
-    text-align: right;
-    opacity: 0;
-    transform: translateY(20px);
-    transition:
-      opacity 0.6s ease-out,
-      transform 0.6s ease-out;
-
-    &.in-view {
-      animation: fadeInUp 0.6s ease-out forwards;
-    }
-  }
-
-  &__badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.5rem 1.25rem;
-    background: linear-gradient(
-      135deg,
-      rgba(20, 52, 203, 0.15) 0%,
-      rgba(20, 52, 203, 0.08) 100%
-    );
-    border: 1px solid rgba(20, 52, 203, 0.3);
-    border-radius: $radius-full;
-    color: #6b8afd;
-    font-size: 0.9375rem;
-    font-weight: $font-weight-semibold;
-    margin-bottom: $spacing-lg;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition:
-      opacity 0.3s ease-out,
-      transform 0.3s ease-out;
-
-    &.in-view {
-      animation: slideDown 0.3s ease-out forwards;
-    }
-  }
-
-  &__title {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: $font-weight-bold;
-    line-height: 1.3;
-    margin-bottom: $spacing-lg;
-    color: $color-text-primary;
-    opacity: 0;
-    transform: translateY(20px);
-    transition:
-      opacity 0.6s ease-out,
-      transform 0.6s ease-out;
-
-    &.in-view {
-      animation: fadeInUp 0.6s ease-out 0.1s forwards;
-    }
-  }
-
-  &__title-highlight {
-    color: $color-accent-primary;
-    display: block;
-  }
-
-  &__description {
-    font-size: 1.125rem;
-    line-height: 1.8;
-    color: $color-text-secondary;
-    opacity: 0;
-    transform: translateY(20px);
-    transition:
-      opacity 0.6s ease-out,
-      transform 0.6s ease-out;
-
-    &.in-view {
-      animation: fadeInUp 0.6s ease-out 0.15s forwards;
-    }
-
-    p {
-      margin-bottom: $spacing-md;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
 }
 
-// Tablet
 @media (max-width: $breakpoint-lg) {
   .customers {
     gap: $spacing-2xl;
@@ -263,7 +186,6 @@ const { isVisible } = useScrollAnimation(sectionRef);
       flex: 0 0 45%;
       margin-left: -3%;
     }
-
     &__content {
       max-width: 500px;
       padding-right: 1.5rem;
@@ -276,7 +198,6 @@ const { isVisible } = useScrollAnimation(sectionRef);
 
     &__description {
       font-size: 1.0625rem;
-
       p {
         margin-bottom: $spacing-sm;
       }
@@ -284,7 +205,6 @@ const { isVisible } = useScrollAnimation(sectionRef);
   }
 }
 
-// Tablet Portrait - Stack Layout
 @media (max-width: $breakpoint-md) {
   .section--customers {
     padding: $spacing-2xl 0;
@@ -299,15 +219,13 @@ const { isVisible } = useScrollAnimation(sectionRef);
       flex: none;
       width: 100%;
       max-width: 600px;
-      margin-left: 0;
+      // FIX: was margin-left: 0 followed by margin: 0 auto (conflict) — use margin only
       margin: 0 auto;
     }
 
     &__image-wrapper {
       border-radius: $radius-xl;
       border: 1px solid $color-border-subtle;
-
-      // Remove left fade on mobile
       &::before {
         display: none;
       }
@@ -324,22 +242,15 @@ const { isVisible } = useScrollAnimation(sectionRef);
     &__badge {
       margin-bottom: $spacing-md;
     }
-
     &__title {
       font-size: clamp(1.5rem, 5vw, 1.875rem);
     }
-
     &__title-highlight {
       display: inline;
-    }
-
-    &__description {
-      margin: 0 auto;
     }
   }
 }
 
-// Mobile
 @media (max-width: $breakpoint-sm) {
   .section--customers {
     padding: $spacing-xl 0;
@@ -352,7 +263,6 @@ const { isVisible } = useScrollAnimation(sectionRef);
     &__visual {
       max-width: 100%;
     }
-
     &__image-wrapper {
       border-radius: $radius-md;
     }
@@ -369,25 +279,9 @@ const { isVisible } = useScrollAnimation(sectionRef);
 
     &__description {
       font-size: 1rem;
-
       p {
         margin-bottom: $spacing-sm;
       }
-    }
-  }
-}
-
-// Extra small mobile
-@media (max-width: 375px) {
-  .customers {
-    padding: 0 1rem;
-
-    &__title {
-      font-size: 1.5rem;
-    }
-
-    &__description {
-      font-size: 0.9375rem;
     }
   }
 }
