@@ -67,13 +67,13 @@
         </p>
       </div>
 
-      <div class="hero__visual" :class="reveal(6)">
+      <!-- <div class="hero__visual" :class="reveal(6)">
         <img
           src="@/assets/images/demo.png"
           alt="نمایی از زونکن"
           class="hero__demo-image"
         />
-      </div>
+      </div> -->
     </div>
   </section>
 </template>
@@ -118,14 +118,14 @@ const handleSubmit = () => {};
     animation: float 20s infinite ease-in-out;
 
     &--1 {
-      top: 13%;
-      left: 8%;
+      top: 31%;
+      left: 15%;
       animation-delay: 0s;
       animation-duration: 18s;
       transform: rotate(-15deg);
     }
     &--2 {
-      top: 9%;
+      top: 20%;
       left: 25%;
       animation-delay: -3s;
       animation-duration: 22s;
@@ -134,8 +134,8 @@ const handleSubmit = () => {};
       height: 60px;
     }
     &--3 {
-      top: 15%;
-      left: 75%;
+      top: 30%;
+      left: 64%;
       animation-delay: -6s;
       animation-duration: 20s;
       transform: rotate(-25deg);
@@ -143,15 +143,15 @@ const handleSubmit = () => {};
       height: 70px;
     }
     &--4 {
-      top: 11%;
-      right: 8%;
+      top: 23%;
+      right: 21%;
       animation-delay: -9s;
       animation-duration: 24s;
       transform: rotate(12deg);
     }
     &--5 {
-      top: 22%;
-      left: 18%;
+      top: 42%;
+      left: 26%;
       animation-delay: -12s;
       animation-duration: 19s;
       transform: rotate(18deg);
@@ -159,8 +159,8 @@ const handleSubmit = () => {};
       height: 65px;
     }
     &--6 {
-      top: 28%;
-      right: 15%;
+      top: 44%;
+      right: 23%;
       animation-delay: -15s;
       animation-duration: 21s;
       transform: rotate(-8deg);
@@ -168,8 +168,8 @@ const handleSubmit = () => {};
       height: 75px;
     }
     &--7 {
-      top: 14%;
-      right: 62%;
+      top: 22%;
+      right: 60%;
       animation-delay: -18s;
       animation-duration: 23s;
       transform: rotate(22deg);
