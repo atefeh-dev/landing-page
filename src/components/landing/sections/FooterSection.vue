@@ -7,7 +7,7 @@
         </div>
 
         <div class="footer__logo" :class="slideDown()">
-          <img src="../assets/brand/logo.svg" alt="لوگوی زونکن" />
+          <img src="@/assets/brand/logo.svg" alt="لوگوی زونکن" />
         </div>
 
         <div class="footer__social" :class="reveal(2)">
@@ -18,7 +18,7 @@
             class="footer__social-link"
             aria-label="لینکدین"
           >
-            <img src="../assets/social/social-linkedin.svg" alt="لینکدین" />
+            <img src="@/assets/social/social-linkedin.svg" alt="لینکدین" />
           </a>
           <a
             href="https://www.instagram.com/zoonkanapp"
@@ -27,7 +27,7 @@
             class="footer__social-link"
             aria-label="اینستاگرام"
           >
-            <img src="../assets/social/social-instagram.svg" alt="اینستاگرام" />
+            <img src="@/assets/social/social-instagram.svg" alt="اینستاگرام" />
           </a>
           <a
             href="https://x.com/doclastapp"
@@ -36,7 +36,7 @@
             class="footer__social-link"
             aria-label="توییتر"
           >
-            <img src="../assets/social/x-social.svg" alt="توییتر" />
+            <img src="@/assets/social/x-social.svg" alt="توییتر" />
           </a>
         </div>
       </div>

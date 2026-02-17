@@ -53,7 +53,10 @@ import { ref } from "vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 const sectionRef = ref(null);
-const { reveal, slideDown } = useScrollAnimation(sectionRef);
+
+// FIX: threshold 0.1 (not default 0.3) → triggers when just 10% visible
+// So animations start earlier when scrolling fast or jumping via nav
+const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
 </script>
 
 <style lang="scss" scoped>
@@ -120,9 +123,6 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
   .philosophy__card-text {
     font-size: 1rem;
   }
-  .philosophy__text {
-    font-size: 1.125rem;
-  }
 }
 
 @media (max-width: $breakpoint-md) {
@@ -149,9 +149,6 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
   }
   .philosophy__card-text {
     font-size: 0.9375rem;
-  }
-  .philosophy__text {
-    font-size: 1.0625rem;
   }
 }
 
@@ -181,11 +178,6 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
   .philosophy__card-text {
     font-size: 0.875rem;
     line-height: 1.6;
-  }
-  .philosophy__text {
-    font-size: 1rem;
-    line-height: 1.7;
-    padding: 0;
   }
 }
 </style>
