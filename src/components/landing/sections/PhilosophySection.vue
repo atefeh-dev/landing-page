@@ -39,9 +39,10 @@
         </div>
       </div>
 
-      <p class="philosophy__text" :class="reveal(4)">
-        این‌ها چیزهایی بود که خودمان تجربه کردیم، قبل از اینکه به فکر ساخت
-        <span class="highlight">زونکن</span> بیفتیم.
+      <p class="section__conclusion" :class="reveal(4)">
+        <span> نتیجه؟</span><br />
+        سوءتفاهم‌ها، اختلاف، و بی اعتمادی از جایی شروع می‌شوند که
+        <span class="highlight">سندها مسیر مشخصی ندارند.</span>
       </p>
     </div>
   </section>
@@ -96,16 +97,6 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
   color: #f7f7f7;
   margin: 0;
   font-weight: $font-weight-semibold;
-}
-
-.philosophy__text {
-  font-size: $font-size-2xl;
-  line-height: 1.8;
-  color: $color-text-secondary;
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: center;
-  padding: 0 $spacing-lg;
 }
 
 @media (max-width: $breakpoint-lg) {

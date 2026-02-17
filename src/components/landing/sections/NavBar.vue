@@ -18,6 +18,7 @@
 
       <div class="nav__menu">
         <a href="#philosophy" class="nav__link">مسئله</a>
+        <a href="#testimonials" class="nav__link"> تجربه ها</a>
         <a href="#approach" class="nav__link">رویکرد</a>
         <a href="#features" class="nav__link">ویژگی‌ها</a>
         <a href="#customers" class="nav__link">مخاطبان</a>

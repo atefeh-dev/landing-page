@@ -96,6 +96,10 @@
           </div>
         </div>
       </div>
+
+      <p class="section__conclusion" :class="reveal(4)">
+        وقتی این تجربه‌ها تکرار می‌شود، دیگر اتفاق نیست. یک الگوست.
+      </p>
     </div>
   </section>
 </template>
@@ -258,8 +262,8 @@ const resumeRow2 = (e) => {
 }
 
 .tweets-scroller {
-  margin-top: $spacing-2xl;
   position: relative;
+  margin-bottom: $spacing-3xl;
 
   &::before,
   &::after {
