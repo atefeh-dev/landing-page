@@ -17,7 +17,7 @@
       </div>
 
       <div class="nav__menu">
-        <a href="#philosophy" class="nav__link">فلسفه محصول</a>
+        <a href="#philosophy" class="nav__link">مسئله</a>
         <a href="#approach" class="nav__link">رویکرد</a>
         <a href="#features" class="nav__link">ویژگی‌ها</a>
         <a href="#customers" class="nav__link">مخاطبان</a>

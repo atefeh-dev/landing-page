@@ -2,10 +2,10 @@
   <section class="section section--philosophy" id="philosophy" ref="sectionRef">
     <div class="section__container">
       <div class="section__header section__header--center">
-        <span class="section__badge" :class="slideDown()">فلسفه</span>
+        <span class="section__badge" :class="slideDown()">مسئله</span>
         <div class="section__title-wrapper" :class="reveal(1)">
           <h2 class="section__title">
-            مشکل فقط <span class="highlight">نگهداری فایل</span> نیست
+            مسئله فقط <span class="highlight"> یک قرارداد</span> نیست.
           </h2>
         </div>
       </div>
@@ -16,7 +16,7 @@
             <img src="@/assets/ui/notion.svg" alt="Notion" />
           </div>
           <p class="philosophy__card-text">
-            اصلاحاتی که در پیام‌ها و ایمیل‌ها گم شدند.
+            خیلی از همکاری‌ها بدون سند شروع می‌شوند.
           </p>
         </div>
 
@@ -25,7 +25,7 @@
             <img src="@/assets/ui/slack.svg" alt="Slack" />
           </div>
           <p class="philosophy__card-text">
-            فایل‌هایی که نمی‌دانستیم آخرین نسخه‌شان کدام است.
+            خیلی از قرارداده با عجله نوشته می‌شوند.
           </p>
         </div>
 
@@ -34,7 +34,7 @@
             <img src="@/assets/ui/slack.svg" alt="Slack" />
           </div>
           <p class="philosophy__card-text">
-            قراردادهایی که شفاهی شروع شدند و بعداً سوءتفاهم ساختند.
+            خیلی از فایل‌ها میان پیام‌ها، ایمیل‌ها و نسخه‌های مختلف گم می‌شوند.
           </p>
         </div>
       </div>

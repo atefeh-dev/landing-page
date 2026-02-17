@@ -51,7 +51,7 @@
         <h1 class="hero__title" :class="reveal(2)">
           اینجا، هر سند <br />
           <span class="hero__title-highlight">یک مسیر مشخص</span>
-          دارد
+          دارد.
         </h1>
 
         <p class="hero__description" :class="reveal(3)">
@@ -63,7 +63,7 @@
         <EmailForm @submit="handleSubmit" />
 
         <p class="hero__note" :class="reveal(5)">
-          هیچ وقت اسپم ارسال نمی‌کنیم. خیالتون راحت
+          با ثبت ایمیل، از زمان دسترسی و خبرهای رونمایی باخبر می‌شوید.
         </p>
       </div>
 
@@ -125,7 +125,7 @@ const handleSubmit = () => {};
       transform: rotate(-15deg);
     }
     &--2 {
-      top: 20%;
+      top: 38%;
       left: 25%;
       animation-delay: -3s;
       animation-duration: 22s;
@@ -150,8 +150,8 @@ const handleSubmit = () => {};
       transform: rotate(12deg);
     }
     &--5 {
-      top: 42%;
-      left: 26%;
+      top: 57%;
+      left: 21%;
       animation-delay: -12s;
       animation-duration: 19s;
       transform: rotate(18deg);
