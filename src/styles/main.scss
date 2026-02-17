@@ -747,8 +747,11 @@
   }
 }
 
-// Section base styles
 .section {
+  min-height: calc(100vh - $nav-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: $spacing-3xl 0;
   position: relative;
 
@@ -764,7 +767,6 @@
 
   &__header {
     position: relative;
-
     &--center {
       text-align: center;
     }
@@ -797,8 +799,7 @@
   &__title {
     font-size: clamp(2rem, 4vw, 2.1rem);
     font-weight: 700;
-    // margin-bottom: $spacing-md;
-    margin-bottom: $spacing-3xl;
+    margin-bottom: $spacing-md;
   }
 
   &__subtitle {
@@ -818,6 +819,7 @@
 
 @media (max-width: $breakpoint-sm) {
   .section {
+    min-height: auto; // ← content drives height on mobile
     padding: $spacing-xl 0;
   }
 }

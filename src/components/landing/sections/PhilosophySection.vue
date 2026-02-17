@@ -99,7 +99,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
 }
 
 .philosophy__text {
-  font-size: $font-size-3xl;
+  font-size: $font-size-2xl;
   line-height: 1.8;
   color: $color-text-secondary;
   max-width: 700px;
