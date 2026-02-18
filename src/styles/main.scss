@@ -14,7 +14,9 @@
 // Composable adds [data-animate] attribute and toggles .is-visible
 // ─────────────────────────────────────────────────────────────
 
-[data-animate] {
+// Scoped to .section children only — never affects nav or fixed UI elements
+.section [data-animate],
+footer [data-animate] {
   opacity: 0;
   transform: translateY(20px);
   transition:
@@ -32,22 +34,28 @@
   }
 }
 
-[data-delay="1"].is-visible {
+.section [data-delay="1"].is-visible,
+footer [data-delay="1"].is-visible {
   transition-delay: 0.1s;
 }
-[data-delay="2"].is-visible {
+.section [data-delay="2"].is-visible,
+footer [data-delay="2"].is-visible {
   transition-delay: 0.15s;
 }
-[data-delay="3"].is-visible {
+.section [data-delay="3"].is-visible,
+footer [data-delay="3"].is-visible {
   transition-delay: 0.2s;
 }
-[data-delay="4"].is-visible {
+.section [data-delay="4"].is-visible,
+footer [data-delay="4"].is-visible {
   transition-delay: 0.25s;
 }
-[data-delay="5"].is-visible {
+.section [data-delay="5"].is-visible,
+footer [data-delay="5"].is-visible {
   transition-delay: 0.3s;
 }
-[data-delay="6"].is-visible {
+.section [data-delay="6"].is-visible,
+footer [data-delay="6"].is-visible {
   transition-delay: 0.35s;
 }
 
@@ -86,14 +94,14 @@
   // ── Badge ──────────────────────────────────────────────────
   &__badge {
     display: inline-block;
-    padding: 0.625rem 0.75rem;
+    padding: 0.5rem 0.75rem;
     background: $color-badge-fill;
     border: 1px solid $color-badge-stroke;
     border-radius: $radius-full;
     color: $color-badge-text;
-    font-size: 0.875rem;
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
     font-weight: 600;
-    margin-bottom: $spacing-xl;
+    margin-bottom: $spacing-lg;
     backdrop-filter: blur(10px);
   }
 
@@ -111,9 +119,11 @@
 
   // ── Title ──────────────────────────────────────────────────
   &__title {
-    font-size: clamp(2rem, 4vw, 2.1rem);
+    // Scales from 1.375rem (22px) on small phones up to 2.1rem (33.6px) on desktop
+    font-size: clamp(1.375rem, 4vw, 2.1rem);
     font-weight: 700;
-    margin-bottom: $spacing-3xl;
+    line-height: 1.3;
+    margin-bottom: $spacing-xl;
   }
 
   // ── Subtitle ───────────────────────────────────────────────
@@ -126,13 +136,14 @@
 
   // ── Conclusion ─────────────────────────────────────────────
   &__conclusion {
-    font-size: $font-size-2xl;
-    line-height: 1.8;
+    // Scales from 1rem (16px) on phones up to 1.5rem (24px) on desktop
+    font-size: clamp(1rem, 3vw, $font-size-2xl);
+    line-height: 1.75;
     color: $color-text-secondary;
     max-width: 700px;
     margin: 0 auto;
     text-align: center;
-    padding: 0 $spacing-lg;
+    padding: 0 $spacing-md;
   }
 }
 
@@ -166,9 +177,27 @@
   }
 }
 
+@media (max-width: $breakpoint-md) {
+  .section {
+    padding: $spacing-2xl 0;
+  }
+
+  .section__container {
+    padding: 0 1.5rem;
+  }
+}
+
 @media (max-width: $breakpoint-sm) {
   .section {
     min-height: auto;
     padding: $spacing-xl 0;
+  }
+
+  .section__container {
+    padding: 0 1.25rem;
+  }
+
+  .section__title {
+    margin-bottom: $spacing-lg;
   }
 }

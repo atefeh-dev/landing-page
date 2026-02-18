@@ -72,11 +72,6 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
 </script>
 
 <style lang="scss" scoped>
-// ── Section modifier ───────────────────────────────────────────
-// Only sets background color.
-// Centering (min-height, display:flex, justify-content:center, padding)
-// is fully handled by the shared .section block in main.scss.
-
 .section--operation {
   background: $color-bg-primary;
 }
@@ -146,7 +141,7 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: fill;
 }
 
 // ── Step indicators row ────────────────────────────────────────

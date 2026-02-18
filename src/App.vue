@@ -6,6 +6,7 @@
       <HeroSection />
       <PhilosophySection />
       <Tweetexperiences />
+      <ApproachSection />
       <OperationSection />
       <CustomersSection />
       <FaqSection />
@@ -27,7 +28,8 @@ import CustomersSection from "@/components/landing/sections/CustomerSection.vue"
 import FaqSection from "@/components/landing/sections/FaqSection.vue";
 import CtaSection from "@/components/landing/sections/CtaSection.vue";
 import FooterSection from "@/components/landing/sections/FooterSection.vue";
-import OperationSection from "./components/landing/sections/OperationSection.vue";
+import OperationSection from "@/components/landing/sections/OperationSection.vue";
+import ApproachSection from "@/components/landing/sections/ApproachSection.vue";
 
 const ctaRef = ref(null);
 
