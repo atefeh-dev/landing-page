@@ -1,16 +1,16 @@
 <template>
   <footer class="footer" ref="sectionRef">
     <div class="footer__container">
-      <div class="footer__content" :class="reveal()">
-        <div class="footer__brand" :class="reveal(1)">
+      <div class="footer__content" v-bind="reveal()">
+        <div class="footer__brand" v-bind="reveal(1)">
           <p class="footer__brand-text">با افتخار ساخت ایران</p>
         </div>
 
-        <div class="footer__logo" :class="slideDown()">
+        <div class="footer__logo" v-bind="slideDown()">
           <img src="@/assets/brand/logo.svg" alt="لوگوی زونکن" />
         </div>
 
-        <div class="footer__social" :class="reveal(2)">
+        <div class="footer__social" v-bind="reveal(2)">
           <a
             href="https://www.linkedin.com/company/zoonkan/"
             target="_blank"
@@ -61,16 +61,22 @@ const currentYear = computed(() => new Date().getFullYear());
 </script>
 
 <style lang="scss" scoped>
+// ── Block ──────────────────────────────────────────────────────
+
 .footer {
   background: $color-bg-secondary;
   border-top: 1px solid $color-border-subtle;
   padding: $spacing-2xl 0 $spacing-lg;
+
+  // ── Container ─────────────────────────────────────────────
 
   &__container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
   }
+
+  // ── Content row ───────────────────────────────────────────
 
   &__content {
     display: flex;
@@ -80,6 +86,8 @@ const currentYear = computed(() => new Date().getFullYear());
     padding-bottom: $spacing-xl;
     border-bottom: 1px solid $color-border-subtle;
   }
+
+  // ── Brand ─────────────────────────────────────────────────
 
   &__brand {
     flex: 1;
@@ -92,6 +100,8 @@ const currentYear = computed(() => new Date().getFullYear());
     margin: 0;
   }
 
+  // ── Logo ──────────────────────────────────────────────────
+
   &__logo {
     display: flex;
     align-items: center;
@@ -101,11 +111,14 @@ const currentYear = computed(() => new Date().getFullYear());
       width: 47px;
       height: auto;
       transition: $transition-base;
+
       &:hover {
         opacity: 0.8;
       }
     }
   }
+
+  // ── Social links ──────────────────────────────────────────
 
   &__social {
     flex: 1;
@@ -135,11 +148,14 @@ const currentYear = computed(() => new Date().getFullYear());
     &:hover {
       background: rgba(255, 255, 255, 0.1);
       transform: translateY(-2px);
+
       img {
         opacity: 1;
       }
     }
   }
+
+  // ── Bottom bar ────────────────────────────────────────────
 
   &__bottom {
     padding-top: $spacing-lg;
@@ -153,33 +169,43 @@ const currentYear = computed(() => new Date().getFullYear());
   }
 }
 
+// ── Responsive ─────────────────────────────────────────────────
+
 @media (max-width: $breakpoint-lg) {
   .footer {
     padding: $spacing-xl 0 $spacing-md;
+
     &__container {
       padding: 0 1.5rem;
     }
+
     &__content {
       gap: $spacing-lg;
       padding-bottom: $spacing-lg;
     }
+
     &__brand-text {
       font-size: 0.9375rem;
     }
+
     &__logo img {
       width: 42px;
     }
+
     &__social {
       gap: $spacing-sm;
     }
+
     &__social-link {
       width: 38px;
       height: 38px;
+
       img {
         width: 18px;
         height: 18px;
       }
     }
+
     &__bottom {
       padding-top: $spacing-md;
     }
@@ -189,45 +215,56 @@ const currentYear = computed(() => new Date().getFullYear());
 @media (max-width: $breakpoint-sm) {
   .footer {
     padding: $spacing-lg 0 $spacing-sm;
+
     &__container {
       padding: 0 1.5rem;
     }
+
     &__content {
       flex-direction: column;
       gap: $spacing-md;
       padding-bottom: $spacing-md;
       text-align: center;
     }
+
     &__brand {
       flex: none;
       width: 100%;
     }
+
     &__brand-text {
       font-size: 0.875rem;
     }
+
     &__logo {
       order: -1;
+
       img {
         width: 38px;
       }
     }
+
     &__social {
       flex: none;
       width: 100%;
       justify-content: center;
       gap: $spacing-sm;
     }
+
     &__social-link {
       width: 36px;
       height: 36px;
+
       img {
         width: 16px;
         height: 16px;
       }
     }
+
     &__bottom {
       padding-top: $spacing-sm;
     }
+
     &__copyright {
       font-size: 0.75rem;
     }
@@ -239,15 +276,19 @@ const currentYear = computed(() => new Date().getFullYear());
     &__container {
       padding: 0 1rem;
     }
+
     &__brand-text {
       font-size: 0.8125rem;
     }
+
     &__logo img {
       width: 35px;
     }
+
     &__social-link {
       width: 34px;
       height: 34px;
+
       img {
         width: 15px;
         height: 15px;

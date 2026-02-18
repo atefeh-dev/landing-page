@@ -1,19 +1,17 @@
-<!-- ─────────────────────────────────────────────
-     CustomersSection.vue
-────────────────────────────────────────────── -->
 <template>
   <section class="section section--customers" id="customers" ref="sectionRef">
     <div class="section__container">
       <div class="customers">
-        <div class="customers__content" :class="reveal()">
-          <span class="section__badge" :class="slideDown(1)">مخاطبان</span>
+        <!-- Text content -->
+        <div class="customers__content" v-bind="reveal()">
+          <span class="section__badge" v-bind="slideDown(1)">مخاطبان</span>
 
-          <h2 class="customers__title" :class="reveal(2)">
+          <h2 class="customers__title" v-bind="reveal(2)">
             برای کسانی که می‌خواهند
             <span class="customers__title-highlight">منظم‌تر کار کنند</span>
           </h2>
 
-          <div class="customers__description" :class="reveal(3)">
+          <div class="customers__description" v-bind="reveal(3)">
             <p>
               زونکن امروز بیشتر برای افراد مستقل و کسب‌وکارهای کوچک طراحی شده؛
               جایی که نظم در اسناد، تفاوت بزرگی ایجاد می‌کند.
@@ -25,7 +23,8 @@
           </div>
         </div>
 
-        <div class="customers__visual" :class="reveal(4)">
+        <!-- Dashboard image -->
+        <div class="customers__visual" v-bind="reveal(4)">
           <div class="customers__image-wrapper">
             <img
               :src="DashboardImg"
@@ -49,16 +48,22 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
 </script>
 
 <style lang="scss" scoped>
+// ── Section modifier ───────────────────────────────────────────
+
 .section--customers {
   background: $color-bg-primary;
   position: relative;
   overflow: hidden;
 }
 
+// ── Customers block ────────────────────────────────────────────
+
 .customers {
   display: flex;
   align-items: center;
   gap: $spacing-3xl;
+
+  // ── Content column ────────────────────────────────────────
 
   &__content {
     flex: 0 0 auto;
@@ -67,6 +72,8 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
     padding-right: 2rem;
     text-align: right;
   }
+
+  // ── Title ─────────────────────────────────────────────────
 
   &__title {
     font-size: clamp(1.75rem, 4vw, 2.5rem);
@@ -81,6 +88,8 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
     display: block;
   }
 
+  // ── Description ───────────────────────────────────────────
+
   &__description {
     font-size: 1.125rem;
     line-height: 1.8;
@@ -88,17 +97,22 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
 
     p {
       margin-bottom: $spacing-md;
+
       &:last-child {
         margin-bottom: 0;
       }
     }
   }
 
+  // ── Visual column ─────────────────────────────────────────
+
   &__visual {
     flex: 0 0 50%;
     position: relative;
     margin-left: -5%;
   }
+
+  // ── Image wrapper ─────────────────────────────────────────
 
   &__image-wrapper {
     position: relative;
@@ -113,6 +127,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
       rgba(255, 255, 255, 0.02) 100%
     );
 
+    // Left fade overlay
     &::before {
       content: "";
       position: absolute;
@@ -136,6 +151,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
       z-index: 2;
     }
 
+    // Tint overlay
     &::after {
       content: "";
       position: absolute;
@@ -153,6 +169,8 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
     }
   }
 
+  // ── Image ─────────────────────────────────────────────────
+
   &__image {
     width: 100%;
     height: auto;
@@ -162,23 +180,30 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
   }
 }
 
+// ── Responsive ─────────────────────────────────────────────────
+
 @media (max-width: $breakpoint-lg) {
   .customers {
     gap: $spacing-2xl;
+
     &__visual {
       flex: 0 0 45%;
       margin-left: -3%;
     }
+
     &__content {
       max-width: 500px;
       padding-right: 1.5rem;
     }
+
     &__title {
       font-size: clamp(1.5rem, 4vw, 2rem);
       margin-bottom: $spacing-md;
     }
+
     &__description {
       font-size: 1.0625rem;
+
       p {
         margin-bottom: $spacing-sm;
       }
@@ -190,23 +215,28 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
   .section--customers {
     padding: $spacing-2xl 0;
   }
+
   .customers {
     flex-direction: column;
     gap: $spacing-xl;
     padding: 0 1.5rem;
+
     &__visual {
       flex: none;
       width: 100%;
       max-width: 600px;
       margin: 0 auto;
     }
+
     &__image-wrapper {
       border-radius: $radius-xl;
       border: 1px solid $color-border-subtle;
+
       &::before {
         display: none;
       }
     }
+
     &__content {
       flex: none;
       max-width: 600px;
@@ -214,12 +244,11 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
       padding-right: 0;
       margin: 0 auto;
     }
-    &__badge {
-      margin-bottom: $spacing-md;
-    }
+
     &__title {
       font-size: clamp(1.5rem, 5vw, 1.875rem);
     }
+
     &__title-highlight {
       display: inline;
     }
@@ -230,25 +259,27 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
   .section--customers {
     padding: $spacing-xl 0;
   }
+
   .customers {
     padding: 0 1.5rem;
     gap: $spacing-lg;
+
     &__visual {
       max-width: 100%;
     }
+
     &__image-wrapper {
       border-radius: $radius-md;
     }
-    &__badge {
-      font-size: 0.875rem;
-      padding: 0.375rem 1rem;
-    }
+
     &__title {
       font-size: clamp(1.5rem, 6vw, 1.75rem);
       margin-bottom: $spacing-md;
     }
+
     &__description {
       font-size: 1rem;
+
       p {
         margin-bottom: $spacing-sm;
       }

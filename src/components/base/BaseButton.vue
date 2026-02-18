@@ -1,5 +1,4 @@
 <template>
-  <!-- FIX: v-bind="$attrs" comes FIRST so explicit props always take precedence -->
   <button
     v-bind="$attrs"
     class="btn"
@@ -47,9 +46,8 @@ defineProps({
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-size: 1rem;
-  font-weight: $font-weight-semibold;
   font-family: inherit;
+  font-weight: $font-weight-semibold;
   white-space: nowrap;
   border: none;
   border-radius: $radius-md;
@@ -58,8 +56,21 @@ defineProps({
   position: relative;
   overflow: hidden;
 
+  // ── Size modifiers (single source of truth for padding/font-size) ──
+
+  &--md {
+    padding: 0.625rem 1rem;
+    font-size: 0.9375rem;
+  }
+
+  &--lg {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  // ── Variant modifiers ──────────────────────────────────────
+
   &--primary {
-    padding: 0.75rem 1.25rem;
     background: $color-accent-primary;
     color: $color-bg-primary;
     box-shadow: $shadow-md;
@@ -81,6 +92,7 @@ defineProps({
       background: #ffd84d;
       transform: translateY(-2px);
       box-shadow: $shadow-accent;
+
       &::before {
         opacity: 1;
       }
@@ -92,7 +104,6 @@ defineProps({
   }
 
   &--secondary {
-    padding: 0.75rem 1.25rem;
     background: transparent;
     color: $color-text-secondary;
     border: 1px solid $color-border-medium;
@@ -103,15 +114,7 @@ defineProps({
     }
   }
 
-  &--md {
-    padding: 0.625rem 1rem;
-    font-size: 0.9375rem;
-  }
-
-  &--lg {
-    padding: 0.75rem 1.25rem;
-    font-size: 1rem;
-  }
+  // ── State modifiers ───────────────────────────────────────
 
   &:disabled,
   &--loading {
@@ -119,6 +122,8 @@ defineProps({
     cursor: not-allowed;
     pointer-events: none;
   }
+
+  // ── Elements ──────────────────────────────────────────────
 
   &__spinner {
     width: 14px;
@@ -128,12 +133,6 @@ defineProps({
     border-radius: 50%;
     animation: spin 0.65s linear infinite;
     flex-shrink: 0;
-  }
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
   }
 }
 </style>

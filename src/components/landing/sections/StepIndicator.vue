@@ -1,17 +1,18 @@
 <template>
-  <div class="step-indicator">
+  <div
+    class="step-indicator"
+    :class="{ 'step-indicator--completed': completed }"
+  >
     <div
       class="step-indicator__circle"
-      :class="{
-        'step-indicator__circle--completed': completed,
-      }"
+      :class="{ 'step-indicator__circle--completed': completed }"
       :style="circleStyle"
     >
       <img
-        ref="checkImage"
         v-if="completed"
         src="@/assets/icons/whitecheck.svg"
         class="step-indicator__check"
+        alt=""
       />
       <span v-else class="step-indicator__number" :style="numberStyle">
         {{ persianNumber }}
@@ -31,7 +32,6 @@
 
 <script setup>
 import { computed } from "vue";
-import CheckIcon from "@/assets/icons/whitecheck.svg";
 
 const props = defineProps({
   stepNumber: {
@@ -44,22 +44,20 @@ const props = defineProps({
   },
 });
 
-const persianNumber = computed(() => {
-  const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-  return String(props.stepNumber)
+const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+
+const persianNumber = computed(() =>
+  String(props.stepNumber)
     .split("")
     .map((d) => persianDigits[parseInt(d)])
-    .join("");
-});
+    .join(""),
+);
 
-// Progressive opacity: higher step numbers = brighter
+// Progressive opacity: step 1 = brightest, higher step index = more faded
+// step 1 → 0.65, step 2 → 0.52, step 3 → 0.39, step 4 → 0.26
 const numberOpacity = computed(() => {
   if (props.completed) return 1;
-
-  // Step 1: 0.35, Step 2: 0.45, Step 3: 0.55, Step 4: 0.65
-  const baseOpacity = 0.25;
-  const increment = 0.1;
-  return baseOpacity + props.stepNumber * increment;
+  return 0.65 - (props.stepNumber - 1) * 0.13;
 });
 
 const numberStyle = computed(() => ({
@@ -68,13 +66,13 @@ const numberStyle = computed(() => ({
 
 const circleStyle = computed(() => {
   if (props.completed) return {};
-  return {
-    borderColor: `rgba(255, 255, 255, ${numberOpacity.value * 0.4})`,
-  };
+  return { borderColor: `rgba(255, 255, 255, ${numberOpacity.value * 0.4})` };
 });
 </script>
 
 <style lang="scss" scoped>
+// ── Block ──────────────────────────────────────────────────────
+
 .step-indicator {
   display: flex;
   flex-direction: column;
@@ -83,13 +81,13 @@ const circleStyle = computed(() => {
   position: relative;
   flex: 1;
 
-  // Connector line
+  // Connector line between steps
   &::after {
     content: "";
     position: absolute;
-    top: 13px; // center of 44px circle
-    left: -43%; // start from center of THIS step
-    width: 100%; // go to next step center
+    top: 13px;
+    left: -43%;
+    width: 100%;
     height: 0;
     border-top: 2px dotted rgba(255, 255, 255, 0.2);
     transform: translateY(-50%);
@@ -100,9 +98,13 @@ const circleStyle = computed(() => {
     display: none;
   }
 
+  // ── Completed modifier (connector becomes green) ──────────
+
   &--completed::after {
-    border-color: $color-success;
+    border-color: $color-border-primary;
   }
+
+  // ── Circle element ────────────────────────────────────────
 
   &__circle {
     width: $spacing-md;
@@ -122,22 +124,34 @@ const circleStyle = computed(() => {
       border-color: $color-success;
       box-shadow: 0 0 0 4px rgba(68, 147, 109, 0.15);
     }
-    &__number {
-      font-size: $font-size-sm;
-      font-weight: $font-weight-bold;
-      transition: color 0.3s ease;
-    }
-
-    &__check {
-      color: white;
-    }
-
-    &__content {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
   }
+
+  // ── Number (shown when not completed) ─────────────────────
+
+  &__number {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    transition: color 0.3s ease;
+  }
+
+  // ── Check icon (shown when completed) ─────────────────────
+
+  &__check {
+    width: 12px;
+    height: 12px;
+    display: block;
+  }
+
+  // ── Content wrapper ───────────────────────────────────────
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  // ── Title ─────────────────────────────────────────────────
 
   &__title {
     font-size: $font-size-sm;
@@ -147,6 +161,8 @@ const circleStyle = computed(() => {
     line-height: 1.4;
   }
 
+  // ── Description ───────────────────────────────────────────
+
   &__description {
     font-size: $font-size-xs;
     color: $color-text-tertiary;
@@ -155,10 +171,13 @@ const circleStyle = computed(() => {
     max-width: 160px;
   }
 
-  &__circle--completed ~ &__content &__title {
+  // When step is completed, brighten its title
+  &--completed &__title {
     color: $color-text-primary;
   }
 }
+
+// ── Responsive ─────────────────────────────────────────────────
 
 @media (max-width: $breakpoint-sm) {
   .step-indicator {

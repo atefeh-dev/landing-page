@@ -2,23 +2,24 @@
   <section class="section section--tweets" id="experiences" ref="sectionRef">
     <div class="section__container">
       <div class="section__header section__header--center">
-        <span class="section__badge" :class="slideDown()"> تجربه ها </span>
-        <div class="section__title-wrapper" :class="reveal(1)">
+        <span class="section__badge" v-bind="slideDown()">تجربه‌ها</span>
+        <div class="section__title-wrapper" v-bind="reveal(1)">
           <h2 class="section__title">
             سوءتفاهم و کاغذبازی‌های بی‌پایان یک الگوست، و ما با
             <span class="highlight">زونکن</span>
-            راه حلش رو ساختیم.
+            راه‌حلش رو ساختیم.
           </h2>
         </div>
       </div>
 
-      <div class="tweets-scroller" :class="reveal(2)">
+      <!-- Scrolling tweet rows -->
+      <div class="tweet-scroller" v-bind="reveal(2)">
         <!-- Row 1 — scrolls left -->
-        <div class="tweets-scroller__row">
+        <div class="tweet-scroller__row">
           <div
-            class="tweets-scroller__track"
-            @mouseenter="pauseRow1"
-            @mouseleave="resumeRow1"
+            class="tweet-scroller__track"
+            @mouseenter="pauseTrack($event)"
+            @mouseleave="resumeTrack($event)"
           >
             <div
               v-for="(tweet, index) in [...row1Tweets, ...row1Tweets]"
@@ -55,11 +56,11 @@
         </div>
 
         <!-- Row 2 — scrolls right -->
-        <div class="tweets-scroller__row">
+        <div class="tweet-scroller__row">
           <div
-            class="tweets-scroller__track tweets-scroller__track--reverse"
-            @mouseenter="pauseRow2"
-            @mouseleave="resumeRow2"
+            class="tweet-scroller__track tweet-scroller__track--reverse"
+            @mouseenter="pauseTrack($event)"
+            @mouseleave="resumeTrack($event)"
           >
             <div
               v-for="(tweet, index) in [...row2Tweets, ...row2Tweets]"
@@ -96,7 +97,7 @@
         </div>
       </div>
 
-      <p class="section__conclusion" :class="reveal(4)">
+      <p class="section__conclusion" v-bind="reveal(4)">
         ما برای توسعه‌ی <span class="highlight">زونکن</span>
         از نیازهای واقعی الهام می‌گیریم.
       </p>
@@ -114,6 +115,13 @@ import Avatar4 from "@/assets/images/avatars/avatar4.png";
 
 const sectionRef = ref(null);
 const { reveal, slideDown } = useScrollAnimation(sectionRef);
+
+function pauseTrack(e) {
+  e.currentTarget.style.animationPlayState = "paused";
+}
+function resumeTrack(e) {
+  e.currentTarget.style.animationPlayState = "running";
+}
 
 const row1Tweets = [
   {
@@ -240,33 +248,24 @@ const row2Tweets = [
     text: "سند مکتوب از هزارتا قول شفاهی بهتره",
   },
 ];
-
-const pauseRow1 = (e) => {
-  e.currentTarget.style.animationPlayState = "paused";
-};
-const resumeRow1 = (e) => {
-  e.currentTarget.style.animationPlayState = "running";
-};
-const pauseRow2 = (e) => {
-  e.currentTarget.style.animationPlayState = "paused";
-};
-const resumeRow2 = (e) => {
-  e.currentTarget.style.animationPlayState = "running";
-};
 </script>
 
 <style lang="scss" scoped>
+// ── Section modifier ───────────────────────────────────────────
+
 .section--tweets {
   background: #0a0a0a;
-  // overflow:hidden removed — was breaking flex layout
   padding-top: calc($nav-height - $spacing-xl);
   padding-bottom: $spacing-3xl;
 }
 
-.tweets-scroller {
+// ── Scroller block ─────────────────────────────────────────────
+
+.tweet-scroller {
   position: relative;
   margin-bottom: $spacing-3xl;
 
+  // Fade edges
   &::before,
   &::after {
     content: "";
@@ -300,24 +299,32 @@ const resumeRow2 = (e) => {
     );
   }
 
+  // ── Row ────────────────────────────────────────────────────
+
   &__row {
     overflow: hidden;
     margin-bottom: $spacing-lg;
+
     &:last-child {
       margin-bottom: 0;
     }
   }
+
+  // ── Scrolling track ────────────────────────────────────────
 
   &__track {
     display: flex;
     gap: $spacing-md;
     width: fit-content;
     animation: scrollLeft 70s linear infinite;
+
     &--reverse {
       animation: scrollRight 70s linear infinite;
     }
   }
 }
+
+// ── Tweet card block ───────────────────────────────────────────
 
 .tweet-card {
   flex: 0 0 360px;
@@ -330,21 +337,26 @@ const resumeRow2 = (e) => {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
-    border-color: #fcc015;
+    border-color: $color-accent-primary;
     background: rgba(252, 192, 21, 0.05);
     box-shadow:
       0 20px 40px rgba(0, 0, 0, 0.7),
       0 0 0 1px rgba(252, 192, 21, 0.5);
+
     .tweet-card__avatar {
-      border-color: #fcc015;
+      border-color: $color-accent-primary;
     }
   }
+
+  // ── Header ─────────────────────────────────────────────────
 
   &__header {
     display: flex;
     gap: 0.75rem;
     margin-bottom: 0.875rem;
   }
+
+  // ── Avatar ─────────────────────────────────────────────────
 
   &__avatar {
     width: 42px;
@@ -355,36 +367,47 @@ const resumeRow2 = (e) => {
     transition: border-color 0.3s ease;
   }
 
+  // ── Author info ────────────────────────────────────────────
+
   &__author {
     flex: 1;
     min-width: 0;
   }
+
   &__name-row {
     display: flex;
     align-items: center;
     gap: 0.375rem;
     margin-bottom: 0.25rem;
   }
+
   &__name {
     font-weight: 700;
     font-size: 0.9375rem;
     color: #fff;
   }
+
   &__verified {
     color: #1d9bf0;
     flex-shrink: 0;
   }
+
   &__handle {
     font-size: 0.875rem;
     color: rgba(255, 255, 255, 0.5);
     direction: ltr;
   }
+
+  // ── Tweet text ─────────────────────────────────────────────
+
   &__text {
     font-size: 0.9375rem;
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.8);
   }
 }
+
+// ── Keyframes ──────────────────────────────────────────────────
 
 @keyframes scrollLeft {
   from {
@@ -404,11 +427,14 @@ const resumeRow2 = (e) => {
   }
 }
 
+// ── Responsive ─────────────────────────────────────────────────
+
 @media (max-width: $breakpoint-lg) {
-  .tweets-scroller::before,
-  .tweets-scroller::after {
+  .tweet-scroller::before,
+  .tweet-scroller::after {
     width: 150px;
   }
+
   .tweet-card {
     flex: 0 0 340px;
     width: 340px;
@@ -416,10 +442,11 @@ const resumeRow2 = (e) => {
 }
 
 @media (max-width: $breakpoint-md) {
-  .tweets-scroller::before,
-  .tweets-scroller::after {
+  .tweet-scroller::before,
+  .tweet-scroller::after {
     width: 100px;
   }
+
   .tweet-card {
     flex: 0 0 320px;
     width: 320px;
@@ -433,14 +460,16 @@ const resumeRow2 = (e) => {
     padding-bottom: $spacing-xl;
   }
 
-  .tweets-scroller {
+  .tweet-scroller {
     &::before,
     &::after {
       width: 60px;
     }
+
     &__row {
       margin-bottom: $spacing-sm;
     }
+
     &__track {
       gap: $spacing-sm;
       animation-duration: 50s;
@@ -451,6 +480,7 @@ const resumeRow2 = (e) => {
     flex: 0 0 280px;
     width: 280px;
     padding: 1rem;
+
     &__avatar {
       width: 38px;
       height: 38px;

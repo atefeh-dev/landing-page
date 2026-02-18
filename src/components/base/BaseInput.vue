@@ -14,7 +14,8 @@
     />
     <p
       v-if="error"
-      class="input__error animate-slide-down in-view"
+      class="input__error"
+      :class="{ 'input__error--visible': !!error }"
       role="alert"
     >
       {{ error }}
@@ -62,6 +63,8 @@ defineEmits(["update:modelValue", "blur"]);
   gap: 0.5rem;
   width: 100%;
 
+  // ── Field ─────────────────────────────────────────────────
+
   &__field {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -105,12 +108,23 @@ defineEmits(["update:modelValue", "blur"]);
     }
   }
 
+  // ── Error message ─────────────────────────────────────────
+
   &__error {
     font-size: 0.875rem;
     color: #ef4444;
     margin: 0;
     text-align: right;
-    // animate-slide-down in-view handles the entrance (from main.scss)
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity 0.3s ease-out,
+      transform 0.3s ease-out;
+
+    &--visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 

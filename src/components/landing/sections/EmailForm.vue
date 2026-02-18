@@ -6,8 +6,7 @@
         type="email"
         :placeholder="placeholder"
         :error="showError ? errorMessage : ''"
-        class="email-form__input animate-fade-up animate-delay-1"
-        :class="{ 'in-view': isVisible }"
+        class="email-form__input"
         @blur="handleBlur"
       />
 
@@ -15,8 +14,7 @@
         variant="primary"
         size="lg"
         :loading="isSubmitting"
-        class="email-form__btn animate-fade-up animate-delay-2"
-        :class="{ 'in-view': isVisible }"
+        class="email-form__btn"
         @click="handleSubmit"
       >
         {{ isSubmitting ? submitText : buttonText }}
@@ -29,7 +27,6 @@
 import { ref, computed } from "vue";
 import BaseInput from "@/components/base/BaseInput.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
-import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 const props = defineProps({
   placeholder: {
@@ -47,9 +44,6 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["submit"]);
-
-const formRef = ref(null);
-const { isVisible } = useScrollAnimation(formRef, 0.1);
 
 const email = ref("");
 const touched = ref(false);
@@ -87,6 +81,8 @@ const handleSubmit = () => {
 .email-form {
   width: 100%;
 
+  // ── Row layout ────────────────────────────────────────────
+
   &__row {
     display: flex;
     gap: $spacing-md;
@@ -95,10 +91,14 @@ const handleSubmit = () => {
     margin: 0 auto;
   }
 
+  // ── Input wrapper ─────────────────────────────────────────
+
   &__input {
     flex: 1;
     min-width: 0;
   }
+
+  // ── Submit button ─────────────────────────────────────────
 
   &__btn {
     flex-shrink: 0;
@@ -106,14 +106,16 @@ const handleSubmit = () => {
 }
 
 @media (max-width: $breakpoint-sm) {
-  .email-form__row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: $spacing-sm;
-  }
+  .email-form {
+    &__row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: $spacing-sm;
+    }
 
-  .email-form__btn {
-    width: 100%;
+    &__btn {
+      width: 100%;
+    }
   }
 }
 </style>

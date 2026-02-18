@@ -1,751 +1,59 @@
 @use "variables" as *;
 @use "reset";
 
-// Display
-.flex {
-  display: flex;
-}
-.inline-flex {
-  display: inline-flex;
-}
-.grid {
-  display: grid;
-}
-.block {
-  display: block;
-}
-.inline-block {
-  display: inline-block;
-}
-.hidden {
-  display: none;
-}
+// ─────────────────────────────────────────────────────────────
+// GLOBAL SEMANTIC HELPER
+// ─────────────────────────────────────────────────────────────
 
-// Flex Direction
-.flex-row {
-  flex-direction: row;
-}
-.flex-col {
-  flex-direction: column;
-}
-
-// Flex Wrap
-.flex-wrap {
-  flex-wrap: wrap;
-}
-.flex-nowrap {
-  flex-wrap: nowrap;
-}
-
-// Align Items
-.items-start {
-  align-items: flex-start;
-}
-.items-center {
-  align-items: center;
-}
-.items-end {
-  align-items: flex-end;
-}
-.items-stretch {
-  align-items: stretch;
-}
-
-// Justify Content
-.justify-start {
-  justify-content: flex-start;
-}
-.justify-center {
-  justify-content: center;
-}
-.justify-end {
-  justify-content: flex-end;
-}
-.justify-between {
-  justify-content: space-between;
-}
-
-// Gap
-.gap-xs {
-  gap: $spacing-xs;
-}
-.gap-sm {
-  gap: $spacing-sm;
-}
-.gap-md {
-  gap: $spacing-md;
-}
-.gap-lg {
-  gap: $spacing-lg;
-}
-.gap-xl {
-  gap: $spacing-xl;
-}
-.gap-2xl {
-  gap: $spacing-2xl;
-}
-.gap-3xl {
-  gap: $spacing-3xl;
-}
-
-// ────────────────────────────────────────────
-// SPACING UTILITIES
-// ────────────────────────────────────────────
-
-// Padding (all sides)
-.p-0 {
-  padding: 0;
-}
-.p-xs {
-  padding: $spacing-xs;
-}
-.p-sm {
-  padding: $spacing-sm;
-}
-.p-md {
-  padding: $spacing-md;
-}
-.p-lg {
-  padding: $spacing-lg;
-}
-.p-xl {
-  padding: $spacing-xl;
-}
-.p-2xl {
-  padding: $spacing-2xl;
-}
-.p-3xl {
-  padding: $spacing-3xl;
-}
-
-// Padding Y (top + bottom)
-.py-0 {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.py-xs {
-  padding-top: $spacing-xs;
-  padding-bottom: $spacing-xs;
-}
-.py-sm {
-  padding-top: $spacing-sm;
-  padding-bottom: $spacing-sm;
-}
-.py-md {
-  padding-top: $spacing-md;
-  padding-bottom: $spacing-md;
-}
-.py-lg {
-  padding-top: $spacing-lg;
-  padding-bottom: $spacing-lg;
-}
-.py-xl {
-  padding-top: $spacing-xl;
-  padding-bottom: $spacing-xl;
-}
-.py-2xl {
-  padding-top: $spacing-2xl;
-  padding-bottom: $spacing-2xl;
-}
-.py-3xl {
-  padding-top: $spacing-3xl;
-  padding-bottom: $spacing-3xl;
-}
-
-// Padding X (left + right)
-.px-0 {
-  padding-left: 0;
-  padding-right: 0;
-}
-.px-1 {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-.px-2 {
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-.px-sm {
-  padding-left: $spacing-sm;
-  padding-right: $spacing-sm;
-}
-.px-md {
-  padding-left: $spacing-md;
-  padding-right: $spacing-md;
-}
-.px-lg {
-  padding-left: $spacing-lg;
-  padding-right: $spacing-lg;
-}
-
-// Margin (all sides)
-.m-0 {
-  margin: 0;
-}
-.m-auto {
-  margin: auto;
-}
-.m-md {
-  margin: $spacing-md;
-}
-.m-lg {
-  margin: $spacing-lg;
-}
-
-// Margin Y (top + bottom)
-.my-0 {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-.my-sm {
-  margin-top: $spacing-sm;
-  margin-bottom: $spacing-sm;
-}
-.my-md {
-  margin-top: $spacing-md;
-  margin-bottom: $spacing-md;
-}
-.my-lg {
-  margin-top: $spacing-lg;
-  margin-bottom: $spacing-lg;
-}
-.my-xl {
-  margin-top: $spacing-xl;
-  margin-bottom: $spacing-xl;
-}
-.my-2xl {
-  margin-top: $spacing-2xl;
-  margin-bottom: $spacing-2xl;
-}
-
-// Margin X (left + right)
-.mx-0 {
-  margin-left: 0;
-  margin-right: 0;
-}
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-.mx-md {
-  margin-left: $spacing-md;
-  margin-right: $spacing-md;
-}
-.mx-lg {
-  margin-left: $spacing-lg;
-  margin-right: $spacing-lg;
-}
-
-// Margin Bottom (common use)
-.mb-0 {
-  margin-bottom: 0;
-}
-.mb-sm {
-  margin-bottom: $spacing-sm;
-}
-.mb-md {
-  margin-bottom: $spacing-md;
-}
-.mb-lg {
-  margin-bottom: $spacing-lg;
-}
-.mb-xl {
-  margin-bottom: $spacing-xl;
-}
-.mb-2xl {
-  margin-bottom: $spacing-2xl;
-}
-
-// ────────────────────────────────────────────
-// TYPOGRAPHY UTILITIES
-// ────────────────────────────────────────────
-
-// Font Size
-.text-xs {
-  font-size: 0.75rem;
-} // 12px
-.text-sm {
-  font-size: 0.875rem;
-} // 14px
-.text-base {
-  font-size: 1rem;
-} // 16px
-.text-lg {
-  font-size: 1.125rem;
-} // 18px
-.text-xl {
-  font-size: 1.25rem;
-} // 20px
-.text-2xl {
-  font-size: 1.5rem;
-} // 24px
-.text-3xl {
-  font-size: 1.875rem;
-} // 30px
-.text-4xl {
-  font-size: 2.25rem;
-} // 36px
-.text-5xl {
-  font-size: 3rem;
-} // 48px
-
-// Font Weight
-.font-normal {
-  font-weight: $font-weight-regular;
-}
-.font-medium {
-  font-weight: $font-weight-medium;
-}
-.font-semibold {
-  font-weight: $font-weight-semibold;
-}
-.font-bold {
-  font-weight: $font-weight-bold;
-}
-
-// Text Alignment
-.text-left {
-  text-align: left;
-}
-.text-center {
-  text-align: center;
-}
-.text-right {
-  text-align: right;
-}
-
-// Line Height
-.leading-none {
-  line-height: 1;
-}
-.leading-tight {
-  line-height: 1.25;
-}
-.leading-snug {
-  line-height: 1.375;
-}
-.leading-normal {
-  line-height: 1.5;
-}
-.leading-relaxed {
-  line-height: 1.625;
-}
-.leading-loose {
-  line-height: 2;
-}
-
-// ────────────────────────────────────────────
-// COLOR UTILITIES
-// ────────────────────────────────────────────
-
-// Text Colors
-.text-primary {
-  color: $color-text-primary;
-}
-.text-secondary {
-  color: $color-text-secondary;
-}
-.text-tertiary {
-  color: $color-text-tertiary;
-}
-.text-accent {
+.highlight {
   color: $color-accent-primary;
 }
-.text-white {
-  color: #ffffff;
-}
-.text-white-90 {
-  color: rgba(255, 255, 255, 0.9);
-}
-.text-white-80 {
-  color: rgba(255, 255, 255, 0.8);
-}
-.text-white-70 {
-  color: rgba(255, 255, 255, 0.7);
-}
-.text-white-50 {
-  color: rgba(255, 255, 255, 0.5);
-}
 
-// Background Colors
-.bg-primary {
-  background: $color-bg-primary;
-}
-.bg-secondary {
-  background: $color-bg-secondary;
-}
-.bg-dark {
-  background: #0a0a0a;
-}
-.bg-dark-subtle {
-  background: #111111;
-}
-.bg-transparent {
-  background: transparent;
-}
+// ─────────────────────────────────────────────────────────────
+// SCROLL ANIMATION — driven by useScrollAnimation composable
+// Composable adds [data-animate] attribute and toggles .is-visible
+// ─────────────────────────────────────────────────────────────
 
-// Background Gradients
-.bg-gradient-dark {
-  background: linear-gradient(180deg, #111111 0%, #0d0a0f 50%, #0a0a0a 100%);
-}
-
-// ────────────────────────────────────────────
-// BORDER UTILITIES
-// ────────────────────────────────────────────
-
-// Border
-.border {
-  border: 1px solid $color-border-subtle;
-}
-.border-medium {
-  border: 1px solid $color-border-medium;
-}
-.border-strong {
-  border: 1px solid $color-border-strong;
-}
-.border-2 {
-  border-width: 2px;
-}
-.border-0 {
-  border: none;
-}
-
-// Border Sides
-.border-t {
-  border-top: 1px solid $color-border-subtle;
-}
-.border-b {
-  border-bottom: 1px solid $color-border-subtle;
-}
-.border-l {
-  border-left: 1px solid $color-border-subtle;
-}
-.border-r {
-  border-right: 1px solid $color-border-subtle;
-}
-
-// Border Radius
-.rounded-none {
-  border-radius: 0;
-}
-.rounded-sm {
-  border-radius: $radius-sm;
-}
-.rounded-md {
-  border-radius: $radius-md;
-}
-.rounded-lg {
-  border-radius: $radius-lg;
-}
-.rounded-xl {
-  border-radius: $radius-xl;
-}
-.rounded-full {
-  border-radius: $radius-full;
-}
-
-// ────────────────────────────────────────────
-// EFFECT UTILITIES
-// ────────────────────────────────────────────
-
-// Box Shadow
-.shadow-none {
-  box-shadow: none;
-}
-.shadow-sm {
-  box-shadow: $shadow-sm;
-}
-.shadow-md {
-  box-shadow: $shadow-md;
-}
-.shadow-lg {
-  box-shadow: $shadow-lg;
-}
-.shadow-xl {
-  box-shadow: $shadow-xl;
-}
-
-// Transitions
-.transition {
-  transition: $transition-base;
-}
-.transition-all {
-  transition: all 0.3s ease;
-}
-.transition-none {
-  transition: none;
-}
-
-// Opacity
-.opacity-0 {
-  opacity: 0;
-}
-.opacity-50 {
-  opacity: 0.5;
-}
-.opacity-70 {
-  opacity: 0.7;
-}
-.opacity-80 {
-  opacity: 0.8;
-}
-.opacity-90 {
-  opacity: 0.9;
-}
-.opacity-100 {
-  opacity: 1;
-}
-
-// ────────────────────────────────────────────
-// SIZING UTILITIES
-// ────────────────────────────────────────────
-
-// Width
-.w-full {
-  width: 100%;
-}
-.w-auto {
-  width: auto;
-}
-.w-fit {
-  width: fit-content;
-}
-
-// Max Width
-.max-w-sm {
-  max-width: 640px;
-}
-.max-w-md {
-  max-width: 768px;
-}
-.max-w-lg {
-  max-width: 900px;
-}
-.max-w-xl {
-  max-width: 1024px;
-}
-.max-w-2xl {
-  max-width: 1200px;
-}
-.max-w-full {
-  max-width: 100%;
-}
-
-// Height
-.h-full {
-  height: 100%;
-}
-.h-auto {
-  height: auto;
-}
-
-// ────────────────────────────────────────────
-// POSITION UTILITIES
-// ────────────────────────────────────────────
-
-.relative {
-  position: relative;
-}
-.absolute {
-  position: absolute;
-}
-.fixed {
-  position: fixed;
-}
-.sticky {
-  position: sticky;
-}
-
-// ────────────────────────────────────────────
-// OVERFLOW UTILITIES
-// ────────────────────────────────────────────
-
-.overflow-hidden {
-  overflow: hidden;
-}
-.overflow-auto {
-  overflow: auto;
-}
-.overflow-visible {
-  overflow: visible;
-}
-
-// ────────────────────────────────────────────
-// CURSOR UTILITIES
-// ────────────────────────────────────────────
-
-.cursor-pointer {
-  cursor: pointer;
-}
-.cursor-default {
-  cursor: default;
-}
-.cursor-not-allowed {
-  cursor: not-allowed;
-}
-
-// ────────────────────────────────────────────
-// SCROLL ANIMATION UTILITIES
-// ────────────────────────────────────────────
-
-.animate-fade-up {
+[data-animate] {
   opacity: 0;
   transform: translateY(20px);
   transition:
     opacity 0.6s ease-out,
     transform 0.6s ease-out;
 
-  &.in-view {
-    animation: fadeInUp 0.6s ease-out forwards;
-  }
-}
-
-.animate-slide-down {
-  opacity: 0;
-  transform: translateY(-10px);
-  transition:
-    opacity 0.3s ease-out,
-    transform 0.3s ease-out;
-
-  &.in-view {
-    animation: slideDown 0.3s ease-out forwards;
-  }
-}
-
-// Animation Delays
-.animate-delay-1 {
-  &.in-view {
-    animation-delay: 0.1s;
-  }
-}
-.animate-delay-2 {
-  &.in-view {
-    animation-delay: 0.15s;
-  }
-}
-.animate-delay-3 {
-  &.in-view {
-    animation-delay: 0.2s;
-  }
-}
-.animate-delay-4 {
-  &.in-view {
-    animation-delay: 0.25s;
-  }
-}
-.animate-delay-5 {
-  &.in-view {
-    animation-delay: 0.3s;
-  }
-}
-.animate-delay-6 {
-  &.in-view {
-    animation-delay: 0.35s;
-  }
-}
-
-// ────────────────────────────────────────────
-// KEYFRAMES
-// ────────────────────────────────────────────
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
+  &[data-animate="slide-down"] {
     transform: translateY(-10px);
+    transition-duration: 0.3s;
   }
-  to {
+
+  &.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(var(--rotation, 0deg));
-  }
-  50% {
-    transform: translateY(-20px) rotate(calc(var(--rotation, 0deg) + 5deg));
-  }
+[data-delay="1"].is-visible {
+  transition-delay: 0.1s;
+}
+[data-delay="2"].is-visible {
+  transition-delay: 0.15s;
+}
+[data-delay="3"].is-visible {
+  transition-delay: 0.2s;
+}
+[data-delay="4"].is-visible {
+  transition-delay: 0.25s;
+}
+[data-delay="5"].is-visible {
+  transition-delay: 0.3s;
+}
+[data-delay="6"].is-visible {
+  transition-delay: 0.35s;
 }
 
-// ============================================
-// SHARED COMPONENTS (keep existing)
-// ============================================
-
-.highlight {
-  color: $color-accent-primary;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  font-family: inherit;
-  text-decoration: none;
-  border: none;
-  border-radius: $radius-md;
-  cursor: pointer;
-  transition: $transition-base;
-  white-space: nowrap;
-  position: relative;
-  overflow: hidden;
-
-  &--primary {
-    background-color: $color-accent-primary;
-    color: $color-bg-primary;
-    box-shadow: $shadow-md;
-
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.1) 0%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      opacity: 0;
-      transition: $transition-base;
-    }
-
-    &:hover {
-      background-color: #ffd84d;
-      transform: translateY(-2px);
-      box-shadow: $shadow-accent;
-
-      &::before {
-        opacity: 1;
-      }
-    }
-  }
-
-  &--secondary {
-    background-color: transparent;
-    color: $color-text-secondary;
-    border: none;
-  }
-
-  &--large {
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    font-weight: $font-weight-semibold;
-  }
-}
+// ─────────────────────────────────────────────────────────────
+// SECTION — shared layout block used by every page section
+// ─────────────────────────────────────────────────────────────
 
 .section {
   min-height: calc(100vh - $nav-height);
@@ -755,6 +63,7 @@
   padding: $spacing-3xl 0;
   position: relative;
 
+  // ── Container ──────────────────────────────────────────────
   &__container {
     max-width: 1200px;
     margin: 0 auto;
@@ -765,13 +74,16 @@
     }
   }
 
+  // ── Header ─────────────────────────────────────────────────
   &__header {
     position: relative;
+
     &--center {
       text-align: center;
     }
   }
 
+  // ── Badge ──────────────────────────────────────────────────
   &__badge {
     display: inline-block;
     padding: 0.625rem 0.75rem;
@@ -785,29 +97,34 @@
     backdrop-filter: blur(10px);
   }
 
+  // ── Title wrapper ──────────────────────────────────────────
   &__title-wrapper {
     display: flex;
     align-items: center;
     gap: $spacing-md;
     justify-content: center;
 
-    &--right {
+    &--left {
       justify-content: flex-start;
     }
   }
 
+  // ── Title ──────────────────────────────────────────────────
   &__title {
     font-size: clamp(2rem, 4vw, 2.1rem);
     font-weight: 700;
     margin-bottom: $spacing-3xl;
   }
 
+  // ── Subtitle ───────────────────────────────────────────────
   &__subtitle {
     font-size: 1.2rem;
     color: $color-text-secondary;
     max-width: 600px;
     margin: 0 auto;
   }
+
+  // ── Conclusion ─────────────────────────────────────────────
   &__conclusion {
     font-size: $font-size-2xl;
     line-height: 1.8;
@@ -819,7 +136,30 @@
   }
 }
 
-// Responsive
+// ─────────────────────────────────────────────────────────────
+// KEYFRAMES
+// ─────────────────────────────────────────────────────────────
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--rotation, 0deg));
+  }
+  50% {
+    transform: translateY(-20px) rotate(calc(var(--rotation, 0deg) + 5deg));
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// RESPONSIVE
+// ─────────────────────────────────────────────────────────────
+
 @media (max-width: $breakpoint-lg) {
   .section__title-wrapper {
     justify-content: center;
@@ -828,7 +168,7 @@
 
 @media (max-width: $breakpoint-sm) {
   .section {
-    min-height: auto; // ← content drives height on mobile
+    min-height: auto;
     padding: $spacing-xl 0;
   }
 }

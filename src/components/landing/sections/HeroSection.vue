@@ -1,6 +1,7 @@
 <template>
   <section class="hero" id="hero" ref="sectionRef">
-    <div class="hero__floating-icons">
+    <!-- Floating background icons -->
+    <div class="hero__icons">
       <img
         src="@/assets/icons/pagewithcurl.svg"
         alt=""
@@ -40,21 +41,24 @@
 
     <div class="hero__container">
       <div class="hero__content">
-        <div class="hero__badge" :class="reveal(1)">
-          <span class="hero__badge--news">
+        <!-- Badge -->
+        <div class="hero__badge" v-bind="reveal(1)">
+          <span class="hero__badge-news">
             <img src="@/assets/ui/green-dot.svg" alt="" />
             <span>چه خبر؟</span>
           </span>
           <span>از امروز لیست انتظار باز است</span>
         </div>
 
-        <h1 class="hero__title" :class="reveal(2)">
+        <!-- Title -->
+        <h1 class="hero__title" v-bind="reveal(2)">
           اینجا، هر سند <br />
           <span class="hero__title-highlight">یک مسیر مشخص</span>
           دارد.
         </h1>
 
-        <p class="hero__description" :class="reveal(3)">
+        <!-- Description -->
+        <p class="hero__description" v-bind="reveal(3)">
           ما زونکن را ساختیم چون سال‌ها با اسناد، قراردادها و فایل‌هایی کار
           کردیم که هیچ مسیر مشخصی نداشتند. زونکن تلاشی است برای اینکه اسناد، از
           همان ابتدا در مسیر درست قرار بگیرند.
@@ -62,18 +66,11 @@
 
         <EmailForm @submit="handleSubmit" />
 
-        <p class="hero__note" :class="reveal(5)">
+        <!-- Note -->
+        <p class="hero__note" v-bind="reveal(5)">
           با ثبت ایمیل، از زمان دسترسی و خبرهای رونمایی باخبر می‌شوید.
         </p>
       </div>
-
-      <!-- <div class="hero__visual" :class="reveal(6)">
-        <img
-          src="@/assets/images/demo.png"
-          alt="نمایی از زونکن"
-          class="hero__demo-image"
-        />
-      </div> -->
     </div>
   </section>
 </template>
@@ -86,12 +83,15 @@ import { useScrollAnimation } from "@/composables/useScrollAnimation";
 defineEmits(["scroll-to-cta"]);
 
 const sectionRef = ref(null);
-const { reveal } = useScrollAnimation(sectionRef, 0); // threshold 0 → triggers immediately
+// threshold 0 → triggers immediately on mount (hero is always visible)
+const { reveal } = useScrollAnimation(sectionRef, 0);
 
 const handleSubmit = () => {};
 </script>
 
 <style lang="scss" scoped>
+// ── Block ──────────────────────────────────────────────────────
+
 .hero {
   padding-top: 8rem;
   padding-bottom: $spacing-3xl;
@@ -102,7 +102,9 @@ const handleSubmit = () => {};
   position: relative;
   overflow: hidden;
 
-  &__floating-icons {
+  // ── Floating icon layer ───────────────────────────────────
+
+  &__icons {
     position: absolute;
     inset: 0;
     pointer-events: none;
@@ -122,14 +124,14 @@ const handleSubmit = () => {};
       left: 15%;
       animation-delay: 0s;
       animation-duration: 18s;
-      transform: rotate(-15deg);
+      --rotation: -15deg;
     }
     &--2 {
       top: 38%;
       left: 25%;
       animation-delay: -3s;
       animation-duration: 22s;
-      transform: rotate(8deg);
+      --rotation: 8deg;
       width: 60px;
       height: 60px;
     }
@@ -138,7 +140,7 @@ const handleSubmit = () => {};
       left: 64%;
       animation-delay: -6s;
       animation-duration: 20s;
-      transform: rotate(-25deg);
+      --rotation: -25deg;
       width: 70px;
       height: 70px;
     }
@@ -147,14 +149,14 @@ const handleSubmit = () => {};
       right: 21%;
       animation-delay: -9s;
       animation-duration: 24s;
-      transform: rotate(12deg);
+      --rotation: 12deg;
     }
     &--5 {
       top: 57%;
       left: 21%;
       animation-delay: -12s;
       animation-duration: 19s;
-      transform: rotate(18deg);
+      --rotation: 18deg;
       width: 65px;
       height: 65px;
     }
@@ -163,7 +165,7 @@ const handleSubmit = () => {};
       right: 23%;
       animation-delay: -15s;
       animation-duration: 21s;
-      transform: rotate(-8deg);
+      --rotation: -8deg;
       width: 75px;
       height: 75px;
     }
@@ -172,11 +174,13 @@ const handleSubmit = () => {};
       right: 60%;
       animation-delay: -18s;
       animation-duration: 23s;
-      transform: rotate(22deg);
+      --rotation: 22deg;
       width: 70px;
       height: 70px;
     }
   }
+
+  // ── Container ─────────────────────────────────────────────
 
   &__container {
     max-width: 1200px;
@@ -190,10 +194,14 @@ const handleSubmit = () => {};
     z-index: 1;
   }
 
+  // ── Content area ──────────────────────────────────────────
+
   &__content {
     text-align: center;
     max-width: 700px;
   }
+
+  // ── Badge ─────────────────────────────────────────────────
 
   &__badge {
     display: inline-flex;
@@ -207,17 +215,19 @@ const handleSubmit = () => {};
     font-weight: 600;
     margin-bottom: $spacing-lg;
     backdrop-filter: blur(10px);
-
-    &--news {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      padding: 0.25rem 0.5rem;
-      border-radius: $radius-sm;
-      border: 1px solid $color-border-primary;
-      color: $color-text-hero;
-    }
   }
+
+  &__badge-news {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: $radius-sm;
+    border: 1px solid $color-border-primary;
+    color: $color-text-hero;
+  }
+
+  // ── Title ─────────────────────────────────────────────────
 
   &__title {
     font-size: $font-size-5xl;
@@ -233,6 +243,8 @@ const handleSubmit = () => {};
     display: inline-block;
   }
 
+  // ── Description ───────────────────────────────────────────
+
   &__description {
     font-size: $font-size-xl;
     line-height: 1.6;
@@ -240,37 +252,28 @@ const handleSubmit = () => {};
     margin-bottom: $spacing-md;
   }
 
+  // ── Note ──────────────────────────────────────────────────
+
   &__note {
     font-size: 0.875rem;
     color: $color-text-tertiary;
     margin-top: 0.25rem;
     text-align: right;
   }
-
-  &__visual {
-    width: 100%;
-    max-width: 900px;
-  }
-
-  &__demo-image {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    opacity: 0.9;
-  }
 }
+
+// ── Responsive ─────────────────────────────────────────────────
 
 @media (max-width: $breakpoint-lg) {
   .hero {
     &__content {
       max-width: 600px;
     }
-    &__visual {
-      max-width: 700px;
-    }
+
     &__icon {
       width: 60px;
       height: 60px;
+
       &--2,
       &--5 {
         width: 50px;
@@ -294,13 +297,16 @@ const handleSubmit = () => {};
       padding: 0 1.5rem;
       gap: $spacing-xl;
     }
+
     &__content {
       max-width: 100%;
     }
+
     &__title {
       font-size: clamp(1.75rem, 8vw, 2rem);
       margin-bottom: $spacing-md;
     }
+
     &__description {
       font-size: 1rem;
       margin-bottom: $spacing-lg;
@@ -310,6 +316,7 @@ const handleSubmit = () => {};
       width: 50px;
       height: 50px;
       opacity: 0.3;
+
       &--2,
       &--5 {
         width: 40px;

@@ -2,8 +2,8 @@
   <section class="section section--faq" id="faq" ref="sectionRef">
     <div class="section__container section__container--narrow">
       <div class="section__header section__header--center">
-        <span class="section__badge" :class="slideDown(1)">سوالات متداول</span>
-        <div class="section__title-wrapper" :class="reveal()">
+        <span class="section__badge" v-bind="slideDown(1)">سوالات متداول</span>
+        <div class="section__title-wrapper" v-bind="reveal()">
           <h2 class="section__title">
             پرسش‌هایی که ممکن است در ذهن شما هم باشد.
           </h2>
@@ -14,27 +14,28 @@
         <div
           v-for="(item, index) in faqs"
           :key="index"
-          class="faq-item"
+          class="faq__item"
           :class="[
-            { 'faq-item--active': activeFaq === index },
+            { 'faq__item--active': activeFaq === index },
             reveal(Math.min(index + 1, 6)),
           ]"
         >
-          <button class="faq-item__question" @click="toggleFaq(index)">
+          <button class="faq__question" @click="toggleFaq(index)">
             <img
               v-if="activeFaq === index"
               :src="MinusIcon"
               alt="بستن"
-              class="faq-item__icon"
+              class="faq__icon"
             />
-            <img v-else :src="PlusIcon" alt="باز کردن" class="faq-item__icon" />
+            <img v-else :src="PlusIcon" alt="باز کردن" class="faq__icon" />
             <span>{{ item.question }}</span>
           </button>
+
           <div
-            class="faq-item__answer-wrapper"
-            :class="{ 'faq-item__answer-wrapper--open': activeFaq === index }"
+            class="faq__answer-wrapper"
+            :class="{ 'faq__answer-wrapper--open': activeFaq === index }"
           >
-            <div class="faq-item__answer">
+            <div class="faq__answer">
               <p v-html="item.answer" />
             </div>
           </div>
@@ -48,7 +49,6 @@
 import { ref } from "vue";
 import PlusIcon from "@/assets/ui/plus.svg";
 import MinusIcon from "@/assets/ui/minus.svg";
-
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 const sectionRef = ref(null);
@@ -58,7 +58,7 @@ const activeFaq = ref(null);
 
 const faqs = [
   {
-    question: " عضویت و استفاده از زونکن چگونه است؟",
+    question: "عضویت و استفاده از زونکن چگونه است؟",
     answer:
       '<span class="highlight">شروع استفاده از زونکن ساده و بدون هزینه‌ی اولیه است</span> و دسترسی به قالب‌های عمومی و تنظیم اسناد در چارچوب مشخص در اختیار کاربران قرار می‌گیرد. در صورت استفاده گسترده‌تر و یا نیاز به امکانات پیشرفته، شرایط استفاده بر اساس سیاست مصرف منصفانه مشخص می‌شود',
   },
@@ -85,13 +85,7 @@ const faqs = [
   {
     question:
       "نگهداری، امنیت و محرمانگی اسناد من در زونکن چگونه مدیریت می‌شود؟",
-    answer: `زونکن با رویکرد حداقلی در نگه‌داری داده طراحی شده است.
-ساختار سیستم به‌گونه‌ای است که اطلاعات به‌صورت رمزنگاری‌شده پردازش می‌شوند و
-<span class="highlight">
-فایل نهایی اسناد به‌صورت پایدار در سرورهای زونکن ذخیره نمی‌شود.
-</span>
-ما تلاش کرده‌ایم طراحی فنی زونکن به‌گونه‌ای باشد که حتی در صورت بروز اختلال یا دسترسی غیرمجاز،
-داده قابل‌استفاده‌ای در اختیار اشخاص قرار نگیرد.`,
+    answer: `زونکن با رویکرد حداقلی در نگه‌داری داده طراحی شده است. ساختار سیستم به‌گونه‌ای است که اطلاعات به‌صورت رمزنگاری‌شده پردازش می‌شوند و <span class="highlight">فایل نهایی اسناد به‌صورت پایدار در سرورهای زونکن ذخیره نمی‌شود.</span> ما تلاش کرده‌ایم طراحی فنی زونکن به‌گونه‌ای باشد که حتی در صورت بروز اختلال یا دسترسی غیرمجاز، داده قابل‌استفاده‌ای در اختیار اشخاص قرار نگیرد.`,
   },
   {
     question: "چه زمانی دسترسی عمومی برای استفاده از زونکن فعال می‌شود؟",
@@ -106,6 +100,8 @@ function toggleFaq(index) {
 </script>
 
 <style lang="scss" scoped>
+// ── Section modifier ───────────────────────────────────────────
+
 .section--faq {
   background: linear-gradient(180deg, #111111 0%, #0d0a0f 50%, #0a0a0a 100%);
   position: relative;
@@ -113,31 +109,38 @@ function toggleFaq(index) {
   margin-top: $spacing-2xl;
 }
 
+// ── FAQ block ──────────────────────────────────────────────────
+
 .faq {
   max-width: 900px;
   margin: 2.5rem auto;
   padding: 0 $spacing-md;
-}
 
-.faq-item {
-  background: $color-bg-secondary;
-  border: 1px solid $color-border-subtle;
-  border-radius: $radius-lg;
-  margin-bottom: $spacing-sm;
-  overflow: hidden;
-  transition:
-    border-color 0.3s ease,
-    background 0.3s ease,
-    box-shadow 0.3s ease;
+  // ── Item ───────────────────────────────────────────────────
 
-  &:hover {
-    border-color: $color-border-medium;
-    background: rgba(255, 255, 255, 0.02);
+  &__item {
+    background: $color-bg-secondary;
+    border: 1px solid $color-border-subtle;
+    border-radius: $radius-lg;
+    margin-bottom: $spacing-sm;
+    overflow: hidden;
+    transition:
+      border-color 0.3s ease,
+      background 0.3s ease,
+      box-shadow 0.3s ease;
+
+    &:hover {
+      border-color: $color-border-medium;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    &--active {
+      border-color: $color-border-medium;
+      box-shadow: $shadow-sm;
+    }
   }
-  &--active {
-    border-color: $color-border-medium;
-    box-shadow: $shadow-sm;
-  }
+
+  // ── Question button ────────────────────────────────────────
 
   &__question {
     width: 100%;
@@ -161,23 +164,28 @@ function toggleFaq(index) {
     }
   }
 
+  // ── Toggle icon ────────────────────────────────────────────
+
   &__icon {
     width: 24px;
     height: 24px;
     flex-shrink: 0;
     opacity: 0.7;
     transition: opacity $transition-base;
+
+    .faq__item:hover & {
+      opacity: 1;
+    }
   }
 
-  &:hover &__icon {
-    opacity: 1;
-  }
+  // ── Answer accordion ───────────────────────────────────────
 
   &__answer-wrapper {
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
+
     &--open {
       grid-template-rows: 1fr;
     }
@@ -195,29 +203,34 @@ function toggleFaq(index) {
     p {
       margin: 0;
     }
-    .faq-item__answer-wrapper--open & {
+
+    .faq__answer-wrapper--open & {
       padding-bottom: $spacing-lg;
     }
   }
 }
 
+// ── Responsive ─────────────────────────────────────────────────
+
 @media (max-width: $breakpoint-lg) {
   .faq {
     padding: 0;
-  }
-  .faq-item {
+
     &__question {
       padding: $spacing-md $spacing-lg;
       font-size: 1.0625rem;
       gap: $spacing-md;
     }
+
     &__answer {
       padding: 0 $spacing-lg;
       font-size: 1rem;
-      .faq-item__answer-wrapper--open & {
+
+      .faq__answer-wrapper--open & {
         padding-bottom: $spacing-md;
       }
     }
+
     &__icon {
       width: 22px;
       height: 22px;
@@ -226,22 +239,28 @@ function toggleFaq(index) {
 }
 
 @media (max-width: $breakpoint-sm) {
-  .faq-item {
-    margin-bottom: $spacing-sm;
-    border-radius: $radius-md;
+  .faq {
+    &__item {
+      margin-bottom: $spacing-sm;
+      border-radius: $radius-md;
+    }
+
     &__question {
       padding: $spacing-md;
       font-size: 1rem;
       gap: $spacing-sm;
     }
+
     &__answer {
       padding: 0 $spacing-md;
       font-size: 0.9375rem;
       line-height: 1.7;
-      .faq-item__answer-wrapper--open & {
+
+      .faq__answer-wrapper--open & {
         padding-bottom: $spacing-md;
       }
     }
+
     &__icon {
       width: 20px;
       height: 20px;

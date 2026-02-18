@@ -1,6 +1,7 @@
 <template>
   <nav class="nav" :class="{ 'nav--scrolled': scrolled }">
     <div class="nav__container">
+      <!-- Logo -->
       <div class="nav__logo">
         <a href="#hero" class="nav__logo-link">
           <img
@@ -16,14 +17,16 @@
         </a>
       </div>
 
+      <!-- Desktop menu -->
       <div class="nav__menu">
         <a href="#philosophy" class="nav__link">مسئله</a>
-        <a href="#experiences" class="nav__link"> تجربه ها</a>
+        <a href="#experiences" class="nav__link">تجربه‌ها</a>
         <a href="#operation" class="nav__link">عملکرد</a>
         <a href="#customers" class="nav__link">مخاطبان</a>
         <a href="#faq" class="nav__link">سوالات متداول</a>
       </div>
 
+      <!-- Actions -->
       <div class="nav__actions">
         <BaseButton variant="primary" size="md" @click="handleCta">
           درخواست عضویت
@@ -48,9 +51,9 @@
       <div v-if="mobileMenuOpen" class="nav__overlay" @click="closeMenu" />
     </transition>
 
-    <!-- Mobile panel — slides from RIGHT (RTL) -->
+    <!-- Mobile panel — slides from right (RTL) -->
     <transition name="nav-panel">
-      <div v-if="mobileMenuOpen" class="nav__mobile-menu">
+      <div v-if="mobileMenuOpen" class="nav__mobile-panel">
         <div class="nav__mobile-header">
           <span class="nav__mobile-title">منو</span>
         </div>
@@ -59,17 +62,14 @@
           <a href="#philosophy" class="nav__mobile-link" @click="closeMenu"
             >فلسفه محصول</a
           >
-          <a href="#approach" class="nav__mobile-link" @click="closeMenu"
-            >رویکرد</a
+          <a href="#experiences" class="nav__mobile-link" @click="closeMenu"
+            >تجربه‌ها</a
           >
-          <a href="#features" class="nav__mobile-link" @click="closeMenu"
-            >ویژگی‌ها</a
+          <a href="#operation" class="nav__mobile-link" @click="closeMenu"
+            >عملکرد</a
           >
           <a href="#customers" class="nav__mobile-link" @click="closeMenu"
-            >مشتریان</a
-          >
-          <a href="#experiences" class="nav__mobile-link" @click="closeMenu"
-            >نظرات کاربران</a
+            >مخاطبان</a
           >
           <a href="#faq" class="nav__mobile-link" @click="closeMenu"
             >سوالات متداول</a
@@ -77,7 +77,6 @@
         </nav>
 
         <div class="nav__mobile-footer">
-          <!-- FIX: using BaseButton -->
           <BaseButton
             variant="primary"
             size="lg"
@@ -132,6 +131,8 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
+// ── Block ──────────────────────────────────────────────────────
+
 .nav {
   position: fixed;
   top: 0;
@@ -149,7 +150,7 @@ onBeforeUnmount(() => {
     box-shadow: $shadow-md;
   }
 
-  // ── Container ────────────────────────────
+  // ── Container ────────────────────────────────────────────
 
   &__container {
     max-width: 1900px;
@@ -160,7 +161,7 @@ onBeforeUnmount(() => {
     justify-content: space-between;
   }
 
-  // ── Logo ─────────────────────────────────
+  // ── Logo ─────────────────────────────────────────────────
 
   &__logo-link {
     display: flex;
@@ -175,7 +176,7 @@ onBeforeUnmount(() => {
     display: block;
   }
 
-  // ── Desktop Menu ─────────────────────────
+  // ── Desktop menu ──────────────────────────────────────────
 
   &__menu {
     display: flex;
@@ -208,13 +209,14 @@ onBeforeUnmount(() => {
 
     &:hover {
       color: $color-text-primary;
+
       &::after {
         width: 100%;
       }
     }
   }
 
-  // ── Actions ──────────────────────────────
+  // ── Actions ───────────────────────────────────────────────
 
   &__actions {
     display: flex;
@@ -222,7 +224,7 @@ onBeforeUnmount(() => {
     align-items: center;
   }
 
-  // ── Hamburger ────────────────────────────
+  // ── Hamburger ─────────────────────────────────────────────
 
   &__hamburger {
     display: none;
@@ -263,7 +265,7 @@ onBeforeUnmount(() => {
     }
   }
 
-  // ── Mobile Overlay ───────────────────────
+  // ── Overlay ───────────────────────────────────────────────
 
   &__overlay {
     position: fixed;
@@ -273,10 +275,9 @@ onBeforeUnmount(() => {
     z-index: 998;
   }
 
-  // ── Mobile Panel ─────────────────────────
-  // FIX: was left: 0 (slides from left) — RTL site should slide from right
+  // ── Mobile panel ──────────────────────────────────────────
 
-  &__mobile-menu {
+  &__mobile-panel {
     position: fixed;
     top: 0;
     right: 0;
@@ -343,7 +344,7 @@ onBeforeUnmount(() => {
   }
 }
 
-// ── Transitions ──────────────────────────────────
+// ── Vue transition animations ───────────────────────────────────
 
 .nav-overlay-enter-active,
 .nav-overlay-leave-active {
@@ -354,7 +355,6 @@ onBeforeUnmount(() => {
   opacity: 0;
 }
 
-// FIX: was translateX(-100%) — panel now slides from right
 .nav-panel-enter-active,
 .nav-panel-leave-active {
   transition: transform 0.3s ease;
@@ -364,13 +364,14 @@ onBeforeUnmount(() => {
   transform: translateX(100%);
 }
 
-// ── Responsive ───────────────────────────────────
+// ── Responsive ─────────────────────────────────────────────────
 
 @media (max-width: $breakpoint-lg) {
   .nav {
     &__menu {
       gap: $spacing-md;
     }
+
     &__link {
       font-size: 0.9rem;
     }
@@ -382,14 +383,16 @@ onBeforeUnmount(() => {
     &__container {
       padding: 1rem 1.5rem;
     }
+
     &__menu {
       display: none;
     }
+
     &__hamburger {
       display: flex;
     }
 
-    // Hide desktop CTA button, show hamburger only
+    // Hide desktop CTA, show hamburger only
     &__actions > :first-child {
       display: none;
     }

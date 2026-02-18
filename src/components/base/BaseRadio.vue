@@ -66,6 +66,8 @@ defineEmits(["click"]);
     background: rgba(255, 255, 255, 0.03);
   }
 
+  // ── Indicator circle ──────────────────────────────────────
+
   &__indicator {
     width: 20px;
     height: 20px;
@@ -90,12 +92,16 @@ defineEmits(["click"]);
     }
   }
 
+  // ── Check icon (shown when completed) ─────────────────────
+
   &__check {
     color: $color-bg-primary;
     opacity: 0;
     transform: scale(0);
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
+
+  // ── Label ─────────────────────────────────────────────────
 
   &__label {
     flex: 1;
@@ -105,6 +111,8 @@ defineEmits(["click"]);
     transition: color 0.3s ease;
     line-height: 1.5;
   }
+
+  // ── Active modifier ───────────────────────────────────────
 
   &--active {
     .step-radio__indicator {
@@ -121,6 +129,8 @@ defineEmits(["click"]);
       font-weight: $font-weight-semibold;
     }
   }
+
+  // ── Completed modifier ────────────────────────────────────
 
   &--completed {
     .step-radio__indicator {

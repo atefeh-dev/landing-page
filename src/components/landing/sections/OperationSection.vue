@@ -3,13 +3,13 @@
     <div class="section__container">
       <!-- Header -->
       <div class="operation__header">
-        <span class="section__badge" :class="slideDown()">عملکرد</span>
+        <!-- <span class="section__badge" v-bind="slideDown()">عملکرد</span> -->
 
-        <h2 class="operation__title" :class="reveal(1)">
+        <h2 class="operation__title" v-bind="reveal(1)">
           ساخت سند، شفاف و مرحله‌به‌مرحله.
         </h2>
 
-        <div class="operation__toggle" :class="reveal(2)">
+        <div class="operation__toggle" v-bind="reveal(2)">
           <ToggleSwitch v-model="showStandard" />
           <span class="operation__toggle-label">
             {{ showStandard ? "دریافت اسناد استاندارد" : "تنظیم هوشمند اسناد" }}
@@ -18,9 +18,9 @@
       </div>
 
       <!-- Image preview -->
-      <div class="operation__preview" :class="reveal(3)">
+      <div class="operation__preview" v-bind="reveal(3)">
         <div class="operation__preview-inner">
-          <transition name="image-crossfade">
+          <transition name="operation__image-fade">
             <img
               :key="showStandard ? 'standard' : 'smart'"
               :src="currentImage"
@@ -31,8 +31,8 @@
         </div>
       </div>
 
-      <!-- Steps with progressive opacity -->
-      <div class="operation__steps" :class="reveal(4)">
+      <!-- Step indicators -->
+      <div class="operation__steps" v-bind="reveal(4)">
         <StepIndicator
           v-for="(step, index) in steps"
           :key="`step-${index}`"
@@ -60,42 +60,28 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
 
 const showStandard = ref(false);
 
-// Steps with title + description
 const steps = [
-  {
-    title: "انتخاب نوع سند",
-    description: "نام‌گذاری",
-  },
-  {
-    title: "تنظیم سند",
-    description: "تکمیل اطلاعات",
-  },
-  {
-    title: "پیش‌نمایش سند",
-    description: "درج اطلاعات ",
-  },
-  {
-    title: "ذخیره سند",
-    description: "دریافت سند",
-  },
+  { title: "انتخاب نوع سند", description: "نام‌گذاری" },
+  { title: "تنظیم سند", description: "تکمیل اطلاعات" },
+  { title: "پیش‌نمایش سند", description: "درج اطلاعات" },
+  { title: "ذخیره سند", description: "دریافت سند" },
 ];
 
-const currentImage = computed(() => {
-  return showStandard.value ? Step2 : Step1;
-});
-
-const currentStepIndex = computed(() => {
-  return showStandard.value ? 1 : 2;
-});
+const currentImage = computed(() => (showStandard.value ? Step2 : Step1));
+const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
 </script>
 
 <style lang="scss" scoped>
+// ── Section modifier ───────────────────────────────────────────
+// Only sets background color.
+// Centering (min-height, display:flex, justify-content:center, padding)
+// is fully handled by the shared .section block in main.scss.
+
 .section--operation {
   background: $color-bg-primary;
-  padding-top: calc($nav-height + $spacing-2xl);
-  padding-bottom: $spacing-2xl;
-  min-height: auto;
 }
+
+// ── Header ─────────────────────────────────────────────────────
 
 .operation__header {
   text-align: center;
@@ -105,6 +91,8 @@ const currentStepIndex = computed(() => {
   margin-right: auto;
 }
 
+// ── Title ──────────────────────────────────────────────────────
+
 .operation__title {
   font-size: clamp(1.5rem, 3.5vw, 2rem);
   font-weight: $font-weight-bold;
@@ -112,6 +100,8 @@ const currentStepIndex = computed(() => {
   color: $color-text-primary;
   line-height: 1.3;
 }
+
+// ── Toggle row ─────────────────────────────────────────────────
 
 .operation__toggle {
   display: inline-flex;
@@ -135,6 +125,8 @@ const currentStepIndex = computed(() => {
   font-weight: $font-weight-medium;
 }
 
+// ── Image preview ──────────────────────────────────────────────
+
 .operation__preview {
   max-width: 1000px;
   margin: 0 auto $spacing-xl;
@@ -157,6 +149,8 @@ const currentStepIndex = computed(() => {
   object-fit: contain;
 }
 
+// ── Step indicators row ────────────────────────────────────────
+
 .operation__steps {
   display: flex;
   direction: rtl;
@@ -168,27 +162,26 @@ const currentStepIndex = computed(() => {
   padding: 0 $spacing-md;
 }
 
-.image-crossfade-enter-active,
-.image-crossfade-leave-active {
+// ── Image crossfade transition ─────────────────────────────────
+
+.operation__image-fade-enter-active,
+.operation__image-fade-leave-active {
   transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.image-crossfade-enter-from {
+.operation__image-fade-enter-from {
   opacity: 0;
   transform: scale(0.92);
 }
 
-.image-crossfade-leave-to {
+.operation__image-fade-leave-to {
   opacity: 0;
   transform: scale(1.08);
 }
 
-@media (max-width: $breakpoint-md) {
-  .section--operation {
-    padding-top: calc($nav-height + $spacing-xl);
-    padding-bottom: $spacing-xl;
-  }
+// ── Responsive ─────────────────────────────────────────────────
 
+@media (max-width: $breakpoint-md) {
   .operation__header {
     margin-bottom: $spacing-md;
   }
@@ -209,11 +202,6 @@ const currentStepIndex = computed(() => {
 }
 
 @media (max-width: $breakpoint-sm) {
-  .section--operation {
-    padding-top: calc($nav-height + $spacing-md);
-    padding-bottom: $spacing-md;
-  }
-
   .operation__header {
     margin-bottom: $spacing-sm;
   }
@@ -240,7 +228,6 @@ const currentStepIndex = computed(() => {
 
   .operation__steps {
     padding: 0 $spacing-sm;
-    gap: 0;
   }
 }
 </style>

@@ -29,6 +29,8 @@ defineEmits(["update:modelValue"]);
   height: 24px;
   cursor: pointer;
 
+  // ── Hidden native checkbox ────────────────────────────────
+
   &__input {
     opacity: 0;
     width: 0;
@@ -46,6 +48,8 @@ defineEmits(["update:modelValue"]);
       box-shadow: 0 0 0 3px $color-accent-subtle;
     }
   }
+
+  // ── Visible track + thumb ─────────────────────────────────
 
   &__slider {
     position: absolute;
