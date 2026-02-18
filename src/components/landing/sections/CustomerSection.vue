@@ -8,7 +8,7 @@
 
           <h2 class="customers__title" v-bind="reveal(2)">
             برای کسانی که می‌خواهند
-            <span class="customers__title-highlight">منظم‌تر کار کنند</span>
+            <span class="customers__title-highlight">منظم‌تر کار کنند.</span>
           </h2>
 
           <div class="customers__description" v-bind="reveal(3)">
