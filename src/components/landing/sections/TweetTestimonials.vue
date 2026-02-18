@@ -284,7 +284,7 @@ const row2Tweets = [
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 200px;
+    width: 340px;
     z-index: 2;
     pointer-events: none;
   }
@@ -294,8 +294,9 @@ const row2Tweets = [
     background: linear-gradient(
       90deg,
       #0a0a0a 0%,
-      rgba(10, 10, 10, 0.9) 20%,
-      rgba(10, 10, 10, 0.4) 60%,
+      #0a0a0a 15%,
+      rgba(10, 10, 10, 0.85) 40%,
+      rgba(10, 10, 10, 0.3) 75%,
       transparent 100%
     );
   }
@@ -305,8 +306,9 @@ const row2Tweets = [
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(10, 10, 10, 0.4) 40%,
-      rgba(10, 10, 10, 0.9) 80%,
+      rgba(10, 10, 10, 0.3) 25%,
+      rgba(10, 10, 10, 0.85) 60%,
+      #0a0a0a 85%,
       #0a0a0a 100%
     );
   }
@@ -444,7 +446,7 @@ const row2Tweets = [
 @media (max-width: $breakpoint-lg) {
   .tweet-scroller::before,
   .tweet-scroller::after {
-    width: 120px;
+    width: 220px;
   }
 
   .tweet-card {
@@ -456,7 +458,7 @@ const row2Tweets = [
 @media (max-width: $breakpoint-md) {
   .tweet-scroller::before,
   .tweet-scroller::after {
-    width: 80px;
+    width: 140px;
   }
 
   .tweet-card {
@@ -470,7 +472,7 @@ const row2Tweets = [
   .tweet-scroller {
     &::before,
     &::after {
-      width: 40px;
+      width: 60px;
     }
 
     &__row {

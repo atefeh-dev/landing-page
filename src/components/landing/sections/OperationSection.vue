@@ -3,8 +3,6 @@
     <div class="section__container">
       <!-- Header -->
       <div class="operation__header">
-        <!-- <span class="section__badge" v-bind="slideDown()">عملکرد</span> -->
-
         <h2 class="operation__title" v-bind="reveal(1)">
           ساخت سند، شفاف و مرحله‌به‌مرحله.
         </h2>
@@ -17,21 +15,19 @@
         </div>
       </div>
 
-      <!-- Image preview -->
+      <!-- Image preview — fixed aspect-ratio box so height never collapses during transition -->
       <div class="operation__preview" v-bind="reveal(3)">
-        <div class="operation__preview-inner">
-          <transition name="operation__image-fade">
-            <img
-              :key="showStandard ? 'standard' : 'smart'"
-              :src="currentImage"
-              :alt="showStandard ? 'فرآیند استاندارد' : 'فرآیند هوشمند'"
-              class="operation__image"
-            />
-          </transition>
-        </div>
+        <transition name="op-fade">
+          <img
+            :key="showStandard ? 'standard' : 'smart'"
+            :src="currentImage"
+            :alt="showStandard ? 'فرآیند استاندارد' : 'فرآیند هوشمند'"
+            class="operation__image"
+          />
+        </transition>
       </div>
 
-      <!-- Step indicators -->
+      <!-- Step indicators — original floating style -->
       <div class="operation__steps" v-bind="reveal(4)">
         <StepIndicator
           v-for="(step, index) in steps"
@@ -56,7 +52,7 @@ import Step1 from "@/assets/images/step1.png";
 import Step2 from "@/assets/images/step2.png";
 
 const sectionRef = ref(null);
-const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
+const { reveal } = useScrollAnimation(sectionRef, 0.1);
 
 const showStandard = ref(false);
 
@@ -72,6 +68,8 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
 </script>
 
 <style lang="scss" scoped>
+// ── Section ────────────────────────────────────────────────────
+
 .section--operation {
   background: $color-bg-primary;
 }
@@ -80,36 +78,32 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
 
 .operation__header {
   text-align: center;
-  margin-bottom: $spacing-lg;
+  margin-bottom: $spacing-xl;
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
 }
 
-// ── Title ──────────────────────────────────────────────────────
-
 .operation__title {
-  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-size: clamp(1.375rem, 3.5vw, 2rem);
   font-weight: $font-weight-bold;
+  line-height: 1.3;
   margin-bottom: $spacing-md;
   color: $color-text-primary;
-  line-height: 1.3;
 }
-
-// ── Toggle row ─────────────────────────────────────────────────
 
 .operation__toggle {
   display: inline-flex;
   align-items: center;
   gap: $spacing-sm;
-  padding: 0.625rem 1.125rem;
+  padding: 0.625rem 1.25rem;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid $color-border-subtle;
   border-radius: $radius-full;
   transition: $transition-base;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.06);
     border-color: $color-border-medium;
   }
 }
@@ -121,17 +115,17 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
 }
 
 // ── Image preview ──────────────────────────────────────────────
+// Uses padding-bottom aspect-ratio trick so the box NEVER collapses
+// to zero height during the Vue transition (which caused the blank flash).
+// Both entering and leaving images are position:absolute inside this box.
 
 .operation__preview {
-  max-width: 1000px;
-  margin: 0 auto $spacing-xl;
-  box-shadow: $shadow-lg;
-  background: $color-bg-primary;
-}
-
-.operation__preview-inner {
   position: relative;
-  width: 100%;
+  // Break out of container to give image more room — same trick as steps row
+  margin-left: -4rem;
+  margin-right: -4rem;
+  margin-bottom: $spacing-xl;
+  // Aspect ratio box — keeps height stable during transition so no flash
   padding-bottom: 58%;
 }
 
@@ -141,10 +135,13 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: contain;
+  display: block;
 }
 
 // ── Step indicators row ────────────────────────────────────────
+// Steps use negative horizontal margins to escape the container's
+// max-width, giving them more breathing room than the rest of the section.
 
 .operation__steps {
   display: flex;
@@ -152,77 +149,85 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
   align-items: flex-start;
   justify-content: center;
   gap: 0;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 $spacing-md;
+  // Escape the container on both sides by the same amount
+  margin-left: -4rem;
+  margin-right: -4rem;
 }
 
-// ── Image crossfade transition ─────────────────────────────────
+// ── Image transition ───────────────────────────────────────────
+// Enter: image scales up from slightly smaller → normal (feels like it "reveals")
+// Leave: image scales up further and fades (feels like it "recedes")
+// Both are absolute so container height is ALWAYS held by padding-bottom.
 
-.operation__image-fade-enter-active,
-.operation__image-fade-leave-active {
-  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+.op-fade-enter-active {
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.2, 0, 0.2, 1);
+}
+.op-fade-leave-active {
+  transition:
+    opacity 0.4s ease-in,
+    transform 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+  // Must be absolute during leave so it doesn't push layout
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.operation__image-fade-enter-from {
+.op-fade-enter-from {
   opacity: 0;
-  transform: scale(0.92);
+  transform: scale(0.94);
 }
-
-.operation__image-fade-leave-to {
+.op-fade-leave-to {
   opacity: 0;
-  transform: scale(1.08);
+  transform: scale(1.04);
 }
 
 // ── Responsive ─────────────────────────────────────────────────
 
 @media (max-width: $breakpoint-md) {
   .operation__header {
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-lg;
   }
 
   .operation__title {
     font-size: clamp(1.25rem, 4vw, 1.75rem);
-    margin-bottom: $spacing-sm;
   }
 
   .operation__preview {
-    max-width: 900px;
-    margin-bottom: $spacing-md;
+    margin-left: -2rem;
+    margin-right: -2rem;
+    padding-bottom: 62%;
+    margin-bottom: $spacing-lg;
   }
 
-  .operation__preview-inner {
-    padding-bottom: 62%;
+  .operation__steps {
+    // Reduce the breakout on tablet
+    margin-left: -2rem;
+    margin-right: -2rem;
   }
 }
 
 @media (max-width: $breakpoint-sm) {
-  .operation__header {
-    margin-bottom: $spacing-sm;
-  }
-
   .operation__toggle {
     flex-direction: column;
-    gap: 0.375rem;
-    padding: 0.5rem 0.875rem;
-  }
-
-  .operation__toggle-label {
-    font-size: $font-size-xs;
+    gap: 0.25rem;
+    padding: 0.5rem 1rem;
   }
 
   .operation__preview {
-    max-width: 100%;
-    margin-bottom: $spacing-sm;
-    border-radius: $radius-md;
-  }
-
-  .operation__preview-inner {
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
     padding-bottom: 70%;
+    margin-bottom: $spacing-md;
   }
 
   .operation__steps {
-    padding: 0 $spacing-sm;
+    // Reset the negative margins — container padding is already small on mobile
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
   }
 }
 </style>

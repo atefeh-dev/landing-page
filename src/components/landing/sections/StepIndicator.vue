@@ -53,11 +53,18 @@ const persianNumber = computed(() =>
     .join(""),
 );
 
-// Progressive opacity: step 1 = brightest, higher step index = more faded
-// step 1 → 0.65, step 2 → 0.52, step 3 → 0.39, step 4 → 0.26
+// Opacity logic:
+// - completed steps → full opacity (1.0), bright
+// - uncompleted steps → fades progressively: step just after current is 0.5,
+//   each following step gets 0.15 more faded
+// stepNumber 1 = first step (rightmost in RTL layout)
+// We receive stepNumber as 1-based, so step just ahead of current = slightly faded
 const numberOpacity = computed(() => {
   if (props.completed) return 1;
-  return 0.65 - (props.stepNumber - 1) * 0.13;
+  // uncompleted: step N gets opacity based on how far ahead it is
+  // step 1 uncompleted (next up) = 0.55, step 2 = 0.40, step 3 = 0.28, step 4 = 0.18
+  const position = props.stepNumber; // 1 = first/closest, 4 = last/furthest
+  return Math.max(0.18, 0.55 - (position - 1) * 0.13);
 });
 
 const numberStyle = computed(() => ({
@@ -66,7 +73,7 @@ const numberStyle = computed(() => ({
 
 const circleStyle = computed(() => {
   if (props.completed) return {};
-  return { borderColor: `rgba(255, 255, 255, ${numberOpacity.value * 0.4})` };
+  return { borderColor: `rgba(255, 255, 255, ${numberOpacity.value * 0.5})` };
 });
 </script>
 
