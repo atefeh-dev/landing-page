@@ -6,6 +6,7 @@
       <HeroSection />
       <PhilosophySection />
       <Tweetexperiences />
+      <OperationSection />
       <CustomersSection />
       <FaqSection />
       <CtaSection ref="ctaRef" />
@@ -26,6 +27,7 @@ import CustomersSection from "@/components/landing/sections/CustomerSection.vue"
 import FaqSection from "@/components/landing/sections/FaqSection.vue";
 import CtaSection from "@/components/landing/sections/CtaSection.vue";
 import FooterSection from "@/components/landing/sections/FooterSection.vue";
+import OperationSection from "./components/landing/sections/OperationSection.vue";
 
 const ctaRef = ref(null);
 
