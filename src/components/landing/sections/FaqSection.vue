@@ -103,7 +103,7 @@ function toggleFaq(index) {
 // ── Section modifier ───────────────────────────────────────────
 
 .section--faq {
-  background: linear-gradient(180deg, #111111 0%, #0d0a0f 50%, #0a0a0a 100%);
+  background: $color-bg-primary;
   position: relative;
   overflow: hidden;
   margin-top: $spacing-2xl;

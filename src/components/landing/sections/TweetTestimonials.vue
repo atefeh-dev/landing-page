@@ -258,7 +258,7 @@ const row2Tweets = [
 // ── Section modifier ───────────────────────────────────────────
 
 .section--tweets {
-  background: #0a0a0a;
+  background: $color-bg-primary;
   overflow: hidden; // prevent animated tracks from blowing out page width
 
   // The tweet section title is a long sentence — needs smaller clamp floor
@@ -293,8 +293,8 @@ const row2Tweets = [
     left: 0;
     background: linear-gradient(
       90deg,
-      #0a0a0a 0%,
-      #0a0a0a 15%,
+      $color-bg-primary 0%,
+      $color-bg-primary 15%,
       rgba(10, 10, 10, 0.85) 40%,
       rgba(10, 10, 10, 0.3) 75%,
       transparent 100%
@@ -308,8 +308,8 @@ const row2Tweets = [
       transparent 0%,
       rgba(10, 10, 10, 0.3) 25%,
       rgba(10, 10, 10, 0.85) 60%,
-      #0a0a0a 85%,
-      #0a0a0a 100%
+      $color-bg-primary 85%,
+      $color-bg-primary 100%
     );
   }
 

@@ -35,7 +35,12 @@ const { reveal } = useScrollAnimation(sectionRef);
 // ── Section modifier ───────────────────────────────────────────
 
 .section--cta {
-  background: $color-bg-primary;
+  background: linear-gradient(
+    180deg,
+    #111111 0%,
+    #0d0a0f 50%,
+    $color-bg-primary 100%
+  );
 }
 
 // ── CTA block ──────────────────────────────────────────────────

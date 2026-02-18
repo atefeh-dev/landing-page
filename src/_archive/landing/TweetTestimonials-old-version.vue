@@ -222,7 +222,7 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .section--tweets {
-  background-color: #0a0a0a;
+  background-color: $color-bg-primary;
   overflow: hidden;
 }
 

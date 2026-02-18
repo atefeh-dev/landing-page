@@ -98,7 +98,7 @@ const handleSubmit = () => {};
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background: #0a0a0a;
+  background: $color-bg-primary;
   position: relative;
   overflow: hidden;
 

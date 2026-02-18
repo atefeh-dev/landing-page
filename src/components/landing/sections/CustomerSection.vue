@@ -51,7 +51,12 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
 // ── Section modifier ───────────────────────────────────────────
 
 .section--customers {
-  background: $color-bg-primary;
+  background: linear-gradient(
+    180deg,
+    #111111 0%,
+    #0d0a0f 50%,
+    $color-bg-primary 100%
+  );
   position: relative;
   overflow: hidden;
 }
