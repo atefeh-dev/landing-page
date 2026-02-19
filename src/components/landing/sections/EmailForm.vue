@@ -31,7 +31,7 @@ import BaseButton from "@/components/base/BaseButton.vue";
 defineProps({
   placeholder: {
     type: String,
-    default: "پست الکترونیک خود را وارد نمایید",
+    default: "ایمیل شما",
   },
   buttonText: {
     type: String,

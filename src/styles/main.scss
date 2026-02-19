@@ -1,3 +1,12 @@
+// ─────────────────────────────────────────────────────────────
+// MAIN SCSS
+// Global styles: section layout, scroll animation, keyframes.
+// Component-specific styles live in their own scoped blocks.
+// ─────────────────────────────────────────────────────────────
+
+// main.scss is a regular stylesheet (not injected via additionalData),
+// so it uses the full @/ alias path. The index is NOT used here because
+// main.scss generates output CSS — it cannot be in additionalData.
 @use "@/styles/functions" as *;
 @use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
@@ -5,6 +14,9 @@
 
 // ─────────────────────────────────────────────────────────────
 // GLOBAL UTILITIES
+// One-off semantic helpers that don't belong to any component.
+// WHY: .highlight is used across every section template so it
+// belongs in global scope, not duplicated per component.
 // ─────────────────────────────────────────────────────────────
 
 .highlight {
@@ -13,6 +25,10 @@
 
 // ─────────────────────────────────────────────────────────────
 // SCROLL ANIMATION
+// Driven by useScrollAnimation composable.
+// Composable adds [data-animate] and toggles .is-visible.
+// WHY: Scoped to .section and footer only — never leaks into
+// nav or fixed-position UI elements.
 // ─────────────────────────────────────────────────────────────
 
 .section [data-animate],
@@ -35,6 +51,8 @@ footer [data-animate] {
 }
 
 // ── Staggered delay helpers ───────────────────────────────────
+// WHY: Using a @for loop eliminates 12 lines of hand-written
+// repetition and makes adding new delay steps trivial.
 
 @for $i from 1 through 6 {
   .section [data-delay="#{$i}"].is-visible,
@@ -53,7 +71,7 @@ footer [data-animate] {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: $spacing-3xl 0;
+  padding: $spacing-2xl 0;
   position: relative;
 
   // ── Container ──────────────────────────────────────────────
@@ -147,7 +165,7 @@ footer [data-animate] {
 
 @include respond-to(md) {
   .section {
-    padding: $spacing-2xl 0;
+    padding: $spacing-lg 0;
   }
 
   .section__container {
@@ -158,7 +176,7 @@ footer [data-animate] {
 @include respond-to(sm) {
   .section {
     min-height: auto;
-    padding: $spacing-xl 0;
+    padding: $spacing-lg 0;
   }
 
   .section__container {
@@ -176,16 +194,6 @@ footer [data-animate] {
 // WHY: Keyframes are global by nature — defining them per
 // scoped component causes duplication in the CSS output.
 // ─────────────────────────────────────────────────────────────
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(var(--rotation, 0deg));
-  }
-  50% {
-    transform: translateY(-20px) rotate(calc(var(--rotation, 0deg) + 5deg));
-  }
-}
 
 @keyframes spin {
   to {

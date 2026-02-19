@@ -49,13 +49,13 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
 // ─────────────────────────────────────────────────────────────
 // CustomerSection
 // WHY notes:
-// - @include section-dark-gradient replaces the duplicated gradient.
+// All section backgrounds are solid $color-bg-primary.
 // - customers__image-wrapper pseudo-elements use the token
 //   $color-bg-primary instead of the hard-coded rgba(10,10,15,x).
 // ─────────────────────────────────────────────────────────────
 
 .section--customers {
-  @include section-dark-gradient;
+  background: $color-bg-primary;
   position: relative;
   overflow: hidden;
 }
@@ -113,11 +113,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
     box-shadow: $shadow-xl;
     border: 1px solid $color-border-subtle;
     border-left: none;
-    background: linear-gradient(
-      135deg,
-      $color-surface-subtle 0%,
-      rgba(255, 255, 255, 0.02) 100%
-    );
+    background: $color-bg-primary;
 
     // Left fade overlay
     &::before {
@@ -127,18 +123,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
       left: 0;
       bottom: 0;
       width: 25%;
-      background: linear-gradient(
-        90deg,
-        $color-bg-primary 0%,
-        rgba(10, 10, 10, 0.95) 15%,
-        rgba(10, 10, 10, 0.85) 30%,
-        rgba(10, 10, 10, 0.7) 45%,
-        rgba(10, 10, 10, 0.5) 60%,
-        rgba(10, 10, 10, 0.3) 75%,
-        rgba(10, 10, 10, 0.15) 88%,
-        rgba(10, 10, 10, 0.05) 96%,
-        transparent 100%
-      );
+      background: $color-bg-primary;
       pointer-events: none;
       z-index: 2;
     }
@@ -148,13 +133,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        135deg,
-        rgba(252, 192, 21, 0.08) 0%,
-        transparent 30%,
-        transparent 70%,
-        rgba(20, 52, 203, 0.05) 100%
-      );
+      background: $color-bg-primary;
       pointer-events: none;
       z-index: 1;
       opacity: 0.6;

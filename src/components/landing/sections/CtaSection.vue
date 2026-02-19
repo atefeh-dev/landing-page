@@ -33,7 +33,7 @@ const { reveal } = useScrollAnimation(sectionRef);
 
 <style lang="scss" scoped>
 .section--cta {
-  @include section-dark-gradient;
+  background: $color-bg-primary;
 }
 
 .cta {

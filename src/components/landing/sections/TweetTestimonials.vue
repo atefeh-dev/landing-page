@@ -271,12 +271,14 @@ const row2Tweets = [
 
   &::before {
     left: 0;
+    // WHY gradient: solid color would hard-clip the cards.
+    // Gradient creates a smooth fade-out so cards dissolve into the
+    // background at both edges — gives the infinite scroll illusion depth.
     background: linear-gradient(
-      90deg,
+      to right,
       $color-bg-primary 0%,
-      $color-bg-primary 15%,
-      rgba(10, 10, 10, 0.85) 40%,
-      rgba(10, 10, 10, 0.3) 75%,
+      $color-bg-primary 20%,
+      rgba(10, 10, 10, 0.7) 60%,
       transparent 100%
     );
   }
@@ -284,12 +286,11 @@ const row2Tweets = [
   &::after {
     right: 0;
     background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(10, 10, 10, 0.3) 25%,
-      rgba(10, 10, 10, 0.85) 60%,
-      $color-bg-primary 85%,
-      $color-bg-primary 100%
+      to left,
+      $color-bg-primary 0%,
+      $color-bg-primary 20%,
+      rgba(10, 10, 10, 0.7) 60%,
+      transparent 100%
     );
   }
 

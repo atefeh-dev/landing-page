@@ -30,8 +30,17 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
 </script>
 
 <style lang="scss" scoped>
+// ─────────────────────────────────────────────────────────────
+// ApproachSection
+// All section backgrounds are solid $color-bg-primary.
+// CtaSection, and CustomerSection — eliminating 4× duplication.
+// Card grid markup was removed from template since this section
+// currently has no cards; the card styles and mixin are available
+// if cards are re-added in future.
+// ─────────────────────────────────────────────────────────────
+
 .section--approach {
-  @include section-dark-gradient;
+  background: $color-bg-primary;
   position: relative;
   overflow: hidden;
 }

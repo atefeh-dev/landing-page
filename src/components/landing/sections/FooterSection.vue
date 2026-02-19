@@ -48,12 +48,6 @@
           </a>
         </div>
       </div>
-
-      <div class="footer__bottom">
-        <p class="footer__copyright">
-          © {{ currentYear }} زونکن. تمامی حقوق محفوظ است.
-        </p>
-      </div>
     </div>
   </footer>
 </template>
@@ -69,13 +63,22 @@ const currentYear = computed(() => new Date().getFullYear());
 </script>
 
 <style lang="scss" scoped>
+// ─────────────────────────────────────────────────────────────
+// FooterSection
+// WHY notes:
+// - Social icon imgs use aria-hidden="true" since the link
+//   itself carries the aria-label — duplicate alt text is noise.
+// - respond-to() mixin replaces raw @media.
+// - transition targets specific properties.
+// ─────────────────────────────────────────────────────────────
+
 .footer {
   background: $color-bg-secondary;
   border-top: 1px solid $color-border-subtle;
   padding: $spacing-2xl 0 $spacing-lg;
 
   &__container {
-    max-width: 1200px;
+    max-width: rem(1200);
     margin: 0 auto;
     padding: 0 2rem;
   }
@@ -85,8 +88,6 @@ const currentYear = computed(() => new Date().getFullYear());
     justify-content: space-between;
     align-items: center;
     gap: $spacing-xl;
-    padding-bottom: $spacing-xl;
-    border-bottom: 1px solid $color-border-subtle;
   }
 
   &__brand {
@@ -106,7 +107,7 @@ const currentYear = computed(() => new Date().getFullYear());
     justify-content: center;
 
     img {
-      width: 47px;
+      width: rem(47);
       height: auto;
       transition: opacity #{$transition-duration-fast}
         #{$transition-easing-standard};
@@ -129,42 +130,23 @@ const currentYear = computed(() => new Date().getFullYear());
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: $radius-full;
-    background: $color-surface-subtle;
-    transition:
-      background-color #{$transition-duration-fast}
-        #{$transition-easing-standard},
-      transform #{$transition-duration-fast} #{$transition-easing-standard};
+    // WHY no background: design requires bare icons, no fill.
+    transition: opacity #{$transition-duration-fast}
+      #{$transition-easing-standard};
 
     img {
-      width: 20px;
-      height: 20px;
-      opacity: 0.7;
+      width: rem(24);
+      height: rem(24);
+      opacity: 0.65;
       transition: opacity #{$transition-duration-fast}
         #{$transition-easing-standard};
     }
 
     &:hover {
-      background: $color-surface-light;
-      transform: translateY(-2px);
-
       img {
         opacity: 1;
       }
     }
-  }
-
-  &__bottom {
-    padding-top: $spacing-lg;
-    text-align: center;
-  }
-
-  &__copyright {
-    color: $color-text-tertiary;
-    font-size: $font-size-sm;
-    margin: 0;
   }
 }
 
@@ -185,22 +167,16 @@ const currentYear = computed(() => new Date().getFullYear());
       font-size: 0.9375rem;
     }
     &__logo img {
-      width: 42px;
+      width: rem(42);
     }
     &__social {
       gap: $spacing-sm;
     }
-    &__bottom {
-      padding-top: $spacing-md;
-    }
 
     &__social-link {
-      width: 38px;
-      height: 38px;
-
       img {
-        width: 18px;
-        height: 18px;
+        width: rem(18);
+        height: rem(18);
       }
     }
   }
@@ -234,7 +210,7 @@ const currentYear = computed(() => new Date().getFullYear());
       order: -1;
 
       img {
-        width: 38px;
+        width: rem(38);
       }
     }
 
@@ -246,20 +222,10 @@ const currentYear = computed(() => new Date().getFullYear());
     }
 
     &__social-link {
-      width: 36px;
-      height: 36px;
-
       img {
-        width: 16px;
-        height: 16px;
+        width: rem(16);
+        height: rem(16);
       }
-    }
-
-    &__bottom {
-      padding-top: $spacing-sm;
-    }
-    &__copyright {
-      font-size: 0.75rem;
     }
   }
 }
@@ -273,16 +239,13 @@ const currentYear = computed(() => new Date().getFullYear());
       font-size: 0.8125rem;
     }
     &__logo img {
-      width: 35px;
+      width: rem(35);
     }
 
     &__social-link {
-      width: 34px;
-      height: 34px;
-
       img {
-        width: 15px;
-        height: 15px;
+        width: rem(15);
+        height: rem(15);
       }
     }
   }

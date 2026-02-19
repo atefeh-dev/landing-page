@@ -1,12 +1,19 @@
 // ─────────────────────────────────────────────────────────────
 // MIXINS
+// WHY @use here: @forward does not share scope between sibling
+// modules. _mixins.scss must explicitly @use variables so that
+// $color-bg-primary etc. are available inside mixin bodies.
+// The @/ alias resolves correctly regardless of which component
+// file triggers this compilation.
 // ─────────────────────────────────────────────────────────────
 
 @use "@/styles/functions" as *;
 @use "@/styles/variables" as *;
 
 // ── Responsive breakpoints ────────────────────────────────────
-
+// WHY: Centralises media query syntax. Components never write
+// raw media queries — they call respond-to(). This means
+// changing a breakpoint value updates every usage automatically.
 //
 // Usage:
 //   @include respond-to(md) { ... }
@@ -34,8 +41,8 @@
 }
 
 // ── Section dark gradient background ─────────────────────────
-// Usage:
-//   .section--foo { @include section-dark-gradient; }
+// LEGACY: All sections now use solid $color-bg-primary per design.
+// Mixin kept for rollback convenience — do not use in new code.
 
 @mixin section-dark-gradient {
   background: linear-gradient(
@@ -47,6 +54,9 @@
 }
 
 // ── Focus ring ────────────────────────────────────────────────
+// WHY: Consistent accessible focus indicator across all
+// interactive elements (inputs, buttons, toggles).
+//
 // Usage:
 //   &:focus-visible { @include focus-ring; }
 //   &:focus-visible { @include focus-ring($color-error, 0.1); }
@@ -73,6 +83,9 @@
 }
 
 // ── Overlay pseudo-element ────────────────────────────────────
+// WHY: Repeated pattern for ::before / ::after overlays on
+// image wrappers, buttons, and cards.
+//
 // Usage:
 //   &::before { @include pseudo-overlay; background: ...; }
 
@@ -84,6 +97,9 @@
 }
 
 // ── Scrolling track animation ─────────────────────────────────
+// WHY: TweetTestimonials has two tracks with mirrored animations.
+// Mixin accepts direction so both share one definition.
+//
 // Usage:
 //   .tweet-scroller__track         { @include scroll-track(left); }
 //   .tweet-scroller__track--reverse { @include scroll-track(right); }
@@ -95,6 +111,9 @@
 }
 
 // ── Card grid ─────────────────────────────────────────────────
+// WHY: PhilosophySection and ApproachSection shared identical
+// 3-column card grid layout. One mixin, two usages.
+//
 // Usage:
 //   .philosophy__cards { @include card-grid; }
 
