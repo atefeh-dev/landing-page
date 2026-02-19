@@ -1,0 +1,46 @@
+@use "sass:math";
+@use "sass:meta";
+
+// ── rem() ─────────────────────────────────────────────────────
+// Converts a unitless px number to rem (base: 16px).
+//
+// Usage:
+//   padding: rem(24);        → 1.5rem
+//   font-size: rem(14);      → 0.875rem
+//   width: rem(320);         → 20rem
+
+$_base-font-size: 16 !default;
+
+@function rem($px) {
+  @if meta.type-of($px) != number {
+    @error "rem() expects a number.";
+  }
+
+  @if math.unit($px) == "rem" {
+    @return $px;
+  }
+
+  @if math.unit($px) != "" and math.unit($px) != "px" {
+    @error "rem() expects unitless or px.";
+  }
+
+  @if math.unit($px) == "" {
+    @return math.div($px * 1px, $_base-font-size * 1px) * 1rem;
+  }
+
+  @return math.div($px, $_base-font-size * 1px) * 1rem;
+}
+// ── em() ──────────────────────────────────────────────────────
+// Converts px to em relative to a given context (default 16px).
+// Prefer rem() in almost all cases.
+
+@function em($px, $context: $_base-font-size) {
+  @return math.div($px, $context) * 1em;
+}
+
+// ── strip-unit() ──────────────────────────────────────────────
+// Removes the unit from a value. Internal helper.
+
+@function strip-unit($value) {
+  @return math.div($value, $value * 0 + 1);
+}

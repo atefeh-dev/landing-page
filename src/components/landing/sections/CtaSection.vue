@@ -32,26 +32,15 @@ const { reveal } = useScrollAnimation(sectionRef);
 </script>
 
 <style lang="scss" scoped>
-// ── Section modifier ───────────────────────────────────────────
-
 .section--cta {
-  background: linear-gradient(
-    180deg,
-    #111111 0%,
-    #0d0a0f 50%,
-    $color-bg-primary 100%
-  );
+  @include section-dark-gradient;
 }
-
-// ── CTA block ──────────────────────────────────────────────────
 
 .cta {
   text-align: center;
   padding: $spacing-3xl $spacing-xl;
-  max-width: 800px;
+  max-width: rem(800);
   margin: 0 auto;
-
-  // ── Title ─────────────────────────────────────────────────
 
   &__title {
     font-size: clamp(1.75rem, 4vw, 2.25rem);
@@ -61,14 +50,12 @@ const { reveal } = useScrollAnimation(sectionRef);
     color: $color-text-primary;
   }
 
-  // ── Description ───────────────────────────────────────────
-
   &__description {
-    font-size: 1.125rem;
+    font-size: $font-size-lg;
     line-height: 1.8;
     color: $color-text-secondary;
     margin-bottom: $spacing-md;
-    max-width: 700px;
+    max-width: rem(700);
     margin-left: auto;
     margin-right: auto;
 
@@ -78,23 +65,20 @@ const { reveal } = useScrollAnimation(sectionRef);
   }
 }
 
-// ── Responsive ─────────────────────────────────────────────────
-
-@media (max-width: $breakpoint-lg) {
+@include respond-to(lg) {
   .cta {
     padding: $spacing-2xl $spacing-lg;
 
     &__title {
       font-size: clamp(1.5rem, 4vw, 2rem);
     }
-
     &__description {
       font-size: 1.0625rem;
     }
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@include respond-to(sm) {
   .section--cta {
     padding: $spacing-2xl 0;
   }
@@ -108,7 +92,7 @@ const { reveal } = useScrollAnimation(sectionRef);
     }
 
     &__description {
-      font-size: 1rem;
+      font-size: $font-size-md;
       margin-bottom: $spacing-sm;
 
       &:last-of-type {

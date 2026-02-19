@@ -2,7 +2,6 @@
   <section class="section section--customers" id="customers" ref="sectionRef">
     <div class="section__container">
       <div class="customers">
-        <!-- Text content -->
         <div class="customers__content" v-bind="reveal()">
           <span class="section__badge" v-bind="slideDown(1)">مخاطبان</span>
 
@@ -23,7 +22,6 @@
           </div>
         </div>
 
-        <!-- Dashboard image -->
         <div class="customers__visual" v-bind="reveal(4)">
           <div class="customers__image-wrapper">
             <img
@@ -48,37 +46,32 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
 </script>
 
 <style lang="scss" scoped>
-// ── Section modifier ───────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// CustomerSection
+// WHY notes:
+// - @include section-dark-gradient replaces the duplicated gradient.
+// - customers__image-wrapper pseudo-elements use the token
+//   $color-bg-primary instead of the hard-coded rgba(10,10,15,x).
+// ─────────────────────────────────────────────────────────────
 
 .section--customers {
-  background: linear-gradient(
-    180deg,
-    #111111 0%,
-    #0d0a0f 50%,
-    $color-bg-primary 100%
-  );
+  @include section-dark-gradient;
   position: relative;
   overflow: hidden;
 }
-
-// ── Customers block ────────────────────────────────────────────
 
 .customers {
   display: flex;
   align-items: center;
   gap: $spacing-3xl;
 
-  // ── Content column ────────────────────────────────────────
-
   &__content {
     flex: 0 0 auto;
-    max-width: 600px;
+    max-width: rem(600);
     width: 100%;
     padding-right: 2rem;
     text-align: right;
   }
-
-  // ── Title ─────────────────────────────────────────────────
 
   &__title {
     font-size: clamp(1.75rem, 4vw, 2.5rem);
@@ -93,10 +86,8 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
     display: block;
   }
 
-  // ── Description ───────────────────────────────────────────
-
   &__description {
-    font-size: 1.125rem;
+    font-size: $font-size-lg;
     line-height: 1.8;
     color: $color-text-secondary;
 
@@ -109,15 +100,11 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
     }
   }
 
-  // ── Visual column ─────────────────────────────────────────
-
   &__visual {
     flex: 0 0 50%;
     position: relative;
     margin-left: -5%;
   }
-
-  // ── Image wrapper ─────────────────────────────────────────
 
   &__image-wrapper {
     position: relative;
@@ -128,7 +115,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
     border-left: none;
     background: linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.05) 0%,
+      $color-surface-subtle 0%,
       rgba(255, 255, 255, 0.02) 100%
     );
 
@@ -142,14 +129,14 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
       width: 25%;
       background: linear-gradient(
         90deg,
-        rgba(10, 10, 15, 1) 0%,
-        rgba(10, 10, 15, 0.95) 15%,
-        rgba(10, 10, 15, 0.85) 30%,
-        rgba(10, 10, 15, 0.7) 45%,
-        rgba(10, 10, 15, 0.5) 60%,
-        rgba(10, 10, 15, 0.3) 75%,
-        rgba(10, 10, 15, 0.15) 88%,
-        rgba(10, 10, 15, 0.05) 96%,
+        $color-bg-primary 0%,
+        rgba(10, 10, 10, 0.95) 15%,
+        rgba(10, 10, 10, 0.85) 30%,
+        rgba(10, 10, 10, 0.7) 45%,
+        rgba(10, 10, 10, 0.5) 60%,
+        rgba(10, 10, 10, 0.3) 75%,
+        rgba(10, 10, 10, 0.15) 88%,
+        rgba(10, 10, 10, 0.05) 96%,
         transparent 100%
       );
       pointer-events: none;
@@ -174,8 +161,6 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
     }
   }
 
-  // ── Image ─────────────────────────────────────────────────
-
   &__image {
     width: 100%;
     height: auto;
@@ -187,7 +172,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
 
 // ── Responsive ─────────────────────────────────────────────────
 
-@media (max-width: $breakpoint-lg) {
+@include respond-to(lg) {
   .customers {
     gap: $spacing-2xl;
 
@@ -197,7 +182,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
     }
 
     &__content {
-      max-width: 500px;
+      max-width: rem(500);
       padding-right: 1.5rem;
     }
 
@@ -216,7 +201,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
   }
 }
 
-@media (max-width: $breakpoint-md) {
+@include respond-to(md) {
   .section--customers {
     padding: $spacing-2xl 0;
   }
@@ -229,7 +214,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
     &__visual {
       flex: none;
       width: 100%;
-      max-width: 600px;
+      max-width: rem(600);
       margin: 0 auto;
     }
 
@@ -244,7 +229,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
 
     &__content {
       flex: none;
-      max-width: 600px;
+      max-width: rem(600);
       text-align: center;
       padding-right: 0;
       margin: 0 auto;
@@ -253,14 +238,13 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
     &__title {
       font-size: clamp(1.5rem, 5vw, 1.875rem);
     }
-
     &__title-highlight {
       display: inline;
     }
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@include respond-to(sm) {
   .section--customers {
     padding: $spacing-xl 0;
   }
@@ -272,7 +256,6 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
     &__visual {
       max-width: 100%;
     }
-
     &__image-wrapper {
       border-radius: $radius-md;
     }
@@ -283,7 +266,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
     }
 
     &__description {
-      font-size: 1rem;
+      font-size: $font-size-md;
 
       p {
         margin-bottom: $spacing-sm;

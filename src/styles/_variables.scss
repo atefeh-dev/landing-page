@@ -1,22 +1,25 @@
-$nav-height: 80px;
+@use "@/styles/functions" as *;
 
-// Colors - Dark Mode Palette
+// ── Layout ────────────────────────────────────────────────────
+
+$nav-height: rem(80);
+
+// ── Color: Backgrounds ────────────────────────────────────────
+
 $color-bg-primary: #0a0a0a;
-$color-bg-primary-shadow: linear-gradient(
-  180deg,
-  #111111 0%,
-  #0d0a0f 50%,
-  $color-bg-primary 100%
-);
-
 $color-bg-secondary: #111111;
 $color-bg-tertiary: #1a1a1a;
 $color-bg-elevated: #222222;
 $color-bg-overlay: rgba(0, 0, 0, 0.6);
 
+// ── Color: Borders ────────────────────────────────────────────
+
 $color-border-subtle: rgba(255, 255, 255, 0.06);
 $color-border-medium: rgba(255, 255, 255, 0.1);
 $color-border-strong: rgba(255, 255, 255, 0.15);
+$color-border-primary: #373a41;
+
+// ── Color: Text ───────────────────────────────────────────────
 
 $color-text-primary: #ffffff;
 $color-text-secondary: rgba(255, 255, 255, 0.7);
@@ -24,57 +27,86 @@ $color-text-tertiary: rgba(255, 255, 255, 0.5);
 $color-text-muted: rgba(255, 255, 255, 0.3);
 $color-text-hero: #cecfd2;
 
-$color-border-primary: #373a41;
+// ── Color: Accent ─────────────────────────────────────────────
 
 $color-accent-primary: #fcc015;
+$color-accent-hover: #ffd84d; // used only in BaseButton hover; avoids magic number
 $color-accent-secondary: #1434cb;
 $color-accent-glow: rgba(252, 192, 21, 0.15);
 $color-accent-subtle: rgba(252, 192, 21, 0.08);
+
+// ── Color: Semantic ───────────────────────────────────────────
+
 $color-success: #079455;
+$color-error: #ef4444;
 $color-info: #2d8ff0;
+
+// ── Color: Badge ──────────────────────────────────────────────
+
 $color-badge-fill: #2c1c5f;
 $color-badge-text: #d6bbfb;
 $color-badge-stroke: #53389e;
 
-//font-sizes
-$font-size-xs: 0.75rem;
-$font-size-sm: 0.875rem;
-$font-size-md: 1rem;
-$font-size-lg: 1.125rem;
-$font-size-xl: 1.25rem;
-$font-size-2xl: 1.5rem;
-$font-size-3xl: 1.875rem;
-$font-size-4xl: 2.25rem;
-$font-size-5xl: 3rem;
+// ── Color: Surface overlays ───────────────────────────────────
+// Avoid scattering rgba(255,255,255, x) magic numbers in components.
 
-// font-weights
+$color-surface-hover: rgba(255, 255, 255, 0.03);
+$color-surface-subtle: rgba(255, 255, 255, 0.05);
+$color-surface-light: rgba(255, 255, 255, 0.08);
+$color-surface-bright: rgba(255, 255, 255, 0.1);
+
+// ── Typography: Scale ─────────────────────────────────────────
+
+$font-size-xs: rem(12);
+$font-size-sm: rem(14);
+$font-size-md: rem(16);
+$font-size-lg: rem(18);
+$font-size-xl: rem(20);
+$font-size-2xl: rem(24);
+$font-size-3xl: rem(30);
+$font-size-4xl: rem(36);
+$font-size-5xl: rem(48);
+
+// ── Typography: Weights ───────────────────────────────────────
+
 $font-weight-regular: 400;
 $font-weight-medium: 500;
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
 
-// Spacing
-$spacing-xs: 0.5rem;
-$spacing-sm: 1rem;
-$spacing-md: 1.5rem;
-$spacing-lg: 2rem;
-$spacing-xl: 3.125rem;
-$spacing-2xl: 4rem;
-$spacing-3xl: 5rem;
-$spacing-4xl: 6rem;
-$spacing-gap: 3.125rem;
-// Border Radius
+// ── Spacing ───────────────────────────────────────────────────
+
+$spacing-xs: rem(8);
+$spacing-sm: rem(16);
+$spacing-md: rem(24);
+$spacing-lg: rem(32);
+$spacing-xl: rem(50);
+$spacing-2xl: rem(64);
+$spacing-3xl: rem(80);
+$spacing-4xl: rem(96);
+
+// ── Border Radius ─────────────────────────────────────────────
+
 $radius-sm: 8px;
 $radius-md: 12px;
 $radius-lg: 16px;
 $radius-xl: 20px;
 $radius-full: 9999px;
 
-// Transitions
-$transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-$transition-slow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+// ── Transitions ───────────────────────────────────────────────
 
-// Shadows
+$transition-duration-fast: 0.3s;
+$transition-duration-slow: 0.6s;
+$transition-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+$transition-easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+$transition-base: all #{$transition-duration-fast}
+  #{$transition-easing-standard};
+$transition-slow: all #{$transition-duration-slow}
+  #{$transition-easing-standard};
+
+// ── Shadows ───────────────────────────────────────────────────
+
 $shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
 $shadow-md:
   0 4px 6px -1px rgba(0, 0, 0, 0.6),
@@ -88,7 +120,8 @@ $shadow-xl:
 $shadow-accent: 0 8px 16px rgba(252, 192, 21, 0.25);
 $glow-accent: 0 0 20px rgba(252, 192, 21, 0.3);
 
-// Breakpoints
+// ── Breakpoints ───────────────────────────────────────────────
+
 $breakpoint-sm: 640px;
 $breakpoint-md: 844px;
 $breakpoint-lg: 1024px;

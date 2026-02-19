@@ -1,7 +1,6 @@
 <template>
   <section class="hero" id="hero" ref="sectionRef">
-    <!-- Floating background icons -->
-    <div class="hero__icons">
+    <div class="hero__icons" aria-hidden="true">
       <img
         src="@/assets/icons/pagewithcurl.svg"
         alt=""
@@ -41,23 +40,20 @@
 
     <div class="hero__container">
       <div class="hero__content">
-        <!-- Badge -->
         <div class="hero__badge" v-bind="reveal(1)">
-          <span class="hero__badge-news">
-            <img src="@/assets/ui/green-dot.svg" alt="" />
+          <span class="hero__badge-label">
+            <img src="@/assets/ui/green-dot.svg" alt="" aria-hidden="true" />
             <span>چه خبر؟</span>
           </span>
           <span>از امروز لیست انتظار باز است</span>
         </div>
 
-        <!-- Title -->
         <h1 class="hero__title" v-bind="reveal(2)">
           اینجا، هر سند <br />
           <span class="hero__title-highlight">یک مسیر مشخص</span>
           دارد.
         </h1>
 
-        <!-- Description -->
         <p class="hero__description" v-bind="reveal(3)">
           ما زونکن را ساختیم چون سال‌ها با اسناد، قراردادها و فایل‌هایی کار
           کردیم که هیچ مسیر مشخصی نداشتند. زونکن تلاشی است برای اینکه اسناد، از
@@ -66,7 +62,6 @@
 
         <EmailForm @submit="handleSubmit" />
 
-        <!-- Note -->
         <p class="hero__note" v-bind="reveal(5)">
           با ثبت ایمیل، از زمان دسترسی و خبرهای رونمایی باخبر می‌شوید.
         </p>
@@ -83,14 +78,20 @@ import { useScrollAnimation } from "@/composables/useScrollAnimation";
 defineEmits(["scroll-to-cta"]);
 
 const sectionRef = ref(null);
-// threshold 0 → triggers immediately on mount (hero is always visible)
 const { reveal } = useScrollAnimation(sectionRef, 0);
 
 const handleSubmit = () => {};
 </script>
 
 <style lang="scss" scoped>
-// ── Block ──────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// HeroSection
+// WHY notes:
+// - Floating icon sizes use --icon-size custom property to avoid
+//   repeating width + height declarations on each modifier.
+// - hero__badge-news renamed to hero__badge-label (clearer intent).
+// - respond-to() mixin replaces raw @media blocks.
+// ─────────────────────────────────────────────────────────────
 
 .hero {
   padding-top: 8rem;
@@ -113,8 +114,11 @@ const handleSubmit = () => {};
 
   &__icon {
     position: absolute;
-    width: 80px;
-    height: 80px;
+    // WHY: CSS custom property for size avoids duplicating
+    // width + height on every modifier class.
+    --icon-size: 80px;
+    width: var(--icon-size);
+    height: var(--icon-size);
     opacity: 0.4;
     filter: brightness(0.8);
     animation: float 20s infinite ease-in-out;
@@ -122,7 +126,6 @@ const handleSubmit = () => {};
     &--1 {
       top: 31%;
       left: 15%;
-      animation-delay: 0s;
       animation-duration: 18s;
       --rotation: -15deg;
     }
@@ -132,8 +135,7 @@ const handleSubmit = () => {};
       animation-delay: -3s;
       animation-duration: 22s;
       --rotation: 8deg;
-      width: 60px;
-      height: 60px;
+      --icon-size: 60px;
     }
     &--3 {
       top: 30%;
@@ -141,8 +143,7 @@ const handleSubmit = () => {};
       animation-delay: -6s;
       animation-duration: 20s;
       --rotation: -25deg;
-      width: 70px;
-      height: 70px;
+      --icon-size: 70px;
     }
     &--4 {
       top: 23%;
@@ -157,8 +158,7 @@ const handleSubmit = () => {};
       animation-delay: -12s;
       animation-duration: 19s;
       --rotation: 18deg;
-      width: 65px;
-      height: 65px;
+      --icon-size: 65px;
     }
     &--6 {
       top: 44%;
@@ -166,8 +166,7 @@ const handleSubmit = () => {};
       animation-delay: -15s;
       animation-duration: 21s;
       --rotation: -8deg;
-      width: 75px;
-      height: 75px;
+      --icon-size: 75px;
     }
     &--7 {
       top: 22%;
@@ -175,30 +174,29 @@ const handleSubmit = () => {};
       animation-delay: -18s;
       animation-duration: 23s;
       --rotation: 22deg;
-      width: 70px;
-      height: 70px;
+      --icon-size: 70px;
     }
   }
 
   // ── Container ─────────────────────────────────────────────
 
   &__container {
-    max-width: 1200px;
+    max-width: rem(1200);
     margin: 0 auto;
     padding: 0 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: $spacing-gap;
+    gap: $spacing-xl;
     position: relative;
     z-index: 1;
   }
 
-  // ── Content area ──────────────────────────────────────────
+  // ── Content ───────────────────────────────────────────────
 
   &__content {
     text-align: center;
-    max-width: 700px;
+    max-width: rem(700);
   }
 
   // ── Badge ─────────────────────────────────────────────────
@@ -211,13 +209,13 @@ const handleSubmit = () => {};
     border: 1px solid $color-border-primary;
     border-radius: $radius-sm;
     color: $color-text-hero;
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
     margin-bottom: $spacing-lg;
     backdrop-filter: blur(10px);
   }
 
-  &__badge-news {
+  &__badge-label {
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
@@ -255,7 +253,7 @@ const handleSubmit = () => {};
   // ── Note ──────────────────────────────────────────────────
 
   &__note {
-    font-size: 0.875rem;
+    font-size: $font-size-sm;
     color: $color-text-tertiary;
     margin-top: 0.25rem;
     text-align: right;
@@ -264,31 +262,28 @@ const handleSubmit = () => {};
 
 // ── Responsive ─────────────────────────────────────────────────
 
-@media (max-width: $breakpoint-lg) {
+@include respond-to(lg) {
   .hero {
     &__content {
-      max-width: 600px;
+      max-width: rem(600);
     }
 
     &__icon {
-      width: 60px;
-      height: 60px;
+      --icon-size: 60px;
 
       &--2,
       &--5 {
-        width: 50px;
-        height: 50px;
+        --icon-size: 50px;
       }
       &--3,
       &--7 {
-        width: 55px;
-        height: 55px;
+        --icon-size: 55px;
       }
     }
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@include respond-to(sm) {
   .hero {
     padding-top: 6rem;
     padding-bottom: $spacing-2xl;
@@ -308,19 +303,17 @@ const handleSubmit = () => {};
     }
 
     &__description {
-      font-size: 1rem;
+      font-size: $font-size-md;
       margin-bottom: $spacing-lg;
     }
 
     &__icon {
-      width: 50px;
-      height: 50px;
+      --icon-size: 50px;
       opacity: 0.3;
 
       &--2,
       &--5 {
-        width: 40px;
-        height: 40px;
+        --icon-size: 40px;
       }
       &--3,
       &--6,

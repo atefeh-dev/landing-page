@@ -57,31 +57,27 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
 </script>
 
 <style lang="scss" scoped>
-// ── Section modifier ───────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// PhilosophySection
+// WHY: section--philosophy, section--approach, section--cta and
+// section--customers all used the identical dark gradient.
+// Now all four use @include section-dark-gradient — one change
+// updates them all.
+// ─────────────────────────────────────────────────────────────
 
 .section--philosophy {
-  background: linear-gradient(
-    180deg,
-    #111111 0%,
-    #0d0a0f 50%,
-    $color-bg-primary 100%
-  );
+  @include section-dark-gradient;
   position: relative;
   overflow: hidden;
 }
 
-// ── Cards grid ─────────────────────────────────────────────────
+// ── Cards ──────────────────────────────────────────────────────
+// WHY: card-grid mixin replaces the duplicated grid definition
+// that was copy-pasted from ApproachSection verbatim.
 
 .philosophy__cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $spacing-md;
-  max-width: 1000px;
-  margin: 0 auto $spacing-xl;
-  padding: 0 $spacing-lg;
+  @include card-grid;
 }
-
-// ── Card block ─────────────────────────────────────────────────
 
 .philosophy__card {
   display: flex;
@@ -90,24 +86,24 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
   text-align: center;
 
   &-icon {
-    width: 80px;
-    height: 80px;
+    width: rem(80);
+    height: rem(80);
     border-radius: $radius-md;
     display: flex;
     align-items: center;
     justify-content: center;
 
     img {
-      width: 48px;
-      height: 48px;
+      width: rem(48);
+      height: rem(48);
       object-fit: contain;
     }
   }
 
   &-text {
-    font-size: 1.25rem;
+    font-size: $font-size-xl;
     line-height: 1.7;
-    color: #f7f7f7;
+    color: $color-text-primary;
     margin: 0;
     font-weight: $font-weight-semibold;
   }
@@ -115,7 +111,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
 
 // ── Responsive ─────────────────────────────────────────────────
 
-@media (max-width: $breakpoint-lg) {
+@include respond-to(lg) {
   .philosophy__cards {
     gap: $spacing-lg;
     margin-bottom: $spacing-2xl;
@@ -127,22 +123,22 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
     gap: $spacing-md;
 
     &-icon {
-      width: 70px;
-      height: 70px;
+      width: rem(70);
+      height: rem(70);
 
       img {
-        width: 42px;
-        height: 42px;
+        width: rem(42);
+        height: rem(42);
       }
     }
 
     &-text {
-      font-size: 1rem;
+      font-size: $font-size-md;
     }
   }
 }
 
-@media (max-width: $breakpoint-md) {
+@include respond-to(md) {
   .philosophy__cards {
     grid-template-columns: repeat(2, 1fr);
     gap: $spacing-md;
@@ -150,7 +146,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
 
     .philosophy__card:last-child {
       grid-column: 1 / -1;
-      max-width: 500px;
+      max-width: rem(500);
       margin: 0 auto;
     }
   }
@@ -159,12 +155,12 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
     padding: $spacing-md;
 
     &-icon {
-      width: 64px;
-      height: 64px;
+      width: rem(64);
+      height: rem(64);
 
       img {
-        width: 38px;
-        height: 38px;
+        width: rem(38);
+        height: rem(38);
       }
     }
 
@@ -174,10 +170,9 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@include respond-to(sm) {
   .philosophy__cards {
     grid-template-columns: 1fr;
-    gap: $spacing-md;
     margin-bottom: $spacing-lg;
     padding: 0;
 
@@ -192,17 +187,17 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
     gap: $spacing-md;
 
     &-icon {
-      width: 60px;
-      height: 60px;
+      width: rem(60);
+      height: rem(60);
 
       img {
-        width: 36px;
-        height: 36px;
+        width: rem(36);
+        height: rem(36);
       }
     }
 
     &-text {
-      font-size: 0.875rem;
+      font-size: $font-size-sm;
       line-height: 1.6;
     }
   }

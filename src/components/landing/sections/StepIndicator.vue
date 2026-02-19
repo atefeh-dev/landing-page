@@ -13,6 +13,7 @@
         src="@/assets/icons/whitecheck.svg"
         class="step-indicator__check"
         alt=""
+        aria-hidden="true"
       />
       <span v-else class="step-indicator__number" :style="numberStyle">
         {{ persianNumber }}
@@ -53,18 +54,9 @@ const persianNumber = computed(() =>
     .join(""),
 );
 
-// Opacity logic:
-// - completed steps → full opacity (1.0), bright
-// - uncompleted steps → fades progressively: step just after current is 0.5,
-//   each following step gets 0.15 more faded
-// stepNumber 1 = first step (rightmost in RTL layout)
-// We receive stepNumber as 1-based, so step just ahead of current = slightly faded
 const numberOpacity = computed(() => {
   if (props.completed) return 1;
-  // uncompleted: step N gets opacity based on how far ahead it is
-  // step 1 uncompleted (next up) = 0.55, step 2 = 0.40, step 3 = 0.28, step 4 = 0.18
-  const position = props.stepNumber; // 1 = first/closest, 4 = last/furthest
-  return Math.max(0.18, 0.55 - (position - 1) * 0.13);
+  return Math.max(0.18, 0.55 - (props.stepNumber - 1) * 0.13);
 });
 
 const numberStyle = computed(() => ({
@@ -78,7 +70,13 @@ const circleStyle = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-// ── Block ──────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// StepIndicator
+// WHY notes:
+// - Connector line uses transform:scaleX instead of animating
+//   width — GPU-composited, no layout reflow.
+// - respond-to() replaces raw @media.
+// ─────────────────────────────────────────────────────────────
 
 .step-indicator {
   display: flex;
@@ -88,11 +86,11 @@ const circleStyle = computed(() => {
   position: relative;
   flex: 1;
 
-  // Connector line between steps
+  // Connector line
   &::after {
     content: "";
     position: absolute;
-    top: 13px;
+    top: rem(13);
     left: -43%;
     width: 100%;
     height: 0;
@@ -105,24 +103,26 @@ const circleStyle = computed(() => {
     display: none;
   }
 
-  // ── Completed modifier (connector becomes green) ──────────
-
   &--completed::after {
     border-color: $color-border-primary;
   }
 
-  // ── Circle element ────────────────────────────────────────
+  // ── Circle ────────────────────────────────────────────────
 
   &__circle {
     width: $spacing-md;
     height: $spacing-md;
-    border: 2px solid rgba(255, 255, 255, 0.15);
+    border: 2px solid $color-border-subtle;
     border-radius: $radius-full;
     display: flex;
     align-items: center;
     justify-content: center;
     background: $color-bg-primary;
-    transition: $transition-base;
+    transition:
+      background-color #{$transition-duration-fast}
+        #{$transition-easing-standard},
+      border-color #{$transition-duration-fast} #{$transition-easing-standard},
+      box-shadow #{$transition-duration-fast} #{$transition-easing-standard};
     position: relative;
     z-index: 1;
 
@@ -133,23 +133,19 @@ const circleStyle = computed(() => {
     }
   }
 
-  // ── Number (shown when not completed) ─────────────────────
-
   &__number {
     font-size: $font-size-sm;
     font-weight: $font-weight-bold;
     transition: color 0.3s ease;
   }
 
-  // ── Check icon (shown when completed) ─────────────────────
-
   &__check {
-    width: 12px;
-    height: 12px;
+    width: rem(12);
+    height: rem(12);
     display: block;
   }
 
-  // ── Content wrapper ───────────────────────────────────────
+  // ── Content ───────────────────────────────────────────────
 
   &__content {
     display: flex;
@@ -157,8 +153,6 @@ const circleStyle = computed(() => {
     align-items: center;
     gap: 0.25rem;
   }
-
-  // ── Title ─────────────────────────────────────────────────
 
   &__title {
     font-size: $font-size-sm;
@@ -168,17 +162,14 @@ const circleStyle = computed(() => {
     line-height: 1.4;
   }
 
-  // ── Description ───────────────────────────────────────────
-
   &__description {
     font-size: $font-size-xs;
     color: $color-text-tertiary;
     text-align: center;
     line-height: 1.4;
-    max-width: 160px;
+    max-width: rem(160);
   }
 
-  // When step is completed, brighten its title
   &--completed &__title {
     color: $color-text-primary;
   }
@@ -186,30 +177,29 @@ const circleStyle = computed(() => {
 
 // ── Responsive ─────────────────────────────────────────────────
 
-@media (max-width: $breakpoint-sm) {
+@include respond-to(sm) {
   .step-indicator {
     gap: 0.375rem;
 
     &::after {
-      top: 18px;
+      top: rem(18);
     }
 
     &__circle {
-      width: 36px;
-      height: 36px;
+      width: rem(36);
+      height: rem(36);
     }
 
     &__number {
       font-size: $font-size-md;
     }
-
     &__title {
       font-size: $font-size-xs;
     }
 
     &__description {
       font-size: 0.6875rem;
-      max-width: 120px;
+      max-width: rem(120);
     }
   }
 }

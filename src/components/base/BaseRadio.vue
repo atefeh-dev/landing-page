@@ -17,6 +17,7 @@
         height="12"
         viewBox="0 0 12 12"
         fill="none"
+        aria-hidden="true"
       >
         <path
           d="M10 3L4.5 8.5L2 6"
@@ -49,6 +50,15 @@ defineEmits(["click"]);
 </script>
 
 <style lang="scss" scoped>
+// ─────────────────────────────────────────────────────────────
+// BaseRadio (StepOption)
+// WHY notes:
+// - $color-surface-hover replaces magic rgba(255,255,255,0.03).
+// - $transition-easing-spring replaces the duplicate cubic-bezier.
+// - transition targets specific properties for GPU performance.
+// - respond-to() mixin replaces raw @media.
+// ─────────────────────────────────────────────────────────────
+
 .step-radio {
   display: flex;
   align-items: center;
@@ -58,12 +68,13 @@ defineEmits(["click"]);
   border: none;
   border-radius: $radius-lg;
   cursor: pointer;
-  transition: $transition-base;
+  transition: background-color #{$transition-duration-fast}
+    #{$transition-easing-standard};
   text-align: right;
   width: 100%;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.03);
+    background: $color-surface-hover;
   }
 
   // ── Indicator circle ──────────────────────────────────────
@@ -77,7 +88,11 @@ defineEmits(["click"]);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: $transition-base;
+    transition:
+      border-color #{$transition-duration-fast} #{$transition-easing-standard},
+      background-color #{$transition-duration-fast}
+        #{$transition-easing-standard},
+      box-shadow #{$transition-duration-fast} #{$transition-easing-standard};
     position: relative;
 
     &::before {
@@ -88,17 +103,19 @@ defineEmits(["click"]);
       border-radius: $radius-full;
       background: $color-accent-primary;
       transform: scale(0);
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.3s #{$transition-easing-spring};
     }
   }
 
-  // ── Check icon (shown when completed) ─────────────────────
+  // ── Check icon ────────────────────────────────────────────
 
   &__check {
     color: $color-bg-primary;
     opacity: 0;
     transform: scale(0);
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition:
+      opacity 0.3s #{$transition-easing-spring},
+      transform 0.3s #{$transition-easing-spring};
   }
 
   // ── Label ─────────────────────────────────────────────────
@@ -108,11 +125,12 @@ defineEmits(["click"]);
     font-size: $font-size-md;
     font-weight: $font-weight-medium;
     color: $color-text-tertiary;
-    transition: color 0.3s ease;
+    transition: color #{$transition-duration-fast}
+      #{$transition-easing-standard};
     line-height: 1.5;
   }
 
-  // ── Active modifier ───────────────────────────────────────
+  // ── Active state ──────────────────────────────────────────
 
   &--active {
     .step-radio__indicator {
@@ -130,7 +148,7 @@ defineEmits(["click"]);
     }
   }
 
-  // ── Completed modifier ────────────────────────────────────
+  // ── Completed state ───────────────────────────────────────
 
   &--completed {
     .step-radio__indicator {
@@ -149,7 +167,9 @@ defineEmits(["click"]);
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+// ── Responsive ─────────────────────────────────────────────────
+
+@include respond-to(sm) {
   .step-radio {
     padding: 0.75rem 1rem;
     gap: 0.625rem;

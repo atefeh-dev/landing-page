@@ -28,7 +28,7 @@ import { ref, computed } from "vue";
 import BaseInput from "@/components/base/BaseInput.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
 
-const props = defineProps({
+defineProps({
   placeholder: {
     type: String,
     default: "پست الکترونیک خود را وارد نمایید",
@@ -58,11 +58,11 @@ const errorMessage = computed(() =>
   showError.value ? "لطفاً یک آدرس ایمیل معتبر وارد کنید" : "",
 );
 
-const handleBlur = () => {
+function handleBlur() {
   touched.value = true;
-};
+}
 
-const handleSubmit = () => {
+function handleSubmit() {
   touched.value = true;
   if (!isEmailValid.value) return;
 
@@ -74,38 +74,37 @@ const handleSubmit = () => {
     email.value = "";
     touched.value = false;
   }, 2000);
-};
+}
 </script>
 
 <style lang="scss" scoped>
+// ─────────────────────────────────────────────────────────────
+// EmailForm — no structural changes needed.
+// WHY: respond-to() replaces raw @media.
+// ─────────────────────────────────────────────────────────────
+
 .email-form {
   width: 100%;
-
-  // ── Row layout ────────────────────────────────────────────
 
   &__row {
     display: flex;
     gap: $spacing-md;
     align-items: flex-start;
-    max-width: 700px;
+    max-width: rem(700);
     margin: 0 auto;
   }
-
-  // ── Input wrapper ─────────────────────────────────────────
 
   &__input {
     flex: 1;
     min-width: 0;
   }
 
-  // ── Submit button ─────────────────────────────────────────
-
   &__btn {
     flex-shrink: 0;
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@include respond-to(sm) {
   .email-form {
     &__row {
       flex-direction: column;

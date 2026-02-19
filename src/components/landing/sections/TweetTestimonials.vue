@@ -1,11 +1,17 @@
 <template>
   <section class="section section--tweets" id="experiences" ref="sectionRef">
-    <!-- Header — inside container for proper padding -->
     <div class="section__container">
       <div class="section__header section__header--center">
         <span class="section__badge" v-bind="slideDown()">تجربه‌ها</span>
         <div class="section__title-wrapper" v-bind="reveal(1)">
-          <h2 class="section__title">
+          <!--
+            WHY: section__title--wide modifier replaces the scoped
+            override of .section__title font-size that was inside
+            section--tweets. Overriding a global element from inside
+            a modifier breaks the single source of truth. A modifier
+            on the element itself is the correct BEM pattern.
+          -->
+          <h2 class="section__title section__title--wide">
             سوءتفاهم و کاغذبازی‌های بی‌پایان یک الگوست، و ما با
             <span class="highlight">زونکن</span>
             راه‌حلش رو ساختیم.
@@ -14,9 +20,7 @@
       </div>
     </div>
 
-    <!-- Scroller — direct child of section, full viewport width -->
     <div class="tweet-scroller" v-bind="reveal(2)">
-      <!-- Row 1 — scrolls left -->
       <div class="tweet-scroller__row">
         <div
           class="tweet-scroller__track"
@@ -28,36 +32,11 @@
             :key="`row1-${index}`"
             class="tweet-card"
           >
-            <div class="tweet-card__header">
-              <img
-                :src="tweet.avatar"
-                :alt="tweet.name"
-                class="tweet-card__avatar"
-              />
-              <div class="tweet-card__author">
-                <div class="tweet-card__name-row">
-                  <span class="tweet-card__name">{{ tweet.name }}</span>
-                  <svg
-                    class="tweet-card__verified"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.0 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36-6.2 6.77z"
-                    />
-                  </svg>
-                </div>
-                <span class="tweet-card__handle">{{ tweet.handle }}</span>
-              </div>
-            </div>
-            <p class="tweet-card__text">{{ tweet.text }}</p>
+            <TweetCard :tweet="tweet" />
           </div>
         </div>
       </div>
 
-      <!-- Row 2 — scrolls right -->
       <div class="tweet-scroller__row">
         <div
           class="tweet-scroller__track tweet-scroller__track--reverse"
@@ -69,37 +48,12 @@
             :key="`row2-${index}`"
             class="tweet-card"
           >
-            <div class="tweet-card__header">
-              <img
-                :src="tweet.avatar"
-                :alt="tweet.name"
-                class="tweet-card__avatar"
-              />
-              <div class="tweet-card__author">
-                <div class="tweet-card__name-row">
-                  <span class="tweet-card__name">{{ tweet.name }}</span>
-                  <svg
-                    class="tweet-card__verified"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.0 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36-6.2 6.77z"
-                    />
-                  </svg>
-                </div>
-                <span class="tweet-card__handle">{{ tweet.handle }}</span>
-              </div>
-            </div>
-            <p class="tweet-card__text">{{ tweet.text }}</p>
+            <TweetCard :tweet="tweet" />
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Conclusion — back inside container for proper padding -->
     <div class="section__container">
       <p class="section__conclusion" v-bind="reveal(4)">
         ما برای توسعه‌ی <span class="highlight">زونکن</span>
@@ -112,10 +66,16 @@
 <script setup>
 import { ref } from "vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
+import TweetCard from "@/components/landing/cards/TweetCard.vue";
 import Avatar1 from "@/assets/images/avatars/avatar1.png";
 import Avatar2 from "@/assets/images/avatars/avatar2.png";
 import Avatar3 from "@/assets/images/avatars/avatar3.png";
 import Avatar4 from "@/assets/images/avatars/avatar4.png";
+
+// TweetCard is extracted to its own component:
+// - Eliminates the 90-line SVG verified badge duplication
+// - Makes each row's v-for loop clean and readable
+// - See: @/components/landing/cards/TweetCard.vue
 
 const sectionRef = ref(null);
 const { reveal, slideDown } = useScrollAnimation(sectionRef);
@@ -255,18 +215,39 @@ const row2Tweets = [
 </script>
 
 <style lang="scss" scoped>
+// ─────────────────────────────────────────────────────────────
+// TweetTestimonials
+// WHY notes:
+// - section__title--wide added as a BEM modifier on section__title
+//   instead of overriding font-size from inside section--tweets.
+//   Overriding global elements from section modifiers breaks the
+//   single source of truth and creates specificity surprises.
+// - Keyframes (scroll-left / scroll-right) moved to main.scss
+//   so they are defined once globally — scoped @keyframes in Vue
+//   are duplicated in the CSS output for every component instance.
+// - respond-to() mixin replaces raw @media.
+// ─────────────────────────────────────────────────────────────
+
 // ── Section modifier ───────────────────────────────────────────
 
 .section--tweets {
   background: $color-bg-primary;
-  overflow: hidden; // prevent animated tracks from blowing out page width
+  overflow: hidden;
+}
 
-  // The tweet section title is a long sentence — needs smaller clamp floor
-  .section__title {
-    font-size: clamp(1.125rem, 3.5vw, 2.1rem);
-    line-height: 1.4;
-    margin-bottom: $spacing-xl;
-  }
+// ── Title width modifier ───────────────────────────────────────
+// WHY: Instead of overriding .section__title from inside the
+// section modifier (creates implicit coupling), we use an explicit
+// BEM modifier on the element itself.
+
+// Note: section__title is defined globally, this modifier is a
+// legitimate extension. In the global main.scss you can add:
+// .section__title--wide { font-size: clamp(1.125rem, 3.5vw, 2.1rem); line-height: 1.4; }
+// For scoped styles in Vue the override below achieves the same.
+:deep(.section__title--wide) {
+  font-size: clamp(1.125rem, 3.5vw, 2.1rem);
+  line-height: 1.4;
+  margin-bottom: $spacing-xl;
 }
 
 // ── Scroller block ─────────────────────────────────────────────
@@ -277,14 +258,13 @@ const row2Tweets = [
   width: 100%;
   overflow: hidden;
 
-  // Fade edges
   &::before,
   &::after {
     content: "";
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 340px;
+    width: rem(340);
     z-index: 2;
     pointer-events: none;
   }
@@ -313,8 +293,6 @@ const row2Tweets = [
     );
   }
 
-  // ── Row ────────────────────────────────────────────────────
-
   &__row {
     overflow: hidden;
     margin-bottom: $spacing-lg;
@@ -324,155 +302,84 @@ const row2Tweets = [
     }
   }
 
-  // ── Scrolling track ────────────────────────────────────────
-
+  // WHY: scroll-track mixin from _mixins.scss replaces the
+  // duplicated display:flex / width:fit-content / animation block.
   &__track {
-    display: flex;
+    @include scroll-track(left, 70s);
     gap: $spacing-md;
-    width: fit-content;
-    animation: scrollLeft 70s linear infinite;
 
     &--reverse {
-      animation: scrollRight 70s linear infinite;
+      animation-name: scroll-right;
     }
   }
 }
 
-// ── Tweet card block ───────────────────────────────────────────
+// ── Tweet card wrapper ─────────────────────────────────────────
+// WHY: Only sizing, border and hover styles live here.
+// Inner layout (avatar, name, text) lives in TweetCard.vue.
+// This keeps layout concerns (grid sizing) separate from
+// presentational concerns (card content).
 
 .tweet-card {
-  flex: 0 0 360px;
-  width: 360px;
-  background: #111111;
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  padding: 1.25rem;
+  flex: 0 0 rem(360);
+  width: rem(360);
+  background: $color-bg-secondary;
+  border: 2px solid $color-border-strong;
+  border-radius: $radius-lg;
+  padding: rem(20);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    border-color #{$transition-duration-fast} #{$transition-easing-standard},
+    background-color #{$transition-duration-fast} #{$transition-easing-standard},
+    box-shadow #{$transition-duration-fast} #{$transition-easing-standard};
 
   &:hover {
     border-color: $color-accent-primary;
-    background: rgba(252, 192, 21, 0.05);
+    background: $color-accent-subtle;
     box-shadow:
       0 20px 40px rgba(0, 0, 0, 0.7),
       0 0 0 1px rgba(252, 192, 21, 0.5);
 
-    .tweet-card__avatar {
+    // WHY :deep — TweetCard__avatar is inside a child component's
+    // scoped styles. :deep() allows the parent hover to reach it.
+    :deep(.tweet-card__avatar) {
       border-color: $color-accent-primary;
     }
-  }
-
-  // ── Header ─────────────────────────────────────────────────
-
-  &__header {
-    display: flex;
-    gap: 0.75rem;
-    margin-bottom: 0.875rem;
-  }
-
-  // ── Avatar ─────────────────────────────────────────────────
-
-  &__avatar {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    transition: border-color 0.3s ease;
-  }
-
-  // ── Author info ────────────────────────────────────────────
-
-  &__author {
-    flex: 1;
-    min-width: 0;
-  }
-
-  &__name-row {
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-    margin-bottom: 0.25rem;
-  }
-
-  &__name {
-    font-weight: 700;
-    font-size: 0.9375rem;
-    color: #fff;
-  }
-
-  &__verified {
-    color: #1d9bf0;
-    flex-shrink: 0;
-  }
-
-  &__handle {
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.5);
-    direction: ltr;
-  }
-
-  // ── Tweet text ─────────────────────────────────────────────
-
-  &__text {
-    font-size: 0.9375rem;
-    line-height: 1.5;
-    color: rgba(255, 255, 255, 0.8);
-  }
-}
-
-// ── Keyframes ──────────────────────────────────────────────────
-
-@keyframes scrollLeft {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(50%);
-  }
-}
-
-@keyframes scrollRight {
-  from {
-    transform: translateX(50%);
-  }
-  to {
-    transform: translateX(0);
   }
 }
 
 // ── Responsive ─────────────────────────────────────────────────
 
-@media (max-width: $breakpoint-lg) {
+@include respond-to(lg) {
   .tweet-scroller::before,
   .tweet-scroller::after {
-    width: 220px;
+    width: rem(220);
   }
 
   .tweet-card {
-    flex: 0 0 320px;
-    width: 320px;
+    flex: 0 0 rem(320);
+    width: rem(320);
   }
 }
 
-@media (max-width: $breakpoint-md) {
+@include respond-to(md) {
   .tweet-scroller::before,
   .tweet-scroller::after {
-    width: 140px;
+    width: rem(140);
   }
 
   .tweet-card {
-    flex: 0 0 260px;
-    width: 260px;
-    padding: 1rem;
+    flex: 0 0 rem(260);
+    width: rem(260);
+    padding: rem(16);
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@include respond-to(sm) {
   .tweet-scroller {
     &::before,
     &::after {
-      width: 60px;
+      width: rem(60);
     }
 
     &__row {
@@ -480,38 +387,24 @@ const row2Tweets = [
     }
 
     &__track {
-      gap: 0.75rem;
+      gap: rem(12);
       animation-duration: 45s;
     }
   }
 
   .tweet-card {
-    flex: 0 0 220px;
-    width: 220px;
-    padding: 0.875rem;
+    flex: 0 0 rem(220);
+    width: rem(220);
+    padding: rem(14);
     border-radius: $radius-md;
-
-    &__avatar {
-      width: 34px;
-      height: 34px;
-    }
-    &__name {
-      font-size: 0.8125rem;
-    }
-    &__handle {
-      font-size: 0.75rem;
-    }
-    &__text {
-      font-size: 0.8125rem;
-      line-height: 1.4;
-    }
+    // Inner element sizes (avatar, text) handled in TweetCard.vue
   }
 }
 
 @media (max-width: 375px) {
   .tweet-card {
     flex: 0 0 200px;
-    width: 200px;
+    width: rem(200);
     padding: 0.75rem;
   }
 }

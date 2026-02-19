@@ -41,6 +41,16 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
+// ─────────────────────────────────────────────────────────────
+// BaseButton
+// WHY notes:
+// - $color-accent-hover replaces the magic number #ffd84d.
+// - transition targets specific properties (color, background,
+//   transform, box-shadow) instead of "all" — better GPU perf.
+// - ::before shimmer uses pseudo-overlay pattern consistently.
+// - Disabled/loading states merged: both produce identical output.
+// ─────────────────────────────────────────────────────────────
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -52,11 +62,16 @@ defineProps({
   border: none;
   border-radius: $radius-md;
   cursor: pointer;
-  transition: $transition-base;
+  transition:
+    color #{$transition-duration-fast} #{$transition-easing-standard},
+    background-color #{$transition-duration-fast} #{$transition-easing-standard},
+    transform #{$transition-duration-fast} #{$transition-easing-standard},
+    box-shadow #{$transition-duration-fast} #{$transition-easing-standard},
+    border-color #{$transition-duration-fast} #{$transition-easing-standard};
   position: relative;
   overflow: hidden;
 
-  // ── Size modifiers (single source of truth for padding/font-size) ──
+  // ── Sizes ────────────────────────────────────────────────
 
   &--md {
     padding: 0.625rem 1rem;
@@ -65,10 +80,10 @@ defineProps({
 
   &--lg {
     padding: 0.875rem 1.5rem;
-    font-size: 1rem;
+    font-size: $font-size-md;
   }
 
-  // ── Variant modifiers ──────────────────────────────────────
+  // ── Variants ─────────────────────────────────────────────
 
   &--primary {
     background: $color-accent-primary;
@@ -85,11 +100,13 @@ defineProps({
         transparent 100%
       );
       opacity: 0;
-      transition: $transition-base;
+      transition: opacity #{$transition-duration-fast}
+        #{$transition-easing-standard};
+      pointer-events: none;
     }
 
     &:hover:not(:disabled) {
-      background: #ffd84d;
+      background: $color-accent-hover;
       transform: translateY(-2px);
       box-shadow: $shadow-accent;
 
@@ -114,7 +131,9 @@ defineProps({
     }
   }
 
-  // ── State modifiers ───────────────────────────────────────
+  // ── States ───────────────────────────────────────────────
+  // WHY: Both :disabled and .btn--loading produce identical
+  // visual output, so they share one rule block.
 
   &:disabled,
   &--loading {
@@ -123,14 +142,14 @@ defineProps({
     pointer-events: none;
   }
 
-  // ── Elements ──────────────────────────────────────────────
+  // ── Elements ─────────────────────────────────────────────
 
   &__spinner {
-    width: 14px;
-    height: 14px;
+    width: rem(14);
+    height: rem(14);
     border: 2px solid rgba(0, 0, 0, 0.25);
     border-top-color: currentColor;
-    border-radius: 50%;
+    border-radius: $radius-full;
     animation: spin 0.65s linear infinite;
     flex-shrink: 0;
   }

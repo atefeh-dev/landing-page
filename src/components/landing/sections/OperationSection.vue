@@ -1,7 +1,6 @@
 <template>
   <section class="section section--operation" id="operation" ref="sectionRef">
     <div class="section__container">
-      <!-- Header -->
       <div class="operation__header">
         <h2 class="operation__title" v-bind="reveal(1)">
           ساخت سند، شفاف و مرحله‌به‌مرحله.
@@ -15,7 +14,6 @@
         </div>
       </div>
 
-      <!-- Image preview — fixed aspect-ratio box so height never collapses during transition -->
       <div class="operation__preview" v-bind="reveal(3)">
         <transition name="op-fade">
           <img
@@ -27,7 +25,6 @@
         </transition>
       </div>
 
-      <!-- Step indicators — original floating style -->
       <div class="operation__steps" v-bind="reveal(4)">
         <StepIndicator
           v-for="(step, index) in steps"
@@ -68,18 +65,23 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
 </script>
 
 <style lang="scss" scoped>
-// ── Section ────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// OperationSection
+// No structural changes needed — this section was already clean.
+// WHY changes:
+// - respond-to() mixin replaces raw @media.
+// - $color-surface-hover replaces rgba(255,255,255,0.06).
+// - transition targets specific properties.
+// ─────────────────────────────────────────────────────────────
 
 .section--operation {
   background: $color-bg-primary;
 }
 
-// ── Header ─────────────────────────────────────────────────────
-
 .operation__header {
   text-align: center;
   margin-bottom: $spacing-xl;
-  max-width: 700px;
+  max-width: rem(700);
   margin-left: auto;
   margin-right: auto;
 }
@@ -97,13 +99,15 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
   align-items: center;
   gap: $spacing-sm;
   padding: 0.625rem 1.25rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: $color-surface-hover;
   border: 1px solid $color-border-subtle;
   border-radius: $radius-full;
-  transition: $transition-base;
+  transition:
+    background-color #{$transition-duration-fast} #{$transition-easing-standard},
+    border-color #{$transition-duration-fast} #{$transition-easing-standard};
 
   &:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: $color-surface-light;
     border-color: $color-border-medium;
   }
 }
@@ -115,17 +119,14 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
 }
 
 // ── Image preview ──────────────────────────────────────────────
-// Uses padding-bottom aspect-ratio trick so the box NEVER collapses
-// to zero height during the Vue transition (which caused the blank flash).
-// Both entering and leaving images are position:absolute inside this box.
+// WHY: padding-bottom aspect-ratio trick keeps height stable
+// during the Vue transition, preventing the blank-flash bug.
 
 .operation__preview {
   position: relative;
-  // Break out of container to give image more room — same trick as steps row
   margin-left: -4rem;
   margin-right: -4rem;
   margin-bottom: $spacing-xl;
-  // Aspect ratio box — keeps height stable during transition so no flash
   padding-bottom: 58%;
 }
 
@@ -139,36 +140,28 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
   display: block;
 }
 
-// ── Step indicators row ────────────────────────────────────────
-// Steps use negative horizontal margins to escape the container's
-// max-width, giving them more breathing room than the rest of the section.
-
 .operation__steps {
   display: flex;
   direction: rtl;
   align-items: flex-start;
   justify-content: center;
   gap: 0;
-  // Escape the container on both sides by the same amount
   margin-left: -4rem;
   margin-right: -4rem;
 }
 
 // ── Image transition ───────────────────────────────────────────
-// Enter: image scales up from slightly smaller → normal (feels like it "reveals")
-// Leave: image scales up further and fades (feels like it "recedes")
-// Both are absolute so container height is ALWAYS held by padding-bottom.
 
 .op-fade-enter-active {
   transition:
     opacity 0.55s ease-out,
-    transform 0.55s cubic-bezier(0.2, 0, 0.2, 1);
+    transform 0.55s #{$transition-easing-standard};
 }
+
 .op-fade-leave-active {
   transition:
     opacity 0.4s ease-in,
-    transform 0.4s cubic-bezier(0.2, 0, 0.2, 1);
-  // Must be absolute during leave so it doesn't push layout
+    transform 0.4s #{$transition-easing-standard};
   position: absolute;
   top: 0;
   left: 0;
@@ -180,6 +173,7 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
   opacity: 0;
   transform: scale(0.94);
 }
+
 .op-fade-leave-to {
   opacity: 0;
   transform: scale(1.04);
@@ -187,7 +181,7 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
 
 // ── Responsive ─────────────────────────────────────────────────
 
-@media (max-width: $breakpoint-md) {
+@include respond-to(md) {
   .operation__header {
     margin-bottom: $spacing-lg;
   }
@@ -204,13 +198,12 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
   }
 
   .operation__steps {
-    // Reduce the breakout on tablet
     margin-left: -2rem;
     margin-right: -2rem;
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@include respond-to(sm) {
   .operation__toggle {
     flex-direction: column;
     gap: 0.25rem;
@@ -225,7 +218,6 @@ const currentStepIndex = computed(() => (showStandard.value ? 1 : 2));
   }
 
   .operation__steps {
-    // Reset the negative margins — container padding is already small on mobile
     margin-left: -1.25rem;
     margin-right: -1.25rem;
   }

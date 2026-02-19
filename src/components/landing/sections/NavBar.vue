@@ -1,7 +1,6 @@
 <template>
   <nav class="nav" :class="{ 'nav--scrolled': scrolled }">
     <div class="nav__container">
-      <!-- Logo -->
       <div class="nav__logo">
         <a href="#hero" class="nav__logo-link">
           <img
@@ -17,17 +16,15 @@
         </a>
       </div>
 
-      <!-- Desktop menu -->
-      <div class="nav__menu">
+      <nav class="nav__menu" aria-label="منوی اصلی">
         <a href="#philosophy" class="nav__link">مسئله</a>
         <a href="#experiences" class="nav__link">تجربه‌ها</a>
         <a href="#approach" class="nav__link">رویکرد</a>
         <a href="#operation" class="nav__link">عملکرد</a>
         <a href="#customers" class="nav__link">مخاطبان</a>
         <a href="#faq" class="nav__link">سوالات متداول</a>
-      </div>
+      </nav>
 
-      <!-- Actions -->
       <div class="nav__actions">
         <BaseButton variant="primary" size="md" @click="handleCta">
           درخواست عضویت
@@ -37,7 +34,8 @@
           class="nav__hamburger"
           :class="{ 'nav__hamburger--active': mobileMenuOpen }"
           type="button"
-          aria-label="باز کردن منو"
+          :aria-label="mobileMenuOpen ? 'بستن منو' : 'باز کردن منو'"
+          :aria-expanded="mobileMenuOpen"
           @click="toggleMenu"
         >
           <span />
@@ -47,14 +45,18 @@
       </div>
     </div>
 
-    <!-- Overlay -->
-    <transition name="nav-overlay">
+    <Transition name="nav-overlay">
       <div v-if="mobileMenuOpen" class="nav__overlay" @click="closeMenu" />
-    </transition>
+    </Transition>
 
-    <!-- Mobile panel — slides from right (RTL) -->
-    <transition name="nav-panel">
-      <div v-if="mobileMenuOpen" class="nav__mobile-panel">
+    <Transition name="nav-panel">
+      <div
+        v-if="mobileMenuOpen"
+        class="nav__mobile-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="منوی موبایل"
+      >
         <div class="nav__mobile-header">
           <span class="nav__mobile-title">منو</span>
         </div>
@@ -88,7 +90,7 @@
           </BaseButton>
         </div>
       </div>
-    </transition>
+    </Transition>
   </nav>
 </template>
 
@@ -124,7 +126,9 @@ function handleMobileCta() {
   setTimeout(() => emit("scroll-to-cta"), 300);
 }
 
-onMounted(() => window.addEventListener("scroll", handleScroll));
+onMounted(() =>
+  window.addEventListener("scroll", handleScroll, { passive: true }),
+);
 onBeforeUnmount(() => {
   window.removeEventListener("scroll", handleScroll);
   document.body.style.overflow = "";
@@ -132,7 +136,16 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
-// ── Block ──────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// NavBar
+// WHY notes:
+// - nav__logo-icon/type share one rule via comma selector.
+// - &::after underline on nav__link uses transform:scaleX
+//   instead of animating width — scaleX is composited by the
+//   GPU (no layout reflow) which is significantly cheaper.
+// - respond-to() mixin replaces raw @media.
+// - { passive: true } added to scroll listener in script (perf).
+// ─────────────────────────────────────────────────────────────
 
 .nav {
   position: fixed;
@@ -143,7 +156,10 @@ onBeforeUnmount(() => {
   background: rgba(10, 10, 10, 0.7);
   backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid $color-border-subtle;
-  transition: $transition-base;
+  transition:
+    background-color #{$transition-duration-fast} #{$transition-easing-standard},
+    border-color #{$transition-duration-fast} #{$transition-easing-standard},
+    box-shadow #{$transition-duration-fast} #{$transition-easing-standard};
 
   &--scrolled {
     background: rgba(10, 10, 10, 0.95);
@@ -151,10 +167,10 @@ onBeforeUnmount(() => {
     box-shadow: $shadow-md;
   }
 
-  // ── Container ────────────────────────────────────────────
+  // ── Container ─────────────────────────────────────────────
 
   &__container {
-    max-width: 1900px;
+    max-width: rem(1900);
     margin: 0 auto;
     padding: 1rem 2rem;
     display: flex;
@@ -162,7 +178,7 @@ onBeforeUnmount(() => {
     justify-content: space-between;
   }
 
-  // ── Logo ─────────────────────────────────────────────────
+  // ── Logo ──────────────────────────────────────────────────
 
   &__logo-link {
     display: flex;
@@ -170,9 +186,10 @@ onBeforeUnmount(() => {
     gap: $spacing-xs;
   }
 
+  // WHY: Comma selector eliminates one repeated rule block.
   &__logo-icon,
   &__logo-type {
-    height: 50px;
+    height: rem(50);
     width: auto;
     display: block;
   }
@@ -187,32 +204,37 @@ onBeforeUnmount(() => {
 
   &__link {
     color: $color-text-secondary;
-    font-weight: 500;
+    font-weight: $font-weight-medium;
     white-space: nowrap;
-    transition: $transition-base;
+    transition: color #{$transition-duration-fast}
+      #{$transition-easing-standard};
     position: relative;
 
+    // WHY: scaleX transition is GPU-composited (no layout).
+    // Using width animation forces layout recalculation per frame.
     &::after {
       content: "";
       position: absolute;
       bottom: -0.5rem;
       right: 0;
-      width: 0;
-      height: 3px;
+      left: 0;
+      height: rem(3);
       background: linear-gradient(
         90deg,
         transparent 0%,
         $color-accent-primary 50%,
         transparent 100%
       );
-      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.4s #{$transition-easing-standard};
     }
 
     &:hover {
       color: $color-text-primary;
 
       &::after {
-        width: 100%;
+        transform: scaleX(1);
       }
     }
   }
@@ -231,8 +253,8 @@ onBeforeUnmount(() => {
     display: none;
     flex-direction: column;
     justify-content: space-between;
-    width: 28px;
-    height: 22px;
+    width: rem(28);
+    height: rem(22);
     background: transparent;
     border: none;
     cursor: pointer;
@@ -242,10 +264,13 @@ onBeforeUnmount(() => {
     span {
       display: block;
       width: 100%;
-      height: 3px;
+      height: rem(3);
       background: $color-text-primary;
       border-radius: 2px;
-      transition: all 0.3s ease;
+      transition:
+        transform 0.3s ease,
+        opacity 0.3s ease,
+        background-color 0.3s ease;
       transform-origin: center;
     }
 
@@ -282,7 +307,7 @@ onBeforeUnmount(() => {
     position: fixed;
     top: 0;
     right: 0;
-    width: 320px;
+    width: rem(320);
     max-width: 85vw;
     height: 100vh;
     background: linear-gradient(
@@ -307,8 +332,8 @@ onBeforeUnmount(() => {
   }
 
   &__mobile-title {
-    font-size: 1.25rem;
-    font-weight: 700;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
     color: $color-text-primary;
   }
 
@@ -323,13 +348,17 @@ onBeforeUnmount(() => {
     justify-content: center;
     padding: 0.875rem 0.75rem;
     color: $color-text-secondary;
-    font-weight: 500;
+    font-weight: $font-weight-medium;
     font-size: $font-size-md;
-    transition: $transition-base;
+    transition:
+      background-color #{$transition-duration-fast}
+        #{$transition-easing-standard},
+      color #{$transition-duration-fast} #{$transition-easing-standard},
+      border-color #{$transition-duration-fast} #{$transition-easing-standard};
     border-right: 3px solid transparent;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.03);
+      background: $color-surface-hover;
       color: $color-text-primary;
       border-right-color: $color-accent-primary;
     }
@@ -345,7 +374,7 @@ onBeforeUnmount(() => {
   }
 }
 
-// ── Vue transition animations ───────────────────────────────────
+// ── Transitions ────────────────────────────────────────────────
 
 .nav-overlay-enter-active,
 .nav-overlay-leave-active {
@@ -367,7 +396,7 @@ onBeforeUnmount(() => {
 
 // ── Responsive ─────────────────────────────────────────────────
 
-@media (max-width: $breakpoint-lg) {
+@include respond-to(lg) {
   .nav {
     &__menu {
       gap: $spacing-md;
@@ -379,7 +408,7 @@ onBeforeUnmount(() => {
   }
 }
 
-@media (max-width: $breakpoint-md) {
+@include respond-to(md) {
   .nav {
     &__container {
       padding: 1rem 1.5rem;
@@ -393,19 +422,18 @@ onBeforeUnmount(() => {
       display: flex;
     }
 
-    // Hide desktop CTA, show hamburger only
     &__actions > :first-child {
       display: none;
     }
 
     &__logo-icon,
     &__logo-type {
-      height: 40px;
+      height: rem(40);
     }
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@include respond-to(sm) {
   .nav__container {
     padding: 0.75rem 1rem;
   }

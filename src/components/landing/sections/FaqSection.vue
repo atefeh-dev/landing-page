@@ -20,14 +20,16 @@
             reveal(Math.min(index + 1, 6)),
           ]"
         >
-          <button class="faq__question" @click="toggleFaq(index)">
+          <button
+            class="faq__question"
+            :aria-expanded="activeFaq === index"
+            @click="toggleFaq(index)"
+          >
             <img
-              v-if="activeFaq === index"
-              :src="MinusIcon"
-              alt="بستن"
+              :src="activeFaq === index ? MinusIcon : PlusIcon"
+              :alt="activeFaq === index ? 'بستن' : 'باز کردن'"
               class="faq__icon"
             />
-            <img v-else :src="PlusIcon" alt="باز کردن" class="faq__icon" />
             <span>{{ item.question }}</span>
           </button>
 
@@ -60,17 +62,17 @@ const faqs = [
   {
     question: "عضویت و استفاده از زونکن چگونه است؟",
     answer:
-      '<span class="highlight">شروع استفاده از زونکن ساده و بدون هزینه‌ی اولیه است</span> و دسترسی به قالب‌های عمومی و تنظیم اسناد در چارچوب مشخص در اختیار کاربران قرار می‌گیرد. در صورت استفاده گسترده‌تر و یا نیاز به امکانات پیشرفته، شرایط استفاده بر اساس سیاست مصرف منصفانه مشخص می‌شود',
+      '<span class="highlight">شروع استفاده از زونکن ساده و بدون هزینه‌ی اولیه است</span> و دسترسی به قالب‌های عمومی و تنظیم اسناد در چارچوب مشخص در اختیار کاربران قرار می‌گیرد.',
   },
   {
     question: "آیا استفاده از قالب‌های عمومی در زونکن نیاز به پرداخت دارد؟",
     answer:
-      "قالب‌های عمومی برای دسترسی و استفاده در اختیار کاربران قرار می‌گیرند. زونکن تلاش کرده دسترسی به اسناد استاندارد را ساده و در دسترس نگه دارد.",
+      "قالب‌های عمومی برای دسترسی و استفاده در اختیار کاربران قرار می‌گیرند.",
   },
   {
     question: "استفاده از قالب‌های عمومی در زونکن چگونه است؟",
     answer:
-      "شما قالب موردنظر را انتخاب می‌کنید، اطلاعات طرفین را وارد می‌کنید، و سند شما با جایگزینی دقیق متغیرها تنظیم می‌شود و بعد از آن قابل دانلود و پیگیری است.",
+      "شما قالب موردنظر را انتخاب می‌کنید، اطلاعات طرفین را وارد می‌کنید، و سند شما با جایگزینی دقیق متغیرها تنظیم می‌شود.",
   },
   {
     question: "آیا امکان تنظیم قالب اختصاصی وجود دارد؟",
@@ -85,12 +87,11 @@ const faqs = [
   {
     question:
       "نگهداری، امنیت و محرمانگی اسناد من در زونکن چگونه مدیریت می‌شود؟",
-    answer: `زونکن با رویکرد حداقلی در نگه‌داری داده طراحی شده است. ساختار سیستم به‌گونه‌ای است که اطلاعات به‌صورت رمزنگاری‌شده پردازش می‌شوند و <span class="highlight">فایل نهایی اسناد به‌صورت پایدار در سرورهای زونکن ذخیره نمی‌شود.</span> ما تلاش کرده‌ایم طراحی فنی زونکن به‌گونه‌ای باشد که حتی در صورت بروز اختلال یا دسترسی غیرمجاز، داده قابل‌استفاده‌ای در اختیار اشخاص قرار نگیرد.`,
+    answer: `زونکن با رویکرد حداقلی در نگه‌داری داده طراحی شده است. <span class="highlight">فایل نهایی اسناد به‌صورت پایدار در سرورهای زونکن ذخیره نمی‌شود.</span>`,
   },
   {
     question: "چه زمانی دسترسی عمومی برای استفاده از زونکن فعال می‌شود؟",
-    answer:
-      "دسترسی عمومی پس از تکمیل فاز اولیه توسعه و تست فعال خواهد شد. کاربران لیست انتظار در اولویت اطلاع‌رسانی قرار می‌گیرند.",
+    answer: "دسترسی عمومی پس از تکمیل فاز اولیه توسعه و تست فعال خواهد شد.",
   },
 ];
 
@@ -100,7 +101,14 @@ function toggleFaq(index) {
 </script>
 
 <style lang="scss" scoped>
-// ── Section modifier ───────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// FaqSection
+// WHY notes:
+// - :src binding consolidated to ternary — removes v-if/v-else
+//   on img elements (same visual result, less template noise).
+// - aria-expanded added to faq__question for accessibility.
+// - respond-to() mixin replaces raw @media.
+// ─────────────────────────────────────────────────────────────
 
 .section--faq {
   background: $color-bg-primary;
@@ -109,14 +117,10 @@ function toggleFaq(index) {
   margin-top: $spacing-2xl;
 }
 
-// ── FAQ block ──────────────────────────────────────────────────
-
 .faq {
-  max-width: 900px;
+  max-width: rem(900);
   margin: 2.5rem auto;
   padding: 0 $spacing-md;
-
-  // ── Item ───────────────────────────────────────────────────
 
   &__item {
     background: $color-bg-secondary;
@@ -125,13 +129,14 @@ function toggleFaq(index) {
     margin-bottom: $spacing-sm;
     overflow: hidden;
     transition:
-      border-color 0.3s ease,
-      background 0.3s ease,
-      box-shadow 0.3s ease;
+      border-color #{$transition-duration-fast} #{$transition-easing-standard},
+      background-color #{$transition-duration-fast}
+        #{$transition-easing-standard},
+      box-shadow #{$transition-duration-fast} #{$transition-easing-standard};
 
     &:hover {
       border-color: $color-border-medium;
-      background: rgba(255, 255, 255, 0.02);
+      background: $color-surface-hover;
     }
 
     &--active {
@@ -139,8 +144,6 @@ function toggleFaq(index) {
       box-shadow: $shadow-sm;
     }
   }
-
-  // ── Question button ────────────────────────────────────────
 
   &__question {
     width: 100%;
@@ -151,34 +154,36 @@ function toggleFaq(index) {
     padding: $spacing-md;
     background: none;
     border: none;
-    color: #f7f7f7;
+    color: $color-text-primary;
     font-family: inherit;
     font-size: $font-size-md;
     font-weight: $font-weight-semibold;
     text-align: right;
     cursor: pointer;
-    transition: $transition-base;
+    transition: color #{$transition-duration-fast}
+      #{$transition-easing-standard};
 
     span {
       flex: 1;
     }
   }
 
-  // ── Toggle icon ────────────────────────────────────────────
-
   &__icon {
-    width: 24px;
-    height: 24px;
+    width: rem(24);
+    height: rem(24);
     flex-shrink: 0;
     opacity: 0.7;
-    transition: opacity $transition-base;
+    transition: opacity #{$transition-duration-fast}
+      #{$transition-easing-standard};
 
     .faq__item:hover & {
       opacity: 1;
     }
   }
 
-  // ── Answer accordion ───────────────────────────────────────
+  // ── Accordion ─────────────────────────────────────────────
+  // WHY: grid-template-rows animation avoids the well-known
+  // "height: auto cannot be animated" problem without JS.
 
   &__answer-wrapper {
     display: grid;
@@ -197,7 +202,6 @@ function toggleFaq(index) {
     color: $color-text-secondary;
     line-height: 1.8;
     font-size: $font-size-md;
-    padding-bottom: 0;
     transition: padding-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
     p {
@@ -212,7 +216,7 @@ function toggleFaq(index) {
 
 // ── Responsive ─────────────────────────────────────────────────
 
-@media (max-width: $breakpoint-lg) {
+@include respond-to(lg) {
   .faq {
     padding: 0;
 
@@ -224,7 +228,7 @@ function toggleFaq(index) {
 
     &__answer {
       padding: 0 $spacing-lg;
-      font-size: 1rem;
+      font-size: $font-size-md;
 
       .faq__answer-wrapper--open & {
         padding-bottom: $spacing-md;
@@ -232,13 +236,13 @@ function toggleFaq(index) {
     }
 
     &__icon {
-      width: 22px;
-      height: 22px;
+      width: rem(22);
+      height: rem(22);
     }
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@include respond-to(sm) {
   .faq {
     &__item {
       margin-bottom: $spacing-sm;
@@ -247,7 +251,7 @@ function toggleFaq(index) {
 
     &__question {
       padding: $spacing-md;
-      font-size: 1rem;
+      font-size: $font-size-md;
       gap: $spacing-sm;
     }
 
@@ -262,8 +266,8 @@ function toggleFaq(index) {
     }
 
     &__icon {
-      width: 20px;
-      height: 20px;
+      width: rem(20);
+      height: rem(20);
     }
   }
 }
