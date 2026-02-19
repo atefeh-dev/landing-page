@@ -158,6 +158,7 @@ const handleSubmit = () => {};
     width: var(--icon-size);
     height: var(--icon-size);
     filter: brightness(0.9);
+
     // No animation — static placement
 
     &--1 {
@@ -225,7 +226,7 @@ const handleSubmit = () => {};
 
   &__content {
     text-align: center;
-    max-width: rem(700);
+    max-width: rem(716);
   }
 
   // ── Badge ─────────────────────────────────────────────────
@@ -323,6 +324,8 @@ const handleSubmit = () => {};
     padding: rem(12) rem(16);
     background: $color-bg-tertiary;
     border-bottom: 1px solid $color-border-subtle;
+
+    direction: ltr;
   }
 
   &__browser-dot {

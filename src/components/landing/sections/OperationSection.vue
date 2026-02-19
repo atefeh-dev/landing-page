@@ -3,6 +3,10 @@
     <div class="section__container">
       <!-- Header -->
       <div class="operation__header">
+        <div class="section__header section__header--center">
+          <span class="section__badge" v-bind="slideDown()">عملکرد</span>
+        </div>
+
         <h2 class="operation__title" v-bind="reveal(1)">
           ساخت سند، <span class="highlight">شفاف</span> و مرحله‌به‌مرحله.
         </h2>
@@ -14,12 +18,21 @@
           <strong>اما مهم‌تر از تولید سند، مدیریت چرخه آن است.</strong>
         </p>
 
-        <!-- Toggle -->
+        <!-- Two-label toggle: right label = off state, left label = on state -->
         <div class="operation__toggle" v-bind="reveal(3)">
+          <span
+            class="operation__toggle-label"
+            :class="{ 'operation__toggle-label--active': !showStandard }"
+            >تنظیم هوشمند اسناد</span
+          >
+
           <ToggleSwitch v-model="showStandard" />
-          <span class="operation__toggle-label">
-            {{ showStandard ? "دریافت اسناد استاندارد" : "تنظیم هوشمند اسناد" }}
-          </span>
+
+          <span
+            class="operation__toggle-label"
+            :class="{ 'operation__toggle-label--active': showStandard }"
+            >پیش نمایش</span
+          >
         </div>
       </div>
 
@@ -239,12 +252,12 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, nextTick } from "vue";
 import ToggleSwitch from "@/components/base/BaseToggle.vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 const sectionRef = ref(null);
-const { reveal } = useScrollAnimation(sectionRef, 0.1);
+const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
 
 const showStandard = ref(false);
 const activeStep = ref(1);
@@ -334,8 +347,13 @@ const docData = computed(() =>
 );
 
 // Keep activeStep in sync with toggle
-watch(showStandard, (val, prev) => {
+watch(showStandard, async (val) => {
+  // WHY nextTick: set slide direction BEFORE the key change so Vue
+  // picks up the correct transition name when it re-renders.
+  // Without nextTick the leave/enter animations can use the wrong
+  // direction because they start in the same render flush.
   slideDirection.value = val ? "op-slide-left" : "op-slide-right";
+  await nextTick();
   activeStep.value = val ? 2 : 1;
 });
 </script>
@@ -390,7 +408,7 @@ watch(showStandard, (val, prev) => {
   display: inline-flex;
   align-items: center;
   gap: $spacing-sm;
-  padding: rem(10) rem(20);
+  padding: rem(8) rem(16);
   background: $color-surface-hover;
   border: 1px solid $color-border-subtle;
   border-radius: $radius-full;
@@ -407,8 +425,16 @@ watch(showStandard, (val, prev) => {
 
 .operation__toggle-label {
   font-size: $font-size-sm;
-  color: $color-text-secondary;
+  color: $color-text-muted;
   font-weight: $font-weight-medium;
+  transition: color #{$transition-duration-fast} #{$transition-easing-standard};
+  user-select: none;
+
+  // Active label (matches current toggle state) is bright
+  &--active {
+    color: $color-text-primary;
+    font-weight: $font-weight-semibold;
+  }
 }
 
 // ── Browser shell ──────────────────────────────────────────────
@@ -556,8 +582,8 @@ watch(showStandard, (val, prev) => {
   }
 
   &--active {
-    border: 1px solid $color-accent-primary;
-    background: rgba(252, 192, 21, 0.06);
+    // border: 1px solid $color-accent-primary;
+    // background: rgba(252, 192, 21, 0.06);
 
     .operation__step-line {
       border-color: $color-border-primary;
@@ -710,13 +736,25 @@ watch(showStandard, (val, prev) => {
 // ── Slide transitions ──────────────────────────────────────────
 // Left/right slide matching toggle direction — same timing.
 
+// ── Slide transitions ──────────────────────────────────────────
+// WHY custom cubic-bezier(0.25, 0.46, 0.45, 0.94):
+//   A deceleration curve — fast start, gentle landing.
+//   Feels much more intentional than a linear ease-out.
+// WHY different enter/leave durations:
+//   Leave is shorter (0.28s) so the old doc exits crisply;
+//   Enter is longer (0.48s) so the new doc arrives gracefully.
+// WHY filter blur on leave:
+//   A subtle 2px blur during exit adds depth — the old content
+//   "recedes" rather than just sliding away flat.
+
+$_slide-easing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+$_slide-distance: 56px;
+
 .op-slide-left-enter-active,
-.op-slide-left-leave-active,
-.op-slide-right-enter-active,
-.op-slide-right-leave-active {
+.op-slide-right-enter-active {
   transition:
-    opacity 0.35s ease-out,
-    transform 0.35s #{$transition-easing-standard};
+    opacity 0.48s $_slide-easing,
+    transform 0.48s $_slide-easing;
 }
 
 .op-slide-left-leave-active,
@@ -725,26 +763,32 @@ watch(showStandard, (val, prev) => {
   top: rem(24);
   left: rem(32);
   right: rem(32);
+  transition:
+    opacity 0.28s ease-in,
+    transform 0.28s ease-in,
+    filter 0.28s ease-in;
 }
 
-// Slide left: new comes from left, old exits right
+// Slide left: new enters from left, old exits to right
 .op-slide-left-enter-from {
   opacity: 0;
-  transform: translateX(-40px);
+  transform: translateX(-#{$_slide-distance});
 }
 .op-slide-left-leave-to {
   opacity: 0;
-  transform: translateX(40px);
+  transform: translateX($_slide-distance);
+  filter: blur(2px);
 }
 
-// Slide right: new comes from right, old exits left
+// Slide right: new enters from right, old exits to left
 .op-slide-right-enter-from {
   opacity: 0;
-  transform: translateX(40px);
+  transform: translateX($_slide-distance);
 }
 .op-slide-right-leave-to {
   opacity: 0;
-  transform: translateX(-40px);
+  transform: translateX(-#{$_slide-distance});
+  filter: blur(2px);
 }
 
 // ── Responsive ─────────────────────────────────────────────────
