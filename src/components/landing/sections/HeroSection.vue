@@ -154,7 +154,7 @@ const handleSubmit = () => {};
 
   &__icon {
     position: absolute;
-    --icon-size: 80px;
+    --icon-size: 72px;
     width: var(--icon-size);
     height: var(--icon-size);
     filter: brightness(0.9);
@@ -162,51 +162,48 @@ const handleSubmit = () => {};
     // No animation — static placement
 
     &--1 {
-      top: 31%;
-      left: 15%;
+      top: 11%;
+      left: 25%;
       opacity: 0.8;
       --rotation: -15deg;
       transform: rotate(-15deg);
     }
     &--2 {
-      top: 38%;
-      left: 25%;
-      opacity: 0.7;
-      --icon-size: 60px;
+      top: 14%;
+      left: 34%;
+      opacity: 0.9;
+      --icon-size: 50px;
       transform: rotate(8deg);
     }
     &--3 {
-      top: 30%;
-      left: 64%;
+      top: 22%;
+      left: 24%;
       opacity: 0.85;
-      --icon-size: 70px;
       transform: rotate(-25deg);
     }
     &--4 {
-      top: 23%;
-      right: 21%;
-      opacity: 0.75;
+      top: 13%;
+      right: 31%;
+      opacity: 0.95;
+
       transform: rotate(12deg);
     }
     &--5 {
-      top: 57%;
-      left: 21%;
-      opacity: 0.9;
-      --icon-size: 65px;
+      top: 16%;
+      right: 19%;
+      opacity: 0.8;
       transform: rotate(18deg);
     }
     &--6 {
-      top: 44%;
-      right: 23%;
-      opacity: 0.72;
-      --icon-size: 75px;
+      top: 23%;
+      right: 21%;
+      opacity: 0.89;
       transform: rotate(-8deg);
     }
     &--7 {
-      top: 22%;
-      right: 60%;
-      opacity: 0.82;
-      --icon-size: 70px;
+      top: 18%;
+      left: 16%;
+      opacity: 0.92;
       transform: rotate(22deg);
     }
   }

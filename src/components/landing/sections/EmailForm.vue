@@ -90,7 +90,7 @@ function handleSubmit() {
     display: flex;
     gap: $spacing-ms;
     align-items: flex-start;
-    max-width: rem(700);
+    max-width: rem(507);
     margin: 0 auto;
   }
 
