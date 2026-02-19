@@ -285,8 +285,8 @@ const handleSubmit = () => {};
   &__note {
     font-size: $font-size-sm;
     color: $color-text-tertiary;
-    margin-top: rem(4);
-    text-align: right;
+    margin-top: rem(16);
+    text-align: center;
   }
 
   // ── Demo section ──────────────────────────────────────────
