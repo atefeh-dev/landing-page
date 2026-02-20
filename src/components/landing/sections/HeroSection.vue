@@ -332,6 +332,7 @@ const handleSubmit = () => {};
     padding: rem(12) rem(16);
     background: $color-bg-tertiary;
     border-bottom: 1px solid $color-border-subtle;
+    direction: ltr;
   }
 
   &__browser-dot {
