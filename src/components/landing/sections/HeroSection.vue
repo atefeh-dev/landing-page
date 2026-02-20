@@ -511,8 +511,8 @@ const handleSubmit = () => {};
         --icon-size: 44px;
       }
       &--2 {
-        top: 10%;
-        right: 6%;
+        top: 17%;
+        right: 13%;
         --icon-size: 36px;
       }
       &--3 {
@@ -526,7 +526,7 @@ const handleSubmit = () => {};
         --icon-size: 42px;
       }
       &--5 {
-        top: 14%;
+        top: 22%;
         right: 3%;
         --icon-size: 38px;
       }
