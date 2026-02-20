@@ -79,8 +79,7 @@ function handleSubmit() {
 
 <style lang="scss" scoped>
 // ─────────────────────────────────────────────────────────────
-// EmailForm — no structural changes needed.
-// WHY: respond-to() replaces raw @media.
+// EmailForm
 // ─────────────────────────────────────────────────────────────
 
 .email-form {

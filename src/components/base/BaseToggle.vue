@@ -25,14 +25,12 @@ defineEmits(["update:modelValue"]);
 // ─────────────────────────────────────────────────────────────
 // BaseToggle
 // WHY notes:
-// - visually-hidden mixin replaces opacity:0/width:0/height:0
-//   approach, which is fragile. The standard accessible pattern
-//   is position:absolute with 1px clip. However since the input
-//   must be a sibling of the slider for the :checked selector,
-//   and we need it truly hidden (not just invisible), we keep
-//   the original pattern but document the tradeoff.
 // - $color-surface-bright replaces rgba(255,255,255,0.20).
 // - transition targets specific properties.
+// - Input hidden via opacity + zero dimensions (not visually-hidden
+//   mixin) because the :checked CSS combinator requires the input
+//   to remain a DOM sibling of the slider — absolute positioning
+//   would remove it from sibling flow.
 // ─────────────────────────────────────────────────────────────
 
 .toggle-switch {
@@ -41,12 +39,6 @@ defineEmits(["update:modelValue"]);
   width: rem(44);
   height: rem(24);
   cursor: pointer;
-
-  // ── Hidden native checkbox ────────────────────────────────
-  // WHY: We use opacity + zero dimensions rather than
-  // visually-hidden mixin because the input must remain a
-  // sibling element in the DOM for the CSS :checked combinator
-  // to work. Absolute positioning would break the sibling flow.
 
   &__input {
     opacity: 0;
@@ -67,8 +59,6 @@ defineEmits(["update:modelValue"]);
     }
   }
 
-  // ── Visible track ─────────────────────────────────────────
-
   &__slider {
     position: absolute;
     inset: 0;
@@ -78,8 +68,6 @@ defineEmits(["update:modelValue"]);
       background-color #{$transition-duration-fast}
         #{$transition-easing-standard},
       box-shadow #{$transition-duration-fast} #{$transition-easing-standard};
-
-    // ── Thumb ─────────────────────────────────────────────
 
     &::before {
       content: "";

@@ -4,7 +4,12 @@
       <div class="section__header section__header--center">
         <span class="section__badge" v-bind="slideDown()">رویکرد</span>
         <div class="section__title-wrapper" v-bind="reveal(1)">
-          <h2 class="section__title reduce-gap">
+          <!--
+            FIX: .reduce-gap was a non-BEM utility class inside a scoped
+            block. Replaced with section__title--spaced BEM modifier which
+            is semantically clear and self-documenting.
+          -->
+          <h2 class="section__title section__title--spaced">
             اسناد فقط <span class="highlight">متن </span> نیستند.
           </h2>
         </div>
@@ -32,11 +37,9 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
 <style lang="scss" scoped>
 // ─────────────────────────────────────────────────────────────
 // ApproachSection
-// All section backgrounds are solid $color-bg-primary.
-// CtaSection, and CustomerSection — eliminating 4× duplication.
-// Card grid markup was removed from template since this section
-// currently has no cards; the card styles and mixin are available
-// if cards are re-added in future.
+// FIX: .reduce-gap utility class replaced with .section__title--spaced
+// BEM modifier. Utility classes in scoped blocks break BEM naming
+// and are harder to discover when reading templates.
 // ─────────────────────────────────────────────────────────────
 
 .section--approach {
@@ -45,7 +48,9 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
   overflow: hidden;
 }
 
-.reduce-gap {
+// WHY scoped modifier: section__title--spaced only makes sense
+// in this component context. It's not global like --wide or --faq.
+.section__title--spaced {
   margin-bottom: $spacing-lg;
 }
 </style>

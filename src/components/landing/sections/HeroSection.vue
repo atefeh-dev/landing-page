@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    <!-- Demo browser mockup — shown below the fold -->
+    <!-- Demo browser mockup -->
     <div class="hero__demo" v-bind="reveal(6)">
       <div class="hero__browser">
         <div class="hero__browser-bar">
@@ -128,10 +128,12 @@ const handleSubmit = () => {};
 // ─────────────────────────────────────────────────────────────
 // HeroSection
 // WHY notes:
+// - hero__description changed min-width → max-width.
+//   min-width: rem(716) forced horizontal scroll on every screen
+//   narrower than 716px. max-width constrains without forcing.
+// - hero__demo margin-top uses $spacing-2xl token at md breakpoint.
 // - Icons use float animation (main.scss keyframe) with per-icon timing.
 // - Opacity varies per icon (0.70–0.90) for visual depth.
-// - Demo browser mockup uses an iframe sized to show content large.
-// - All backgrounds solid $color-bg-primary (no gradients).
 // ─────────────────────────────────────────────────────────────
 
 .hero {
@@ -142,8 +144,6 @@ const handleSubmit = () => {};
   overflow: hidden;
 
   // ── Floating icon layer ───────────────────────────────────
-  // Animation: float keyframe (main.scss) with per-icon duration/delay.
-  // WHY varying opacity: mixed 0.70–0.90 range gives depth.
 
   &__icons {
     position: absolute;
@@ -159,9 +159,6 @@ const handleSubmit = () => {};
     height: var(--icon-size);
     filter: brightness(0.9);
     animation: float 20s infinite ease-in-out;
-    // Animation: float keyframe in main.scss drives the movement.
-    // --rotation CSS custom property is read by the keyframe to keep
-    // each icon's tilt offset as it bobs up and down.
 
     &--1 {
       top: 11%;
@@ -282,13 +279,16 @@ const handleSubmit = () => {};
   }
 
   // ── Description ───────────────────────────────────────────
+  // FIX: was min-width: rem(716) — forced horizontal scroll on
+  // screens narrower than 716px. Changed to max-width so it
+  // constrains without ever forcing overflow.
 
   &__description {
     font-size: $font-size-xl;
     line-height: 1.4;
     color: $color-caption;
     margin-bottom: rem(20);
-    min-width: rem(716);
+    max-width: rem(716);
   }
 
   // ── Note ──────────────────────────────────────────────────
@@ -301,9 +301,6 @@ const handleSubmit = () => {};
   }
 
   // ── Demo section ──────────────────────────────────────────
-  // Large browser mockup showing the live product.
-  // WHY full-bleed: the mockup needs visual weight — max-width
-  // would make it feel small and unconvincing.
 
   &__demo {
     position: relative;
@@ -370,16 +367,11 @@ const handleSubmit = () => {};
     justify-content: center;
   }
 
-  // ── iframe ────────────────────────────────────────────────
-  // WHY no padding-bottom aspect ratio: iframe has its own
-  // content — let it breathe at a fixed tall height so the
-  // product is clearly readable.
-
   &__browser-content {
     position: relative;
     width: 100%;
     height: rem(560);
-    background: #f5f5f5; // light placeholder while iframe loads
+    background: #f5f5f5;
   }
 
   &__iframe {
@@ -410,6 +402,7 @@ const handleSubmit = () => {};
     &__content {
       max-width: rem(600);
     }
+
     &__demo {
       max-width: rem(800);
       padding: 0 $spacing-md;
@@ -417,6 +410,7 @@ const handleSubmit = () => {};
 
     &__icon {
       --icon-size: 60px;
+
       &--2,
       &--5 {
         --icon-size: 50px;
@@ -436,9 +430,13 @@ const handleSubmit = () => {};
 @include respond-to(md) {
   .hero {
     padding-top: rem(100);
+
     &__demo {
+      // FIX: was rem(70) magic number — use spacing token
+      margin-top: $spacing-2xl;
       padding: 0 $spacing-sm;
     }
+
     &__browser-content {
       height: rem(380);
     }
@@ -446,8 +444,6 @@ const handleSubmit = () => {};
     &__icon {
       --icon-size: 58px;
 
-      // ── Tablet icon positions ───────────────────────────────
-      // Between desktop and mobile — adjust these as needed.
       &--1 {
         top: 10%;
         left: 14%;
@@ -489,12 +485,13 @@ const handleSubmit = () => {};
     &__container {
       padding: 0 $spacing-sm;
     }
+
     &__content {
       max-width: 100%;
     }
 
     &__title {
-      font-size: clamp(1.75rem, 8vw, 2rem);
+      font-size: clamp(rem(28), 8vw, rem(48));
       margin-bottom: $spacing-md;
     }
 
@@ -505,11 +502,7 @@ const handleSubmit = () => {};
 
     &__icon {
       --icon-size: 48px;
-      opacity: 0.55; // slightly reduced on mobile to keep text readable
-
-      // ── Mobile icon positions ─────────────────────────────
-      // Each icon repositioned individually for small screens.
-      // Adjust these values to move icons around on mobile.
+      opacity: 0.55;
 
       &--1 {
         top: 15%;
@@ -523,9 +516,9 @@ const handleSubmit = () => {};
       }
       &--3 {
         top: 18%;
-        left: 2%;
+        left: 4%;
         --icon-size: 40px;
-      }
+      } // FIX: was left:2% — too close to edge
       &--4 {
         top: 14%;
         left: 38%;
@@ -541,7 +534,7 @@ const handleSubmit = () => {};
       } // too cluttered on small screens
       &--7 {
         display: none;
-      } // too cluttered on small screens
+      }
     }
 
     &__demo {

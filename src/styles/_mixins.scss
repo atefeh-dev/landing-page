@@ -16,10 +16,18 @@
 // changing a breakpoint value updates every usage automatically.
 //
 // Usage:
-//   @include respond-to(md) { ... }
+//   @include respond-to(xs) { ... }  // ≤375px  small phones
+//   @include respond-to(sm) { ... }  // ≤640px
+//   @include respond-to(md) { ... }  // ≤844px
+//   @include respond-to(lg) { ... }  // ≤1024px
+//   @include respond-to(xl) { ... }  // ≤1200px
 
 @mixin respond-to($breakpoint) {
-  @if $breakpoint == sm {
+  @if $breakpoint == xs {
+    @media (max-width: #{$breakpoint-xs}) {
+      @content;
+    }
+  } @else if $breakpoint == sm {
     @media (max-width: #{$breakpoint-sm}) {
       @content;
     }
@@ -36,21 +44,8 @@
       @content;
     }
   } @else {
-    @warn "Unknown breakpoint: #{$breakpoint}.";
+    @warn "Unknown breakpoint: #{$breakpoint}. Valid values: xs, sm, md, lg, xl.";
   }
-}
-
-// ── Section dark gradient background ─────────────────────────
-// LEGACY: All sections now use solid $color-bg-primary per design.
-// Mixin kept for rollback convenience — do not use in new code.
-
-@mixin section-dark-gradient {
-  background: linear-gradient(
-    180deg,
-    #111111 0%,
-    #0d0a0f 50%,
-    $color-bg-primary 100%
-  );
 }
 
 // ── Focus ring ────────────────────────────────────────────────
@@ -100,8 +95,13 @@
 // WHY: TweetTestimonials has two tracks with mirrored animations.
 // Mixin accepts direction so both share one definition.
 //
+// DEPENDENCY: Requires @keyframes scroll-left and scroll-right
+// to be defined globally in main.scss. The animation name is
+// constructed as scroll-#{$direction}, so passing $direction: left
+// binds to the scroll-left keyframe. Do not rename those keyframes.
+//
 // Usage:
-//   .tweet-scroller__track         { @include scroll-track(left); }
+//   .tweet-scroller__track          { @include scroll-track(left); }
 //   .tweet-scroller__track--reverse { @include scroll-track(right); }
 
 @mixin scroll-track($direction: left, $duration: 70s) {
@@ -111,7 +111,7 @@
 }
 
 // ── Card grid ─────────────────────────────────────────────────
-// WHY: PhilosophySection and ApproachSection shared identical
+// WHY: PhilosophySection and ApproachSection share an identical
 // 3-column card grid layout. One mixin, two usages.
 //
 // Usage:
@@ -127,7 +127,7 @@
 }
 
 // ── Flex centre ───────────────────────────────────────────────
-// WHY: Trivially short helper for a very common pattern.
+// WHY: Short helper for a very common pattern.
 
 @mixin flex-center($direction: row) {
   display: flex;

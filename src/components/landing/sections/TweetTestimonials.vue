@@ -4,13 +4,6 @@
       <div class="section__header section__header--center">
         <span class="section__badge" v-bind="slideDown()">تجربه‌ها</span>
         <div class="section__title-wrapper" v-bind="reveal(1)">
-          <!--
-            WHY: section__title--wide modifier replaces the scoped
-            override of .section__title font-size that was inside
-            section--tweets. Overriding a global element from inside
-            a modifier breaks the single source of truth. A modifier
-            on the element itself is the correct BEM pattern.
-          -->
           <h2 class="section__title section__title--wide">
             این تجربه فقط برای ما نبود.
           </h2>
@@ -68,11 +61,6 @@ import Avatar1 from "@/assets/images/avatars/avatar1.png";
 import Avatar2 from "@/assets/images/avatars/avatar2.png";
 import Avatar3 from "@/assets/images/avatars/avatar3.png";
 import Avatar4 from "@/assets/images/avatars/avatar4.png";
-
-// TweetCard is extracted to its own component:
-// - Eliminates the 90-line SVG verified badge duplication
-// - Makes each row's v-for loop clean and readable
-// - See: @/components/landing/cards/TweetCard.vue
 
 const sectionRef = ref(null);
 const { reveal, slideDown } = useScrollAnimation(sectionRef);
@@ -215,36 +203,15 @@ const row2Tweets = [
 // ─────────────────────────────────────────────────────────────
 // TweetTestimonials
 // WHY notes:
-// - section__title--wide added as a BEM modifier on section__title
-//   instead of overriding font-size from inside section--tweets.
-//   Overriding global elements from section modifiers breaks the
-//   single source of truth and creates specificity surprises.
-// - Keyframes (scroll-left / scroll-right) moved to main.scss
-//   so they are defined once globally — scoped @keyframes in Vue
-//   are duplicated in the CSS output for every component instance.
-// - respond-to() mixin replaces raw @media.
+// - section__title--wide is a modifier in main.scss — no :deep
+//   override needed here. Removed the scoped :deep block.
+// - Keyframes (scroll-left/right) live in main.scss globally.
+// - respond-to(xs) replaces the raw @media (max-width: 375px).
 // ─────────────────────────────────────────────────────────────
-
-// ── Section modifier ───────────────────────────────────────────
 
 .section--tweets {
   background: $color-bg-primary;
   overflow: hidden;
-}
-
-// ── Title width modifier ───────────────────────────────────────
-// WHY: Instead of overriding .section__title from inside the
-// section modifier (creates implicit coupling), we use an explicit
-// BEM modifier on the element itself.
-
-// Note: section__title is defined globally, this modifier is a
-// legitimate extension. In the global main.scss you can add:
-// .section__title--wide { font-size: clamp(1.125rem, 3.5vw, 2.1rem); line-height: 1.4; }
-// For scoped styles in Vue the override below achieves the same.
-:deep(.section__title--wide) {
-  font-size: clamp(1.125rem, 3.5vw, 2.1rem);
-  line-height: 1.4;
-  margin-bottom: $spacing-xl;
 }
 
 // ── Scroller block ─────────────────────────────────────────────
@@ -255,6 +222,7 @@ const row2Tweets = [
   width: 100%;
   overflow: hidden;
 
+  // Edge fade masks — smooth dissolve on both sides
   &::before,
   &::after {
     content: "";
@@ -268,9 +236,6 @@ const row2Tweets = [
 
   &::before {
     left: 0;
-    // WHY gradient: solid color would hard-clip the cards.
-    // Gradient creates a smooth fade-out so cards dissolve into the
-    // background at both edges — gives the infinite scroll illusion depth.
     background: linear-gradient(
       to right,
       $color-bg-primary 0%,
@@ -300,8 +265,8 @@ const row2Tweets = [
     }
   }
 
-  // WHY: scroll-track mixin from _mixins.scss replaces the
-  // duplicated display:flex / width:fit-content / animation block.
+  // WHY: scroll-track mixin replaces duplicated flex/animation block.
+  // DEPENDENCY: requires scroll-left/scroll-right keyframes in main.scss.
   &__track {
     @include scroll-track(left, 70s);
     gap: $spacing-md;
@@ -313,10 +278,8 @@ const row2Tweets = [
 }
 
 // ── Tweet card wrapper ─────────────────────────────────────────
-// WHY: Only sizing, border and hover styles live here.
+// Sizing, border and hover live here.
 // Inner layout (avatar, name, text) lives in TweetCard.vue.
-// This keeps layout concerns (grid sizing) separate from
-// presentational concerns (card content).
 
 .tweet-card {
   flex: 0 0 rem(360);
@@ -395,13 +358,12 @@ const row2Tweets = [
     width: rem(220);
     padding: rem(14);
     border-radius: $radius-md;
-    // Inner element sizes (avatar, text) handled in TweetCard.vue
   }
 }
 
-@media (max-width: 375px) {
+@include respond-to(xs) {
   .tweet-card {
-    flex: 0 0 200px;
+    flex: 0 0 rem(200);
     width: rem(200);
     padding: 0.75rem;
   }

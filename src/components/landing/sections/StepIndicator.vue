@@ -193,6 +193,7 @@ const circleStyle = computed(() => {
     &__number {
       font-size: $font-size-md;
     }
+
     &__title {
       font-size: $font-size-xs;
     }

@@ -32,6 +32,11 @@ const { reveal } = useScrollAnimation(sectionRef);
 </script>
 
 <style lang="scss" scoped>
+// ─────────────────────────────────────────────────────────────
+// CtaSection
+// FIX: $color-text-faded replaces the magic color #94979c.
+// ─────────────────────────────────────────────────────────────
+
 .section--cta {
   background: $color-bg-primary;
 }
@@ -43,7 +48,7 @@ const { reveal } = useScrollAnimation(sectionRef);
   margin: 0 auto;
 
   &__title {
-    font-size: clamp(1.75rem, 4vw, rem(40));
+    font-size: clamp(rem(28), 4vw, rem(40));
     font-weight: $font-weight-bold;
     line-height: 1.3;
     margin-bottom: $spacing-lg;
@@ -54,7 +59,7 @@ const { reveal } = useScrollAnimation(sectionRef);
     font-size: rem(20);
     font-weight: $font-weight-bold;
     line-height: 1.8;
-    color: #94979c;
+    color: $color-text-faded; // FIX: was magic #94979c
     margin-bottom: $spacing-md;
     max-width: rem(700);
     margin-left: auto;
@@ -66,13 +71,16 @@ const { reveal } = useScrollAnimation(sectionRef);
   }
 }
 
+// ── Responsive ─────────────────────────────────────────────────
+
 @include respond-to(lg) {
   .cta {
     padding: $spacing-2xl $spacing-lg;
 
     &__title {
-      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-size: clamp(rem(24), 4vw, rem(32));
     }
+
     &__description {
       font-size: 1.0625rem;
     }
@@ -88,7 +96,7 @@ const { reveal } = useScrollAnimation(sectionRef);
     padding: $spacing-xl $spacing-md;
 
     &__title {
-      font-size: clamp(1.5rem, 6vw, 1.75rem);
+      font-size: clamp(rem(24), 6vw, rem(28));
       margin-bottom: $spacing-md;
     }
 

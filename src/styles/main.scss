@@ -4,9 +4,6 @@
 // Component-specific styles live in their own scoped blocks.
 // ─────────────────────────────────────────────────────────────
 
-// main.scss is a regular stylesheet (not injected via additionalData),
-// so it uses the full @/ alias path. The index is NOT used here because
-// main.scss generates output CSS — it cannot be in additionalData.
 @use "@/styles/functions" as *;
 @use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
@@ -97,6 +94,8 @@ footer [data-animate] {
   }
 
   // ── Badge ──────────────────────────────────────────────────
+  // FIX: clamp() was inverted — min (rem(20)=1.25rem) was larger
+  // than max (0.875rem=14px). Corrected to: min=12px, scale, max=14px.
 
   &__badge {
     display: inline-block;
@@ -105,7 +104,7 @@ footer [data-animate] {
     border: 1px solid $color-badge-stroke;
     border-radius: $radius-full;
     color: $color-badge-text;
-    font-size: clamp(rem(20), 2vw, 0.875rem);
+    font-size: clamp(rem(12), 1.5vw, rem(14));
     font-weight: $font-weight-semibold;
     margin-bottom: $spacing-lg;
     backdrop-filter: blur(10px);
@@ -125,12 +124,29 @@ footer [data-animate] {
   }
 
   // ── Title ──────────────────────────────────────────────────
+  // FIX: clamp() was inverted — min (rem(40)=2.5rem) was larger
+  // than max (2.1rem=33.6px). Corrected to proper min → max range.
 
   &__title {
-    font-size: clamp(rem(40), 4vw, 2.1rem);
+    font-size: clamp(rem(28), 4vw, rem(40));
     font-weight: $font-weight-bold;
     line-height: 1.3;
     margin-bottom: $spacing-xl;
+  }
+
+  // ── Title modifiers ────────────────────────────────────────
+  // WHY: Section-specific title sizing should live as a modifier
+  // on the element, not as an override from inside a section block.
+  // This keeps section__title as the single source of truth.
+
+  &__title--wide {
+    font-size: clamp(rem(20), 3.5vw, rem(34));
+    line-height: 1.4;
+    margin-bottom: $spacing-xl;
+  }
+
+  &__title--faq {
+    font-size: clamp(rem(24), 4vw, rem(36));
   }
 
   // ── Subtitle ───────────────────────────────────────────────
@@ -143,9 +159,12 @@ footer [data-animate] {
   }
 
   // ── Conclusion ─────────────────────────────────────────────
+  // FIX: clamp() was inverted — min (rem(30)=1.875rem) was larger
+  // than max ($font-size-2xl=rem(24)=1.5rem).
+  // Corrected: min=18px, fluid, max=30px.
 
   &__conclusion {
-    font-size: clamp(rem(30), 3vw, $font-size-2xl);
+    font-size: clamp(rem(18), 3vw, rem(30));
     font-weight: $font-weight-semibold;
     line-height: 1.75;
     color: $color-text-secondary;
@@ -187,6 +206,16 @@ footer [data-animate] {
   .section__title {
     margin-bottom: $spacing-lg;
   }
+
+  .section__conclusion {
+    padding: 0 $spacing-sm;
+  }
+}
+
+@include respond-to(xs) {
+  .section__container {
+    padding: 0 1rem;
+  }
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -211,6 +240,9 @@ footer [data-animate] {
     transform: rotate(360deg);
   }
 }
+
+// NOTE: scroll-left and scroll-right are referenced by the
+// scroll-track() mixin in _mixins.scss. Do not rename them.
 
 @keyframes scroll-left {
   from {

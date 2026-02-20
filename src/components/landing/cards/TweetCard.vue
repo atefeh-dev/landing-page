@@ -12,7 +12,6 @@
         <div class="tweet-card__name-row">
           <span class="tweet-card__name">{{ tweet.name }}</span>
 
-          <!-- Verified badge — inline SVG kept in component, not duplicated per row -->
           <svg
             class="tweet-card__verified"
             aria-label="تأیید شده"
@@ -51,17 +50,13 @@ defineProps({
 // ─────────────────────────────────────────────────────────────
 // TweetCard
 // WHY a separate component:
-// The verified badge SVG (90 lines) was duplicated in both
-// row1 and row2 of TweetTestimonials. Extracting to a component
-// eliminates that duplication and makes TweetTestimonials's
-// template clean and declarative.
+// The verified badge SVG was duplicated in both row1 and row2 of
+// TweetTestimonials. Extracting to a component eliminates that
+// duplication and keeps TweetTestimonials clean and declarative.
 // ─────────────────────────────────────────────────────────────
 
 .tweet-card {
   &__inner {
-    // No extra wrapper styles needed — .tweet-card on the parent
-    // div in TweetTestimonials handles all sizing and borders.
-    // This component is purely structural.
     display: contents;
   }
 
@@ -125,12 +120,15 @@ defineProps({
       width: rem(34);
       height: rem(34);
     }
+
     &__name {
       font-size: rem(13);
     }
+
     &__handle {
       font-size: rem(12);
     }
+
     &__text {
       font-size: rem(13);
       line-height: 1.4;

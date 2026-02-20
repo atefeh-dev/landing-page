@@ -30,17 +30,3 @@ $_base-font-size: 16 !default;
 
   @return math.div($px, $_base-font-size * 1px) * 1rem;
 }
-// ── em() ──────────────────────────────────────────────────────
-// Converts px to em relative to a given context (default 16px).
-// Prefer rem() in almost all cases.
-
-@function em($px, $context: $_base-font-size) {
-  @return math.div($px, $context) * 1em;
-}
-
-// ── strip-unit() ──────────────────────────────────────────────
-// Removes the unit from a value. Internal helper.
-
-@function strip-unit($value) {
-  @return math.div($value, $value * 0 + 1);
-}

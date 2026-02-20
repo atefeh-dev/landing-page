@@ -1,7 +1,6 @@
 <template>
   <section class="section section--customers" id="customers" ref="sectionRef">
     <div class="customers">
-      <!-- RIGHT column: text (first in DOM = right side in RTL) -->
       <div class="customers__content" v-bind="reveal(1)">
         <span class="section__badge" v-bind="slideDown(1)">مخاطبان</span>
 
@@ -19,7 +18,6 @@
         </div>
       </div>
 
-      <!-- LEFT column: image bleeds to left viewport edge (second in DOM = left in RTL) -->
       <div class="customers__visual" v-bind="reveal(4)">
         <img :src="DashboardImg" alt="داشبورد زونکن" class="customers__image" />
       </div>
@@ -41,14 +39,16 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
 // CustomerSection
 // RTL LAYOUT LOGIC:
 //   Page is direction:rtl. In RTL flex, first DOM child = RIGHT.
-//   So: content first in DOM → appears on RIGHT (correct ✓)
-//       visual second in DOM → appears on LEFT  (correct ✓)
-//   No direction override needed — RTL does the right thing.
+//   content first in DOM → appears on RIGHT (correct ✓)
+//   visual second in DOM → appears on LEFT  (correct ✓)
+// WHY notes:
+// - Added md breakpoint for customers__description to smooth the
+//   jump from rem(24) desktop to rem(16) mobile (was too abrupt).
 // ─────────────────────────────────────────────────────────────
 
 .section--customers {
   background: $color-bg-primary;
-  overflow: visible; // allow left-bleed past section edge
+  overflow: visible;
   padding-top: $spacing-2xl;
   padding-bottom: $spacing-2xl;
   min-height: 0;
@@ -61,7 +61,6 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
   &__visual {
     flex: 0 0 48%;
     overflow: hidden;
-    // Only right side gets rounded corners; left is raw viewport edge
     border-radius: 0 $radius-xl $radius-xl 0;
     border: 1px solid $color-border-subtle;
     border-left: none;
@@ -77,23 +76,15 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
     display: block;
   }
 
-  // ── Right column: text content ─────────────────────────────
-
   &__content {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    // align-items: flex-start keeps children at their natural RTL start (= right side)
     align-items: flex-start;
     padding: $spacing-2xl $spacing-2xl $spacing-2xl $spacing-xl;
     text-align: right;
   }
-
-  // ── Badge — scoped to avoid global section__badge bleed ────
-  // WHY scoped: the global .section__badge has no width constraint
-  // inside a flex column. Scoping lets us use display:inline-block
-  // which shrinks to content width correctly.
 
   &__description {
     font-size: rem(24);
@@ -117,11 +108,9 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
       flex: 0 0 50%;
       min-height: rem(440);
     }
+
     &__content {
       padding: $spacing-xl $spacing-xl $spacing-xl $spacing-lg;
-    }
-    &__title {
-      font-size: clamp(1.5rem, 4vw, 2.25rem);
     }
   }
 }
@@ -133,7 +122,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
   }
 
   .customers {
-    flex-direction: column; // stack: content on top, image below
+    flex-direction: column;
 
     &__visual {
       flex: none;
@@ -152,13 +141,10 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
       padding: $spacing-lg;
     }
 
-    &__title {
-      font-size: clamp(1.5rem, 5vw, 1.875rem);
-    }
-    &__title-highlight {
-      display: inline;
-    }
+    // FIX: added md step — description was jumping directly from
+    // rem(24) to rem(16) with no intermediate size at tablet.
     &__description {
+      font-size: rem(18);
       text-align: center;
     }
   }
@@ -180,13 +166,9 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
       padding: $spacing-md;
     }
 
-    &__title {
-      font-size: clamp(1.375rem, 6vw, 1.75rem);
-      margin-bottom: $spacing-md;
-    }
-
     &__description {
       font-size: $font-size-md;
+
       p {
         margin-bottom: $spacing-sm;
       }

@@ -67,7 +67,7 @@ defineEmits(["update:modelValue", "blur"]);
 // - $color-surface-* tokens replace magic rgba() values.
 // - transition targets specific properties for performance.
 // - Error animation moved to Vue <Transition> — no modifier needed.
-// - respond-to() mixin replaces raw @media breakpoints.
+// - respond-to() mixin replaces all raw @media breakpoints.
 // ─────────────────────────────────────────────────────────────
 
 .input {
@@ -160,7 +160,7 @@ defineEmits(["update:modelValue", "blur"]);
   }
 }
 
-@media (max-width: 375px) {
+@include respond-to(xs) {
   .input__field {
     font-size: $font-size-sm;
     padding: 0.625rem 0.875rem;

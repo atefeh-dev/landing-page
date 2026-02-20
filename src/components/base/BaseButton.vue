@@ -106,10 +106,6 @@ defineProps({
     }
 
     &:hover:not(:disabled) {
-      // background: $color-accent-hover;
-      // transform: translateY(-2px);
-      // box-shadow: $shadow-accent;
-
       &::before {
         opacity: 1;
       }

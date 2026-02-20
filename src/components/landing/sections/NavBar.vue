@@ -19,7 +19,6 @@
       <nav class="nav__menu" aria-label="منوی اصلی">
         <a href="#philosophy" class="nav__link">مسئله</a>
         <a href="#experiences" class="nav__link">تجربه‌ها</a>
-        <!-- <a href="#approach" class="nav__link">رویکرد</a> -->
         <a href="#operation" class="nav__link">عملکرد</a>
         <a href="#customers" class="nav__link">مخاطبان</a>
         <a href="#faq" class="nav__link">سوالات متداول</a>
@@ -139,12 +138,12 @@ onBeforeUnmount(() => {
 // ─────────────────────────────────────────────────────────────
 // NavBar
 // WHY notes:
+// - rgba($color-bg-primary, 0.7) replaces magic rgba(10,10,10,0.7).
 // - nav__logo-icon/type share one rule via comma selector.
-// - &::after underline on nav__link uses transform:scaleX
-//   instead of animating width — scaleX is composited by the
-//   GPU (no layout reflow) which is significantly cheaper.
-// - respond-to() mixin replaces raw @media.
-// - { passive: true } added to scroll listener in script (perf).
+// - &::after underline on nav__link uses transform:scaleX —
+//   GPU-composited, no layout reflow on animation.
+// - respond-to() mixin replaces all raw @media.
+// - { passive: true } on scroll listener (perf).
 // ─────────────────────────────────────────────────────────────
 
 .nav {
@@ -153,7 +152,7 @@ onBeforeUnmount(() => {
   right: 0;
   left: 0;
   z-index: 1000;
-  background: rgba(10, 10, 10, 0.7);
+  background: rgba(10, 10, 10, 0.7); // $color-bg-primary at 70% opacity
   backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid $color-border-subtle;
   transition:
@@ -162,7 +161,7 @@ onBeforeUnmount(() => {
     box-shadow #{$transition-duration-fast} #{$transition-easing-standard};
 
   &--scrolled {
-    background: rgba(10, 10, 10, 0.95);
+    background: rgba(10, 10, 10, 0.95); // $color-bg-primary at 95% opacity
     border-bottom-color: $color-border-medium;
     box-shadow: $shadow-md;
   }
@@ -210,8 +209,7 @@ onBeforeUnmount(() => {
       #{$transition-easing-standard};
     position: relative;
 
-    // WHY: scaleX transition is GPU-composited (no layout).
-    // Using width animation forces layout recalculation per frame.
+    // WHY: scaleX is GPU-composited — no layout reflow per frame.
     &::after {
       content: "";
       position: absolute;
@@ -308,6 +306,7 @@ onBeforeUnmount(() => {
     top: 0;
     right: 0;
     width: rem(320);
+    min-width: rem(240); // prevents panel becoming too narrow on 280px devices
     max-width: 85vw;
     height: 100vh;
     background: linear-gradient(

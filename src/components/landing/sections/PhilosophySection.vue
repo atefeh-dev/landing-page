@@ -63,10 +63,6 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
 <style lang="scss" scoped>
 // ─────────────────────────────────────────────────────────────
 // PhilosophySection
-// WHY: section--philosophy, section--approach, section--cta and
-// section--customers all used the identical dark gradient.
-// All section backgrounds are solid $color-bg-primary.
-// updates them all.
 // ─────────────────────────────────────────────────────────────
 
 .section--philosophy {

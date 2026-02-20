@@ -53,22 +53,20 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 const sectionRef = ref(null);
 const { reveal, slideDown } = useScrollAnimation(sectionRef);
-
-const currentYear = computed(() => new Date().getFullYear());
 </script>
 
 <style lang="scss" scoped>
 // ─────────────────────────────────────────────────────────────
 // FooterSection
 // WHY notes:
-// - Social icon imgs use aria-hidden="true" since the link
-//   itself carries the aria-label — duplicate alt text is noise.
-// - respond-to() mixin replaces raw @media.
+// - Social icon imgs use aria-hidden="true" — the link carries
+//   the aria-label; duplicate alt text is noise.
+// - respond-to(xs) replaces the raw @media (max-width: 375px).
 // - transition targets specific properties.
 // ─────────────────────────────────────────────────────────────
 
@@ -130,7 +128,6 @@ const currentYear = computed(() => new Date().getFullYear());
     display: flex;
     align-items: center;
     justify-content: center;
-    // WHY no background: design requires bare icons, no fill.
     transition: opacity #{$transition-duration-fast}
       #{$transition-easing-standard};
 
@@ -142,10 +139,8 @@ const currentYear = computed(() => new Date().getFullYear());
         #{$transition-easing-standard};
     }
 
-    &:hover {
-      img {
-        opacity: 1;
-      }
+    &:hover img {
+      opacity: 1;
     }
   }
 }
@@ -159,25 +154,27 @@ const currentYear = computed(() => new Date().getFullYear());
     &__container {
       padding: 0 1.5rem;
     }
+
     &__content {
       gap: $spacing-lg;
       padding-bottom: $spacing-lg;
     }
+
     &__brand-text {
       font-size: 0.9375rem;
     }
+
     &__logo img {
       width: rem(42);
     }
+
     &__social {
       gap: $spacing-sm;
     }
 
-    &__social-link {
-      img {
-        width: rem(18);
-        height: rem(18);
-      }
+    &__social-link img {
+      width: rem(18);
+      height: rem(18);
     }
   }
 }
@@ -221,32 +218,30 @@ const currentYear = computed(() => new Date().getFullYear());
       gap: $spacing-sm;
     }
 
-    &__social-link {
-      img {
-        width: rem(16);
-        height: rem(16);
-      }
+    &__social-link img {
+      width: rem(16);
+      height: rem(16);
     }
   }
 }
 
-@media (max-width: 375px) {
+@include respond-to(xs) {
   .footer {
     &__container {
       padding: 0 1rem;
     }
+
     &__brand-text {
       font-size: 0.8125rem;
     }
+
     &__logo img {
       width: rem(35);
     }
 
-    &__social-link {
-      img {
-        width: rem(15);
-        height: rem(15);
-      }
+    &__social-link img {
+      width: rem(15);
+      height: rem(15);
     }
   }
 }

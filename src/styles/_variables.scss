@@ -25,12 +25,13 @@ $color-text-primary: #ffffff;
 $color-text-secondary: rgba(255, 255, 255, 0.7);
 $color-text-tertiary: rgba(255, 255, 255, 0.5);
 $color-text-muted: rgba(255, 255, 255, 0.3);
+$color-text-faded: #94979c; // used in OperationSection & CtaSection descriptions
 $color-text-hero: #cecfd2;
 
 // ── Color: Accent ─────────────────────────────────────────────
 
 $color-accent-primary: #fcc015;
-$color-accent-hover: #ffd84d; // used only in BaseButton hover; avoids magic number
+$color-accent-hover: #ffd84d;
 $color-accent-secondary: #1434cb;
 $color-accent-glow: rgba(252, 192, 21, 0.15);
 $color-accent-subtle: rgba(252, 192, 21, 0.08);
@@ -49,7 +50,6 @@ $color-badge-text: #d6bbfb;
 $color-badge-stroke: #53389e;
 
 // ── Color: Surface overlays ───────────────────────────────────
-// Avoid scattering rgba(255,255,255, x) magic numbers in components.
 
 $color-surface-hover: rgba(255, 255, 255, 0.03);
 $color-surface-subtle: rgba(255, 255, 255, 0.05);
@@ -102,11 +102,6 @@ $transition-duration-slow: 0.6s;
 $transition-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
 $transition-easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-$transition-base: all #{$transition-duration-fast}
-  #{$transition-easing-standard};
-$transition-slow: all #{$transition-duration-slow}
-  #{$transition-easing-standard};
-
 // ── Shadows ───────────────────────────────────────────────────
 
 $shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
@@ -124,6 +119,7 @@ $glow-accent: 0 0 20px rgba(252, 192, 21, 0.3);
 
 // ── Breakpoints ───────────────────────────────────────────────
 
+$breakpoint-xs: 375px; // small phones — replaces raw @media (max-width: 375px)
 $breakpoint-sm: 640px;
 $breakpoint-md: 844px;
 $breakpoint-lg: 1024px;

@@ -4,7 +4,13 @@
       <div class="section__header section__header--center">
         <span class="section__badge" v-bind="slideDown(1)">سوالات متداول</span>
         <div class="section__title-wrapper" v-bind="reveal()">
-          <h2 class="section__title">
+          <!--
+            FIX: was overriding .section__title font-size from inside
+            scoped styles (same anti-pattern found in TweetTestimonials).
+            Now uses the .section__title--faq BEM modifier defined in
+            main.scss — single source of truth preserved.
+          -->
+          <h2 class="section__title section__title--faq">
             پرسش‌هایی که ممکن است در ذهن شما هم باشد.
           </h2>
         </div>
@@ -104,15 +110,12 @@ function toggleFaq(index) {
 // ─────────────────────────────────────────────────────────────
 // FaqSection
 // WHY notes:
-// - :src binding consolidated to ternary — removes v-if/v-else
-//   on img elements (same visual result, less template noise).
-// - aria-expanded added to faq__question for accessibility.
-// - respond-to() mixin replaces raw @media.
+// - Removed scoped .section__title override. Font-size is now
+//   controlled by the section__title--faq modifier in main.scss,
+//   which is the BEM-correct pattern used in TweetTestimonials.
+// - aria-expanded on faq__question for accessibility.
+// - respond-to() mixin replaces all raw @media.
 // ─────────────────────────────────────────────────────────────
-
-.section__title {
-  font-size: clamp(rem(28), 4vw, rem(36));
-}
 
 .section--faq {
   background: $color-bg-primary;
@@ -232,7 +235,6 @@ function toggleFaq(index) {
 
     &__answer {
       padding: 0 $spacing-lg;
-      font-size: $font-size-md;
 
       .faq__answer-wrapper--open & {
         padding-bottom: $spacing-md;
@@ -249,13 +251,11 @@ function toggleFaq(index) {
 @include respond-to(sm) {
   .faq {
     &__item {
-      margin-bottom: $spacing-sm;
       border-radius: $radius-md;
     }
 
     &__question {
       padding: $spacing-md;
-      font-size: $font-size-md;
       gap: $spacing-sm;
     }
 

@@ -15,10 +15,11 @@
           وارد می‌کنید. متغیرها با داده‌های واقعی جایگزین می‌شوند. و سند شما شکل
           می‌گیرد.
           <br />
-          <strong>اما مهم‌تر از تولید سند، مدیریت چرخه آن است.</strong>
+          <span class="highlight"
+            >اما مهم‌تر از تولید سند، مدیریت چرخه آن است.</span
+          >
         </p>
 
-        <!-- Two-label toggle: right label = off state, left label = on state -->
         <div class="operation__toggle" v-bind="reveal(3)">
           <span
             class="operation__toggle-label"
@@ -36,10 +37,9 @@
         </div>
       </div>
 
-      <!-- Browser mockup — pure HTML, no images/iframes -->
+      <!-- Browser mockup -->
       <div class="operation__preview" v-bind="reveal(4)">
         <div class="operation__browser">
-          <!-- Chrome bar -->
           <div class="operation__chrome">
             <div class="operation__chrome-dots" aria-hidden="true">
               <span
@@ -53,7 +53,6 @@
               ></span>
             </div>
             <div class="operation__chrome-icons" aria-hidden="true">
-              <!-- Shield icon -->
               <svg
                 width="14"
                 height="14"
@@ -95,7 +94,6 @@
               zoonkan.com/app/create/document
             </div>
             <div class="operation__chrome-actions" aria-hidden="true">
-              <!-- Download icon -->
               <svg
                 width="16"
                 height="16"
@@ -113,7 +111,6 @@
                   fill="currentColor"
                 />
               </svg>
-              <!-- Plus icon -->
               <svg
                 width="16"
                 height="16"
@@ -127,7 +124,6 @@
                   stroke-width="1.8"
                 />
               </svg>
-              <!-- Copy icon -->
               <svg
                 width="16"
                 height="16"
@@ -153,9 +149,7 @@
             </div>
           </div>
 
-          <!-- Document content area with slide transition -->
           <div class="operation__screen">
-            <!-- Step progress bar -->
             <div class="operation__steps-bar">
               <div
                 v-for="(step, i) in steps"
@@ -167,14 +161,12 @@
                   'operation__step--pending': i > activeStep,
                 }"
               >
-                <!-- connector line (not on last step) -->
                 <div
                   v-if="i < steps.length - 1"
                   class="operation__step-line"
                 ></div>
 
                 <div class="operation__step-circle">
-                  <!-- checkmark when completed -->
                   <svg
                     v-if="i < activeStep"
                     width="12"
@@ -205,10 +197,8 @@
               </div>
             </div>
 
-            <!-- Animated document preview -->
             <transition :name="slideDirection" mode="out-in">
               <div :key="activeStep" class="operation__doc">
-                <!-- Document title -->
                 <div class="operation__doc-header">
                   <h3 class="operation__doc-title">
                     <span class="operation__doc-var">{{ docData.title }}</span>
@@ -223,7 +213,6 @@
                   </p>
                 </div>
 
-                <!-- Document body lines -->
                 <div class="operation__doc-body">
                   <div
                     v-for="(section, si) in docData.sections"
@@ -280,7 +269,6 @@ const persianNum = (n) =>
     .map((d) => persianDigits[+d])
     .join("");
 
-// Two document states matching the screenshots
 const docStates = {
   smart: {
     title: "{عنوان سند} (نام سند)",
@@ -334,7 +322,7 @@ const docStates = {
       {
         heading: "۳. مدت قرارداد",
         lines: [
-          'الف. مدت قرارداد <span class="op-var op-filled">۶ ماه</span> شمسی از تاریخ پرداخت اولین پیش پرداخت محاسبه خواهد شد، لذا طرفین می‌توانند مدت زمان <span class="op-var op-filled">قرارداد</span> را با رضایت طرف دیگر تمدید نمایند.',
+          'الف. مدت قرارداد <span class="op-var op-filled">۶ ماه</span> شمسی از تاریخ پرداخت اولین پیش پرداخت محاسبه خواهد شد.',
           'ب. در صورتی که مدت <span class="op-var op-filled">قرارداد</span> به اتمام رسیده و طرفین نسبت به تمدید آن اقدام ننموده و موضوع <span class="op-var op-filled">قرارداد</span> نیز تحویل نگردد، مطابق ماده فسخ (ماده ۱۲) عمل خواهد شد.',
         ],
       },
@@ -346,12 +334,7 @@ const docData = computed(() =>
   showStandard.value ? docStates.standard : docStates.smart,
 );
 
-// Keep activeStep in sync with toggle
 watch(showStandard, async (val) => {
-  // WHY nextTick: set slide direction BEFORE the key change so Vue
-  // picks up the correct transition name when it re-renders.
-  // Without nextTick the leave/enter animations can use the wrong
-  // direction because they start in the same render flush.
   slideDirection.value = val ? "op-slide-left" : "op-slide-right";
   await nextTick();
   activeStep.value = val ? 2 : 1;
@@ -361,13 +344,10 @@ watch(showStandard, async (val) => {
 <style lang="scss" scoped>
 // ─────────────────────────────────────────────────────────────
 // OperationSection
-// Pure HTML/Vue document preview — no images, no iframes.
-// Matches design screenshots exactly:
-//   - macOS browser chrome with dots + URL bar + action icons
-//   - 4-step RTL progress bar with dotted connectors
-//   - Active step in accent-bordered box
-//   - Document body with inline variable highlights
-//   - Slide-left/right transition between the two states
+// WHY notes:
+// - $color-text-faded replaces the magic color #94979c.
+// - $font-size-3xl replaces the magic rem(30) in subtitle.
+// - operation__toggle mobile padding tightened via respond-to(sm).
 // ─────────────────────────────────────────────────────────────
 
 .section--operation {
@@ -385,16 +365,16 @@ watch(showStandard, async (val) => {
 }
 
 .operation__title {
-  font-size: clamp(rem(40), 4vw, 2.1rem);
+  font-size: clamp(rem(28), 4vw, rem(40));
   font-weight: $font-weight-bold;
   line-height: 1.3;
   margin-bottom: $spacing-xl;
 }
 
 .operation__subtitle {
-  font-size: rem(30);
+  font-size: $font-size-3xl; // FIX: was magic rem(30) — now uses token
   font-weight: $font-weight-semibold;
-  color: #94979c;
+  color: $color-text-faded; // FIX: was magic #94979c — now uses token
   margin: 0 auto;
   margin-bottom: rem(50);
 
@@ -430,7 +410,6 @@ watch(showStandard, async (val) => {
   transition: color #{$transition-duration-fast} #{$transition-easing-standard};
   user-select: none;
 
-  // Active label (matches current toggle state) is bright
   &--active {
     color: $color-text-primary;
     font-weight: $font-weight-semibold;
@@ -453,7 +432,7 @@ watch(showStandard, async (val) => {
     0 0 0 1px $color-border-subtle;
 }
 
-// ── Chrome bar (dots + url + actions) ─────────────────────────
+// ── Chrome bar ─────────────────────────────────────────────────
 
 .operation__chrome {
   display: flex;
@@ -475,6 +454,7 @@ watch(showStandard, async (val) => {
   width: rem(12);
   height: rem(12);
   border-radius: $radius-full;
+
   &--red {
     background: #ff5f57;
   }
@@ -545,8 +525,6 @@ watch(showStandard, async (val) => {
 }
 
 // ── Step progress bar ──────────────────────────────────────────
-// RTL 4-step bar with dotted connector lines between steps.
-// Matches screenshots: active step has accent-bordered box.
 
 .operation__steps-bar {
   display: flex;
@@ -569,10 +547,8 @@ watch(showStandard, async (val) => {
     background-color #{$transition-duration-fast} #{$transition-easing-standard},
     border-color #{$transition-duration-fast} #{$transition-easing-standard};
 
-  // Dotted connector line between steps
   &-line {
     position: absolute;
-    // RTL: line extends to the left (which is the "next" step in RTL)
     top: rem(20);
     left: -50%;
     width: 100%;
@@ -582,13 +558,9 @@ watch(showStandard, async (val) => {
   }
 
   &--active {
-    // border: 1px solid $color-accent-primary;
-    // background: rgba(252, 192, 21, 0.06);
-
     .operation__step-line {
       border-color: $color-border-primary;
     }
-
     .operation__step-title {
       color: $color-text-primary;
     }
@@ -599,7 +571,6 @@ watch(showStandard, async (val) => {
       border-color: $color-border-primary;
       border-style: solid;
     }
-
     .operation__step-title {
       color: $color-text-secondary;
     }
@@ -632,7 +603,6 @@ watch(showStandard, async (val) => {
     background: $color-success;
     border-color: $color-success;
   }
-
   .operation__step--active & {
     border-color: $color-accent-primary;
     background: $color-bg-tertiary;
@@ -671,7 +641,6 @@ watch(showStandard, async (val) => {
 }
 
 // ── Document content ───────────────────────────────────────────
-// Wraps the document and is the target of the slide transition.
 
 .operation__doc {
   direction: rtl;
@@ -720,39 +689,18 @@ watch(showStandard, async (val) => {
   text-align: right;
 }
 
-// Variable placeholders — unfilled (template state, orange)
 :deep(.op-var) {
   color: $color-accent-primary;
   font-weight: $font-weight-medium;
   cursor: default;
 }
 
-// Variable placeholders — filled (standard state, still accent)
 :deep(.op-filled) {
   color: $color-accent-primary;
   font-weight: $font-weight-medium;
 }
 
 // ── Slide transitions ──────────────────────────────────────────
-// Left/right slide matching toggle direction — same timing.
-
-// ── Slide transitions ──────────────────────────────────────────
-// WHY custom cubic-bezier(0.25, 0.46, 0.45, 0.94):
-//   A deceleration curve — fast start, gentle landing.
-//   Feels much more intentional than a linear ease-out.
-// WHY different enter/leave durations:
-//   Leave is shorter (0.28s) so the old doc exits crisply;
-//   Enter is longer (0.48s) so the new doc arrives gracefully.
-// WHY filter blur on leave:
-//   A subtle 2px blur during exit adds depth — the old content
-//   "recedes" rather than just sliding away flat.
-
-// WHY mode="out-in" on the <transition>:
-//   The width-change flash happens when leave and enter overlap —
-//   two docs in the DOM simultaneously at different widths fight
-//   for layout space. out-in sequences them: old fully exits,
-//   then new enters. No overlap, no layout conflict, no flash.
-//   Leave is kept very short (0.18s) so the gap is imperceptible.
 
 $_slide-easing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 $_slide-distance: 40px;
@@ -773,7 +721,6 @@ $_slide-distance: 40px;
   pointer-events: none;
 }
 
-// Slide left: enters from left, exits to right
 .op-slide-left-enter-from {
   opacity: 0;
   transform: translateX(-#{$_slide-distance});
@@ -784,7 +731,6 @@ $_slide-distance: 40px;
   filter: blur(2px);
 }
 
-// Slide right: enters from right, exits to left
 .op-slide-right-enter-from {
   opacity: 0;
   transform: translateX($_slide-distance);
@@ -807,11 +753,13 @@ $_slide-distance: 40px;
   .operation__header {
     margin-bottom: $spacing-lg;
   }
+
   .operation__title {
-    font-size: clamp(rem(24), 4vw, rem(32));
+    font-size: clamp(rem(22), 4vw, rem(32));
   }
+
   .operation__subtitle {
-    font-size: rem(18);
+    font-size: $font-size-lg;
     margin-bottom: rem(32);
   }
 
@@ -823,6 +771,7 @@ $_slide-distance: 40px;
   .operation__step-title {
     font-size: rem(11);
   }
+
   .operation__step-desc {
     display: none;
   }
@@ -832,41 +781,40 @@ $_slide-distance: 40px;
   .operation__toggle {
     flex-direction: column;
     gap: rem(4);
-    padding: rem(16) rem(24);
+    padding: rem(12) rem(16); // FIX: was rem(16) rem(24) — tightened side padding
   }
 
-  // Header text: scale down from user's large desktop values
   .operation__title {
-    font-size: clamp(rem(22), 6vw, rem(28));
+    font-size: clamp(rem(20), 6vw, rem(28));
     margin-bottom: $spacing-md;
   }
+
   .operation__subtitle {
-    font-size: rem(15);
+    font-size: $font-size-md;
     line-height: 1.6;
     margin-bottom: rem(24);
   }
 
   .operation__screen {
     padding: rem(14) rem(10) rem(16);
-    min-height: rem(420); // slightly taller so doc content fits
+    min-height: rem(420);
   }
 
   .operation__chrome-url {
     font-size: rem(9);
     max-width: rem(160);
   }
-  .operation__chrome-actions {
-    display: none;
-  }
+
+  .operation__chrome-actions,
   .operation__chrome-icons {
     display: none;
   }
 
-  // Step bar — tighten up on small screens
   .operation__step-circle {
     width: rem(20);
     height: rem(20);
   }
+
   .operation__step-num {
     font-size: rem(8);
   }
@@ -877,7 +825,6 @@ $_slide-distance: 40px;
     display: none;
   }
 
-  // Document body
   .operation__doc-body {
     font-size: rem(10.5);
     line-height: 1.75;
