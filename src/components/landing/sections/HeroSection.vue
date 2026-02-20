@@ -1,5 +1,5 @@
 <template>
-  <section class="hero" id="hero" ref="sectionRef">
+  <section class="section hero" id="hero" ref="sectionRef">
     <!-- Floating decorative icons -->
     <div class="hero__icons" aria-hidden="true">
       <img
@@ -62,9 +62,9 @@
           از همین تجربه شکل گرفت؛ برای اینکه اسناد، از همان ابتدا در مسیر درست
           قرار بگیرند.
         </p>
-
-        <EmailForm @submit="handleSubmit" />
-
+        <div v-bind="reveal(4)">
+          <EmailForm @submit="handleSubmit" />
+        </div>
         <p class="hero__note" v-bind="reveal(5)">
           با ثبت ایمیل، از زمان دسترسی و خبرهای رونمایی باخبر می‌شوید.
         </p>

@@ -93,9 +93,9 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
   }
 
   &__brand-text {
-    color: $color-text-secondary;
-    font-size: $font-size-md;
-    font-weight: $font-weight-medium;
+    color: $color-text-tertiary;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
     margin: 0;
   }
 

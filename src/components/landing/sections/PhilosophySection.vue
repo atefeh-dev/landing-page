@@ -103,7 +103,7 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
   &-text {
     font-size: $font-size-xl;
     line-height: 1.7;
-    color: $color-text-primary;
+    color: $color--content-primary;
     margin: 0;
     font-weight: $font-weight-semibold;
   }

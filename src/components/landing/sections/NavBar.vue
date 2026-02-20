@@ -21,7 +21,7 @@
         <a href="#experiences" class="nav__link">تجربه‌ها</a>
         <a href="#operation" class="nav__link">عملکرد</a>
         <a href="#customers" class="nav__link">مخاطبان</a>
-        <a href="#faq" class="nav__link">سوالات متداول</a>
+        <a href="#faq" class="nav__link">پرسش‌ها </a>
       </nav>
 
       <div class="nav__actions">

@@ -218,7 +218,7 @@ const row2Tweets = [
 
 .tweet-scroller {
   position: relative;
-  margin-bottom: $spacing-3xl;
+  margin-bottom: rem(50);
   width: 100%;
   overflow: hidden;
 

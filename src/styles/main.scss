@@ -99,14 +99,14 @@ footer [data-animate] {
 
   &__badge {
     display: inline-block;
-    padding: 0.5rem 0.75rem;
+    padding: rem(10) rem(12);
     background: $color-badge-fill;
     border: 1px solid $color-badge-stroke;
     border-radius: $radius-full;
     color: $color-badge-text;
-    font-size: clamp(rem(12), 1.5vw, rem(14));
+    font-size: clamp(rem(12), 1.5vw, rem(20));
     font-weight: $font-weight-semibold;
-    margin-bottom: $spacing-lg;
+    margin-bottom: $spacing-xl;
     backdrop-filter: blur(10px);
   }
 
@@ -129,7 +129,7 @@ footer [data-animate] {
 
   &__title {
     font-size: clamp(rem(28), 4vw, rem(40));
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     line-height: 1.3;
     margin-bottom: $spacing-xl;
   }
@@ -167,7 +167,7 @@ footer [data-animate] {
     font-size: clamp(rem(18), 3vw, rem(30));
     font-weight: $font-weight-semibold;
     line-height: 1.75;
-    color: $color-text-secondary;
+    color: $color-text-faded;
     max-width: rem(816);
     margin: 0 auto;
     text-align: center;

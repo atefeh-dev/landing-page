@@ -4,12 +4,6 @@
       <div class="section__header section__header--center">
         <span class="section__badge" v-bind="slideDown(1)">سوالات متداول</span>
         <div class="section__title-wrapper" v-bind="reveal()">
-          <!--
-            FIX: was overriding .section__title font-size from inside
-            scoped styles (same anti-pattern found in TweetTestimonials).
-            Now uses the .section__title--faq BEM modifier defined in
-            main.scss — single source of truth preserved.
-          -->
           <h2 class="section__title section__title--faq">
             پرسش‌هایی که ممکن است در ذهن شما هم باشد.
           </h2>
@@ -41,7 +35,7 @@
 
           <div
             class="faq__answer-wrapper"
-            :class="{ 'faq__answer-wrapper--open': activeFaq === index }"
+            :ref="(el) => setWrapperRef(el, index)"
           >
             <div class="faq__answer">
               <p v-html="item.answer" />
@@ -63,6 +57,58 @@ const sectionRef = ref(null);
 const { reveal, slideDown } = useScrollAnimation(sectionRef);
 
 const activeFaq = ref(null);
+const wrapperRefs = {};
+
+function setWrapperRef(el, index) {
+  if (el) wrapperRefs[index] = el;
+}
+
+// WHY double rAF: a single rAF can be batched into the same paint
+// cycle as the height assignment, so the browser never sees a
+// "before" state and skips the transition entirely.
+// Two rAF calls guarantee the starting value is painted first.
+
+function collapse(wrapper) {
+  const inner = wrapper.firstElementChild;
+  inner.style.opacity = "0";
+  wrapper.style.height = wrapper.scrollHeight + "px";
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      wrapper.style.height = "0px";
+    });
+  });
+}
+
+function expand(wrapper) {
+  const inner = wrapper.firstElementChild;
+  inner.style.opacity = "0";
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      wrapper.style.height = inner.scrollHeight + "px";
+      inner.style.opacity = "1";
+    });
+  });
+}
+
+function toggleFaq(index) {
+  const wrapper = wrapperRefs[index];
+  if (!wrapper) return;
+
+  const isOpen = activeFaq.value === index;
+
+  // Close previously open item if it's a different one
+  if (activeFaq.value !== null && activeFaq.value !== index) {
+    collapse(wrapperRefs[activeFaq.value]);
+  }
+
+  if (isOpen) {
+    collapse(wrapper);
+    activeFaq.value = null;
+  } else {
+    activeFaq.value = index;
+    expand(wrapper);
+  }
+}
 
 const faqs = [
   {
@@ -100,21 +146,16 @@ const faqs = [
     answer: "دسترسی عمومی پس از تکمیل فاز اولیه توسعه و تست فعال خواهد شد.",
   },
 ];
-
-function toggleFaq(index) {
-  activeFaq.value = activeFaq.value === index ? null : index;
-}
 </script>
 
 <style lang="scss" scoped>
 // ─────────────────────────────────────────────────────────────
 // FaqSection
-// WHY notes:
-// - Removed scoped .section__title override. Font-size is now
-//   controlled by the section__title--faq modifier in main.scss,
-//   which is the BEM-correct pattern used in TweetTestimonials.
-// - aria-expanded on faq__question for accessibility.
-// - respond-to() mixin replaces all raw @media.
+// WHY JS height animation over CSS-only approaches:
+// - max-height: pauses on close (animates from 500px ceiling
+//   to real height before collapsing) — visible tail.
+// - grid-template-rows: content slides upward on close — wrong.
+// - JS scrollHeight: exact pixel height, crisp in both directions.
 // ─────────────────────────────────────────────────────────────
 
 .section--faq {
@@ -127,30 +168,32 @@ function toggleFaq(index) {
 .faq {
   max-width: rem(900);
   margin: 0 auto;
-  padding: 0 $spacing-md;
+  // padding: 0 $spacing-md;
+
+  // ── Item ──────────────────────────────────────────────────
 
   &__item {
-    background: $color-bg-secondary;
     border: 1px solid $color-border-subtle;
     border-radius: $radius-lg;
     margin-bottom: $spacing-sm;
     overflow: hidden;
     transition:
       border-color #{$transition-duration-fast} #{$transition-easing-standard},
-      background-color #{$transition-duration-fast}
-        #{$transition-easing-standard},
       box-shadow #{$transition-duration-fast} #{$transition-easing-standard};
 
     &:hover {
       border-color: $color-border-medium;
-      background: $color-surface-hover;
+      // background-color: $color-hover-bg;
     }
 
     &--active {
       border-color: $color-border-medium;
       box-shadow: $shadow-sm;
+      background-color: $color-hover-bg;
     }
   }
+
+  // ── Question ──────────────────────────────────────────────
 
   &__question {
     width: 100%;
@@ -167,11 +210,16 @@ function toggleFaq(index) {
     font-weight: $font-weight-semibold;
     text-align: right;
     cursor: pointer;
-    transition: color #{$transition-duration-fast}
-      #{$transition-easing-standard};
+    transition:
+      color #{$transition-duration-fast} #{$transition-easing-standard},
+      padding-bottom 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 
     span {
       flex: 1;
+    }
+
+    .faq__item--active & {
+      padding-bottom: 0;
     }
   }
 
@@ -189,34 +237,26 @@ function toggleFaq(index) {
   }
 
   // ── Accordion ─────────────────────────────────────────────
-  // WHY: grid-template-rows animation avoids the well-known
-  // "height: auto cannot be animated" problem without JS.
+  // height is driven entirely by JS toggleFaq().
+  // CSS only provides the transition — JS provides the values.
 
   &__answer-wrapper {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 0;
     overflow: hidden;
-
-    &--open {
-      grid-template-rows: 1fr;
-    }
+    transition: height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   &__answer {
-    min-height: 0;
-    padding: 0 3.5rem 0 1.5rem;
-    color: $color-text-secondary;
+    padding: 0 3.5rem rem(23) 1.5rem;
+    color: $color-text-tertiary;
+    font-weight: $font-weight-regular;
     line-height: 1.8;
     font-size: $font-size-md;
-    transition: padding-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+    transition: opacity 0.25s ease;
 
     p {
       margin: 0;
-    }
-
-    .faq__answer-wrapper--open & {
-      padding-bottom: $spacing-lg;
     }
   }
 }
@@ -231,14 +271,14 @@ function toggleFaq(index) {
       padding: $spacing-md $spacing-lg;
       font-size: 1.0625rem;
       gap: $spacing-md;
+
+      .faq__item--active & {
+        padding-bottom: 0;
+      }
     }
 
     &__answer {
-      padding: 0 $spacing-lg;
-
-      .faq__answer-wrapper--open & {
-        padding-bottom: $spacing-md;
-      }
+      padding: 0 $spacing-lg rem(23) $spacing-lg;
     }
 
     &__icon {
@@ -257,16 +297,16 @@ function toggleFaq(index) {
     &__question {
       padding: $spacing-md;
       gap: $spacing-sm;
+
+      .faq__item--active & {
+        padding-bottom: 0;
+      }
     }
 
     &__answer {
-      padding: 0 $spacing-md;
+      padding: 0 $spacing-md rem(23) $spacing-md;
       font-size: 0.9375rem;
       line-height: 1.7;
-
-      .faq__answer-wrapper--open & {
-        padding-bottom: $spacing-md;
-      }
     }
 
     &__icon {
