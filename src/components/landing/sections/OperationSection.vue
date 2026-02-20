@@ -779,9 +779,8 @@ $_slide-distance: 40px;
 
 @include respond-to(sm) {
   .operation__toggle {
-    flex-direction: column;
-    gap: rem(4);
-    padding: rem(12) rem(16); // FIX: was rem(16) rem(24) — tightened side padding
+    gap: rem(16);
+    padding: rem(16); // FIX: was rem(16) rem(24) — tightened side padding
   }
 
   .operation__title {
