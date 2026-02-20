@@ -135,17 +135,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
-// ─────────────────────────────────────────────────────────────
-// NavBar
-// WHY notes:
-// - rgba($color-bg-primary, 0.7) replaces magic rgba(10,10,10,0.7).
-// - nav__logo-icon/type share one rule via comma selector.
-// - &::after underline on nav__link uses transform:scaleX —
-//   GPU-composited, no layout reflow on animation.
-// - respond-to() mixin replaces all raw @media.
-// - { passive: true } on scroll listener (perf).
-// ─────────────────────────────────────────────────────────────
-
 .nav {
   position: fixed;
   top: 0;
@@ -197,16 +186,18 @@ onBeforeUnmount(() => {
 
   &__menu {
     display: flex;
-    gap: $spacing-lg;
+    gap: rem(10);
     align-items: center;
   }
 
   &__link {
     color: $color-text-secondary;
-    font-weight: $font-weight-medium;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
     white-space: nowrap;
     transition: color #{$transition-duration-fast}
       #{$transition-easing-standard};
+    padding: rem(4) rem(6) 0 rem(6);
     position: relative;
 
     // WHY: scaleX is GPU-composited — no layout reflow per frame.

@@ -233,7 +233,7 @@ const handleSubmit = () => {};
 
   &__content {
     text-align: center;
-    max-width: rem(700);
+    max-width: rem(716);
   }
 
   // ── Badge ─────────────────────────────────────────────────
@@ -265,7 +265,7 @@ const handleSubmit = () => {};
   // ── Title ─────────────────────────────────────────────────
 
   &__title {
-    font-size: $font-size-5xl;
+    font-size: $font-size-7xl;
     font-weight: $font-weight-bold;
     line-height: 1.2;
     margin-bottom: $spacing-md;
@@ -285,7 +285,7 @@ const handleSubmit = () => {};
 
   &__description {
     font-size: $font-size-xl;
-    line-height: 1.4;
+    line-height: rem(30);
     color: $color-caption;
     margin-bottom: rem(20);
     max-width: rem(716);

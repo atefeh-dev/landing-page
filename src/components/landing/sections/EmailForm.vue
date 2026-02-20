@@ -35,7 +35,7 @@ defineProps({
   },
   buttonText: {
     type: String,
-    default: "به لیست انتظار بپیوندید",
+    default: "پیوستن به لیست انتظار ",
   },
   submitText: {
     type: String,
