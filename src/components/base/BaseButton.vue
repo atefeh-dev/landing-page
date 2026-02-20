@@ -79,7 +79,7 @@ defineProps({
   }
 
   &--lg {
-    padding: 0.875rem 1.5rem;
+    padding: rem(12) rem(18);
     font-size: $font-size-md;
   }
 

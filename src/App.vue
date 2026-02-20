@@ -6,7 +6,7 @@
       <HeroSection />
       <PhilosophySection />
       <Tweetexperiences />
-      <ApproachSection />
+      <!-- <ApproachSection /> -->
       <OperationSection />
       <CustomersSection />
       <FaqSection />

@@ -206,7 +206,7 @@
             </div>
 
             <!-- Animated document preview -->
-            <transition :name="slideDirection">
+            <transition :name="slideDirection" mode="out-in">
               <div :key="activeStep" class="operation__doc">
                 <!-- Document title -->
                 <div class="operation__doc-header">
@@ -379,24 +379,24 @@ watch(showStandard, async (val) => {
 .operation__header {
   text-align: center;
   margin-bottom: $spacing-xl;
-  max-width: rem(800);
+  max-width: rem(967);
   margin-left: auto;
   margin-right: auto;
 }
 
 .operation__title {
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-size: clamp(rem(40), 4vw, 2.1rem);
   font-weight: $font-weight-bold;
   line-height: 1.3;
-  margin-bottom: $spacing-md;
-  color: $color-text-primary;
+  margin-bottom: $spacing-xl;
 }
 
 .operation__subtitle {
-  font-size: $font-size-lg;
-  line-height: 1.7;
-  color: $color-text-secondary;
-  margin-bottom: $spacing-lg;
+  font-size: rem(30);
+  font-weight: $font-weight-semibold;
+  color: #94979c;
+  margin: 0 auto;
+  margin-bottom: rem(50);
 
   strong {
     color: $color-text-primary;
@@ -540,7 +540,7 @@ watch(showStandard, async (val) => {
   background: $color-bg-secondary;
   direction: rtl;
   min-height: rem(560);
-  overflow: hidden; // clip sliding doc
+  overflow: hidden;
   position: relative;
 }
 
@@ -747,29 +747,33 @@ watch(showStandard, async (val) => {
 //   A subtle 2px blur during exit adds depth — the old content
 //   "recedes" rather than just sliding away flat.
 
+// WHY mode="out-in" on the <transition>:
+//   The width-change flash happens when leave and enter overlap —
+//   two docs in the DOM simultaneously at different widths fight
+//   for layout space. out-in sequences them: old fully exits,
+//   then new enters. No overlap, no layout conflict, no flash.
+//   Leave is kept very short (0.18s) so the gap is imperceptible.
+
 $_slide-easing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-$_slide-distance: 56px;
+$_slide-distance: 40px;
 
 .op-slide-left-enter-active,
 .op-slide-right-enter-active {
   transition:
-    opacity 0.48s $_slide-easing,
-    transform 0.48s $_slide-easing;
+    opacity 0.4s $_slide-easing,
+    transform 0.4s $_slide-easing;
 }
 
 .op-slide-left-leave-active,
 .op-slide-right-leave-active {
-  position: absolute;
-  top: rem(24);
-  left: rem(32);
-  right: rem(32);
   transition:
-    opacity 0.28s ease-in,
-    transform 0.28s ease-in,
-    filter 0.28s ease-in;
+    opacity 0.18s ease-in,
+    transform 0.18s ease-in,
+    filter 0.18s ease-in;
+  pointer-events: none;
 }
 
-// Slide left: new enters from left, old exits to right
+// Slide left: enters from left, exits to right
 .op-slide-left-enter-from {
   opacity: 0;
   transform: translateX(-#{$_slide-distance});
@@ -780,7 +784,7 @@ $_slide-distance: 56px;
   filter: blur(2px);
 }
 
-// Slide right: new enters from right, old exits to left
+// Slide right: enters from right, exits to left
 .op-slide-right-enter-from {
   opacity: 0;
   transform: translateX($_slide-distance);
@@ -803,6 +807,14 @@ $_slide-distance: 56px;
   .operation__header {
     margin-bottom: $spacing-lg;
   }
+  .operation__title {
+    font-size: clamp(rem(24), 4vw, rem(32));
+  }
+  .operation__subtitle {
+    font-size: rem(18);
+    margin-bottom: rem(32);
+  }
+
   .operation__screen {
     padding: rem(20) rem(20) rem(24);
     min-height: rem(440);
@@ -820,42 +832,61 @@ $_slide-distance: 56px;
   .operation__toggle {
     flex-direction: column;
     gap: rem(4);
-    padding: rem(8) rem(16);
+    padding: rem(16) rem(24);
+  }
+
+  // Header text: scale down from user's large desktop values
+  .operation__title {
+    font-size: clamp(rem(22), 6vw, rem(28));
+    margin-bottom: $spacing-md;
+  }
+  .operation__subtitle {
+    font-size: rem(15);
+    line-height: 1.6;
+    margin-bottom: rem(24);
   }
 
   .operation__screen {
-    padding: rem(16) rem(12) rem(20);
-    min-height: rem(380);
+    padding: rem(14) rem(10) rem(16);
+    min-height: rem(420); // slightly taller so doc content fits
   }
 
   .operation__chrome-url {
-    font-size: rem(10);
-    max-width: rem(180);
+    font-size: rem(9);
+    max-width: rem(160);
   }
   .operation__chrome-actions {
     display: none;
   }
+  .operation__chrome-icons {
+    display: none;
+  }
 
+  // Step bar — tighten up on small screens
   .operation__step-circle {
-    width: rem(22);
-    height: rem(22);
+    width: rem(20);
+    height: rem(20);
   }
   .operation__step-num {
-    font-size: rem(9);
+    font-size: rem(8);
   }
   .operation__step-title {
-    font-size: rem(10);
+    font-size: rem(9);
+  }
+  .operation__step-desc {
+    display: none;
   }
 
+  // Document body
   .operation__doc-body {
-    font-size: rem(11);
+    font-size: rem(10.5);
+    line-height: 1.75;
   }
   .operation__doc-title {
-    font-size: rem(14);
+    font-size: rem(13);
   }
-
-  .operation__subtitle {
-    font-size: $font-size-md;
+  .operation__doc-section-title {
+    font-size: rem(11);
   }
 }
 </style>

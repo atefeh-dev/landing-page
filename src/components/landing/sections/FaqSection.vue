@@ -110,6 +110,10 @@ function toggleFaq(index) {
 // - respond-to() mixin replaces raw @media.
 // ─────────────────────────────────────────────────────────────
 
+.section__title {
+  font-size: clamp(rem(28), 4vw, rem(36));
+}
+
 .section--faq {
   background: $color-bg-primary;
   position: relative;
@@ -119,7 +123,7 @@ function toggleFaq(index) {
 
 .faq {
   max-width: rem(900);
-  margin: 2.5rem auto;
+  margin: 0 auto;
   padding: 0 $spacing-md;
 
   &__item {

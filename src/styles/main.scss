@@ -71,7 +71,7 @@ footer [data-animate] {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: $spacing-2xl 0;
+  padding: rem(35) 0;
   position: relative;
 
   // ── Container ──────────────────────────────────────────────
@@ -105,7 +105,7 @@ footer [data-animate] {
     border: 1px solid $color-badge-stroke;
     border-radius: $radius-full;
     color: $color-badge-text;
-    font-size: clamp(0.75rem, 2vw, 0.875rem);
+    font-size: clamp(rem(20), 2vw, 0.875rem);
     font-weight: $font-weight-semibold;
     margin-bottom: $spacing-lg;
     backdrop-filter: blur(10px);
@@ -127,7 +127,7 @@ footer [data-animate] {
   // ── Title ──────────────────────────────────────────────────
 
   &__title {
-    font-size: clamp(1.375rem, 4vw, 2.1rem);
+    font-size: clamp(rem(40), 4vw, 2.1rem);
     font-weight: $font-weight-bold;
     line-height: 1.3;
     margin-bottom: $spacing-xl;
@@ -145,10 +145,11 @@ footer [data-animate] {
   // ── Conclusion ─────────────────────────────────────────────
 
   &__conclusion {
-    font-size: clamp(1rem, 3vw, $font-size-2xl);
+    font-size: clamp(rem(30), 3vw, $font-size-2xl);
+    font-weight: $font-weight-semibold;
     line-height: 1.75;
     color: $color-text-secondary;
-    max-width: 700px;
+    max-width: rem(816);
     margin: 0 auto;
     text-align: center;
     padding: 0 $spacing-md;
@@ -194,6 +195,16 @@ footer [data-animate] {
 // WHY: Keyframes are global by nature — defining them per
 // scoped component causes duplication in the CSS output.
 // ─────────────────────────────────────────────────────────────
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--rotation, 0deg));
+  }
+  50% {
+    transform: translateY(-20px) rotate(calc(var(--rotation, 0deg) + 5deg));
+  }
+}
 
 @keyframes spin {
   to {

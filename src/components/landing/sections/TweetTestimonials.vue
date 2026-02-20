@@ -12,9 +12,7 @@
             on the element itself is the correct BEM pattern.
           -->
           <h2 class="section__title section__title--wide">
-            سوءتفاهم و کاغذبازی‌های بی‌پایان یک الگوست، و ما با
-            <span class="highlight">زونکن</span>
-            راه‌حلش رو ساختیم.
+            این تجربه فقط برای ما نبود.
           </h2>
         </div>
       </div>
@@ -56,8 +54,7 @@
 
     <div class="section__container">
       <p class="section__conclusion" v-bind="reveal(4)">
-        ما برای توسعه‌ی <span class="highlight">زونکن</span>
-        از نیازهای واقعی الهام می‌گیریم.
+        وقتی این تجربه‌ها تکرار می‌شود، دیگر اتفاق نیست. یک الگوست.
       </p>
     </div>
   </section>

@@ -1,6 +1,6 @@
 <template>
   <section class="hero" id="hero" ref="sectionRef">
-    <!-- Floating decorative icons — static, no animation -->
+    <!-- Floating decorative icons -->
     <div class="hero__icons" aria-hidden="true">
       <img
         src="@/assets/icons/pagewithcurl.svg"
@@ -128,7 +128,7 @@ const handleSubmit = () => {};
 // ─────────────────────────────────────────────────────────────
 // HeroSection
 // WHY notes:
-// - Icons are static (no animation) per design requirement.
+// - Icons use float animation (main.scss keyframe) with per-icon timing.
 // - Opacity varies per icon (0.70–0.90) for visual depth.
 // - Demo browser mockup uses an iframe sized to show content large.
 // - All backgrounds solid $color-bg-primary (no gradients).
@@ -136,13 +136,13 @@ const handleSubmit = () => {};
 
 .hero {
   padding-top: rem(128);
-  padding-bottom: $spacing-2xl;
+  padding-bottom: rem(35);
   background: $color-bg-primary;
   position: relative;
   overflow: hidden;
 
   // ── Floating icon layer ───────────────────────────────────
-  // WHY static: animation removed per design requirement.
+  // Animation: float keyframe (main.scss) with per-icon duration/delay.
   // WHY varying opacity: mixed 0.70–0.90 range gives depth.
 
   &__icons {
@@ -154,57 +154,70 @@ const handleSubmit = () => {};
 
   &__icon {
     position: absolute;
-    --icon-size: 72px;
+    --icon-size: 80px;
     width: var(--icon-size);
     height: var(--icon-size);
     filter: brightness(0.9);
-
-    // No animation — static placement
+    animation: float 20s infinite ease-in-out;
+    // Animation: float keyframe in main.scss drives the movement.
+    // --rotation CSS custom property is read by the keyframe to keep
+    // each icon's tilt offset as it bobs up and down.
 
     &--1 {
       top: 11%;
-      left: 25%;
+      left: 21%;
       opacity: 0.8;
       --rotation: -15deg;
-      transform: rotate(-15deg);
+      animation-duration: 18s;
     }
     &--2 {
       top: 14%;
-      left: 34%;
+      left: 31%;
       opacity: 0.9;
       --icon-size: 50px;
-      transform: rotate(8deg);
+      --rotation: 8deg;
+      animation-delay: -3s;
+      animation-duration: 22s;
     }
     &--3 {
       top: 22%;
-      left: 24%;
+      left: 20%;
       opacity: 0.85;
-      transform: rotate(-25deg);
+      --rotation: -25deg;
+      animation-delay: -6s;
+      animation-duration: 20s;
     }
     &--4 {
       top: 13%;
-      right: 31%;
+      right: 30%;
       opacity: 0.95;
-
-      transform: rotate(12deg);
+      --rotation: 12deg;
+      animation-delay: -9s;
+      animation-duration: 24s;
     }
     &--5 {
       top: 16%;
       right: 19%;
       opacity: 0.8;
-      transform: rotate(18deg);
+      --rotation: 18deg;
+      animation-delay: -12s;
+      animation-duration: 19s;
     }
     &--6 {
-      top: 23%;
-      right: 21%;
+      top: 24%;
+      right: 19%;
       opacity: 0.89;
-      transform: rotate(-8deg);
+      --rotation: -8deg;
+      animation-delay: -15s;
+      animation-duration: 21s;
     }
     &--7 {
       top: 18%;
-      left: 16%;
+      left: 12%;
       opacity: 0.92;
-      transform: rotate(22deg);
+      --rotation: 22deg;
+      animation-delay: -18s;
+      animation-duration: 23s;
     }
   }
 
@@ -223,7 +236,7 @@ const handleSubmit = () => {};
 
   &__content {
     text-align: center;
-    max-width: rem(716);
+    max-width: rem(700);
   }
 
   // ── Badge ─────────────────────────────────────────────────
@@ -272,9 +285,10 @@ const handleSubmit = () => {};
 
   &__description {
     font-size: $font-size-xl;
-    line-height: 1.6;
-    color: #e9d7fe;
-    margin-bottom: $spacing-md;
+    line-height: 1.4;
+    color: $color-caption;
+    margin-bottom: rem(20);
+    min-width: rem(716);
   }
 
   // ── Note ──────────────────────────────────────────────────
@@ -294,7 +308,7 @@ const handleSubmit = () => {};
   &__demo {
     position: relative;
     z-index: 1;
-    margin-top: $spacing-2xl;
+    margin-top: rem(70);
     padding: 0 $spacing-lg;
     max-width: rem(960);
     margin-left: auto;
@@ -321,8 +335,6 @@ const handleSubmit = () => {};
     padding: rem(12) rem(16);
     background: $color-bg-tertiary;
     border-bottom: 1px solid $color-border-subtle;
-
-    direction: ltr;
   }
 
   &__browser-dot {
@@ -383,10 +395,10 @@ const handleSubmit = () => {};
 
   &__demo-caption {
     text-align: center;
-    margin-top: $spacing-md;
-    font-size: clamp(1rem, 2.5vw, $font-size-2xl);
-    font-weight: $font-weight-bold;
-    color: $color-text-secondary;
+    margin-top: rem(40);
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-semibold;
+    color: $color-caption;
     line-height: 1.5;
   }
 }
@@ -430,6 +442,42 @@ const handleSubmit = () => {};
     &__browser-content {
       height: rem(380);
     }
+
+    &__icon {
+      --icon-size: 58px;
+
+      // ── Tablet icon positions ───────────────────────────────
+      // Between desktop and mobile — adjust these as needed.
+      &--1 {
+        top: 10%;
+        left: 14%;
+      }
+      &--2 {
+        top: 12%;
+        left: 26%;
+        --icon-size: 44px;
+      }
+      &--3 {
+        top: 20%;
+        left: 10%;
+      }
+      &--4 {
+        top: 10%;
+        right: 24%;
+      }
+      &--5 {
+        top: 14%;
+        right: 12%;
+      }
+      &--6 {
+        top: 22%;
+        right: 12%;
+      }
+      &--7 {
+        top: 15%;
+        left: 5%;
+      }
+    }
   }
 }
 
@@ -456,17 +504,44 @@ const handleSubmit = () => {};
     }
 
     &__icon {
-      --icon-size: 50px;
+      --icon-size: 48px;
+      opacity: 0.55; // slightly reduced on mobile to keep text readable
 
-      &--2,
-      &--5 {
+      // ── Mobile icon positions ─────────────────────────────
+      // Each icon repositioned individually for small screens.
+      // Adjust these values to move icons around on mobile.
+
+      &--1 {
+        top: 15%;
+        left: 19%;
+        --icon-size: 44px;
+      }
+      &--2 {
+        top: 10%;
+        right: 6%;
+        --icon-size: 36px;
+      }
+      &--3 {
+        top: 18%;
+        left: 2%;
         --icon-size: 40px;
       }
-      &--3,
-      &--6,
+      &--4 {
+        top: 14%;
+        left: 38%;
+        --icon-size: 42px;
+      }
+      &--5 {
+        top: 14%;
+        right: 3%;
+        --icon-size: 38px;
+      }
+      &--6 {
+        display: none;
+      } // too cluttered on small screens
       &--7 {
         display: none;
-      }
+      } // too cluttered on small screens
     }
 
     &__demo {

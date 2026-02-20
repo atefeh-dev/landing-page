@@ -3,11 +3,11 @@
     <div class="customers">
       <!-- RIGHT column: text (first in DOM = right side in RTL) -->
       <div class="customers__content" v-bind="reveal(1)">
-        <span class="customers__badge" v-bind="slideDown(1)">مخاطبان</span>
+        <span class="section__badge" v-bind="slideDown(1)">مخاطبان</span>
 
-        <h2 class="customers__title" v-bind="reveal(2)">
+        <h2 class="section__title" v-bind="reveal(2)">
           برای کسانی که<br />
-          <span class="customers__title-highlight">اسناد را جدی می‌گیرند.</span>
+          اسناد را جدی می‌گیرند.
         </h2>
 
         <div class="customers__description" v-bind="reveal(3)">
@@ -95,38 +95,10 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef);
   // inside a flex column. Scoping lets us use display:inline-block
   // which shrinks to content width correctly.
 
-  &__badge {
-    display: inline-block;
-    padding: rem(6) rem(16);
-    background: $color-badge-fill;
-    border: 1px solid $color-badge-stroke;
-    border-radius: $radius-full;
-    color: $color-badge-text;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-semibold;
-    margin-bottom: $spacing-lg;
-    // Don't stretch — size to content only
-    align-self: auto;
-    width: auto;
-  }
-
-  &__title {
-    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-    font-weight: $font-weight-bold;
-    line-height: 1.25;
-    margin-bottom: $spacing-lg;
-    color: $color-text-primary;
-  }
-
-  &__title-highlight {
-    color: $color-accent-primary;
-    display: block;
-  }
-
   &__description {
-    font-size: $font-size-lg;
+    font-size: rem(24);
     line-height: 1.8;
-    color: $color-text-secondary;
+    color: #f7f7f7;
 
     p {
       margin-bottom: $spacing-md;

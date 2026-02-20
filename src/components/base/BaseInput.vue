@@ -80,13 +80,14 @@ defineEmits(["update:modelValue", "blur"]);
 
   &__field {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: rem(12) rem(14);
     font-size: $font-size-md;
     font-family: inherit;
     background: $color-surface-subtle;
     border: 1px solid $color-border-medium;
     border-radius: $radius-md;
     color: $color-text-primary;
+    line-height: 1.4;
     transition:
       background-color #{$transition-duration-fast}
         #{$transition-easing-standard},

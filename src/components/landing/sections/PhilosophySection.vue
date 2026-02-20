@@ -16,7 +16,8 @@
             <img src="@/assets/ui/notion.svg" alt="Notion" />
           </div>
           <p class="philosophy__card-text">
-            خیلی از همکاری‌ها بدون سند شروع می‌شوند.
+            خیلی از همکاری‌ها<br />
+            بدون سند شروع می‌شوند.
           </p>
         </div>
 
@@ -25,7 +26,8 @@
             <img src="@/assets/ui/slack.svg" alt="Slack" />
           </div>
           <p class="philosophy__card-text">
-            خیلی از قرارداده با عجله نوشته می‌شوند.
+            خیلی از قراردادها<br />
+            با عجله نوشته می‌شوند.
           </p>
         </div>
 
@@ -41,8 +43,10 @@
 
       <p class="section__conclusion" v-bind="reveal(4)">
         <span>نتیجه؟</span><br />
-        سوءتفاهم‌ها، اختلاف، و بی‌اعتمادی از جایی شروع می‌شوند که
-        <span class="highlight">سندها مسیر مشخصی ندارند.</span>
+        سوءتفاهم، اختلاف، بی‌اعتمادی. پس، مشکل فقط نوشتن نیست.<br />
+        <span class="highlight">
+          مشکل، نداشتن یک مسیر مشخص برای هر سند است.</span
+        >
       </p>
     </div>
   </section>

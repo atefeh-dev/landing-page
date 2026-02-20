@@ -19,7 +19,7 @@
       <nav class="nav__menu" aria-label="منوی اصلی">
         <a href="#philosophy" class="nav__link">مسئله</a>
         <a href="#experiences" class="nav__link">تجربه‌ها</a>
-        <a href="#approach" class="nav__link">رویکرد</a>
+        <!-- <a href="#approach" class="nav__link">رویکرد</a> -->
         <a href="#operation" class="nav__link">عملکرد</a>
         <a href="#customers" class="nav__link">مخاطبان</a>
         <a href="#faq" class="nav__link">سوالات متداول</a>

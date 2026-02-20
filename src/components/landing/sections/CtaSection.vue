@@ -43,7 +43,7 @@ const { reveal } = useScrollAnimation(sectionRef);
   margin: 0 auto;
 
   &__title {
-    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-size: clamp(1.75rem, 4vw, rem(40));
     font-weight: $font-weight-bold;
     line-height: 1.3;
     margin-bottom: $spacing-lg;
@@ -51,9 +51,10 @@ const { reveal } = useScrollAnimation(sectionRef);
   }
 
   &__description {
-    font-size: $font-size-lg;
+    font-size: rem(20);
+    font-weight: $font-weight-bold;
     line-height: 1.8;
-    color: $color-text-secondary;
+    color: #94979c;
     margin-bottom: $spacing-md;
     max-width: rem(700);
     margin-left: auto;
