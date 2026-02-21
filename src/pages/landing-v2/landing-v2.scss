@@ -1,0 +1,92 @@
+// ─────────────────────────────────────────────────────────────
+// LANDING V2 — page-scoped styles
+// No .section class. No min-height tricks. Each block owns its
+// own padding. Clean top-to-bottom flow.
+// ─────────────────────────────────────────────────────────────
+
+@use "@/styles/global/functions" as *;
+@use "@/styles/global/tokens" as *;
+@use "@/styles/global/mixins" as *;
+
+// ── Page base ─────────────────────────────────────────────────
+
+.lv2 {
+  background: $color-bg-primary;
+  color: $color-text-primary;
+  font-size: $font-size-md;
+  line-height: 1.7;
+  direction: rtl;
+}
+
+// ── Shared container ──────────────────────────────────────────
+
+.lv2-container {
+  max-width: rem(1200);
+  margin: 0 auto;
+  padding: 0 rem(32);
+
+  &--narrow {
+    max-width: rem(800);
+  }
+
+  @include respond-to(md) {
+    padding: 0 rem(24);
+  }
+  @include respond-to(sm) {
+    padding: 0 rem(20);
+  }
+  @include respond-to(xs) {
+    padding: 0 rem(16);
+  }
+}
+
+// ── Shared accent ─────────────────────────────────────────────
+
+.lv2-highlight {
+  color: $color-accent-primary;
+}
+
+// ── Scroll reveal ─────────────────────────────────────────────
+// Applied by useScrollAnimation composable via data-animate attr.
+
+[data-animate] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+
+  &[data-animate="slide-down"] {
+    transform: translateY(-10px);
+    transition-duration: 0.3s;
+  }
+
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@for $i from 1 through 8 {
+  [data-delay="#{$i}"].is-visible {
+    transition-delay: #{$i * 0.08}s;
+  }
+}
+
+// ── Keyframes ─────────────────────────────────────────────────
+
+@keyframes lv2-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--rotation, 0deg));
+  }
+  50% {
+    transform: translateY(-20px) rotate(calc(var(--rotation, 0deg) + 5deg));
+  }
+}
+
+@keyframes lv2-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

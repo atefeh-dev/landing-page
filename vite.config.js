@@ -8,22 +8,23 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        // WHY three separate @use statements instead of one @forward index:
-        // @forward compiles each module in isolation — _mixins.scss cannot
-        // see $color-bg-primary even if _variables.scss is also forwarded,
-        // because @forward does not share scope between sibling modules.
+        // WHY additionalData: automatically injects these @use statements
+        // into every .scss file and every .vue <style lang="scss"> block.
+        // This means components never need to manually import tokens/mixins.
         //
-        // Injecting each file explicitly in dependency order works because
-        // Sass deduplicates @use: if a file @uses the same module twice,
-        // the second is silently ignored. Order must follow the dep chain:
-        //   1. functions  (no deps)
-        //   2. variables  (depends on functions via @use inside the file)
-        //   3. mixins     (depends on variables via @use inside the file)
+        // WHY these three in this order:
+        //   1. functions  — no deps, must come first (rem() used by tokens)
+        //   2. tokens     — depends on functions
+        //   3. mixins     — depends on tokens (respond-to uses breakpoints)
+        //
+        // WHY @/ alias works here (unlike in .scss-to-.scss @use):
+        // Vite processes additionalData BEFORE passing to Sass,
+        // so @/ is resolved by Vite first, then Sass sees the real path.
         additionalData:
           [
-            `@use "@/styles/functions" as *;`,
-            `@use "@/styles/variables" as *;`,
-            `@use "@/styles/mixins" as *;`,
+            `@use "@/styles/global/functions" as *;`,
+            `@use "@/styles/global/tokens" as *;`,
+            `@use "@/styles/global/mixins" as *;`,
           ].join("\n") + "\n",
       },
     },

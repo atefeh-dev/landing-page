@@ -1,0 +1,120 @@
+// Uses relative path — Sass resolves @use before Vite aliases work
+@use "functions" as *;
+
+// ── Colors: Backgrounds ───────────────────────────────────────
+$color-bg-primary: #0a0a0a;
+$color-bg-secondary: #111111;
+$color-bg-tertiary: #1a1a1a;
+$color-bg-elevated: #222222;
+
+// ── Colors: Borders ───────────────────────────────────────────
+$color-border-subtle: rgba(255, 255, 255, 0.06);
+$color-border-medium: rgba(255, 255, 255, 0.1);
+$color-border-strong: rgba(255, 255, 255, 0.15);
+$color-border-primary: #373a41;
+
+// ── Colors: Text ──────────────────────────────────────────────
+$color-text-primary: #ffffff;
+$color-text-secondary: rgba(255, 255, 255, 0.7);
+$color-text-tertiary: #94979c;
+$color-text-muted: rgba(255, 255, 255, 0.3);
+$color-text-faded: #94979c;
+
+// ── Colors: Accent ────────────────────────────────────────────
+$color-accent-primary: #fcc015;
+$color-accent-hover: #ffd84d;
+$color-accent-subtle: rgba(252, 192, 21, 0.08);
+$color-accent-glow: rgba(252, 192, 21, 0.15);
+
+// ── Colors: Semantic ──────────────────────────────────────────
+$color-success: #079455;
+$color-error: #ef4444;
+
+// ── Colors: Surfaces ──────────────────────────────────────────
+$color-surface-hover: rgba(255, 255, 255, 0.03);
+$color-surface-subtle: rgba(255, 255, 255, 0.05);
+$color-surface-light: rgba(255, 255, 255, 0.08);
+$color-surface-bright: rgba(255, 255, 255, 0.1);
+
+// ── Typography ────────────────────────────────────────────────
+$font-size-xs: rem(12);
+$font-size-sm: rem(14);
+$font-size-md: rem(16);
+$font-size-lg: rem(18);
+$font-size-xl: rem(20);
+$font-size-2xl: rem(24);
+$font-size-3xl: rem(30);
+$font-size-4xl: rem(36);
+$font-size-7xl: rem(70);
+
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// ── Spacing ───────────────────────────────────────────────────
+$spacing-xs: rem(8);
+$spacing-sm: rem(16);
+$spacing-ms: rem(20);
+$spacing-md: rem(24);
+$spacing-lg: rem(32);
+$spacing-xl: rem(50);
+$spacing-2xl: rem(64);
+$spacing-3xl: rem(80);
+$spacing-4xl: rem(96);
+
+// ── Radii ─────────────────────────────────────────────────────
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 16px;
+$radius-xl: 20px;
+$radius-full: 9999px;
+
+// ── Transitions ───────────────────────────────────────────────
+$transition-fast: 0.3s;
+$transition-slow: 0.6s;
+$ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// ── Shadows ───────────────────────────────────────────────────
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+$shadow-md:
+  0 4px 6px -1px rgba(0, 0, 0, 0.6),
+  0 2px 4px -1px rgba(0, 0, 0, 0.4);
+$shadow-lg:
+  0 10px 15px -3px rgba(0, 0, 0, 0.7),
+  0 4px 6px -2px rgba(0, 0, 0, 0.5);
+$shadow-xl:
+  0 20px 25px -5px rgba(0, 0, 0, 0.8),
+  0 10px 10px -5px rgba(0, 0, 0, 0.6);
+
+// ── Breakpoints ───────────────────────────────────────────────
+$bp-xs: 375px;
+$bp-sm: 640px;
+$bp-md: 844px;
+$bp-lg: 1024px;
+$bp-xl: 1200px;
+
+// ─────────────────────────────────────────────────────────────
+// V1 LEGACY ALIASES
+// DO NOT remove — keeps V1 frozen without touching its files.
+// ─────────────────────────────────────────────────────────────
+$transition-duration-fast: $transition-fast;
+$transition-duration-slow: $transition-slow;
+$transition-easing-standard: $ease-standard;
+$transition-easing-spring: $ease-spring;
+$breakpoint-xs: $bp-xs;
+$breakpoint-sm: $bp-sm;
+$breakpoint-md: $bp-md;
+$breakpoint-lg: $bp-lg;
+$breakpoint-xl: $bp-xl;
+$color-bg-overlay: rgba(0, 0, 0, 0.6);
+$color-hover-bg: #13161b;
+$color-caption: #e9d7fe;
+$color-text-hero: #cecfd2;
+$color-badge-fill: #2c1c5f;
+$color-badge-text: #d6bbfb;
+$color-badge-stroke: #53389e;
+$color-info: #2d8ff0;
+$color--content-primary: #f7f7f7;
+$nav-height: rem(80);

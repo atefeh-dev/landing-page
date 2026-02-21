@@ -1,0 +1,18 @@
+// ─────────────────────────────────────────────────────────────
+// GLOBAL STYLES ENTRY
+// Only: reset + tokens + mixins.
+// NO layout rules. NO .section class. NO page-specific styles.
+// Each page imports this and adds its own layout on top.
+// ─────────────────────────────────────────────────────────────
+
+// WHY relative paths: Sass resolves @use BEFORE Vite runs.
+// @/ aliases only work inside .vue <style> blocks, not here.
+
+@use "global/reset";
+@use "global/functions" as *;
+@use "global/tokens" as *;
+@use "global/mixins" as *;
+
+.highlight {
+  color: $color-accent-primary;
+}

@@ -1,9 +1,6 @@
 // ─────────────────────────────────────────────────────────────
-// RESET
+// RESET — zero layout opinions, just browser normalisation
 // ─────────────────────────────────────────────────────────────
-
-@use "@/styles/functions" as *;
-@use "@/styles/variables" as *;
 
 *,
 *::before,
@@ -15,7 +12,6 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: $nav-height;
 }
 
 body {
@@ -24,10 +20,6 @@ body {
     -apple-system,
     BlinkMacSystemFont,
     sans-serif;
-  background-color: $color-bg-primary;
-  color: $color-text-primary;
-  line-height: 1.7;
-  font-size: $font-size-md;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -38,7 +30,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: $font-weight-bold;
+  font-weight: inherit;
   line-height: 1.2;
 }
 
@@ -51,12 +43,10 @@ ul,
 ol {
   list-style: none;
 }
-
 img {
   max-width: 100%;
   display: block;
 }
-
 button {
   font-family: inherit;
 }

@@ -113,7 +113,7 @@
 
 <script setup>
 import { ref } from "vue";
-import EmailForm from "@/components/landing/sections/EmailForm.vue";
+import EmailForm from "@/pages/landing-v1/sections/EmailForm.vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 defineEmits(["scroll-to-cta"]);

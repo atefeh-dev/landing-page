@@ -1,5 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import "./styles/main.scss";
+import router from "./router/index.js";
 
-createApp(App).mount("#app");
+// Global styles = reset + design tokens ONLY.
+// NO layout rules. Each page owns its own.
+import "@/styles/index.scss";
+createApp(App).use(router).mount("#app");

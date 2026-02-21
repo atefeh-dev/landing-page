@@ -56,7 +56,7 @@
 <script setup>
 import { ref } from "vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
-import TweetCard from "@/components/landing/cards/TweetCard.vue";
+import TweetCard from "@/pages/landing-v1/components/TweetCard.vue";
 import Avatar1 from "@/assets/images/avatars/avatar1.png";
 import Avatar2 from "@/assets/images/avatars/avatar2.png";
 import Avatar3 from "@/assets/images/avatars/avatar3.png";
@@ -272,7 +272,7 @@ const row2Tweets = [
     gap: $spacing-md;
 
     &--reverse {
-      animation-name: scroll-right;
+      animation-name: v1-scroll-right;
     }
   }
 }
