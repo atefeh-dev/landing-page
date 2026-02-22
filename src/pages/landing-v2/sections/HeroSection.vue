@@ -267,9 +267,9 @@ function anim(n) {
     display: inline-flex;
     align-items: center;
     gap: rem(8);
-    padding: rem(4) rem(10);
+    padding: rem(4) rem(8);
     border: 1px solid $color-border-primary;
-    border-radius: $radius-sm;
+    border-radius: 10px;
     color: rgba(255, 255, 255, 0.8);
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;

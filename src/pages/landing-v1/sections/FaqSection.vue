@@ -247,7 +247,7 @@ const faqs = [
   }
 
   &__answer {
-    padding: 0 3.5rem rem(23) 1.5rem;
+    padding: rem(4) rem(64) rem(23) 1.5rem;
     color: $color-text-tertiary;
     font-weight: $font-weight-regular;
     line-height: 1.8;
