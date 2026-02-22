@@ -38,6 +38,18 @@ $v1-nav-height: rem(80);
     padding: rem(35) 0;
     position: relative;
 
+    // ── Hero override ─────────────────────────────────────
+    // WHY: justify-content:center vertically centers content,
+    // pushing the badge behind the fixed navbar regardless of
+    // padding-top. Hero must flow from the TOP, not the center.
+    &.hero {
+      justify-content: flex-start;
+      // Override the base padding: rem(35) 0
+      // nav height(80) + design gap(70) = 150
+      padding-top: rem(150);
+      padding-bottom: rem(35);
+    }
+
     &__container {
       max-width: 1200px;
       margin: 0 auto;

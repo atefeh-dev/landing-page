@@ -42,7 +42,7 @@
     <!-- Above-fold content -->
     <div class="hero__container">
       <div class="hero__content">
-        <div class="hero__badge" v-bind="reveal(1)">
+        <div class="hero__badge">
           <span class="hero__badge-label">
             <img src="@/assets/ui/green-dot.svg" alt="" aria-hidden="true" />
             <span>چه خبر؟</span>
@@ -62,9 +62,11 @@
           از همین تجربه شکل گرفت؛ برای اینکه اسناد، از همان ابتدا در مسیر درست
           قرار بگیرند.
         </p>
+
         <div v-bind="reveal(4)">
           <EmailForm @submit="handleSubmit" />
         </div>
+
         <p class="hero__note" v-bind="reveal(5)">
           با ثبت ایمیل، از زمان دسترسی و خبرهای رونمایی باخبر می‌شوید.
         </p>
@@ -73,37 +75,13 @@
 
     <!-- Demo browser mockup -->
     <div class="hero__demo" v-bind="reveal(6)">
-      <div class="hero__browser">
-        <div class="hero__browser-bar">
-          <span class="hero__browser-dot hero__browser-dot--red"></span>
-          <span class="hero__browser-dot hero__browser-dot--yellow"></span>
-          <span class="hero__browser-dot hero__browser-dot--green"></span>
-          <div class="hero__browser-url">
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
-                fill="currentColor"
-              />
-            </svg>
-            <span>zoonkan.com/template/NDA</span>
-          </div>
-        </div>
-        <div class="hero__browser-content">
-          <iframe
-            src="https://zoonkan.com/template/NDA"
-            title="نمایش زنده زونکن"
-            loading="lazy"
-            class="hero__iframe"
-            sandbox="allow-scripts allow-same-origin"
-          ></iframe>
-        </div>
-      </div>
+      <BrowserMockup
+        url="zoonkan.com/template/NDA"
+        src="https://zoonkan.com/template/NDA"
+        height="520px"
+        theme="light"
+      />
+
       <p class="hero__demo-caption">
         این همان مسیری است که سال‌ها جایش خالی بود.
       </p>
@@ -114,6 +92,7 @@
 <script setup>
 import { ref } from "vue";
 import EmailForm from "@/pages/landing-v1/sections/EmailForm.vue";
+import BrowserMockup from "@/components/base/BrowserMockup.vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 defineEmits(["scroll-to-cta"]);
@@ -125,19 +104,9 @@ const handleSubmit = () => {};
 </script>
 
 <style lang="scss" scoped>
-// ─────────────────────────────────────────────────────────────
-// HeroSection
-// WHY notes:
-// - hero__description changed min-width → max-width.
-//   min-width: rem(716) forced horizontal scroll on every screen
-//   narrower than 716px. max-width constrains without forcing.
-// - hero__demo margin-top uses $spacing-2xl token at md breakpoint.
-// - Icons use float animation (main.scss keyframe) with per-icon timing.
-// - Opacity varies per icon (0.70–0.90) for visual depth.
-// ─────────────────────────────────────────────────────────────
-
 .hero {
-  padding-top: rem(128);
+  // padding-top is set in landing-v1.scss on &.hero — rem(150)
+  // Setting it here too would cause specificity conflicts
   padding-bottom: rem(35);
   background: $color-bg-primary;
   position: relative;
@@ -279,9 +248,6 @@ const handleSubmit = () => {};
   }
 
   // ── Description ───────────────────────────────────────────
-  // FIX: was min-width: rem(716) — forced horizontal scroll on
-  // screens narrower than 716px. Changed to max-width so it
-  // constrains without ever forcing overflow.
 
   &__description {
     font-size: $font-size-xl;
@@ -403,15 +369,16 @@ const handleSubmit = () => {};
     &__content {
       max-width: rem(600);
     }
-
     &__demo {
       max-width: rem(800);
       padding: 0 $spacing-md;
     }
+    &__browser-content {
+      height: rem(460);
+    }
 
     &__icon {
       --icon-size: 60px;
-
       &--2,
       &--5 {
         --icon-size: 50px;
@@ -421,30 +388,23 @@ const handleSubmit = () => {};
         --icon-size: 55px;
       }
     }
-
-    &__browser-content {
-      height: rem(460);
-    }
   }
 }
 
 @include respond-to(md) {
   .hero {
-    padding-top: rem(100);
+    // handled in landing-v1.scss
 
     &__demo {
-      // FIX: was rem(70) magic number — use spacing token
       margin-top: $spacing-2xl;
       padding: 0 $spacing-sm;
     }
-
     &__browser-content {
       height: rem(380);
     }
 
     &__icon {
       --icon-size: 58px;
-
       &--1 {
         top: 10%;
         left: 14%;
@@ -480,31 +440,37 @@ const handleSubmit = () => {};
 
 @include respond-to(sm) {
   .hero {
-    padding-top: rem(80);
+    // handled in landing-v1.scss
     padding-bottom: $spacing-xl;
 
     &__container {
       padding: 0 $spacing-sm;
     }
-
     &__content {
       max-width: 100%;
     }
-
     &__title {
       font-size: clamp(rem(28), 8vw, rem(48));
       margin-bottom: $spacing-md;
     }
-
     &__description {
       font-size: $font-size-md;
       margin-bottom: $spacing-lg;
+    }
+    &__demo {
+      margin-top: $spacing-xl;
+      padding: 0 $spacing-xs;
+    }
+    &__browser-content {
+      height: rem(280);
+    }
+    &__demo-caption {
+      font-size: $font-size-md;
     }
 
     &__icon {
       --icon-size: 48px;
       opacity: 0.55;
-
       &--1 {
         top: 15%;
         left: 19%;
@@ -519,7 +485,7 @@ const handleSubmit = () => {};
         top: 18%;
         left: 4%;
         --icon-size: 40px;
-      } // FIX: was left:2% — too close to edge
+      }
       &--4 {
         top: 14%;
         left: 38%;
@@ -532,23 +498,10 @@ const handleSubmit = () => {};
       }
       &--6 {
         display: none;
-      } // too cluttered on small screens
+      }
       &--7 {
         display: none;
       }
-    }
-
-    &__demo {
-      margin-top: $spacing-xl;
-      padding: 0 $spacing-xs;
-    }
-
-    &__browser-content {
-      height: rem(280);
-    }
-
-    &__demo-caption {
-      font-size: $font-size-md;
     }
   }
 }
