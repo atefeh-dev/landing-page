@@ -79,36 +79,14 @@
 
     <!-- Demo browser mockup -->
     <div class="hero__demo" v-bind="reveal(6)">
-      <div class="hero__browser">
-        <div class="hero__browser-bar">
-          <span class="hero__browser-dot hero__browser-dot--red"></span>
-          <span class="hero__browser-dot hero__browser-dot--yellow"></span>
-          <span class="hero__browser-dot hero__browser-dot--green"></span>
-          <div class="hero__browser-url">
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
-                fill="currentColor"
-              />
-            </svg>
-            <span>zoonkan.com/template/NDA</span>
-          </div>
-        </div>
-        <div class="hero__browser-content">
-          <iframe
-            src="https://zoonkan.com/template/NDA"
-            title="نمایش زنده زونکن"
-            loading="lazy"
-            class="hero__iframe"
-            sandbox="allow-scripts allow-same-origin"
-          ></iframe>
-        </div>
+      <div class="hero__browser-wrap">
+        <BrowserMockup
+          url="zoonkan.com/template/NDA"
+          src="https://zoonkan.com/template/NDA"
+          iframe-title="نمایش زنده زونکن"
+          height="560px"
+          theme="light"
+        />
       </div>
       <p class="hero__demo-caption">
         این همان مسیری است که سال‌ها جایش خالی بود.
@@ -121,6 +99,7 @@
 import { ref } from "vue";
 import EmailForm from "@/pages/landing-v1/sections/EmailForm.vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
+import BrowserMockup from "@/components/base/BrowserMockup.vue";
 
 defineEmits(["scroll-to-cta"]);
 
@@ -299,11 +278,7 @@ const handleSubmit = () => {};
     position: relative;
     z-index: 1;
     margin-top: rem(70);
-    padding: 0 $spacing-lg;
-    max-width: rem(960);
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
+    // No padding/max-width here — browser-wrap centers itself
   }
 
   &__browser {
@@ -314,6 +289,11 @@ const handleSubmit = () => {};
     box-shadow:
       0 rem(32) rem(80) rgba(0, 0, 0, 0.6),
       0 0 0 1px $color-border-subtle;
+  }
+
+  &__browser-wrap {
+    width: rem(1000);
+    margin: 0 auto; // ← this is what centers it
   }
 
   // ── Browser chrome bar ────────────────────────────────────

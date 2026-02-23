@@ -4,7 +4,7 @@
     <header class="lv2-topbar" aria-label="سربرگ">
       <span class="lv2-topbar__tagline">اسناد<br />در مسیر درست</span>
       <a href="#" class="lv2-topbar__logo" aria-label="صفحه اصلی زونکن">
-        <img src="@/assets/brand/logo.svg?url" alt="زونکن" />
+        <img src="@/assets/brand/logo-dark-mode.svg?url" alt="زونکن" />
       </a>
     </header>
 
@@ -44,12 +44,20 @@ import FooterSection from "./sections/FooterSection.vue";
   position: fixed;
   top: 0;
   inset-inline: 0;
-  z-index: 100;
+  z-index: 1000;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   padding: rem(20) rem(24);
   pointer-events: none;
+  // WHY: fixed topbar over scrolling content needs a backdrop,
+  // otherwise page content bleeds through. backdrop-filter gives
+  // the frosted glass effect without a hard color edge.
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.85) 0%,
+    rgba(10, 10, 10, 0) 100%
+  );
 
   &__tagline {
     font-size: $font-size-xs;

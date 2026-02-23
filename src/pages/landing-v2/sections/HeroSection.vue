@@ -80,13 +80,15 @@
     <div class="lv2-container">
       <div class="hero__demo" v-bind="anim(6)">
         <p class="hero__demo-label">قرارداد شما، مرحله به مرحله</p>
-        <BrowserMockup
-          url="zoonkan.com/template/NDA"
-          src="https://zoonkan.com/template/NDA"
-          iframe-title="نمایش زنده زونکن"
-          height="540px"
-          theme="light"
-        />
+        <div class="hero__browser-wrap">
+          <BrowserMockup
+            url="zoonkan.com/template/NDA"
+            src="https://zoonkan.com/template/NDA"
+            iframe-title="نمایش زنده زونکن"
+            height="540px"
+            theme="light"
+          />
+        </div>
       </div>
     </div>
   </section>
@@ -265,6 +267,13 @@ function anim(n) {
     margin-top: rem(64);
   }
 
+  &__browser-wrap {
+    display: block;
+    width: rem(1100);
+    max-width: calc(100% - rem(48));
+    margin: 0 auto;
+  }
+
   &__demo-label {
     text-align: center;
     font-size: $font-size-xl;
@@ -282,7 +291,10 @@ function anim(n) {
       0 rem(32) rem(80) rgba(0, 0, 0, 0.6),
       0 0 0 1px $color-border-subtle;
   }
-
+  &__browser-wrap {
+    width: rem(1000);
+    margin: 0 auto; // ← this is what centers it
+  }
   // ── Browser chrome ────────────────────────────────────────
 
   &__browser-bar {

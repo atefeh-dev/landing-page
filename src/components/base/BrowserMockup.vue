@@ -10,9 +10,9 @@
           <span class="bm__light bm__light--green"></span>
         </div>
 
-        <SidebarIcon class="bm__icon" />
+        <SidebarIcon class="bm__icon bm__icon--sidebar" />
 
-        <BackIcon class="bm__icon" />
+        <BackIcon class="bm__icon bm__icon--back" />
 
         <ForwardIcon class="bm__icon bm__icon--dimmed" />
       </div>
@@ -85,12 +85,12 @@ const contentStyle = computed(() => ({
 @use "@/styles/global/tokens" as *;
 @use "@/styles/global/mixins" as *;
 
-$light-chrome-bg: #f0f0f0;
-$light-chrome-border: #d0d0d0;
+$light-chrome-bg: #fff;
+$light-chrome-border: #f1f3f4;
 $light-icon-color: #3c3c3c;
 $light-url-bg: #f2f2f2;
-$light-url-border: #d8d8d8;
-$light-url-text: #1a1a1a;
+$light-url-border: #f2f2f2;
+$light-url-text: #4c4c4c;
 $light-url-sub: #6e6e6e;
 $light-body-bg: #f5f5f5;
 
@@ -142,7 +142,7 @@ $dark-body-bg: #111111;
   &__left {
     display: flex;
     align-items: center;
-    gap: rem(10);
+    //     gap: rem(10);
     flex-shrink: 0;
     z-index: 1;
   }
@@ -177,7 +177,14 @@ $dark-body-bg: #111111;
     flex-shrink: 0;
     display: block;
     &--dimmed {
-      opacity: 0.35;
+      opacity: 0.5;
+      margin-left: rem(24);
+    }
+    &--sidebar {
+      margin-left: rem(40);
+    }
+    &--back {
+      margin-left: rem(24);
     }
   }
   &--light &__icon {
@@ -226,9 +233,9 @@ $dark-body-bg: #111111;
   }
 
   &--light &__url {
-    background: #f2f2f2;
+    background: $light-url-bg;
     border-color: $light-url-border;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    //     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
   }
   &--dark &__url {
     background: $dark-url-bg;
@@ -237,7 +244,7 @@ $dark-body-bg: #111111;
 
   &__url-lock {
     flex-shrink: 0;
-    opacity: 0.6;
+    //     opacity: 0.6;
   }
   &__url-reload {
     flex-shrink: 0;
@@ -283,6 +290,7 @@ $dark-body-bg: #111111;
     position: relative;
     width: 100%;
     overflow: hidden;
+    padding: rem(16) rem(60);
   }
   &--light &__body {
     background: $light-body-bg;
