@@ -221,3 +221,21 @@ $v1-nav-height: rem(80);
     transform: translateX(0);
   }
 }
+
+// ── Keyframes ─────────────────────────────────────────────────
+
+@keyframes lv1-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--rotation, 0deg));
+  }
+  50% {
+    transform: translateY(-20px) rotate(calc(var(--rotation, 0deg) + 5deg));
+  }
+}
+
+@keyframes lv1-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -57,7 +57,7 @@
 
         <h1 class="hero__title" v-bind="anim(2)">
           قراردادهای خود را <span class="lv2-highlight">دقیق</span> و<br />
-          بدون ابهام تنظیم کنید
+          <span class="lv2-highlight"> بدون ابهام </span> تنظیم کنید.
         </h1>
 
         <p class="hero__description" v-bind="anim(3)">
@@ -212,23 +212,25 @@ function anim(n) {
     display: inline-flex;
     align-items: center;
     gap: rem(8);
-    padding: rem(4) rem(10);
+    padding: rem(8);
     border: 1px solid $color-border-primary;
-    border-radius: $radius-sm;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: $font-size-sm;
-    font-weight: $font-weight-semibold;
-    margin-bottom: $spacing-lg;
+    border-radius: $radius-md;
+    color: $color-text-secondary;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    margin-bottom: rem(30);
   }
 
   &__badge-pill {
     display: inline-flex;
     align-items: center;
     gap: rem(4);
-    padding: rem(3) rem(8);
+    padding: rem(4) rem(8);
     border: 1px solid $color-border-primary;
+    font-weight: $font-weight-medium;
     border-radius: $radius-sm;
     font-size: $font-size-xs;
+    color: $color-text-secondary;
   }
 
   // ── Title ─────────────────────────────────────────────────
@@ -239,24 +241,25 @@ function anim(n) {
     line-height: 1.25;
     letter-spacing: -0.02em;
     color: $color-text-primary;
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-ms;
   }
 
   // ── Description ───────────────────────────────────────────
 
   &__description {
-    font-size: $font-size-lg;
-    line-height: 1.8;
-    color: $color-text-secondary;
-    margin-bottom: rem(28);
+    font-size: $font-size-xl;
+    line-height: 2;
+    color: $color-text-tertiary;
+    margin-bottom: rem(30);
   }
 
   // ── Note ──────────────────────────────────────────────────
 
   &__note {
+    --color: #94979c;
     font-size: $font-size-sm;
-    color: $color-text-tertiary;
-    margin-top: rem(14);
+    color: var(--color);
+    margin-top: rem(16);
   }
 
   // ── Demo ──────────────────────────────────────────────────

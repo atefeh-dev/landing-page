@@ -2,10 +2,12 @@
   <div class="lv2">
     <!-- Topbar -->
     <header class="lv2-topbar" aria-label="سربرگ">
-      <span class="lv2-topbar__tagline">اسناد<br />در مسیر درست</span>
       <a href="#" class="lv2-topbar__logo" aria-label="صفحه اصلی زونکن">
         <img src="@/assets/brand/logo-dark-mode.svg?url" alt="زونکن" />
       </a>
+      <span class="lv2-topbar__tagline">
+        <img src="@/assets/brand/catchphrase.svg?url" alt="زونکن" />
+      </span>
     </header>
 
     <main>
@@ -47,7 +49,7 @@ import FooterSection from "./sections/FooterSection.vue";
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: rem(20) rem(24);
+  padding: rem(30) rem(30) 0 rem(30);
   pointer-events: none;
   // WHY: fixed topbar over scrolling content needs a backdrop,
   // otherwise page content bleeds through. backdrop-filter gives
@@ -72,7 +74,7 @@ import FooterSection from "./sections/FooterSection.vue";
     display: block;
 
     img {
-      width: rem(38);
+      width: rem(28);
       height: auto;
     }
   }

@@ -80,17 +80,17 @@ function submit() {
     padding: rem(12) rem(14);
     font-size: $font-size-md;
     font-family: inherit;
-    background: $color-surface-subtle;
-    border: 1px solid $color-border-medium;
-    border-radius: $radius-md;
-    color: $color-text-primary;
+    background: $color-bg-placeholder;
+    border: 1px solid $color-border-placeholder;
+    border-radius: $radius-sm;
+    color: $color-text-placeholder;
     transition:
       border-color $transition-fast $ease-standard,
       box-shadow $transition-fast $ease-standard;
     text-align: right;
 
     &::placeholder {
-      color: $color-text-tertiary;
+      color: $color-text-placeholder;
     }
     &:focus {
       outline: none;
@@ -106,7 +106,7 @@ function submit() {
     flex-shrink: 0;
     padding: rem(12) rem(18);
     background: $color-accent-primary;
-    color: $color-bg-primary;
+    color: $color-text-caption;
     font-family: inherit;
     font-size: $font-size-md;
     font-weight: $font-weight-semibold;

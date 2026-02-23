@@ -133,7 +133,7 @@ const handleSubmit = () => {};
     width: var(--icon-size);
     height: var(--icon-size);
     filter: brightness(0.9);
-    animation: float 20s infinite ease-in-out;
+    animation: lv1-float 20s infinite ease-in-out;
 
     &--1 {
       top: 11%;
