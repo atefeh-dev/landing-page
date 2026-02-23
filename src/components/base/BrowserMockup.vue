@@ -21,14 +21,15 @@
       <div class="bm__center">
         <ShieldIcon class="bm__shield" />
 
-        <!-- URL bar: 300px wide, 28px tall, #f2f2f2 -->
         <div class="bm__url">
-          <LockIcon class="bm__url-lock" />
-          <span class="bm__url-text">{{ url }}</span>
+          <div class="bm__url-left">
+            <LockIcon class="bm__url-lock" />
+            <span class="bm__url-text">{{ url }}</span>
+          </div>
+
           <ReloadIcon class="bm__url-reload" />
         </div>
       </div>
-
       <!-- RIGHT: download + new tab + copy -->
       <div class="bm__right">
         <DownloadIcon class="bm__icon" />
@@ -218,17 +219,15 @@ $dark-body-bg: #111111;
     z-index: 0;
   }
 
-  // URL bar: exact 300×28, #f2f2f2
   &__url {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: rem(6);
     width: rem(300);
     height: rem(28);
     padding: 0 rem(10);
     border-radius: rem(6);
     border: 1px solid;
-    justify-content: center;
     overflow: hidden;
   }
 
@@ -249,6 +248,7 @@ $dark-body-bg: #111111;
   &__url-reload {
     flex-shrink: 0;
     opacity: 0.5;
+    margin-left: auto;
   }
 
   &--light &__url-lock,
@@ -259,17 +259,43 @@ $dark-body-bg: #111111;
   &--dark &__url-reload {
     color: $dark-url-sub;
   }
+  &__url {
+    display: flex;
+    align-items: center;
+    width: rem(300);
+    height: rem(28);
+    padding: 0 rem(10);
+    border-radius: rem(6);
+    border: 1px solid;
+  }
+
+  &__url-left {
+    display: flex;
+    align-items: center;
+    gap: rem(4);
+    flex: 1;
+    min-width: 0; // 🔥 critical for ellipsis
+    justify-content: center; // keeps lock+url centered
+  }
 
   &__url-text {
     font-size: rem(13);
     font-weight: 400;
     letter-spacing: -0.01em;
     white-space: nowrap;
+    position: relative;
+    top: 2px;
     overflow: hidden;
     text-overflow: ellipsis;
-    flex: 1;
-    text-align: center;
+    min-width: 0;
   }
+
+  &__url-reload {
+    flex-shrink: 0;
+    opacity: 0.5;
+    margin-left: auto;
+  }
+
   &--light &__url-text {
     color: $light-url-text;
   }
