@@ -91,7 +91,7 @@
             </div>
 
             <!-- Document content -->
-            <transition :name="slideDirection" mode="out-in">
+            <transition name="op-fade" mode="out-in">
               <div :key="activeStep" class="operation__doc">
                 <div class="operation__doc-header">
                   <h3 class="operation__doc-title">
@@ -145,8 +145,6 @@ const { reveal, slideDown } = useScrollAnimation(sectionRef, 0.1);
 
 const showStandard = ref(false);
 const activeStep = ref(1);
-const slideDirection = ref("op-slide-left");
-
 const steps = [
   {
     title: "انتخاب نوع سند",
@@ -228,7 +226,6 @@ const docData = computed(() =>
 );
 
 watch(showStandard, async (val) => {
-  slideDirection.value = val ? "op-slide-left" : "op-slide-right";
   await nextTick();
   activeStep.value = val ? 2 : 1;
 });

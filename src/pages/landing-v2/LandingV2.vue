@@ -10,7 +10,6 @@
 
     <main>
       <HeroSection />
-      <OperationSection />
       <ApproachSection />
       <CtaSection />
     </main>
@@ -21,7 +20,7 @@
 
 <script setup>
 import HeroSection from "./sections/HeroSection.vue";
-import OperationSection from "./sections/OperationSection.vue";
+import OperationSection from "../landing-v1/sections/OperationSection.vue";
 import ApproachSection from "./sections/ApproachSection.vue";
 import CtaSection from "./sections/CtaSection.vue";
 import FooterSection from "./sections/FooterSection.vue";
