@@ -23,8 +23,11 @@
 
         <!-- URL bar: 300px wide, 28px tall, #f2f2f2 -->
         <div class="bm__url">
-          <LockIcon class="bm__url-lock" />
-          <span class="bm__url-text">{{ url }}</span>
+          <div class="bm__url-inner">
+            <LockIcon class="bm__url-lock" />
+            <span class="bm__url-text">{{ url }}</span>
+          </div>
+
           <ReloadIcon class="bm__url-reload" />
         </div>
       </div>
@@ -219,17 +222,22 @@ $dark-body-bg: #111111;
   }
 
   &__url {
-    position: relative;
     display: flex;
-    align-items: baseline;
+    align-items: center;
     width: rem(300);
     height: rem(28);
     padding: 0 rem(10);
     border-radius: rem(6);
     border: 1px solid;
-    overflow: hidden;
   }
-
+  &__url-inner {
+    display: flex;
+    align-items: center;
+    gap: rem(4);
+    flex: 1;
+    min-width: 0; // 🔥 enables ellipsis
+    justify-content: center; // keeps lock+text centered
+  }
   &--light &__url {
     background: $light-url-bg;
     border-color: $light-url-border;
@@ -244,6 +252,7 @@ $dark-body-bg: #111111;
     flex-shrink: 0;
     //     opacity: 0.6;
   }
+
   &__url-reload {
     flex-shrink: 0;
     opacity: 0.5;
@@ -259,21 +268,6 @@ $dark-body-bg: #111111;
     color: $dark-url-sub;
   }
 
-  &__url-text {
-    // WHY absolute: reload stays right-edge, lock+url truly centers
-    // flex:1 only centers relative to remaining space — not true center
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: inline-flex;
-    align-items: center;
-    gap: rem(4);
-    font-size: rem(13);
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
-    pointer-events: none;
-  }
   &--light &__url-text {
     color: $light-url-text;
   }
@@ -289,12 +283,22 @@ $dark-body-bg: #111111;
     margin-left: auto;
     z-index: 1;
   }
+  &__url-text {
+    font-size: rem(13);
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    line-height: 1;
+    position: relative;
+    top: 2px; // tiny optical correction (safe)
+  }
 
   &__body {
     position: relative;
     width: 100%;
     overflow: hidden;
-    padding: rem(16) rem(60);
   }
   &--light &__body {
     background: $light-body-bg;
@@ -349,9 +353,6 @@ $dark-body-bg: #111111;
     &__shield {
       display: none;
     }
-    &__body {
-      padding: rem(12) rem(32);
-    }
   }
 }
 
@@ -389,9 +390,6 @@ $dark-body-bg: #111111;
     }
     &__url-text {
       font-size: rem(11);
-    }
-    &__body {
-      padding: rem(10) rem(16);
     }
   }
 }

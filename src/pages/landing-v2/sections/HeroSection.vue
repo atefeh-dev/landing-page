@@ -270,7 +270,7 @@ function anim(n) {
   &__browser-wrap {
     display: block;
     width: rem(1100);
-    max-width: calc(100% - rem(48));
+    max-width: calc(100% - rem(16));
     margin: 0 auto;
   }
 
