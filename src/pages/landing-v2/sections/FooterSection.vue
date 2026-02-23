@@ -4,7 +4,7 @@
       <div class="foot__inner" v-bind="reveal()">
         <p class="foot__tagline" v-bind="reveal(1)">با افتخار ساخت ایران</p>
         <a href="#" class="foot__logo" v-bind="reveal(2)">
-          <img src="@/assets/brand/logo.svg" alt="زونکن" />
+          <img src="@/assets/brand/logo.svg?url" alt="زونکن" />
         </a>
         <div class="foot__social" v-bind="reveal(3)">
           <a
@@ -13,7 +13,11 @@
             rel="noopener noreferrer"
             aria-label="توییتر"
           >
-            <img src="@/assets/social/x-social.svg" alt="" aria-hidden="true" />
+            <img
+              src="@/assets/social/x-social.svg?url"
+              alt=""
+              aria-hidden="true"
+            />
           </a>
           <a
             href="https://www.linkedin.com/company/zoonkan/"
@@ -22,7 +26,7 @@
             aria-label="لینکدین"
           >
             <img
-              src="@/assets/social/social-linkedin.svg"
+              src="@/assets/social/social-linkedin.svg?url"
               alt=""
               aria-hidden="true"
             />
@@ -34,7 +38,7 @@
             aria-label="اینستاگرام"
           >
             <img
-              src="@/assets/social/social-instagram.svg"
+              src="@/assets/social/social-instagram.svg?url"
               alt=""
               aria-hidden="true"
             />

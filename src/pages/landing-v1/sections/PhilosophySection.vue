@@ -33,7 +33,7 @@
 
         <div class="philosophy__card" v-bind="reveal(3)">
           <div class="philosophy__card-icon">
-            <img src="@/assets/ui/slack.svg" alt="Slack" />
+            <img src="@/assets/ui/slack.svg?url" alt="Slack" />
           </div>
           <p class="philosophy__card-text">
             خیلی از فایل‌ها میان پیام‌ها، ایمیل‌ها و نسخه‌های مختلف گم می‌شوند.

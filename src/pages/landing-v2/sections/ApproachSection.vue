@@ -11,7 +11,7 @@
       <div class="ap__grid">
         <div class="ap__card" v-bind="anim(2)">
           <div class="ap__icon">
-            <img src="@/assets/ui/slack.svg" alt="" aria-hidden="true" />
+            <img src="@/assets/ui/slack.svg?url" alt="" aria-hidden="true" />
           </div>
           <h3 class="ap__card-title">ساختارهای استاندارد</h3>
           <p class="ap__card-text">
@@ -22,7 +22,7 @@
 
         <div class="ap__card" v-bind="anim(3)">
           <div class="ap__icon">
-            <img src="@/assets/ui/notion.svg" alt="" aria-hidden="true" />
+            <img src="@/assets/ui/notion.svg?url" alt="" aria-hidden="true" />
           </div>
           <h3 class="ap__card-title">مسیر شفاف تنظیم اسناد</h3>
           <p class="ap__card-text">
@@ -33,7 +33,7 @@
 
         <div class="ap__card" v-bind="anim(4)">
           <div class="ap__icon">
-            <img src="@/assets/ui/slack.svg" alt="" aria-hidden="true" />
+            <img src="@/assets/ui/slack.svg?url" alt="" aria-hidden="true" />
           </div>
           <h3 class="ap__card-title">طراحی با رویکرد امنیت</h3>
           <p class="ap__card-text">

@@ -4,205 +4,38 @@
     <div class="bm__chrome" aria-hidden="true">
       <!-- LEFT: traffic lights + sidebar + back/forward -->
       <div class="bm__left">
-        <!-- Traffic lights -->
         <div class="bm__lights">
           <span class="bm__light bm__light--red"></span>
           <span class="bm__light bm__light--yellow"></span>
           <span class="bm__light bm__light--green"></span>
         </div>
 
-        <!-- Sidebar toggle -->
-        <svg
-          class="bm__icon"
-          width="16"
-          height="16"
-          viewBox="0 0 18 18"
-          fill="none"
-        >
-          <rect
-            x="1"
-            y="1"
-            width="16"
-            height="16"
-            rx="3"
-            stroke="currentColor"
-            stroke-width="1.3"
-          />
-          <line
-            x1="6"
-            y1="1"
-            x2="6"
-            y2="17"
-            stroke="currentColor"
-            stroke-width="1.3"
-          />
-        </svg>
+        <SidebarIcon class="bm__icon" />
 
-        <!-- Back -->
-        <svg
-          class="bm__icon"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-        >
-          <path
-            d="M15 18l-6-6 6-6"
-            stroke="currentColor"
-            stroke-width="1.6"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <BackIcon class="bm__icon" />
 
-        <!-- Forward (dimmed) -->
-        <svg
-          class="bm__icon bm__icon--dimmed"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-        >
-          <path
-            d="M9 18l6-6-6-6"
-            stroke="currentColor"
-            stroke-width="1.6"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <ForwardIcon class="bm__icon bm__icon--dimmed" />
       </div>
 
-      <!-- CENTER: shield + URL bar (truly centered via position:absolute) -->
+      <!-- CENTER: absolutely positioned — URL always truly centered -->
       <div class="bm__center">
-        <!-- Shield icon -->
-        <svg
-          class="bm__shield"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-        >
-          <path
-            d="M12 2L4 6v6c0 5.25 4 9.74 8 11 4-1.26 8-5.75 8-11V6l-8-4z"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M9 12l2 2 4-4"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <ShieldIcon class="bm__shield" />
 
-        <!-- URL pill -->
+        <!-- URL bar: 300px wide, 28px tall, #f2f2f2 -->
         <div class="bm__url">
-          <!-- Lock icon -->
-          <svg
-            class="bm__url-lock"
-            width="11"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            <rect
-              x="5"
-              y="11"
-              width="14"
-              height="10"
-              rx="2"
-              stroke="currentColor"
-              stroke-width="1.8"
-            />
-            <path
-              d="M8 11V7a4 4 0 0 1 8 0v4"
-              stroke="currentColor"
-              stroke-width="1.8"
-            />
-          </svg>
+          <LockIcon class="bm__url-lock" />
           <span class="bm__url-text">{{ url }}</span>
-          <!-- Reload icon -->
-          <svg
-            class="bm__url-reload"
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            <path
-              d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+          <ReloadIcon class="bm__url-reload" />
         </div>
       </div>
 
       <!-- RIGHT: download + new tab + copy -->
       <div class="bm__right">
-        <!-- Download -->
-        <svg
-          class="bm__icon"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-        >
-          <path d="M12 16l-4-4h3V4h2v8h3l-4 4z" fill="currentColor" />
-          <circle
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            stroke-width="1.4"
-            fill="none"
-          />
-        </svg>
+        <DownloadIcon class="bm__icon" />
 
-        <!-- New tab / plus -->
-        <svg
-          class="bm__icon"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-        >
-          <path
-            d="M12 5v14M5 12h14"
-            stroke="currentColor"
-            stroke-width="1.6"
-            stroke-linecap="round"
-          />
-        </svg>
+        <PlusIcon class="bm__icon" />
 
-        <!-- Copy / share -->
-        <svg
-          class="bm__icon"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-        >
-          <rect
-            x="9"
-            y="9"
-            width="11"
-            height="13"
-            rx="2"
-            stroke="currentColor"
-            stroke-width="1.4"
-          />
-          <path
-            d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1"
-            stroke="currentColor"
-            stroke-width="1.4"
-          />
-        </svg>
+        <CopyIcon class="bm__icon" />
       </div>
     </div>
 
@@ -224,13 +57,21 @@
 
 <script setup>
 import { computed } from "vue";
+import SidebarIcon from "@/assets/icons/icon-sidebar-toggle.svg?component";
+import BackIcon from "@/assets/icons/icon-arrow-back.svg?component";
+import ForwardIcon from "@/assets/icons/icon-arrow-forward.svg?component";
+import ShieldIcon from "@/assets/icons/icon-security.svg?component";
+import LockIcon from "@/assets/icons/icon-lock.svg?component";
+import ReloadIcon from "@/assets/icons/icon-refresh.svg?component";
+import DownloadIcon from "@/assets/icons/icon-download.svg?component";
+import PlusIcon from "@/assets/icons/plus.svg?component";
+import CopyIcon from "@/assets/icons/copy.svg?component";
 
 const props = defineProps({
   url: { type: String, default: "zoonkan.com/template/NDA" },
   src: { type: String, default: "" },
   iframeTitle: { type: String, default: "نمایش زونکن" },
   height: { type: String, default: "520px" },
-  // "light" | "dark"
   theme: { type: String, default: "light" },
 });
 
@@ -244,42 +85,34 @@ const contentStyle = computed(() => ({
 @use "@/styles/global/tokens" as *;
 @use "@/styles/global/mixins" as *;
 
-// ── Token maps per theme ──────────────────────────────────────
-
-// light theme (matches screenshot exactly)
 $light-chrome-bg: #f0f0f0;
 $light-chrome-border: #d0d0d0;
 $light-icon-color: #3c3c3c;
-$light-icon-dimmed: #b0b0b0;
-$light-url-bg: #ffffff;
+$light-url-bg: #f2f2f2;
 $light-url-border: #d8d8d8;
 $light-url-text: #1a1a1a;
 $light-url-sub: #6e6e6e;
 $light-body-bg: #f5f5f5;
 
-// dark theme
 $dark-chrome-bg: #2c2c2e;
 $dark-chrome-border: rgba(255, 255, 255, 0.08);
 $dark-icon-color: rgba(255, 255, 255, 0.75);
-$dark-icon-dimmed: rgba(255, 255, 255, 0.25);
 $dark-url-bg: #1c1c1e;
 $dark-url-border: rgba(255, 255, 255, 0.1);
 $dark-url-text: rgba(255, 255, 255, 0.85);
 $dark-url-sub: rgba(255, 255, 255, 0.45);
 $dark-body-bg: #111111;
 
-// ── Shell ─────────────────────────────────────────────────────
-
 .bm {
   border-radius: rem(12);
   overflow: hidden;
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.12),
-    0 rem(24) rem(60) rgba(0, 0, 0, 0.18),
-    0 rem(4) rem(8) rgba(0, 0, 0, 0.08);
 
   &--light {
     background: $light-body-bg;
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.12),
+      0 rem(24) rem(60) rgba(0, 0, 0, 0.18),
+      0 rem(4) rem(8) rgba(0, 0, 0, 0.08);
   }
   &--dark {
     background: $dark-body-bg;
@@ -288,16 +121,13 @@ $dark-body-bg: #111111;
       0 rem(32) rem(80) rgba(0, 0, 0, 0.6);
   }
 
-  // ── Chrome bar ───────────────────────────────────────────────
-
   &__chrome {
     position: relative;
     display: flex;
     align-items: center;
     height: rem(52);
     padding: 0 rem(16);
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
+    border-bottom: 1px solid;
   }
 
   &--light &__chrome {
@@ -309,8 +139,6 @@ $dark-body-bg: #111111;
     border-bottom-color: $dark-chrome-border;
   }
 
-  // ── Left group ───────────────────────────────────────────────
-
   &__left {
     display: flex;
     align-items: center;
@@ -318,8 +146,6 @@ $dark-body-bg: #111111;
     flex-shrink: 0;
     z-index: 1;
   }
-
-  // ── Traffic lights ───────────────────────────────────────────
 
   &__lights {
     display: flex;
@@ -347,17 +173,13 @@ $dark-body-bg: #111111;
     }
   }
 
-  // ── Icons ────────────────────────────────────────────────────
-
   &__icon {
     flex-shrink: 0;
     display: block;
-
     &--dimmed {
       opacity: 0.35;
     }
   }
-
   &--light &__icon {
     color: $light-icon-color;
   }
@@ -365,13 +187,10 @@ $dark-body-bg: #111111;
     color: $dark-icon-color;
   }
 
-  // ── Shield ───────────────────────────────────────────────────
-
   &__shield {
     flex-shrink: 0;
     display: block;
   }
-
   &--light &__shield {
     color: $light-url-sub;
   }
@@ -379,8 +198,7 @@ $dark-body-bg: #111111;
     color: $dark-url-sub;
   }
 
-  // ── CENTER — absolutely positioned so URL is truly centered ──
-
+  // Truly centered via absolute positioning
   &__center {
     position: absolute;
     left: 50%;
@@ -389,29 +207,26 @@ $dark-body-bg: #111111;
     display: flex;
     align-items: center;
     gap: rem(8);
-    // Max width keeps it from colliding with left/right groups
-    max-width: rem(440);
-    width: 100%;
     justify-content: center;
+    z-index: 0;
   }
 
-  // ── URL pill ─────────────────────────────────────────────────
-
+  // URL bar: exact 300×28, #f2f2f2
   &__url {
     display: flex;
     align-items: center;
     gap: rem(6);
-    padding: rem(5) rem(14);
-    border-radius: rem(8);
-    border-width: 1px;
-    border-style: solid;
-    min-width: rem(220);
-    max-width: rem(360);
+    width: rem(300);
+    height: rem(28);
+    padding: 0 rem(10);
+    border-radius: rem(6);
+    border: 1px solid;
     justify-content: center;
+    overflow: hidden;
   }
 
   &--light &__url {
-    background: $light-url-bg;
+    background: #f2f2f2;
     border-color: $light-url-border;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
   }
@@ -424,10 +239,17 @@ $dark-body-bg: #111111;
     flex-shrink: 0;
     opacity: 0.6;
   }
-  &--light &__url-lock {
+  &__url-reload {
+    flex-shrink: 0;
+    opacity: 0.5;
+  }
+
+  &--light &__url-lock,
+  &--light &__url-reload {
     color: $light-url-sub;
   }
-  &--dark &__url-lock {
+  &--dark &__url-lock,
+  &--dark &__url-reload {
     color: $dark-url-sub;
   }
 
@@ -448,19 +270,6 @@ $dark-body-bg: #111111;
     color: $dark-url-text;
   }
 
-  &__url-reload {
-    flex-shrink: 0;
-    opacity: 0.5;
-  }
-  &--light &__url-reload {
-    color: $light-url-sub;
-  }
-  &--dark &__url-reload {
-    color: $dark-url-sub;
-  }
-
-  // ── Right group ──────────────────────────────────────────────
-
   &__right {
     display: flex;
     align-items: center;
@@ -470,14 +279,11 @@ $dark-body-bg: #111111;
     z-index: 1;
   }
 
-  // ── Content body ─────────────────────────────────────────────
-
   &__body {
     position: relative;
     width: 100%;
     overflow: hidden;
   }
-
   &--light &__body {
     background: $light-body-bg;
   }
@@ -495,8 +301,6 @@ $dark-body-bg: #111111;
   }
 }
 
-// ── Responsive ───────────────────────────────────────────────
-
 @include respond-to(md) {
   .bm {
     &__chrome {
@@ -512,8 +316,7 @@ $dark-body-bg: #111111;
       height: rem(11);
     }
     &__url {
-      min-width: rem(160);
-      padding: rem(4) rem(10);
+      width: rem(220);
     }
     &__url-text {
       font-size: rem(12);
@@ -537,14 +340,13 @@ $dark-body-bg: #111111;
       display: none;
     }
     &__url {
-      min-width: rem(130);
+      width: rem(160);
     }
     &__url-text {
       font-size: rem(11);
     }
-    &__icon:not(.bm__icon) {
-      width: rem(13);
-      height: rem(13);
+    &__shield {
+      display: none;
     }
   }
 }

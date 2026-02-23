@@ -2,16 +2,15 @@
   <div class="lv2">
     <!-- Topbar -->
     <header class="lv2-topbar" aria-label="سربرگ">
+      <span class="lv2-topbar__tagline">اسناد<br />در مسیر درست</span>
       <a href="#" class="lv2-topbar__logo" aria-label="صفحه اصلی زونکن">
-        <img src="@/assets/brand/logo.svg" alt="زونکن" />
+        <img src="@/assets/brand/logo.svg?url" alt="زونکن" />
       </a>
-      <span class="lv2-topbar__tagline"
-        ><img src="@/assets/brand/catchphrase.svg" alt="زونکن"
-      /></span>
     </header>
 
     <main>
       <HeroSection />
+      <OperationSection />
       <ApproachSection />
       <CtaSection />
     </main>

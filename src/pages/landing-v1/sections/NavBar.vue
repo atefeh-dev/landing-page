@@ -4,12 +4,12 @@
       <div class="nav__logo">
         <a href="#hero" class="nav__logo-link">
           <img
-            src="@/assets/brand/logo-dark-mode.svg"
+            src="@/assets/brand/logo-dark-mode.svg?url"
             alt="زونکن"
             class="nav__logo-icon"
           />
           <img
-            src="@/assets/brand/logotype.svg"
+            src="@/assets/brand/logotype.svg?url"
             alt="زونکن"
             class="nav__logo-type"
           />

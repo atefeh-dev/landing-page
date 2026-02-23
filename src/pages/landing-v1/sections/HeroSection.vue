@@ -3,37 +3,37 @@
     <!-- Floating decorative icons -->
     <div class="hero__icons" aria-hidden="true">
       <img
-        src="@/assets/icons/pagewithcurl.svg"
+        src="@/assets/icons/pagewithcurl.svg?url"
         alt=""
         class="hero__icon hero__icon--1"
       />
       <img
-        src="@/assets/icons/pagefacingup.svg"
+        src="@/assets/icons/pagefacingup.svg?url"
         alt=""
         class="hero__icon hero__icon--2"
       />
       <img
-        src="@/assets/icons/memo.svg"
+        src="@/assets/icons/memo.svg?url"
         alt=""
         class="hero__icon hero__icon--3"
       />
       <img
-        src="@/assets/icons/clipboard.svg"
+        src="@/assets/icons/clipboard.svg?url"
         alt=""
         class="hero__icon hero__icon--4"
       />
       <img
-        src="@/assets/icons/page-facing-up.svg"
+        src="@/assets/icons/page-facing-up.svg?url"
         alt=""
         class="hero__icon hero__icon--5"
       />
       <img
-        src="@/assets/icons/bookmark-tabs.svg"
+        src="@/assets/icons/bookmark-tabs.svg?url"
         alt=""
         class="hero__icon hero__icon--6"
       />
       <img
-        src="@/assets/icons/scroll.svg"
+        src="@/assets/icons/scroll.svg?url"
         alt=""
         class="hero__icon hero__icon--7"
       />
@@ -44,7 +44,11 @@
       <div class="hero__content">
         <div class="hero__badge">
           <span class="hero__badge-label">
-            <img src="@/assets/ui/green-dot.svg" alt="" aria-hidden="true" />
+            <img
+              src="@/assets/ui/green-dot.svg?url"
+              alt=""
+              aria-hidden="true"
+            />
             <span>چه خبر؟</span>
           </span>
           <span>از امروز لیست انتظار باز است</span>
@@ -75,13 +79,37 @@
 
     <!-- Demo browser mockup -->
     <div class="hero__demo" v-bind="reveal(6)">
-      <BrowserMockup
-        url="zoonkan.com/template/NDA"
-        src="https://zoonkan.com/template/NDA"
-        height="520px"
-        theme="light"
-      />
-
+      <div class="hero__browser">
+        <div class="hero__browser-bar">
+          <span class="hero__browser-dot hero__browser-dot--red"></span>
+          <span class="hero__browser-dot hero__browser-dot--yellow"></span>
+          <span class="hero__browser-dot hero__browser-dot--green"></span>
+          <div class="hero__browser-url">
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                fill="currentColor"
+              />
+            </svg>
+            <span>zoonkan.com/template/NDA</span>
+          </div>
+        </div>
+        <div class="hero__browser-content">
+          <iframe
+            src="https://zoonkan.com/template/NDA"
+            title="نمایش زنده زونکن"
+            loading="lazy"
+            class="hero__iframe"
+            sandbox="allow-scripts allow-same-origin"
+          ></iframe>
+        </div>
+      </div>
       <p class="hero__demo-caption">
         این همان مسیری است که سال‌ها جایش خالی بود.
       </p>
@@ -92,7 +120,6 @@
 <script setup>
 import { ref } from "vue";
 import EmailForm from "@/pages/landing-v1/sections/EmailForm.vue";
-import BrowserMockup from "@/components/base/BrowserMockup.vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 defineEmits(["scroll-to-cta"]);
@@ -211,9 +238,9 @@ const handleSubmit = () => {};
     display: inline-flex;
     align-items: center;
     gap: rem(8);
-    padding: rem(8);
+    padding: rem(4) rem(10);
     border: 1px solid $color-border-primary;
-    border-radius: 10px;
+    border-radius: $radius-sm;
     color: $color-text-hero;
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;

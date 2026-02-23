@@ -37,86 +37,14 @@
         </div>
       </div>
 
-      <!-- Browser mockup -->
-      <div class="op__browser" v-bind="anim(4)">
-        <!-- Chrome bar -->
-        <div class="op__chrome" dir="ltr">
-          <div class="op__chrome-dots">
-            <span class="op__dot op__dot--red"></span>
-            <span class="op__dot op__dot--yellow"></span>
-            <span class="op__dot op__dot--green"></span>
-          </div>
-          <svg
-            width="13"
-            height="13"
-            viewBox="0 0 24 24"
-            fill="none"
-            class="op__chrome-icon"
-          >
-            <path
-              d="M12 2L4 6v6c0 5 3.5 9.7 8 11 4.5-1.3 8-6 8-11V6l-8-4z"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-          </svg>
-          <div class="op__chrome-url">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
-              <rect
-                x="5"
-                y="11"
-                width="14"
-                height="10"
-                rx="2"
-                stroke="currentColor"
-                stroke-width="1.8"
-              />
-              <path
-                d="M8 11V7a4 4 0 0 1 8 0v4"
-                stroke="currentColor"
-                stroke-width="1.8"
-              />
-            </svg>
-            zoonkan.com/app/create/document
-          </div>
-          <div class="op__chrome-actions">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <path d="M12 16l-4-4h3V4h2v8h3l-4 4z" fill="currentColor" />
-              <rect
-                x="4"
-                y="18"
-                width="16"
-                height="2"
-                rx="1"
-                fill="currentColor"
-              />
-            </svg>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M12 5v14M5 12h14"
-                stroke="currentColor"
-                stroke-width="1.8"
-              />
-            </svg>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <rect
-                x="9"
-                y="9"
-                width="11"
-                height="13"
-                rx="1.5"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
-              <path
-                d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
-            </svg>
-          </div>
-        </div>
-
-        <!-- Document screen -->
+      <!-- Browser mockup — BrowserMockup chrome, op__screen as slot content -->
+      <BrowserMockup
+        url="zoonkan.com/app/create/document"
+        theme="dark"
+        height="auto"
+        v-bind="anim(4)"
+      >
+        <!-- Document screen lives inside the browser via slot -->
         <div class="op__screen">
           <!-- Step progress -->
           <div class="op__steps">
@@ -157,7 +85,7 @@
           </div>
 
           <!-- Document content -->
-          <Transition :name="slideDir" mode="out-in">
+          <Transition name="op-fade" mode="out-in">
             <div :key="activeStep" class="op__doc" dir="rtl">
               <div class="op__doc-header">
                 <h3 class="op__doc-title" v-html="doc.title" />
@@ -185,14 +113,15 @@
             </div>
           </Transition>
         </div>
-      </div>
+      </BrowserMockup>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, computed, watch, nextTick } from "vue";
+import { ref, computed, watch } from "vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
+import BrowserMockup from "@/components/base/BrowserMockup.vue";
 
 const sectionRef = ref(null);
 const { reveal } = useScrollAnimation(sectionRef, 0.1);
@@ -202,8 +131,6 @@ function anim(n) {
 
 const showFilled = ref(false);
 const activeStep = ref(1);
-const slideDir = ref("op-left");
-
 const steps = [
   { title: "انتخاب نوع سند", desc: "تفاهم نامه، قرارداد، رسید پرداخت و ..." },
   { title: "تنظیم سند", desc: "تکمیل اطلاعات مورد نیاز" },
@@ -276,9 +203,7 @@ const docs = {
 
 const doc = computed(() => (showFilled.value ? docs.filled : docs.smart));
 
-watch(showFilled, async (val) => {
-  slideDir.value = val ? "op-left" : "op-right";
-  await nextTick();
+watch(showFilled, (val) => {
   activeStep.value = val ? 2 : 1;
 });
 </script>
@@ -332,7 +257,7 @@ watch(showFilled, async (val) => {
     color: $color-text-muted;
     font-weight: $font-weight-medium;
     user-select: none;
-    transition: color $transition-fast $ease-standard;
+    // no transition — label switches instantly per manager requirement
 
     &--on {
       color: $color-text-primary;
@@ -365,7 +290,7 @@ watch(showFilled, async (val) => {
     inset: 0;
     background: $color-surface-bright;
     border-radius: $radius-full;
-    transition: background $transition-fast $ease-standard;
+    // no transition — switches instantly per manager requirement
     &::before {
       content: "";
       position: absolute;
@@ -375,7 +300,7 @@ watch(showFilled, async (val) => {
       bottom: rem(3);
       background: $color-text-primary;
       border-radius: $radius-full;
-      transition: transform 0.3s $ease-standard;
+      // no transition on thumb
     }
   }
 
@@ -615,34 +540,17 @@ watch(showFilled, async (val) => {
 
 // ── Slide transitions ──────────────────────────────────────────
 
-.op-left-enter-active,
-.op-right-enter-active {
-  transition:
-    opacity 0.4s ease,
-    transform 0.4s ease;
+// Fade only — no slide, no transform. Manager requirement: instant feel with subtle fade.
+.op-fade-enter-active {
+  transition: opacity 0.18s ease;
 }
-.op-left-leave-active,
-.op-right-leave-active {
-  transition:
-    opacity 0.18s ease-in,
-    transform 0.18s ease-in;
+.op-fade-leave-active {
+  transition: opacity 0.12s ease;
   pointer-events: none;
 }
-.op-left-enter-from {
+.op-fade-enter-from,
+.op-fade-leave-to {
   opacity: 0;
-  transform: translateX(-40px);
-}
-.op-left-leave-to {
-  opacity: 0;
-  transform: translateX(40px);
-}
-.op-right-enter-from {
-  opacity: 0;
-  transform: translateX(40px);
-}
-.op-right-leave-to {
-  opacity: 0;
-  transform: translateX(-40px);
 }
 
 // ── Responsive ─────────────────────────────────────────────────

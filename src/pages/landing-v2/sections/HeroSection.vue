@@ -3,37 +3,37 @@
     <!-- Floating document icons -->
     <div class="hero__icons" aria-hidden="true">
       <img
-        src="@/assets/icons/pagewithcurl.svg"
+        src="@/assets/icons/pagewithcurl.svg?url"
         alt=""
         class="hero__icon hero__icon--1"
       />
       <img
-        src="@/assets/icons/pagefacingup.svg"
+        src="@/assets/icons/pagefacingup.svg?url"
         alt=""
         class="hero__icon hero__icon--2"
       />
       <img
-        src="@/assets/icons/memo.svg"
+        src="@/assets/icons/memo.svg?url"
         alt=""
         class="hero__icon hero__icon--3"
       />
       <img
-        src="@/assets/icons/clipboard.svg"
+        src="@/assets/icons/clipboard.svg?url"
         alt=""
         class="hero__icon hero__icon--4"
       />
       <img
-        src="@/assets/icons/page-facing-up.svg"
+        src="@/assets/icons/page-facing-up.svg?url"
         alt=""
         class="hero__icon hero__icon--5"
       />
       <img
-        src="@/assets/icons/bookmark-tabs.svg"
+        src="@/assets/icons/bookmark-tabs.svg?url"
         alt=""
         class="hero__icon hero__icon--6"
       />
       <img
-        src="@/assets/icons/scroll.svg"
+        src="@/assets/icons/scroll.svg?url"
         alt=""
         class="hero__icon hero__icon--7"
       />
@@ -45,7 +45,11 @@
         <!-- Badge — matching image exactly -->
         <div class="hero__badge" v-bind="anim(1)">
           <span class="hero__badge-pill">
-            <img src="@/assets/ui/green-dot.svg" alt="" aria-hidden="true" />
+            <img
+              src="@/assets/ui/green-dot.svg?url"
+              alt=""
+              aria-hidden="true"
+            />
             <span>چه خبر؟</span>
           </span>
           <span>از امروز لیست انتظار باز است</span>
@@ -72,79 +76,17 @@
       </div>
     </div>
 
-    <!-- Demo browser -->
+    <!-- Demo browser — uses shared BrowserMockup component -->
     <div class="lv2-container">
       <div class="hero__demo" v-bind="anim(6)">
         <p class="hero__demo-label">قرارداد شما، مرحله به مرحله</p>
-        <div class="hero__browser">
-          <div class="hero__browser-bar" dir="ltr">
-            <span class="hero__dot hero__dot--red"></span>
-            <span class="hero__dot hero__dot--yellow"></span>
-            <span class="hero__dot hero__dot--green"></span>
-            <div class="hero__browser-url">
-              <svg
-                width="11"
-                height="11"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-              >
-                <rect
-                  x="5"
-                  y="11"
-                  width="14"
-                  height="10"
-                  rx="2"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                />
-                <path
-                  d="M8 11V7a4 4 0 0 1 8 0v4"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                />
-              </svg>
-              <span>zoonkan.com/template/NDA</span>
-            </div>
-            <!-- chrome actions -->
-            <div class="hero__browser-actions">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 2L4 6v6c0 5 3.5 9.7 8 11 4.5-1.3 8-6 8-11V6l-8-4z"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                />
-              </svg>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M12 16l-4-4h3V4h2v8h3l-4 4z" fill="currentColor" />
-                <rect
-                  x="4"
-                  y="18"
-                  width="16"
-                  height="2"
-                  rx="1"
-                  fill="currentColor"
-                />
-              </svg>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 5v14M5 12h14"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                />
-              </svg>
-            </div>
-          </div>
-          <div class="hero__browser-content">
-            <iframe
-              src="https://zoonkan.com/template/NDA"
-              title="نمایش زنده زونکن"
-              loading="lazy"
-              class="hero__iframe"
-              sandbox="allow-scripts allow-same-origin"
-            ></iframe>
-          </div>
-        </div>
+        <BrowserMockup
+          url="zoonkan.com/template/NDA"
+          src="https://zoonkan.com/template/NDA"
+          iframe-title="نمایش زنده زونکن"
+          height="540px"
+          theme="light"
+        />
       </div>
     </div>
   </section>
@@ -154,6 +96,7 @@
 import { ref } from "vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 import EmailForm from "../components/EmailForm.vue";
+import BrowserMockup from "@/components/base/BrowserMockup.vue";
 
 const sectionRef = ref(null);
 const { reveal } = useScrollAnimation(sectionRef, 0);
@@ -267,9 +210,9 @@ function anim(n) {
     display: inline-flex;
     align-items: center;
     gap: rem(8);
-    padding: rem(4) rem(8);
+    padding: rem(4) rem(10);
     border: 1px solid $color-border-primary;
-    border-radius: 10px;
+    border-radius: $radius-sm;
     color: rgba(255, 255, 255, 0.8);
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;

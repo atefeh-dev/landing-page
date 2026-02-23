@@ -49,8 +49,8 @@
 
 <script setup>
 import { ref } from "vue";
-import PlusIcon from "@/assets/ui/plus.svg";
-import MinusIcon from "@/assets/ui/minus.svg";
+import PlusIcon from "@/assets/ui/plus.svg?url";
+import MinusIcon from "@/assets/ui/minus.svg?url";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 
 const sectionRef = ref(null);
@@ -62,11 +62,6 @@ const wrapperRefs = {};
 function setWrapperRef(el, index) {
   if (el) wrapperRefs[index] = el;
 }
-
-// WHY double rAF: a single rAF can be batched into the same paint
-// cycle as the height assignment, so the browser never sees a
-// "before" state and skips the transition entirely.
-// Two rAF calls guarantee the starting value is painted first.
 
 function collapse(wrapper) {
   const inner = wrapper.firstElementChild;
@@ -96,7 +91,6 @@ function toggleFaq(index) {
 
   const isOpen = activeFaq.value === index;
 
-  // Close previously open item if it's a different one
   if (activeFaq.value !== null && activeFaq.value !== index) {
     collapse(wrapperRefs[activeFaq.value]);
   }
@@ -139,7 +133,8 @@ const faqs = [
   {
     question:
       "نگهداری، امنیت و محرمانگی اسناد من در زونکن چگونه مدیریت می‌شود؟",
-    answer: `زونکن با رویکرد حداقلی در نگه‌داری داده طراحی شده است. <span class="highlight">فایل نهایی اسناد به‌صورت پایدار در سرورهای زونکن ذخیره نمی‌شود.</span>`,
+    answer:
+      'زونکن با رویکرد حداقلی در نگه‌داری داده طراحی شده است. <span class="highlight">فایل نهایی اسناد به‌صورت پایدار در سرورهای زونکن ذخیره نمی‌شود.</span>',
   },
   {
     question: "چه زمانی دسترسی عمومی برای استفاده از زونکن فعال می‌شود؟",
@@ -149,15 +144,6 @@ const faqs = [
 </script>
 
 <style lang="scss" scoped>
-// ─────────────────────────────────────────────────────────────
-// FaqSection
-// WHY JS height animation over CSS-only approaches:
-// - max-height: pauses on close (animates from 500px ceiling
-//   to real height before collapsing) — visible tail.
-// - grid-template-rows: content slides upward on close — wrong.
-// - JS scrollHeight: exact pixel height, crisp in both directions.
-// ─────────────────────────────────────────────────────────────
-
 .section--faq {
   background: $color-bg-primary;
   position: relative;
@@ -168,23 +154,15 @@ const faqs = [
 .faq {
   max-width: rem(900);
   margin: 0 auto;
-  // padding: 0 $spacing-md;
-
-  // ── Item ──────────────────────────────────────────────────
 
   &__item {
-    border: 1px solid $color-border-subtle;
+    border: 1px solid transparent;
     border-radius: $radius-lg;
     margin-bottom: $spacing-sm;
     overflow: hidden;
     transition:
       border-color #{$transition-duration-fast} #{$transition-easing-standard},
       box-shadow #{$transition-duration-fast} #{$transition-easing-standard};
-
-    &:hover {
-      border-color: $color-border-medium;
-      // background-color: $color-hover-bg;
-    }
 
     &--active {
       border-color: $color-border-medium;
@@ -193,15 +171,13 @@ const faqs = [
     }
   }
 
-  // ── Question ──────────────────────────────────────────────
-
   &__question {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: $spacing-sm;
-    padding: $spacing-md;
+    padding: $spacing-md $spacing-md 0 $spacing-md;
     background: none;
     border: none;
     color: $color-text-primary;
@@ -210,16 +186,14 @@ const faqs = [
     font-weight: $font-weight-semibold;
     text-align: right;
     cursor: pointer;
-    transition:
-      color #{$transition-duration-fast} #{$transition-easing-standard},
-      padding-bottom 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    // WHY: removed padding-bottom transition — caused visible motion
+    // when opening/closing. Manager requested simple, no motion.
+    // padding-bottom still changes instantly via .faq__item--active.
+    transition: color #{$transition-duration-fast}
+      #{$transition-easing-standard};
 
     span {
       flex: 1;
-    }
-
-    .faq__item--active & {
-      padding-bottom: 0;
     }
   }
 
@@ -236,18 +210,18 @@ const faqs = [
     }
   }
 
-  // ── Accordion ─────────────────────────────────────────────
-  // height is driven entirely by JS toggleFaq().
-  // CSS only provides the transition — JS provides the values.
-
   &__answer-wrapper {
     height: 0;
     overflow: hidden;
     transition: height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    // WHY padding-top here not on question: question padding must
+    // never change — any change causes the jump the manager hates.
+    // 4px gap lives here, always static.
+    padding-top: rem(4);
   }
 
   &__answer {
-    padding: rem(4) rem(64) rem(23) 1.5rem;
+    padding: 0 rem(64) rem(23) 1.5rem;
     color: $color-text-tertiary;
     font-weight: $font-weight-regular;
     line-height: 1.8;
@@ -261,20 +235,14 @@ const faqs = [
   }
 }
 
-// ── Responsive ─────────────────────────────────────────────────
-
 @include respond-to(lg) {
   .faq {
     padding: 0;
 
     &__question {
-      padding: $spacing-md $spacing-lg;
+      padding: $spacing-md $spacing-lg 0 $spacing-lg;
       font-size: 1.0625rem;
       gap: $spacing-md;
-
-      .faq__item--active & {
-        padding-bottom: 0;
-      }
     }
 
     &__answer {
@@ -295,12 +263,8 @@ const faqs = [
     }
 
     &__question {
-      padding: $spacing-md;
+      padding: $spacing-md $spacing-md 0 $spacing-md;
       gap: $spacing-sm;
-
-      .faq__item--active & {
-        padding-bottom: 0;
-      }
     }
 
     &__answer {
