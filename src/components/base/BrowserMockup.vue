@@ -21,15 +21,14 @@
       <div class="bm__center">
         <ShieldIcon class="bm__shield" />
 
+        <!-- URL bar: 300px wide, 28px tall, #f2f2f2 -->
         <div class="bm__url">
-          <div class="bm__url-left">
-            <LockIcon class="bm__url-lock" />
-            <span class="bm__url-text">{{ url }}</span>
-          </div>
-
+          <LockIcon class="bm__url-lock" />
+          <span class="bm__url-text">{{ url }}</span>
           <ReloadIcon class="bm__url-reload" />
         </div>
       </div>
+
       <!-- RIGHT: download + new tab + copy -->
       <div class="bm__right">
         <DownloadIcon class="bm__icon" />
@@ -222,7 +221,7 @@ $dark-body-bg: #111111;
   &__url {
     position: relative;
     display: flex;
-    align-items: center;
+    align-items: baseline;
     width: rem(300);
     height: rem(28);
     padding: 0 rem(10);
@@ -259,43 +258,22 @@ $dark-body-bg: #111111;
   &--dark &__url-reload {
     color: $dark-url-sub;
   }
-  &__url {
-    display: flex;
-    align-items: center;
-    width: rem(300);
-    height: rem(28);
-    padding: 0 rem(10);
-    border-radius: rem(6);
-    border: 1px solid;
-  }
-
-  &__url-left {
-    display: flex;
-    align-items: center;
-    gap: rem(4);
-    flex: 1;
-    min-width: 0; // 🔥 critical for ellipsis
-    justify-content: center; // keeps lock+url centered
-  }
 
   &__url-text {
+    // WHY absolute: reload stays right-edge, lock+url truly centers
+    // flex:1 only centers relative to remaining space — not true center
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: rem(4);
     font-size: rem(13);
     font-weight: 400;
     letter-spacing: -0.01em;
     white-space: nowrap;
-    position: relative;
-    top: 2px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 0;
+    pointer-events: none;
   }
-
-  &__url-reload {
-    flex-shrink: 0;
-    opacity: 0.5;
-    margin-left: auto;
-  }
-
   &--light &__url-text {
     color: $light-url-text;
   }
@@ -326,12 +304,11 @@ $dark-body-bg: #111111;
   }
 
   &__iframe {
-    position: absolute;
-    inset: 0;
+    display: block;
     width: 100%;
     height: 100%;
     border: none;
-    display: block;
+    border-radius: rem(6);
   }
 }
 
@@ -349,8 +326,19 @@ $dark-body-bg: #111111;
       width: rem(11);
       height: rem(11);
     }
+    &__icon {
+      &--sidebar {
+        margin-left: rem(24);
+      }
+      &--back {
+        margin-left: rem(16);
+      }
+      &--dimmed {
+        margin-left: rem(16);
+      }
+    }
     &__url {
-      width: rem(220);
+      width: rem(240);
     }
     &__url-text {
       font-size: rem(12);
@@ -361,6 +349,9 @@ $dark-body-bg: #111111;
     &__shield {
       display: none;
     }
+    &__body {
+      padding: rem(12) rem(32);
+    }
   }
 }
 
@@ -370,17 +361,37 @@ $dark-body-bg: #111111;
       height: rem(40);
       padding: 0 rem(10);
     }
+    &__icon {
+      &--sidebar {
+        display: none;
+      }
+      &--back {
+        display: none;
+      }
+      &--dimmed {
+        display: none;
+      }
+    }
+    &__lights {
+      margin-right: rem(8);
+    }
     &__right {
       display: none;
     }
+    &__shield {
+      display: none;
+    }
     &__url {
-      width: rem(160);
+      width: rem(200);
+    }
+    &__url-reload {
+      display: none;
     }
     &__url-text {
       font-size: rem(11);
     }
-    &__shield {
-      display: none;
+    &__body {
+      padding: rem(10) rem(16);
     }
   }
 }
