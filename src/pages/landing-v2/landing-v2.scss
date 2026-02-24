@@ -49,23 +49,23 @@
 // ── Scroll reveal ─────────────────────────────────────────────
 // Applied by useScrollAnimation composable via data-animate attr.
 
-[data-animate] {
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 0.6s ease-out,
-    transform 0.6s ease-out;
+// [data-animate] {
+//   opacity: 0;
+//   transform: translateY(24px);
+//   transition:
+//     opacity 0.6s ease-out,
+//     transform 0.6s ease-out;
 
-  &[data-animate="slide-down"] {
-    transform: translateY(-10px);
-    transition-duration: 0.3s;
-  }
+//   &[data-animate="slide-down"] {
+//     transform: translateY(-10px);
+//     transition-duration: 0.3s;
+//   }
 
-  &.is-visible {
-    opacity: 1;
-    transform: none;
-  }
-}
+//   &.is-visible {
+//     opacity: 1;
+//     transform: none;
+//   }
+// }
 
 @for $i from 1 through 8 {
   [data-delay="#{$i}"].is-visible {

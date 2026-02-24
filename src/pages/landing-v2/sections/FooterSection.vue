@@ -1,12 +1,12 @@
 <template>
   <footer class="foot" ref="sectionRef">
     <div class="lv2-container">
-      <div class="foot__inner" v-bind="reveal()">
-        <p class="foot__tagline" v-bind="reveal(1)">با افتخار ساخت ایران</p>
-        <a href="#" class="foot__logo" v-bind="reveal(2)">
-          <img src="@/assets/brand/logo.svg?url" alt="زونکن" />
+      <div class="foot__inner">
+        <p class="foot__tagline">با افتخار ساخت ایران</p>
+        <a href="#" class="foot__logo">
+          <img src="@/assets/brand/footer-logo.svg?url" alt="زونکن" />
         </a>
-        <div class="foot__social" v-bind="reveal(3)">
+        <div class="foot__social">
           <a
             href="https://x.com/doclastapp"
             target="_blank"
@@ -63,9 +63,10 @@ const { reveal } = useScrollAnimation(sectionRef);
 @use "@/styles/global/mixins" as *;
 
 .foot {
-  background: $color-bg-secondary;
-  border-top: 1px solid $color-border-subtle;
-  padding: rem(48) 0 rem(32);
+  // border-top: 1px solid $color-border-subtle;
+  background: $color-bg-primary;
+
+  padding: rem(48) 0 rem(50);
 
   &__inner {
     display: flex;
@@ -74,8 +75,8 @@ const { reveal } = useScrollAnimation(sectionRef);
   }
 
   &__tagline {
-    color: $color-text-tertiary;
-    font-size: $font-size-md;
+    color: $color-text-faded;
+    font-size: $font-size-lg;
     font-weight: $font-weight-bold;
     flex: 1;
   }
@@ -83,7 +84,7 @@ const { reveal } = useScrollAnimation(sectionRef);
   &__logo {
     display: block;
     img {
-      width: rem(44);
+      width: rem(200);
       height: auto;
       transition: opacity $transition-fast $ease-standard;
     }
@@ -96,7 +97,7 @@ const { reveal } = useScrollAnimation(sectionRef);
     flex: 1;
     display: flex;
     justify-content: flex-end;
-    gap: rem(20);
+    gap: rem(24);
     align-items: center;
 
     a {
