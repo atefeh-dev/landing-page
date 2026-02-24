@@ -57,7 +57,8 @@
 
         <h1 class="hero__title" v-bind="anim(2)">
           قراردادهای خود را <span class="lv2-highlight">دقیق</span> و<br />
-          بدون ابهام تنظیم کنید
+          <span class="lv2-highlight"> بدون ابهام </span>
+          تنظیم کنید.
         </h1>
 
         <p class="hero__description" v-bind="anim(3)">
@@ -91,7 +92,7 @@
           url="zoonkan.com/template/NDA"
           src="https://zoonkan.com/template/NDA"
           iframe-title="نمایش زنده زونکن"
-          height="540px"
+          height="744px"
           theme="light"
         />
       </div>
@@ -121,13 +122,12 @@ function anim(n) {
 
 .hero {
   padding-top: rem(140);
-  padding-bottom: rem(80);
+  padding-bottom: rem(30);
   background: $color-bg-primary;
   position: relative;
   overflow: hidden;
 
   // ── Floating icons ────────────────────────────────────────
-
   &__icons {
     position: absolute;
     inset: 0;
@@ -137,7 +137,7 @@ function anim(n) {
 
   &__icon {
     position: absolute;
-    --sz: 80px;
+    --sz: 70px;
     width: var(--sz);
     height: var(--sz);
     animation: lv2-float 20s infinite ease-in-out;
@@ -146,48 +146,47 @@ function anim(n) {
     &--1 {
       top: 11%;
       left: 21%;
-      opacity: 0.8;
-      --rotation: -15deg;
+      // opacity: 0.8;
+      --rotation: -5deg;
       animation-duration: 18s;
     }
     &--2 {
       top: 14%;
-      left: 31%;
-      opacity: 0.9;
+      left: 29%;
+      // opacity: 0.9;
       --sz: 50px;
       --rotation: 8deg;
       animation-delay: -3s;
       animation-duration: 22s;
     }
     &--3 {
-      top: 22%;
+      top: 21%;
       left: 20%;
-      opacity: 0.85;
+      // opacity: 0.85;
       --rotation: -25deg;
       animation-delay: -6s;
       animation-duration: 20s;
     }
     &--4 {
-      top: 13%;
-      right: 30%;
-      opacity: 0.95;
+      top: 10%;
+      right: 26%;
       --rotation: 12deg;
       animation-delay: -9s;
       animation-duration: 24s;
     }
     &--5 {
-      top: 16%;
+      top: 14%;
       right: 19%;
-      opacity: 0.8;
+      // opacity: 0.8;
       --rotation: 18deg;
       animation-delay: -12s;
       animation-duration: 19s;
     }
     &--6 {
-      top: 24%;
-      right: 19%;
-      opacity: 0.89;
-      --rotation: -8deg;
+      top: 23%;
+      right: 22%;
+      // opacity: 0.89;
+      --rotation: -14deg;
       animation-delay: -15s;
       animation-duration: 21s;
     }
@@ -217,12 +216,12 @@ function anim(n) {
     display: inline-flex;
     align-items: center;
     gap: rem(8);
-    padding: rem(4) rem(10);
+    padding: rem(8);
     border: 1px solid $color-border-primary;
-    border-radius: $radius-sm;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: $font-size-sm;
-    font-weight: $font-weight-semibold;
+    border-radius: $radius-md;
+    color: $color-text-secondary;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
     margin-bottom: $spacing-lg;
   }
 
@@ -230,11 +229,14 @@ function anim(n) {
     display: inline-flex;
     align-items: center;
     gap: rem(4);
-    padding: rem(3) rem(8);
+    padding: rem(6) rem(8);
+    color: $color-text-secondary;
     border: 1px solid $color-border-primary;
     border-radius: $radius-sm;
     font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
   }
+  // ── Title ─────────────────────────────────────────────────
 
   // ── Title ─────────────────────────────────────────────────
 
@@ -285,10 +287,10 @@ function anim(n) {
     justify-content: center;
     gap: rem(8);
     direction: rtl;
-    font-size: $font-size-xl;
+    font-size: $font-size-3xl;
     font-weight: $font-weight-semibold;
-    color: $color-text-secondary;
     margin-bottom: rem(20);
+    color: #fff;
   }
 
   &__demo-icon {

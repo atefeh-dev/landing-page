@@ -128,8 +128,8 @@ $dark-body-bg: #111111;
     position: relative;
     display: flex;
     align-items: center;
-    height: rem(52);
-    padding: 0 rem(16);
+    height: rem(48);
+    padding: rem(10) rem(17);
     border-bottom: 1px solid;
   }
 
@@ -153,7 +153,7 @@ $dark-body-bg: #111111;
   &__lights {
     display: flex;
     align-items: center;
-    gap: rem(7);
+    gap: rem(8);
     margin-right: rem(12);
   }
 
@@ -216,7 +216,7 @@ $dark-body-bg: #111111;
     transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
-    gap: rem(8);
+    gap: rem(11);
     justify-content: center;
     z-index: 0;
   }
