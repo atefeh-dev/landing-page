@@ -9,6 +9,13 @@
 @use "@/styles/global/mixins" as *;
 
 // ── Page base ─────────────────────────────────────────────────
+// WHY: html + body must match bg-primary so overscroll (rubber-band
+// on Mac/iOS) doesn't reveal a different color at top/bottom edges.
+
+html,
+body {
+  background: $color-bg-primary;
+}
 
 .lv2 {
   background: $color-bg-primary;
