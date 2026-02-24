@@ -7,31 +7,48 @@
         :placeholder="placeholder"
         class="ef__input"
         :class="{ 'ef__input--error': showError }"
+        :disabled="succeeded"
         dir="rtl"
         @blur="touched = true"
       />
-      <button
+      <BaseButton
+        variant="primary"
+        size="lg"
+        :loading="isSubmitting"
+        :disabled="succeeded"
         class="ef__btn"
-        :disabled="isSubmitting"
-        type="button"
         @click="submit"
       >
-        <span v-if="isSubmitting" class="ef__spinner" aria-hidden="true" />
-        <span v-else>{{ buttonText }}</span>
-      </button>
+        <Transition name="ef-btn" mode="out-in">
+          <span v-if="isSubmitting" key="loading">در حال ارسال...</span>
+          <span v-else-if="succeeded" key="success">می‌بینمت زود 👋</span>
+          <span v-else key="default">{{ buttonText }}</span>
+        </Transition>
+      </BaseButton>
     </div>
-    <p v-if="showError" class="ef__error" role="alert">
-      لطفاً یک آدرس ایمیل معتبر وارد کنید
-    </p>
+
+    <!-- Status: note OR error — fixed height, crossfade -->
+    <div class="ef__status">
+      <Transition name="ef-fade">
+        <p v-if="showError" class="ef__error" role="alert" key="error">
+          لطفاً یک آدرس ایمیل معتبر وارد کنید
+        </p>
+        <p v-else-if="note" class="ef__note" key="note">
+          {{ note }}
+        </p>
+      </Transition>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
+import BaseButton from "@/components/base/BaseButton.vue";
 
 const props = defineProps({
   placeholder: { type: String, default: "ایمیل شما" },
   buttonText: { type: String, default: "پیوستن به لیست انتظار" },
+  note: { type: String, default: "" },
 });
 
 const emit = defineEmits(["submit"]);
@@ -39,22 +56,33 @@ const emit = defineEmits(["submit"]);
 const email = ref("");
 const touched = ref(false);
 const isSubmitting = ref(false);
+const succeeded = ref(false);
 
 const valid = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value));
 const showError = computed(
   () => touched.value && !valid.value && email.value.length > 0,
 );
 
-function submit() {
+async function submit() {
   touched.value = true;
   if (!valid.value) return;
+
   isSubmitting.value = true;
-  emit("submit", email.value);
-  setTimeout(() => {
+  try {
+    // ── API call goes here ────────────────────────────────
+    // Example:
+    // await api.post("/waitlist", { email: email.value });
+    // ─────────────────────────────────────────────────────
+
+    await new Promise((r) => setTimeout(r, 1500)); // remove when API is ready
+    emit("submit", email.value);
+    succeeded.value = true;
+  } catch (err) {
+    // handle API error here if needed
+    console.error("Waitlist submit failed:", err);
+  } finally {
     isSubmitting.value = false;
-    email.value = "";
-    touched.value = false;
-  }, 2000);
+  }
 }
 </script>
 
@@ -100,49 +128,63 @@ function submit() {
     &--error {
       border-color: $color-error;
     }
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 
   &__btn {
     flex-shrink: 0;
-    padding: rem(12) rem(18);
-    background: $color-accent-primary;
-    color: $color-text-caption;
-    font-family: inherit;
-    font-size: $font-size-md;
-    font-weight: $font-weight-semibold;
-    border: none;
-    border-radius: $radius-md;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: rem(8);
-    transition: opacity $transition-fast $ease-standard;
-    white-space: nowrap;
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-    &:hover:not(:disabled) {
-      opacity: 0.9;
-    }
+    min-width: rem(170); // prevents width collapse during loading
   }
 
-  &__spinner {
-    width: rem(14);
-    height: rem(14);
-    border: 2px solid rgba(0, 0, 0, 0.25);
-    border-top-color: currentColor;
-    border-radius: $radius-full;
-    animation: lv2-spin 0.65s linear infinite;
+  // ── Status area ───────────────────────────────────────────
+
+  &__status {
+    position: relative;
+    height: rem(24);
+    margin-top: rem(16);
+    text-align: center;
+  }
+
+  &__error,
+  &__note {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    font-size: $font-size-sm;
+    margin: 0;
   }
 
   &__error {
-    font-size: $font-size-sm;
     color: $color-error;
-    margin-top: rem(8);
-    text-align: center;
   }
+
+  &__note {
+    color: #94979c;
+  }
+}
+
+// ── Button text crossfade ──────────────────────────────────────
+.ef-btn-enter-active,
+.ef-btn-leave-active {
+  transition: opacity 0.15s ease;
+}
+.ef-btn-enter-from,
+.ef-btn-leave-to {
+  opacity: 0;
+}
+
+// ── Status crossfade ───────────────────────────────────────────
+.ef-fade-enter-active,
+.ef-fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.ef-fade-enter-from,
+.ef-fade-leave-to {
+  opacity: 0;
 }
 
 @include respond-to(sm) {
@@ -152,7 +194,7 @@ function submit() {
   }
   .ef__btn {
     width: 100%;
-    justify-content: center;
+    min-width: unset;
   }
 }
 </style>

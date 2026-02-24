@@ -57,7 +57,7 @@
 
         <h1 class="hero__title" v-bind="anim(2)">
           قراردادهای خود را <span class="lv2-highlight">دقیق</span> و<br />
-          <span class="lv2-highlight"> بدون ابهام </span> تنظیم کنید.
+          بدون ابهام تنظیم کنید
         </h1>
 
         <p class="hero__description" v-bind="anim(3)">
@@ -67,28 +67,33 @@
         </p>
 
         <div class="hero__form" v-bind="anim(4)">
-          <EmailForm button-text="پیوستن به لیست انتظار" />
+          <EmailForm
+            button-text="پیوستن به لیست انتظار"
+            note="نسخه‌ی اولیه به زودی در دسترس می‌گیرد."
+          />
         </div>
-
-        <p class="hero__note" v-bind="anim(5)">
-          نسخه‌ی اولیه به زودی در دسترس می‌گیرد.
-        </p>
       </div>
     </div>
 
     <!-- Demo browser — uses shared BrowserMockup component -->
     <div class="lv2-container">
       <div class="hero__demo" v-bind="anim(6)">
-        <p class="hero__demo-label">قرارداد شما، مرحله به مرحله</p>
-        <div class="hero__browser-wrap">
-          <BrowserMockup
-            url="zoonkan.com/template/NDA"
-            src="https://zoonkan.com/template/NDA"
-            iframe-title="نمایش زنده زونکن"
-            height="540px"
-            theme="light"
+        <div class="hero__demo-label">
+          <span>قرارداد شما، مرحله به مرحله</span>
+          <img
+            src="@/assets/images/landing/approval.svg?url"
+            class="hero__demo-icon"
+            alt=""
+            aria-hidden="true"
           />
         </div>
+        <BrowserMockup
+          url="zoonkan.com/template/NDA"
+          src="https://zoonkan.com/template/NDA"
+          iframe-title="نمایش زنده زونکن"
+          height="540px"
+          theme="light"
+        />
       </div>
     </div>
   </section>
@@ -212,25 +217,23 @@ function anim(n) {
     display: inline-flex;
     align-items: center;
     gap: rem(8);
-    padding: rem(8);
+    padding: rem(4) rem(10);
     border: 1px solid $color-border-primary;
-    border-radius: $radius-md;
-    color: $color-text-secondary;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-medium;
-    margin-bottom: rem(30);
+    border-radius: $radius-sm;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-lg;
   }
 
   &__badge-pill {
     display: inline-flex;
     align-items: center;
     gap: rem(4);
-    padding: rem(4) rem(8);
+    padding: rem(3) rem(8);
     border: 1px solid $color-border-primary;
-    font-weight: $font-weight-medium;
     border-radius: $radius-sm;
     font-size: $font-size-xs;
-    color: $color-text-secondary;
   }
 
   // ── Title ─────────────────────────────────────────────────
@@ -241,25 +244,24 @@ function anim(n) {
     line-height: 1.25;
     letter-spacing: -0.02em;
     color: $color-text-primary;
-    margin-bottom: $spacing-ms;
+    margin-bottom: $spacing-md;
   }
 
   // ── Description ───────────────────────────────────────────
 
   &__description {
-    font-size: $font-size-xl;
-    line-height: 2;
-    color: $color-text-tertiary;
-    margin-bottom: rem(30);
+    font-size: $font-size-lg;
+    line-height: 1.8;
+    color: $color-text-secondary;
+    margin-bottom: rem(28);
   }
 
   // ── Note ──────────────────────────────────────────────────
 
   &__note {
-    --color: #94979c;
     font-size: $font-size-sm;
-    color: var(--color);
-    margin-top: rem(16);
+    color: $color-text-tertiary;
+    margin-top: rem(14);
   }
 
   // ── Demo ──────────────────────────────────────────────────
@@ -273,16 +275,27 @@ function anim(n) {
   &__browser-wrap {
     display: block;
     width: rem(1100);
-    max-width: calc(100% - rem(16));
+    max-width: calc(100% - rem(48));
     margin: 0 auto;
   }
 
   &__demo-label {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: rem(8);
+    direction: rtl;
     font-size: $font-size-xl;
     font-weight: $font-weight-semibold;
     color: $color-text-secondary;
     margin-bottom: rem(20);
+  }
+
+  &__demo-icon {
+    height: rem(50);
+    width: auto;
+    flex-shrink: 0;
+    display: block;
   }
 
   &__browser {
@@ -294,10 +307,7 @@ function anim(n) {
       0 rem(32) rem(80) rgba(0, 0, 0, 0.6),
       0 0 0 1px $color-border-subtle;
   }
-  &__browser-wrap {
-    width: rem(1000);
-    margin: 0 auto; // ← this is what centers it
-  }
+
   // ── Browser chrome ────────────────────────────────────────
 
   &__browser-bar {

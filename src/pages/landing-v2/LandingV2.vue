@@ -1,12 +1,18 @@
 <template>
   <div class="lv2">
-    <!-- Topbar -->
-    <header class="lv2-topbar" aria-label="سربرگ">
+    <header
+      class="lv2-topbar"
+      :class="{ 'lv2-topbar--scrolled': scrolled }"
+      aria-label="سربرگ"
+    >
       <a href="#" class="lv2-topbar__logo" aria-label="صفحه اصلی زونکن">
         <img src="@/assets/brand/logo-dark-mode.svg?url" alt="زونکن" />
       </a>
       <span class="lv2-topbar__tagline">
-        <img src="@/assets/brand/catchphrase.svg?url" alt="زونکن" />
+        <img
+          src="@/assets/brand/catchphrase.svg?url"
+          alt="اسناد در مسیر درست"
+        />
       </span>
     </header>
 
@@ -21,15 +27,23 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from "vue";
 import HeroSection from "./sections/HeroSection.vue";
-import OperationSection from "../landing-v1/sections/OperationSection.vue";
 import ApproachSection from "./sections/ApproachSection.vue";
 import CtaSection from "./sections/CtaSection.vue";
 import FooterSection from "./sections/FooterSection.vue";
+
+const scrolled = ref(false);
+
+function onScroll() {
+  scrolled.value = window.scrollY > 60;
+}
+
+onMounted(() => window.addEventListener("scroll", onScroll, { passive: true }));
+onUnmounted(() => window.removeEventListener("scroll", onScroll));
 </script>
 
 <style lang="scss">
-// Page-level global import — scoped to this page only via .lv2 root
 @use "./landing-v2.scss";
 </style>
 
@@ -38,44 +52,85 @@ import FooterSection from "./sections/FooterSection.vue";
 @use "@/styles/global/tokens" as *;
 @use "@/styles/global/mixins" as *;
 
-// ── Topbar ────────────────────────────────────────────────────
-// Fixed corners only — not a full navbar.
-
 .lv2-topbar {
   position: fixed;
   top: 0;
   inset-inline: 0;
   z-index: 1000;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  padding: rem(30) rem(30) 0 rem(30);
+  padding: rem(24) rem(30);
   pointer-events: none;
-  // WHY: fixed topbar over scrolling content needs a backdrop,
-  // otherwise page content bleeds through. backdrop-filter gives
-  // the frosted glass effect without a hard color edge.
+
+  // At top: gradient so content underneath blends
   background: linear-gradient(
     to bottom,
-    rgba(10, 10, 10, 0.85) 0%,
+    rgba(10, 10, 10, 0.88) 0%,
     rgba(10, 10, 10, 0) 100%
   );
 
-  &__tagline {
-    font-size: $font-size-xs;
-    font-weight: $font-weight-bold;
-    color: $color-accent-primary;
-    line-height: 1.5;
-    text-align: right;
-    pointer-events: auto;
+  // Only fade the background — no movement, no hide
+  transition:
+    background 0.3s ease,
+    backdrop-filter 0.3s ease,
+    padding 0.3s ease;
+
+  // Scrolled: solid frosted glass
+  &--scrolled {
+    padding: rem(16) rem(30);
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
+
+  // ── Logo ─────────────────────────────────────────────────
 
   &__logo {
     pointer-events: auto;
     display: block;
+    flex-shrink: 0;
 
     img {
+      display: block;
       width: rem(28);
       height: auto;
+    }
+  }
+
+  // ── Tagline: 123×60 on desktop ────────────────────────────
+
+  &__tagline {
+    pointer-events: auto;
+    display: block;
+    flex-shrink: 0;
+
+    img {
+      display: block;
+      width: rem(123);
+      height: rem(60);
+      object-fit: contain;
+      object-position: right center;
+    }
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────────
+
+@include respond-to(md) {
+  .lv2-topbar {
+    padding: rem(20) rem(24);
+    &--scrolled {
+      padding: rem(14) rem(24);
+    }
+
+    &__logo img {
+      width: rem(28);
+    }
+    &__tagline img {
+      width: rem(100);
+      height: rem(48);
     }
   }
 }
@@ -83,9 +138,16 @@ import FooterSection from "./sections/FooterSection.vue";
 @include respond-to(sm) {
   .lv2-topbar {
     padding: rem(16) rem(16);
+    &--scrolled {
+      padding: rem(12) rem(16);
+    }
 
     &__logo img {
-      width: rem(32);
+      width: rem(24);
+    }
+    &__tagline img {
+      width: rem(80);
+      height: rem(40);
     }
   }
 }
