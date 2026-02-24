@@ -57,7 +57,6 @@
     <!-- Above-fold content -->
     <div class="lv2-container">
       <div class="hero__content">
-        <!-- Badge — matching image exactly -->
         <div class="hero__badge" v-bind="anim(1)">
           <span class="hero__badge-pill">
             <img
@@ -91,7 +90,7 @@
       </div>
     </div>
 
-    <!-- Demo browser — uses shared BrowserMockup component -->
+    <!-- Demo browser -->
     <div class="lv2-container">
       <div class="hero__demo" v-bind="anim(6)">
         <div class="hero__demo-label">
@@ -124,7 +123,6 @@ import BrowserMockup from "@/components/base/BrowserMockup.vue";
 const sectionRef = ref(null);
 const { reveal } = useScrollAnimation(sectionRef, 0);
 
-// shorthand so templates stay readable
 function anim(n) {
   return reveal(n);
 }
@@ -142,7 +140,7 @@ function anim(n) {
   position: relative;
   overflow: hidden;
 
-  // ── Floating icons ────────────────────────────────────────
+  // ── Floating icons ────────────────────────────────────────────────
   &__icons {
     position: absolute;
     inset: 0;
@@ -156,88 +154,75 @@ function anim(n) {
     width: var(--sz);
     height: var(--sz);
     animation: lv2-float 20s infinite ease-in-out;
-    // filter: brightness(0.9);
 
+    // Durations are prime-adjacent — icons never re-sync.
+    // Delays are spread unevenly so no two share the same phase.
     &--1 {
-      top: 11%;
-      left: 18%;
-      // opacity: 0.8;
-      // --rotation: -5deg;
-      animation-duration: 18s;
+      top: 13%;
+      left: 15%;
+      animation-duration: 36s;
+      animation-delay: -4s;
     }
     &--2 {
-      top: 25%;
-      left: 14%;
-      // opacity: 0.9;
-      // --sz: 50px;
-      // --rotation: 8deg;
-      animation-delay: -3s;
-      animation-duration: 22s;
+      top: 24%;
+      left: 13%;
+      animation-duration: 46s;
+      animation-delay: -16s;
     }
     &--3 {
       top: 18%;
       left: 21%;
-      // opacity: 0.85;
-      // --rotation: -25deg;
-      animation-delay: -6s;
-      animation-duration: 20s;
+      animation-duration: 38s;
+      animation-delay: -28s;
     }
     &--4 {
       top: 10%;
       left: 24%;
-      // --rotation: 12deg;
-      animation-delay: -9s;
-      animation-duration: 24s;
+      animation-duration: 50s;
+      animation-delay: -10s;
     }
     &--5 {
-      top: 9%;
-      right: 21%;
-      // opacity: 0.8;
-      // --rotation: 18deg;
-      animation-delay: -12s;
-      animation-duration: 19s;
+      top: 12%;
+      right: 24%;
+      animation-duration: 42s;
+      animation-delay: -22s;
     }
     &--6 {
       top: 20%;
       right: 20%;
-      // opacity: 0.89;
+      animation-duration: 54s;
+      animation-delay: -34s;
       --rotation: -14deg;
-      animation-delay: -15s;
-      animation-duration: 21s;
     }
     &--7 {
-      top: 26%;
+      top: 27%;
       right: 23%;
-      // opacity: 0.92;
-      // --rotation: 22deg;
-      animation-delay: -18s;
-      animation-duration: 23s;
+      animation-duration: 44s;
+      animation-delay: -6s;
     }
     &--8 {
-      top: 16%;
-      right: 15%;
+      top: 15%;
+      right: 12%;
+      animation-duration: 58s;
+      animation-delay: -40s;
       --rotation: -18deg;
-      animation-delay: -10s;
-      animation-duration: 26s;
     }
-
     &--9 {
       top: 26%;
       right: 14%;
+      animation-duration: 34s;
+      animation-delay: -14s;
       --rotation: 16deg;
-      animation-delay: -4s;
-      animation-duration: 17s;
     }
     &--10 {
       top: 27%;
       left: 22%;
-      // --rotation: 16deg;
-      animation-delay: -4s;
-      animation-duration: 17s;
+      animation-duration: 40s;
+      animation-delay: -26s;
     }
   }
 
-  // ── Content block ─────────────────────────────────────────
+  // ── Content block ──────────────────────────────────────────────────
 
   &__content {
     position: relative;
@@ -247,7 +232,7 @@ function anim(n) {
     margin: 0 auto;
   }
 
-  // ── Badge ─────────────────────────────────────────────────
+  // ── Badge ─────────────────────────────────────────────────────────
 
   &__badge {
     display: inline-flex;
@@ -273,9 +258,8 @@ function anim(n) {
     font-size: $font-size-xs;
     font-weight: $font-weight-medium;
   }
-  // ── Title ─────────────────────────────────────────────────
 
-  // ── Title ─────────────────────────────────────────────────
+  // ── Title ────────────────────────────────────────────────────────────
 
   &__title {
     font-size: clamp(rem(36), 6vw, rem(64));
@@ -286,7 +270,7 @@ function anim(n) {
     margin-bottom: $spacing-md;
   }
 
-  // ── Description ───────────────────────────────────────────
+  // ── Description ───────────────────────────────────────────────────
 
   &__description {
     font-size: $font-size-lg;
@@ -295,7 +279,7 @@ function anim(n) {
     margin-bottom: rem(28);
   }
 
-  // ── Note ──────────────────────────────────────────────────
+  // ── Note ──────────────────────────────────────────────────────────────
 
   &__note {
     font-size: $font-size-sm;
@@ -303,7 +287,7 @@ function anim(n) {
     margin-top: rem(14);
   }
 
-  // ── Demo ──────────────────────────────────────────────────
+  // ── Demo ──────────────────────────────────────────────────────────────
 
   &__demo {
     position: relative;
@@ -346,8 +330,6 @@ function anim(n) {
       0 rem(32) rem(80) rgba(0, 0, 0, 0.6),
       0 0 0 1px $color-border-subtle;
   }
-
-  // ── Browser chrome ────────────────────────────────────────
 
   &__browser-bar {
     display: flex;
@@ -414,7 +396,7 @@ function anim(n) {
   }
 }
 
-// ── Responsive ─────────────────────────────────────────────────
+// ── Responsive ─────────────────────────────────────────────────────────────
 
 @include respond-to(lg) {
   .hero {
@@ -422,11 +404,7 @@ function anim(n) {
       height: rem(440);
     }
     &__icon {
-      --sz: 60px;
-      &--2,
-      &--5 {
-        --sz: 46px;
-      }
+      --sz: 54px;
     }
   }
 }
@@ -440,20 +418,14 @@ function anim(n) {
     &__browser-content {
       height: rem(360);
     }
-    &__icon {
-      --sz: 52px;
-      &--1 {
-        left: 12%;
-      }
-      &--4 {
-        right: 22%;
-      }
-      &--5 {
-        right: 10%;
-      }
-      &--6 {
-        right: 10%;
-      }
+    &__demo-label {
+      font-size: $font-size-xl;
+    }
+    &__demo-icon {
+      height: rem(38);
+    }
+    &__icons {
+      display: none;
     }
   }
 }
@@ -478,6 +450,9 @@ function anim(n) {
     &__demo-label {
       font-size: $font-size-md;
     }
+    &__demo-icon {
+      height: rem(28);
+    }
     &__browser-content {
       height: rem(260);
     }
@@ -485,14 +460,7 @@ function anim(n) {
       display: none;
     }
 
-    &__icon {
-      --sz: 44px;
-      opacity: 0.5;
-      &--6,
-      &--7 {
-        display: none;
-      }
-    }
+    // icons hidden via md rule above
   }
 }
 </style>

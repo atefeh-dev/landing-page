@@ -8,13 +8,13 @@ const routes = [
     component: () => import("@/pages/landing-v2/LandingV2.vue"),
     meta: { title: "زونکن — قراردادهای خود را دقیق تنظیم کنید" },
   },
-  {
-    // V1 always accessible — frozen in time, your manager can't touch it
-    path: "/v1",
-    name: "landing-v1",
-    component: () => import("@/pages/landing-v1/LandingV1.vue"),
-    meta: { title: "زونکن — نسخه قدیمی" },
-  },
+  // {
+  //   // V1 always accessible — frozen in time, your manager can't touch it
+  //   path: "/v1",
+  //   name: "landing-v1",
+  //   component: () => import("@/pages/landing-v1/LandingV1.vue"),
+  //   meta: { title: "زونکن — نسخه قدیمی" },
+  // },
   // Future pages plug in here — zero interference with landing styles
   // { path: "/dashboard", name: "dashboard", component: () => import("@/pages/dashboard/Dashboard.vue") },
 ];

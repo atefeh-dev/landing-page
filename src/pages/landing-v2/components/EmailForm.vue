@@ -31,7 +31,7 @@
     <div class="ef__status">
       <Transition name="ef-fade">
         <p v-if="showError" class="ef__error" role="alert" key="error">
-          لطفاً یک آدرس ایمیل معتبر وارد کنید
+          لطفاً یک آدرس ایمیل معتبر وارد کنید!
         </p>
         <p v-else-if="note" class="ef__note" key="note">
           {{ note }}
