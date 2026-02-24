@@ -3,13 +3,19 @@
     <div class="lv2-container lv2-container--narrow">
       <div class="cta__inner">
         <h2 class="cta__title" v-bind="anim(1)">
-          همراه اولین‌ها<br />در این مسیر باشید
+          همراه اولین‌ها در این مسیر باشید.
         </h2>
+        <img
+          src="@/assets/images/landing/announcement.svg?url"
+          class=""
+          alt=""
+          aria-hidden="true"
+        />
         <p class="cta__desc" v-bind="anim(2)">
-          برای دسترسی زودتر و دریافت به‌روزرسانی‌ها، به لیست انتظار بپیوندید
+          برای دسترسی زودتر و دریافت به‌روزرسانی‌ها، به لیست انتظار بپیوندید.
         </p>
         <div v-bind="anim(3)">
-          <EmailForm button-text="می‌خواهم همراه باشم" />
+          <EmailForm button-text="می‌خواهم همراه باشم." />
         </div>
       </div>
     </div>
@@ -42,16 +48,17 @@ function anim(n) {
   }
 
   &__title {
-    font-size: clamp(rem(32), 5vw, rem(56));
-    font-weight: $font-weight-bold;
+    font-size: clamp(rem(32), 5vw, rem(40));
+    font-weight: $font-weight-extrabold;
     line-height: 1.3;
-    color: $color-text-primary;
-    margin-bottom: $spacing-lg;
+    color: $color-text-muted;
+    margin-bottom: $spacing-ms;
   }
 
   &__desc {
-    font-size: $font-size-lg;
-    color: $color-text-tertiary;
+    font-size: $font-size-xl;
+    color: $color-text-faded;
+    font-weight: $font-weight-bold;
     margin-bottom: $spacing-xl;
     line-height: 1.7;
   }

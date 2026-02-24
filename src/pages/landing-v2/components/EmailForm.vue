@@ -21,7 +21,7 @@
       >
         <Transition name="ef-btn" mode="out-in">
           <span v-if="isSubmitting" key="loading">در حال ارسال...</span>
-          <span v-else-if="succeeded" key="success">می‌بینمت زود 👋</span>
+          <span v-else-if="succeeded" key="success">می‌بینمت زود!</span>
           <span v-else key="default">{{ buttonText }}</span>
         </Transition>
       </BaseButton>
