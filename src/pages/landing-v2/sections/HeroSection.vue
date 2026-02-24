@@ -3,39 +3,54 @@
     <!-- Floating document icons -->
     <div class="hero__icons" aria-hidden="true">
       <img
-        src="@/assets/icons/pagewithcurl.svg?url"
+        src="@/assets/images/landing/float-icon-1.svg?url"
         alt=""
         class="hero__icon hero__icon--1"
       />
       <img
-        src="@/assets/icons/pagefacingup.svg?url"
+        src="@/assets/images/landing/float-icon-2.svg?url"
         alt=""
         class="hero__icon hero__icon--2"
       />
       <img
-        src="@/assets/icons/memo.svg?url"
+        src="@/assets/images/landing/float-icon-3.svg?url"
         alt=""
         class="hero__icon hero__icon--3"
       />
       <img
-        src="@/assets/icons/clipboard.svg?url"
+        src="@/assets/images/landing/float-icon-4.svg?url"
         alt=""
         class="hero__icon hero__icon--4"
       />
       <img
-        src="@/assets/icons/page-facing-up.svg?url"
+        src="@/assets/images/landing/float-icon-5.svg?url"
         alt=""
         class="hero__icon hero__icon--5"
       />
       <img
-        src="@/assets/icons/bookmark-tabs.svg?url"
+        src="@/assets/images/landing/float-icon-6.svg?url"
         alt=""
         class="hero__icon hero__icon--6"
       />
       <img
-        src="@/assets/icons/scroll.svg?url"
+        src="@/assets/images/landing/float-icon-7.svg?url"
         alt=""
         class="hero__icon hero__icon--7"
+      />
+      <img
+        src="@/assets/images/landing/float-icon-8.svg?url"
+        alt=""
+        class="hero__icon hero__icon--8"
+      />
+      <img
+        src="@/assets/images/landing/float-icon-9.svg?url"
+        alt=""
+        class="hero__icon hero__icon--9"
+      />
+      <img
+        src="@/assets/images/landing/float-icon-10.svg?url"
+        alt=""
+        class="hero__icon hero__icon--10"
       />
     </div>
 
@@ -137,66 +152,88 @@ function anim(n) {
 
   &__icon {
     position: absolute;
-    --sz: 70px;
+    --sz: 60px;
     width: var(--sz);
     height: var(--sz);
     animation: lv2-float 20s infinite ease-in-out;
-    filter: brightness(0.9);
+    // filter: brightness(0.9);
 
     &--1 {
       top: 11%;
-      left: 21%;
+      left: 18%;
       // opacity: 0.8;
-      --rotation: -5deg;
+      // --rotation: -5deg;
       animation-duration: 18s;
     }
     &--2 {
-      top: 14%;
-      left: 29%;
+      top: 25%;
+      left: 14%;
       // opacity: 0.9;
-      --sz: 50px;
-      --rotation: 8deg;
+      // --sz: 50px;
+      // --rotation: 8deg;
       animation-delay: -3s;
       animation-duration: 22s;
     }
     &--3 {
-      top: 21%;
-      left: 20%;
+      top: 18%;
+      left: 21%;
       // opacity: 0.85;
-      --rotation: -25deg;
+      // --rotation: -25deg;
       animation-delay: -6s;
       animation-duration: 20s;
     }
     &--4 {
       top: 10%;
-      right: 26%;
-      --rotation: 12deg;
+      left: 24%;
+      // --rotation: 12deg;
       animation-delay: -9s;
       animation-duration: 24s;
     }
     &--5 {
-      top: 14%;
-      right: 19%;
+      top: 9%;
+      right: 21%;
       // opacity: 0.8;
-      --rotation: 18deg;
+      // --rotation: 18deg;
       animation-delay: -12s;
       animation-duration: 19s;
     }
     &--6 {
-      top: 23%;
-      right: 22%;
+      top: 20%;
+      right: 20%;
       // opacity: 0.89;
       --rotation: -14deg;
       animation-delay: -15s;
       animation-duration: 21s;
     }
     &--7 {
-      top: 18%;
-      left: 12%;
-      opacity: 0.92;
-      --rotation: 22deg;
+      top: 26%;
+      right: 23%;
+      // opacity: 0.92;
+      // --rotation: 22deg;
       animation-delay: -18s;
       animation-duration: 23s;
+    }
+    &--8 {
+      top: 16%;
+      right: 15%;
+      --rotation: -18deg;
+      animation-delay: -10s;
+      animation-duration: 26s;
+    }
+
+    &--9 {
+      top: 26%;
+      right: 14%;
+      --rotation: 16deg;
+      animation-delay: -4s;
+      animation-duration: 17s;
+    }
+    &--10 {
+      top: 27%;
+      left: 22%;
+      // --rotation: 16deg;
+      animation-delay: -4s;
+      animation-duration: 17s;
     }
   }
 
