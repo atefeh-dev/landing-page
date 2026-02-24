@@ -293,6 +293,11 @@ function anim(n) {
     position: relative;
     z-index: 1;
     margin-top: rem(64);
+    width: rem(1000);
+    height: rem(696);
+    max-width: 100%; // never overflow on smaller screens
+    margin-left: auto;
+    margin-right: auto;
   }
 
   &__browser-wrap {
