@@ -108,7 +108,7 @@
           url="zoonkan.com/template/NDA"
           src="https://zoonkan.com/template/NDA"
           iframe-title="نمایش زنده زونکن"
-          height="696px"
+          height="41rem"
           theme="light"
         />
       </div>
@@ -198,14 +198,14 @@ function anim(n) {
       --rotation: -14deg;
     }
     &--7 {
-      top: 28%;
+      top: 29%;
       right: 22%;
       animation-duration: 36s; // was 44s
       animation-delay: -6s;
     }
     &--8 {
       top: 13%;
-      right: 10%;
+      right: 9%;
       animation-duration: 48s; // was 58s
       animation-delay: -40s;
       --rotation: -18deg;

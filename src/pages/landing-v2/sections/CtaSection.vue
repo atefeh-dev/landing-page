@@ -44,7 +44,7 @@ function anim(n) {
 @use "@/styles/global/mixins" as *;
 
 .cta {
-  padding: rem(100) 0;
+  padding: rem(50) 0;
   background: $color-bg-primary;
 
   &__inner {

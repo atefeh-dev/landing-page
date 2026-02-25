@@ -98,7 +98,7 @@ $light-url-bg: #fff;
 $light-url-border: #bfbfbf;
 $light-url-text: #1b1b1b;
 $light-url-sub: #6e6e6e;
-$light-body-bg: #f5f5f5;
+$light-body-bg: #f2f2f2;
 
 $url-text-size: rem(13);
 
@@ -302,6 +302,8 @@ $dark-body-bg: #111111;
     position: relative;
     width: 100%;
     overflow: hidden;
+    border-bottom-left-radius: rem(12);
+    border-bottom-right-radius: rem(12);
   }
   &--light &__body {
     background: $light-body-bg;
@@ -315,7 +317,7 @@ $dark-body-bg: #111111;
     width: 100%;
     height: 100%;
     border: none;
-    border-radius: rem(6);
+    border-radius: 0;
   }
 }
 

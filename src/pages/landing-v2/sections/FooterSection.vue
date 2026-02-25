@@ -108,7 +108,7 @@ const { reveal } = useScrollAnimation(sectionRef);
     img {
       width: rem(24);
       height: rem(24);
-      // opacity: 0.6;
+      opacity: 0.6;
       transition: opacity $transition-fast $ease-standard;
     }
 
