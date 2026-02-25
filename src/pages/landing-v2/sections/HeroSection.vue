@@ -158,69 +158,69 @@ function anim(n) {
     --sz: 60px;
     width: var(--sz);
     height: var(--sz);
-    animation: lv2-float 20s infinite ease-in-out;
+    animation: lv2-float 18s infinite ease-in-out; // was 20s
 
     &--1 {
-      top: 11%;
+      top: 12%;
       left: 11%;
-      animation-duration: 36s;
+      animation-duration: 30s; // was 36s
       animation-delay: -4s;
     }
     &--2 {
       top: 25%;
       left: 7%;
-      animation-duration: 46s;
+      animation-duration: 38s; // was 46s
       animation-delay: -16s;
     }
     &--3 {
-      top: 17%;
-      left: 16%;
-      animation-duration: 38s;
+      top: 18%;
+      left: 17%;
+      animation-duration: 32s; // was 38s
       animation-delay: -28s;
     }
     &--4 {
       top: 9%;
       left: 22%;
-      animation-duration: 50s;
+      animation-duration: 42s; // was 50s
       animation-delay: -10s;
     }
     &--5 {
-      top: 10%;
+      top: 9%;
       right: 20%;
-      animation-duration: 42s;
+      animation-duration: 34s; // was 42s
       animation-delay: -22s;
     }
     &--6 {
       top: 19%;
       right: 18%;
-      animation-duration: 54s;
+      animation-duration: 44s; // was 54s
       animation-delay: -34s;
       --rotation: -14deg;
     }
     &--7 {
       top: 28%;
-      right: 20%;
-      animation-duration: 44s;
+      right: 22%;
+      animation-duration: 36s; // was 44s
       animation-delay: -6s;
     }
     &--8 {
       top: 13%;
-      right: 11%;
-      animation-duration: 58s;
+      right: 10%;
+      animation-duration: 48s; // was 58s
       animation-delay: -40s;
       --rotation: -18deg;
     }
     &--9 {
       top: 26%;
       right: 8%;
-      animation-duration: 34s;
+      animation-duration: 28s; // was 34s
       animation-delay: -14s;
       --rotation: 16deg;
     }
     &--10 {
-      top: 26%;
+      top: 29%;
       left: 21%;
-      animation-duration: 40s;
+      animation-duration: 32s; // was 40s
       animation-delay: -26s;
     }
   }
@@ -241,7 +241,7 @@ function anim(n) {
     display: inline-flex;
     align-items: center;
     gap: rem(8);
-    padding: rem(8);
+    padding: rem(10);
     border: 1px solid $color-border-primary;
     border-radius: $radius-md;
     color: $color-text-secondary;
@@ -253,8 +253,8 @@ function anim(n) {
   &__badge-pill {
     display: inline-flex;
     align-items: center;
-    gap: rem(4);
-    padding: rem(4) rem(8);
+    gap: rem(6);
+    padding: rem(6) rem(12);
     color: $color-text-secondary;
     border: 1px solid $color-border-primary;
     border-radius: $radius-sm;
