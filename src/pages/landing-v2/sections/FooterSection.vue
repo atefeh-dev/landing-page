@@ -8,7 +8,7 @@
         </a>
         <div class="foot__social">
           <a
-            href="https://x.com/doclastapp"
+            href="https://x.com/zoonkanapp"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="توییتر"
