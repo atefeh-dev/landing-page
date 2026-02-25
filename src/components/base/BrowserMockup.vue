@@ -150,7 +150,6 @@ $dark-body-bg: #111111;
   &__left {
     display: flex;
     align-items: center;
-    //     gap: rem(10);
     flex-shrink: 0;
     z-index: 1;
   }
@@ -240,13 +239,12 @@ $dark-body-bg: #111111;
     align-items: center;
     gap: rem(4);
     flex: 1;
-    min-width: 0; // 🔥 enables ellipsis
-    justify-content: center; // keeps lock+text centered
+    min-width: 0;
+    justify-content: center;
   }
   &--light &__url {
     background: $light-url-bg;
     border-color: $light-url-border;
-    //     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
   }
   &--dark &__url {
     background: $dark-url-bg;
@@ -255,9 +253,7 @@ $dark-body-bg: #111111;
 
   &__url-lock {
     flex-shrink: 0;
-    //     opacity: 0.6;
   }
-
   &__url-reload {
     flex-shrink: 0;
     opacity: 0.5;
@@ -284,11 +280,12 @@ $dark-body-bg: #111111;
   &__right {
     display: flex;
     align-items: center;
-    gap: rem(20);
+    gap: rem(18);
     flex-shrink: 0;
     margin-left: auto;
     z-index: 1;
   }
+
   &__url-text {
     font-size: rem(13);
     font-weight: 400;
@@ -298,7 +295,7 @@ $dark-body-bg: #111111;
     min-width: 0;
     line-height: 1;
     position: relative;
-    top: 2px; // tiny optical correction (safe)
+    top: 2px;
   }
 
   &__body {
@@ -388,8 +385,16 @@ $dark-body-bg: #111111;
     &__shield {
       display: none;
     }
+
+    // Right side gone — switch center from absolute to flex so URL fills the gap
+    &__center {
+      position: static;
+      transform: none;
+      flex: 1;
+      justify-content: flex-start;
+    }
     &__url {
-      width: rem(200);
+      width: 100%;
     }
     &__url-reload {
       display: none;
