@@ -60,7 +60,7 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: rem(24) rem(30);
+  padding: rem(30);
   pointer-events: none;
 
   // At top: gradient so content underneath blends

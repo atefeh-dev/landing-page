@@ -158,6 +158,7 @@ async function submit() {
     position: relative;
     height: rem(40); // taller to fit 2-line success message
     margin-top: rem(16);
+    margin-bottom: rem(20);
     text-align: center;
   }
 

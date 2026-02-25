@@ -77,17 +77,15 @@
 
         <p class="hero__description" v-bind="anim(3)">
           در <span class="lv2-highlight">زونکن</span> به قالب‌های استاندارد
-          حقوقی دسترسی دارید، اطلاعات موردنیاز را وارد می‌کنید،<br />
+          حقوقی دسترسی دارید، اطلاعات موردنیاز را وارد می‌کنید<br />
           و قرارداد شما در یک مسیر مشخص و شفاف تنظیم می‌شود.
         </p>
 
         <div class="hero__form" v-bind="anim(4)">
           <EmailForm
             button-text="پیوستن به لیست انتظار"
-            note="دسترسی عمومی در مرحله‌ی رونمایی فعال می‌شود.</br>
-                  در حال حاضر، استفاده از 
-                 <span class='lv2-highlight'> زونکن
-                 </span>                   از طریق دعوتنامه انجام می‌شود."
+            note="دسترسی عمومی در مرحله‌ی رونمایی فعال می‌شود.<br>
+در حال حاضر، استفاده از <span class='lv2-highlight'>زونکن</span> از طریق دعوتنامه انجام می‌شود."
           />
         </div>
       </div>
@@ -137,7 +135,7 @@ function anim(n) {
 @use "@/styles/global/mixins" as *;
 
 .hero {
-  padding-top: rem(140);
+  padding-top: rem(145);
   padding-bottom: rem(30);
   background: $color-bg-primary;
   position: relative;
@@ -147,6 +145,9 @@ function anim(n) {
   &__icons {
     position: absolute;
     inset: 0;
+    max-width: rem(1400);
+    margin-left: auto;
+    margin-right: auto;
     pointer-events: none;
     z-index: 0;
   }
@@ -158,68 +159,66 @@ function anim(n) {
     height: var(--sz);
     animation: lv2-float 20s infinite ease-in-out;
 
-    // Durations are prime-adjacent — icons never re-sync.
-    // Delays are spread unevenly so no two share the same phase.
     &--1 {
-      top: 13%;
-      left: 15%;
+      top: 11%;
+      left: 10%;
       animation-duration: 36s;
       animation-delay: -4s;
     }
     &--2 {
-      top: 24%;
-      left: 13%;
+      top: 25%;
+      left: 7%;
       animation-duration: 46s;
       animation-delay: -16s;
     }
     &--3 {
-      top: 18%;
-      left: 21%;
+      top: 17%;
+      left: 15%;
       animation-duration: 38s;
       animation-delay: -28s;
     }
     &--4 {
-      top: 10%;
-      left: 24%;
+      top: 9%;
+      left: 21%;
       animation-duration: 50s;
       animation-delay: -10s;
     }
     &--5 {
-      top: 12%;
-      right: 24%;
+      top: 10%;
+      right: 20%;
       animation-duration: 42s;
       animation-delay: -22s;
     }
     &--6 {
-      top: 20%;
-      right: 20%;
+      top: 19%;
+      right: 18%;
       animation-duration: 54s;
       animation-delay: -34s;
       --rotation: -14deg;
     }
     &--7 {
-      top: 27%;
-      right: 23%;
+      top: 28%;
+      right: 20%;
       animation-duration: 44s;
       animation-delay: -6s;
     }
     &--8 {
-      top: 15%;
-      right: 12%;
+      top: 13%;
+      right: 11%;
       animation-duration: 58s;
       animation-delay: -40s;
       --rotation: -18deg;
     }
     &--9 {
       top: 26%;
-      right: 14%;
+      right: 8%;
       animation-duration: 34s;
       animation-delay: -14s;
       --rotation: 16deg;
     }
     &--10 {
-      top: 27%;
-      left: 22%;
+      top: 26%;
+      left: 20%;
       animation-duration: 40s;
       animation-delay: -26s;
     }
@@ -295,9 +294,8 @@ function anim(n) {
   &__demo {
     position: relative;
     z-index: 1;
-    margin-top: rem(64);
+    margin-top: rem(50);
     width: rem(1000);
-    height: rem(696);
     max-width: 100%; // never overflow on smaller screens
     margin-left: auto;
     margin-right: auto;
@@ -318,7 +316,7 @@ function anim(n) {
     direction: rtl;
     font-size: $font-size-3xl;
     font-weight: $font-weight-semibold;
-    margin-bottom: rem(20);
+    margin-bottom: rem(10);
     color: #fff;
   }
 
