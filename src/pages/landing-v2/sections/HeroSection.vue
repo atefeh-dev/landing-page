@@ -63,6 +63,7 @@
               src="@/assets/ui/green-dot.svg?url"
               alt=""
               aria-hidden="true"
+              class="hero__badge-dot"
             />
             <span>چه خبر؟</span>
           </span>
@@ -260,7 +261,12 @@ function anim(n) {
     font-size: $font-size-xs;
     font-weight: $font-weight-medium;
   }
-
+  &__badge-dot {
+    width: rem(10);
+    height: rem(10);
+    display: block;
+    animation: badge-pulse 2.2s ease-in-out infinite;
+  }
   // ── Title ────────────────────────────────────────────────────────────
 
   &__title {
@@ -468,6 +474,23 @@ function anim(n) {
     }
 
     // icons hidden via md rule above
+  }
+}
+// Animation dot
+@keyframes badge-pulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(23, 178, 106, 0.4));
+  }
+
+  50% {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 6px rgba(23, 178, 106, 0.6));
+  }
+
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(23, 178, 106, 0.4));
   }
 }
 </style>
