@@ -6,8 +6,17 @@
     :type="type"
     :disabled="disabled || loading"
   >
-    <span v-if="loading" class="btn__spinner" aria-hidden="true" />
-    <slot />
+    <Transition name="btn-content" mode="out-in">
+      <span v-if="loading" class="btn__loading-inner" key="loading">
+        <slot />
+        <span class="btn__dots" aria-hidden="true"
+          ><span /><span /><span
+        /></span>
+      </span>
+      <span v-else class="btn__default-inner" key="default">
+        <slot />
+      </span>
+    </Transition>
   </button>
 </template>
 
@@ -25,31 +34,15 @@ defineProps({
     default: "md",
     validator: (v) => ["md", "lg"].includes(v),
   },
-  type: {
-    type: String,
-    default: "button",
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  loading: {
-    type: Boolean,
-    default: false,
-  },
+  type: { type: String, default: "button" },
+  disabled: { type: Boolean, default: false },
+  loading: { type: Boolean, default: false },
 });
 </script>
 
 <style lang="scss" scoped>
-// ─────────────────────────────────────────────────────────────
-// BaseButton
-// WHY notes:
-// - $color-accent-hover replaces the magic number #ffd84d.
-// - transition targets specific properties (color, background,
-//   transform, box-shadow) instead of "all" — better GPU perf.
-// - ::before shimmer uses pseudo-overlay pattern consistently.
-// - Disabled/loading states merged: both produce identical output.
-// ─────────────────────────────────────────────────────────────
+@use "@/styles/global/functions" as *;
+@use "@/styles/global/tokens" as *;
 
 .btn {
   display: inline-flex;
@@ -62,16 +55,12 @@ defineProps({
   border: none;
   border-radius: $radius-md;
   cursor: pointer;
-  transition:
-    color #{$transition-duration-fast} #{$transition-easing-standard},
-    background-color #{$transition-duration-fast} #{$transition-easing-standard},
-    transform #{$transition-duration-fast} #{$transition-easing-standard},
-    box-shadow #{$transition-duration-fast} #{$transition-easing-standard},
-    border-color #{$transition-duration-fast} #{$transition-easing-standard};
   position: relative;
   overflow: hidden;
-
-  // ── Sizes ────────────────────────────────────────────────
+  transition:
+    background-color #{$transition-duration-fast} #{$transition-easing-standard},
+    opacity #{$transition-duration-fast} #{$transition-easing-standard},
+    transform #{$transition-duration-fast} #{$transition-easing-standard};
 
   &--md {
     padding: 0.625rem 1rem;
@@ -83,36 +72,16 @@ defineProps({
     font-size: $font-size-md;
   }
 
-  // ── Variants ─────────────────────────────────────────────
-
   &--primary {
     background: $color-accent-primary;
     color: $color-bg-primary;
     box-shadow: $shadow-md;
 
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.12) 0%,
-        transparent 100%
-      );
-      opacity: 0;
-      transition: opacity #{$transition-duration-fast}
-        #{$transition-easing-standard};
-      pointer-events: none;
-    }
-
     &:hover:not(:disabled) {
-      &::before {
-        opacity: 1;
-      }
+      opacity: 0.9;
     }
-
     &:active:not(:disabled) {
-      transform: translateY(0);
+      transform: translateY(1px);
     }
   }
 
@@ -127,10 +96,6 @@ defineProps({
     }
   }
 
-  // ── States ───────────────────────────────────────────────
-  // WHY: Both :disabled and .btn--loading produce identical
-  // visual output, so they share one rule block.
-
   &:disabled,
   &--loading {
     opacity: 0.6;
@@ -138,16 +103,60 @@ defineProps({
     pointer-events: none;
   }
 
-  // ── Elements ─────────────────────────────────────────────
+  &__loading-inner,
+  &__default-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(6);
+  }
 
-  &__spinner {
-    width: rem(14);
-    height: rem(14);
-    border: 2px solid rgba(0, 0, 0, 0.25);
-    border-top-color: currentColor;
-    border-radius: $radius-full;
-    animation: spin 0.65s linear infinite;
-    flex-shrink: 0;
+  &__dots {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(5);
+
+    span {
+      display: block;
+      width: rem(6);
+      height: rem(6);
+      border-radius: $radius-full;
+      background: $color-bg-primary; // dark on yellow — always visible
+      animation: btn-pulse 1.2s ease-in-out infinite;
+
+      &:nth-child(1) {
+        animation-delay: 0s;
+      }
+      &:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      &:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+    }
+  }
+
+  .btn-content-enter-active {
+    transition: opacity 0.2s ease;
+  }
+  .btn-content-leave-active {
+    transition: opacity 0.15s ease;
+  }
+  .btn-content-enter-from,
+  .btn-content-leave-to {
+    opacity: 0;
+  }
+
+  @keyframes btn-pulse {
+    0%,
+    80%,
+    100% {
+      opacity: 0.3;
+      transform: scale(0.7);
+    }
+    40% {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 }
 </style>

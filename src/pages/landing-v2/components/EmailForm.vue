@@ -19,23 +19,32 @@
         class="ef__btn"
         @click="submit"
       >
-        <Transition name="ef-btn" mode="out-in">
-          <span v-if="isSubmitting" key="loading">در حال ارسال...</span>
-          <span v-else-if="succeeded" key="success">می‌بینمت زود!</span>
-          <span v-else key="default">{{ buttonText }}</span>
-        </Transition>
+        <span v-if="isSubmitting">در حال ارسال</span>
+        <span v-else-if="succeeded">شما در لیست هستید.</span>
+        <span v-else>{{ buttonText }}</span>
       </BaseButton>
     </div>
 
-    <!-- Status: note OR error — fixed height, crossfade -->
+    <!-- Status: note OR error OR success — fixed height, crossfade -->
     <div class="ef__status">
       <Transition name="ef-fade">
         <p v-if="showError" class="ef__error" role="alert" key="error">
-          لطفاً یک آدرس ایمیل معتبر وارد کنید!
+          لطفا یک نشانی ایمیل معتبر وارد کنید.
         </p>
-        <p v-else-if="note" class="ef__note" key="note">
-          {{ note }}
+        <p
+          v-else-if="succeeded"
+          class="ef__note ef__note--success"
+          key="success-note"
+        >
+          ایمیل شما ثبت شد.<br />پس از فعال‌شدن دسترسی، دعوتنامه برای شما ارسال
+          خواهد شد.
         </p>
+        <p
+          v-else-if="displayNote"
+          class="ef__note"
+          key="note"
+          v-html="displayNote"
+        ></p>
       </Transition>
     </div>
   </div>
@@ -59,6 +68,12 @@ const isSubmitting = ref(false);
 const succeeded = ref(false);
 
 const valid = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value));
+
+const displayNote = computed(() =>
+  succeeded.value
+    ? "ایمیل شما ثبت شد.<br />پس از فعال‌شدن دسترسی، دعوتنامه برای شما ارسال خواهد شد."
+    : props.note,
+);
 const showError = computed(
   () => touched.value && !valid.value && email.value.length > 0,
 );
@@ -70,7 +85,6 @@ async function submit() {
   isSubmitting.value = true;
   try {
     // ── API call goes here ────────────────────────────────
-    // Example:
     // await api.post("/waitlist", { email: email.value });
     // ─────────────────────────────────────────────────────
 
@@ -78,7 +92,6 @@ async function submit() {
     emit("submit", email.value);
     succeeded.value = true;
   } catch (err) {
-    // handle API error here if needed
     console.error("Waitlist submit failed:", err);
   } finally {
     isSubmitting.value = false;
@@ -130,20 +143,20 @@ async function submit() {
     }
     &:disabled {
       opacity: 0.5;
-      cursor: not-allowed;
+      cursor: default;
     }
   }
 
   &__btn {
     flex-shrink: 0;
-    min-width: rem(170); // prevents width collapse during loading
+    min-width: rem(170);
   }
 
   // ── Status area ───────────────────────────────────────────
 
   &__status {
     position: relative;
-    height: rem(24);
+    height: rem(40); // taller to fit 2-line success message
     margin-top: rem(16);
     text-align: center;
   }
@@ -156,6 +169,7 @@ async function submit() {
     top: 0;
     font-size: $font-size-sm;
     margin: 0;
+    line-height: 1.6;
   }
 
   &__error {
@@ -164,6 +178,10 @@ async function submit() {
 
   &__note {
     color: #94979c;
+
+    &--success {
+      color: $color-accent-primary;
+    }
   }
 }
 
