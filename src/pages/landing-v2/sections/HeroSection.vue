@@ -450,6 +450,7 @@ function anim(n) {
 
     &__content {
       max-width: 100%;
+      margin-top: rem(30);
     }
     &__title {
       font-size: clamp(rem(28), 8vw, rem(44));
