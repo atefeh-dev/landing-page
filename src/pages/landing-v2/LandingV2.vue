@@ -62,6 +62,7 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   justify-content: space-between;
   padding: rem(30);
   pointer-events: none;
+  background-color: $color-bg-primary;
 
   // At top: gradient so content underneath blends
   background: linear-gradient(
@@ -78,11 +79,11 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
 
   // Scrolled: solid frosted glass
   &--scrolled {
-    padding: rem(16) rem(30);
-    background: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: rem(30) rem(30);
+    // background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    // border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   // ── Logo ─────────────────────────────────────────────────
