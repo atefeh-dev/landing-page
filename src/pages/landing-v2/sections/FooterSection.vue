@@ -66,7 +66,7 @@ const { reveal } = useScrollAnimation(sectionRef);
   // border-top: 1px solid $color-border-subtle;
   background: $color-bg-primary;
 
-  padding: rem(48) 0 rem(50);
+  padding: rem(50) 0 rem(70);
 
   &__inner {
     display: flex;
@@ -106,9 +106,9 @@ const { reveal } = useScrollAnimation(sectionRef);
     }
 
     img {
-      width: rem(22);
-      height: rem(22);
-      opacity: 0.6;
+      width: rem(24);
+      height: rem(24);
+      // opacity: 0.6;
       transition: opacity $transition-fast $ease-standard;
     }
 

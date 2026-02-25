@@ -16,7 +16,10 @@
           برای دسترسی زودتر و دریافت به‌روزرسانی‌ها، به لیست انتظار بپیوندید.
         </p>
         <div v-bind="anim(3)">
-          <EmailForm button-text="می‌خواهم همراه باشم." />
+          <EmailForm
+            button-text="می‌خواهم همراه باشم."
+            note="پس از فعال‌شدن دسترسی، دعوتنامه برای شما ارسال خواهد شد."
+          />
         </div>
       </div>
     </div>
@@ -66,7 +69,7 @@ function anim(n) {
   }
 
   &__icon {
-    height: rem(80); // scales automatically with title font-size
+    height: rem(75); // scales automatically with title font-size
     width: auto;
     flex-shrink: 0;
   }
