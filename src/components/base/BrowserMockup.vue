@@ -36,6 +36,8 @@
       <div class="bm__right">
         <DownloadIcon class="bm__icon" />
 
+        <ShareIcon class="bm__icon" />
+
         <PlusIcon class="bm__icon" />
 
         <CopyIcon class="bm__icon" />
@@ -69,6 +71,7 @@ import ReloadIcon from "@/assets/icons/icon-refresh.svg?component";
 import DownloadIcon from "@/assets/icons/icon-download.svg?component";
 import PlusIcon from "@/assets/icons/plus.svg?component";
 import CopyIcon from "@/assets/icons/copy.svg?component";
+import ShareIcon from "@/assets/icons/icon-share.svg?component";
 
 const props = defineProps({
   url: { type: String, default: "zoonkan.com/template/NDA" },
@@ -89,13 +92,15 @@ const contentStyle = computed(() => ({
 @use "@/styles/global/mixins" as *;
 
 $light-chrome-bg: #fff;
-$light-chrome-border: #f1f3f4;
-$light-icon-color: #3c3c3c;
-$light-url-bg: #f2f2f2;
-$light-url-border: #f2f2f2;
-$light-url-text: #4c4c4c;
+$light-chrome-border: #dbdbdb;
+$light-icon-color: #737373;
+$light-url-bg: #fff;
+$light-url-border: #bfbfbf;
+$light-url-text: #1b1b1b;
 $light-url-sub: #6e6e6e;
 $light-body-bg: #f5f5f5;
+
+$url-text-size: rem(13);
 
 $dark-chrome-bg: #2c2c2e;
 $dark-chrome-border: rgba(255, 255, 255, 0.08);
@@ -224,7 +229,7 @@ $dark-body-bg: #111111;
   &__url {
     display: flex;
     align-items: center;
-    width: rem(300);
+    width: rem(417);
     height: rem(28);
     padding: 0 rem(10);
     border-radius: rem(6);
@@ -270,6 +275,7 @@ $dark-body-bg: #111111;
 
   &--light &__url-text {
     color: $light-url-text;
+    font-size: $url-text-size;
   }
   &--dark &__url-text {
     color: $dark-url-text;
@@ -278,7 +284,7 @@ $dark-body-bg: #111111;
   &__right {
     display: flex;
     align-items: center;
-    gap: rem(12);
+    gap: rem(20);
     flex-shrink: 0;
     margin-left: auto;
     z-index: 1;
