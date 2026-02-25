@@ -6,7 +6,7 @@ const routes = [
     path: "/",
     name: "landing-v2",
     component: () => import("@/pages/landing-v2/LandingV2.vue"),
-    meta: { title: "زونکن — قراردادهای خود را دقیق تنظیم کنید" },
+    meta: { title: "زونکن | قراردادهای خود را دقیق تنظیم کنید" },
   },
   // {
   //   // V1 always accessible — frozen in time, your manager can't touch it

@@ -253,7 +253,7 @@ function anim(n) {
     display: inline-flex;
     align-items: center;
     gap: rem(4);
-    padding: rem(6) rem(8);
+    padding: rem(4) rem(8);
     color: $color-text-secondary;
     border: 1px solid $color-border-primary;
     border-radius: $radius-sm;
