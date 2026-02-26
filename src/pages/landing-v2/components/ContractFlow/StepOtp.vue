@@ -207,18 +207,19 @@ function onResend() {
   }
 
   &__resend {
-    font-size: rem(12);
-    color: #667085;
-    margin-bottom: rem(16);
+    color: #535862;
+    font-weight: $font-weight-regular;
+    font-size: $font-size-sm;
+    margin-bottom: rem(18);
     text-align: center;
   }
 
   &__resend-btn {
     background: none;
     border: none;
-    color: #fcc015;
-    font-weight: 600;
-    font-size: rem(12);
+    color: #535862;
+    font-weight: $font-weight-regular;
+    font-size: $font-size-sm;
     font-family: inherit;
     cursor: pointer;
     padding: 0;
