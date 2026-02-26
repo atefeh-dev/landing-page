@@ -81,8 +81,8 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   &--scrolled {
     padding: rem(30) rem(30);
     // background: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
     // border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 

@@ -51,7 +51,7 @@
       class="ss__cta"
       @click="$emit('close')"
     >
-      بستن
+      از نو شروع کنید
     </BaseButton>
   </div>
 </template>
