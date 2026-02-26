@@ -16,9 +16,9 @@
       />
     </Transition>
 
-    <!-- Modal overlay — email, otp, success all layer on top of form -->
+    <!-- Email + OTP modal — dark blurred overlay -->
     <Transition name="cf-modal">
-      <div v-if="modal" class="cf__overlay" @click.self="() => {}">
+      <div v-if="modal === 'email' || modal === 'otp'" class="cf__overlay">
         <div class="cf__modal-wrap">
           <Transition name="cf-modal-swap" mode="out-in">
             <StepEmail
@@ -33,14 +33,15 @@
               @next="onOtpDone"
               @resend="onResend"
             />
-            <StepSuccess
-              v-else-if="modal === 'success'"
-              key="success"
-              :template-id="templateId"
-              @close="reset"
-            />
           </Transition>
         </div>
+      </div>
+    </Transition>
+
+    <!-- Success — full page takeover, own background -->
+    <Transition name="cf-success">
+      <div v-if="modal === 'success'" class="cf__success">
+        <StepSuccess :template-id="templateId" @close="reset" />
       </div>
     </Transition>
   </div>
@@ -127,7 +128,6 @@ function reset() {
   transition:
     opacity 0.2s ease,
     transform 0.2s ease;
-  // Step components must not be block-level inside flex — keep them inline-flex
   position: absolute;
   inset: 0;
   display: flex;
@@ -163,7 +163,20 @@ function reset() {
   opacity: 0;
   transform: translateX(-20px);
 }
-// ── Modal overlay ─────────────────────────────────────────────────
+
+// ── Background step fade ──────────────────────────────────────────
+.cf-fade-enter-active {
+  transition: opacity 0.22s ease;
+}
+.cf-fade-leave-active {
+  transition: opacity 0.18s ease;
+}
+.cf-fade-enter-from,
+.cf-fade-leave-to {
+  opacity: 0;
+}
+
+// ── Email/OTP modal overlay — dark blurred ────────────────────────
 .cf__overlay {
   position: absolute;
   inset: 0;
@@ -181,5 +194,60 @@ function reset() {
   width: 100%;
   max-width: rem(400);
   position: relative;
+}
+
+.cf-modal-enter-active {
+  transition: opacity 0.2s ease;
+}
+.cf-modal-leave-active {
+  transition: opacity 0.18s ease;
+}
+.cf-modal-enter-from,
+.cf-modal-leave-to {
+  opacity: 0;
+}
+
+.cf-modal-swap-enter-active {
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+.cf-modal-swap-leave-active {
+  transition: opacity 0.12s ease;
+}
+.cf-modal-swap-enter-from {
+  opacity: 0;
+  transform: translateY(rem(8));
+}
+.cf-modal-swap-leave-to {
+  opacity: 0;
+}
+
+// ── Success full-page overlay — clean white/neutral ───────────────
+.cf__success {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: #f2f4f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: rem(24);
+}
+
+.cf-success-enter-active {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+.cf-success-leave-active {
+  transition: opacity 0.2s ease;
+}
+.cf-success-enter-from {
+  opacity: 0;
+  transform: translateY(rem(16));
+}
+.cf-success-leave-to {
+  opacity: 0;
 }
 </style>

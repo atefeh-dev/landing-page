@@ -74,10 +74,12 @@ const pdfItems = [
 .ss {
   background: #fff;
   border-radius: rem(16);
-  padding: rem(28) rem(24) rem(24);
+  padding: rem(32) rem(28) rem(28);
   direction: rtl;
   text-align: center;
-  box-shadow: 0 rem(20) rem(48) rgba(0, 0, 0, 0.18);
+  width: rem(400);
+  max-width: 100%;
+  box-shadow: 0 rem(4) rem(24) rgba(0, 0, 0, 0.08);
 
   &__check {
     display: inline-flex;
