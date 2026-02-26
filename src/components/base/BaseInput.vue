@@ -12,12 +12,7 @@
       @input="$emit('update:modelValue', $event.target.value)"
       @blur="$emit('blur')"
     />
-    <!--
-      WHY: Removed input__error--visible modifier class.
-      The element is only rendered when `error` is truthy (v-if),
-      so toggling a --visible class on top is redundant.
-      The enter/leave transition is handled by Vue's <Transition>.
-    -->
+
     <Transition name="input-error">
       <p v-if="error" class="input__error" role="alert">
         {{ error }}

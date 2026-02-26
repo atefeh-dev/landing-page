@@ -36,18 +36,29 @@
       </button>
     </div>
 
-    <button
+    <!-- <button
       class="st__cta"
       :disabled="!selected"
       @click="$emit('next', selected)"
     >
       ادامه
-    </button>
+    </button> -->
+    <BaseButton
+      variant="primary"
+      size="lg"
+      :loading="isSubmitting"
+      :disabled="succeeded"
+      class="ef__btn"
+      @click="$emit('next', selected)"
+    >
+      <span> ادامه</span>
+    </BaseButton>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import BaseButton from "@/components/base/BaseButton.vue";
 defineEmits(["next"]);
 
 const selected = ref("NDA");

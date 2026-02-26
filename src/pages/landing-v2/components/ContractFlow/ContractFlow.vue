@@ -44,7 +44,7 @@ const emit = defineEmits(["url-change"]);
 const step = ref("templates");
 const templateId = ref("NDA");
 const email = ref("");
-const transitionName = ref("cf-forward");
+const transitionName = ref("cf-fade");
 
 const urlMap = {
   templates: "zoonkan.com/templates/",
@@ -55,13 +55,13 @@ const urlMap = {
 };
 
 function goTo(newStep, url) {
-  transitionName.value = "cf-forward";
+  transitionName.value = "cf-fade";
   step.value = newStep;
   emit("url-change", url ?? urlMap[newStep]);
 }
 
 function goBack(newStep) {
-  transitionName.value = "cf-back";
+  transitionName.value = "cf-fade";
   step.value = newStep;
   emit("url-change", urlMap[newStep]);
 }

@@ -75,7 +75,6 @@ defineProps({
   &--primary {
     background: $color-accent-primary;
     color: $color-bg-primary;
-    box-shadow: $shadow-md;
 
     &:hover:not(:disabled) {
       opacity: 0.9;
