@@ -77,7 +77,7 @@ function goTo(newStep, url) {
 function onTemplateSelected(id) {
   templateId.value = id;
   step.value = "form";
-  emitUrl(`zoonkan.com/ccreate/${id}`);
+  emitUrl(`zoonkan.com/create/${id}`);
 }
 
 function onFormDone() {

@@ -85,13 +85,13 @@ defineProps({
   }
 
   &--secondary {
-    background: transparent;
-    color: $color-text-secondary;
-    border: 1px solid $color-border-medium;
+    border: 1.5px solid #e4e7ec;
+    background: #fff;
+    color: #344054;
 
     &:hover:not(:disabled) {
-      border-color: $color-border-strong;
-      color: $color-text-primary;
+      opacity: 0.9;
+      background-color: #f2f2f233;
     }
   }
 
@@ -119,7 +119,7 @@ defineProps({
       width: rem(6);
       height: rem(6);
       border-radius: $radius-full;
-      background: $color-bg-primary; // dark on yellow — always visible
+      background: $color-bg-primary;
       animation: btn-pulse 1.2s ease-in-out infinite;
 
       &:nth-child(1) {
