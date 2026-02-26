@@ -1,63 +1,75 @@
 <template>
   <div class="so">
-    <div class="so__overlay" />
-    <div class="so__modal">
-      <h2 class="so__title">کد تأیید را وارد کنید</h2>
-      <p class="so__sub">
-        کد ارسال‌شده به
-        <span class="so__email" dir="ltr">{{ email }}</span>
-        را وارد نمایید.
-      </p>
+    <h2 class="so__title">کد تأیید را وارد کنید.</h2>
+    <p class="so__sub">
+      کد ارسال‌شده به
+      <span class="so__email" dir="ltr">{{ email }}</span>
+      را وارد نمایید.
+    </p>
 
-      <div class="so__otp" dir="ltr">
-        <input
-          v-for="(_, i) in 4"
-          :key="i"
-          :ref="(el) => (inputs[i] = el)"
-          v-model="digits[i]"
-          class="so__digit"
-          :class="{ 'so__digit--filled': digits[i] }"
-          type="text"
-          inputmode="numeric"
-          maxlength="1"
-          @input="onInput(i, $event)"
-          @keydown="onKeydown(i, $event)"
-          @paste="onPaste"
-        />
-      </div>
-
-      <p class="so__resend">
-        کد تأیید را دریافت نکردید؟
-        <button class="so__resend-btn" @click="$emit('resend')">
-          ارسال دوباره
-        </button>
-      </p>
-
-      <button
-        class="so__cta"
-        :disabled="!complete"
-        @click="$emit('next', digits.join(''))"
-      >
-        تأیید
-      </button>
+    <div class="so__otp" dir="ltr">
+      <input
+        v-for="(_, i) in 4"
+        :key="i"
+        :ref="(el) => (inputs[i] = el)"
+        v-model="digits[i]"
+        class="so__digit"
+        :class="{ 'so__digit--filled': digits[i] }"
+        type="text"
+        inputmode="numeric"
+        maxlength="1"
+        :disabled="isSubmitting"
+        @input="onInput(i, $event)"
+        @keydown="onKeydown(i, $event)"
+        @paste="onPaste"
+      />
     </div>
+
+    <Transition name="so-err">
+      <p v-if="showError" class="so__error">
+        کد وارد شده صحیح نیست. لطفاً دوباره امتحان کنید.
+      </p>
+    </Transition>
+
+    <p class="so__resend">
+      کد تأیید را دریافت نکردید؟
+      <button class="so__resend-btn" :disabled="isSubmitting" @click="onResend">
+        ارسال دوباره
+      </button>
+    </p>
+
+    <BaseButton
+      variant="primary"
+      size="lg"
+      :loading="isSubmitting"
+      :disabled="!complete"
+      style="width: 100%"
+      @click="submit"
+    >
+      <span v-if="isSubmitting">در حال تأیید</span>
+      <span v-else>تأیید</span>
+    </BaseButton>
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
+import BaseButton from "@/components/base/BaseButton.vue";
 
-defineProps({ email: { type: String, default: "" } });
-defineEmits(["next", "resend"]);
+const props = defineProps({ email: { type: String, default: "" } });
+const emit = defineEmits(["next", "resend"]);
 
 const digits = ref(["", "", "", ""]);
 const inputs = ref([]);
+const isSubmitting = ref(false);
+const showError = ref(false);
 
 const complete = computed(() => digits.value.every((d) => d !== ""));
 
 function onInput(i, e) {
   const val = e.target.value.replace(/\D/g, "").slice(-1);
   digits.value[i] = val;
+  showError.value = false;
   if (val && i < 3) inputs.value[i + 1]?.focus();
 }
 
@@ -75,51 +87,58 @@ function onPaste(e) {
   inputs.value[Math.min(text.length, 3)]?.focus();
   e.preventDefault();
 }
+
+async function submit() {
+  if (!complete.value) return;
+  showError.value = false;
+  isSubmitting.value = true;
+
+  try {
+    // TODO: replace with real API call
+    // await api.verifyOtp(props.email, digits.value.join(''))
+    await new Promise((r) => setTimeout(r, 1200)); // simulate network
+    emit("next", digits.value.join(""));
+  } catch {
+    showError.value = true;
+    digits.value = ["", "", "", ""];
+    inputs.value[0]?.focus();
+  } finally {
+    isSubmitting.value = false;
+  }
+}
+
+function onResend() {
+  digits.value = ["", "", "", ""];
+  showError.value = false;
+  emit("resend");
+}
 </script>
 
 <style lang="scss" scoped>
 @use "@/styles/global/functions" as *;
+@use "@/styles/global/tokens" as *;
 
 .so {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
   background: #fff;
+  border-radius: rem(12);
+  padding: rem(24);
+  direction: rtl;
+  box-shadow: 0 rem(20) rem(48) rgba(0, 0, 0, 0.18);
 
-  &__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(52, 64, 84, 0.5);
-    backdrop-filter: blur(2px);
-  }
-
-  &__modal {
-    position: relative;
-    z-index: 1;
-    background: #fff;
-    border-radius: rem(16);
-    padding: rem(32) rem(28);
-    width: rem(360);
-    max-width: calc(100% - rem(32));
-    box-shadow: 0 rem(24) rem(48) rgba(0, 0, 0, 0.18);
-    direction: rtl;
+  &__title {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: #181d27;
+    margin-bottom: rem(10);
     text-align: center;
   }
 
-  &__title {
-    font-size: rem(18);
-    font-weight: 700;
-    color: #101828;
-    margin-bottom: rem(8);
-  }
-
   &__sub {
-    font-size: rem(13);
-    color: #667085;
-    margin-bottom: rem(24);
+    font-size: $font-size-sm;
+    color: #535862;
     line-height: 1.6;
+    margin-bottom: rem(16);
+    text-align: center;
   }
 
   &__email {
@@ -130,39 +149,68 @@ function onPaste(e) {
   &__otp {
     display: flex;
     justify-content: center;
-    gap: rem(12);
-    margin-bottom: rem(16);
+    gap: rem(10);
+    margin-bottom: rem(8);
   }
 
   &__digit {
-    width: rem(56);
-    height: rem(64);
-    border: 1.5px solid #d0d5dd;
-    border-radius: rem(10);
-    font-size: rem(28);
-    font-weight: 700;
-    color: #fcc015;
+    width: 5rem;
+    height: 5rem;
+    border: 2px solid #d0d5dd;
+    border-radius: 0.75rem;
+
     text-align: center;
-    background: #fff;
-    font-family: inherit;
-    transition: border-color 0.15s ease;
+    font-size: 3.125rem;
+    font-weight: 800;
+    color: $color-accent-primary;
+
+    padding: 0;
+    line-height: 5rem;
+    box-sizing: border-box;
 
     &:focus {
       outline: none;
-      border-color: #fcc015;
+      border-color: $color-accent-primary;
       box-shadow: 0 0 0 3px rgba(252, 192, 21, 0.12);
     }
-
     &--filled {
-      border-color: #fcc015;
+      border-color: $color-accent-primary;
       background: #fffbeb;
+    }
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
     }
   }
 
+  &__error {
+    font-size: rem(12);
+    color: $color-error;
+    text-align: center;
+    margin-bottom: rem(8);
+  }
+
+  .so-err-enter-active {
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
+  }
+  .so-err-leave-active {
+    transition: opacity 0.1s ease;
+  }
+  .so-err-enter-from {
+    opacity: 0;
+    transform: translateY(rem(-4));
+  }
+  .so-err-leave-to {
+    opacity: 0;
+  }
+
   &__resend {
-    font-size: rem(13);
+    font-size: rem(12);
     color: #667085;
-    margin-bottom: rem(20);
+    margin-bottom: rem(16);
+    text-align: center;
   }
 
   &__resend-btn {
@@ -170,36 +218,20 @@ function onPaste(e) {
     border: none;
     color: #fcc015;
     font-weight: 600;
-    font-size: rem(13);
+    font-size: rem(12);
     font-family: inherit;
     cursor: pointer;
     padding: 0;
     margin-right: rem(4);
 
-    &:hover {
+    &:hover:not(:disabled) {
       text-decoration: underline;
+      text-underline-offset: 4px;
     }
-  }
-
-  &__cta {
-    width: 100%;
-    padding: rem(12) rem(20);
-    border-radius: rem(8);
-    border: none;
-    background: #fcc015;
-    color: #101828;
-    font-size: rem(15);
-    font-weight: 700;
-    font-family: inherit;
-    cursor: pointer;
-    transition: opacity 0.15s ease;
 
     &:disabled {
       opacity: 0.4;
-      cursor: not-allowed;
-    }
-    &:hover:not(:disabled) {
-      opacity: 0.9;
+      cursor: default;
     }
   }
 }

@@ -1,32 +1,47 @@
 <template>
   <div class="cf">
-    <Transition :name="transitionName" mode="out-in">
+    <!-- Base steps — swap with fade -->
+    <Transition name="cf-fade" mode="out-in">
       <StepTemplates
         v-if="step === 'templates'"
         key="templates"
         @next="onTemplateSelected"
       />
       <StepForm
-        v-else-if="step === 'form'"
+        v-else
         key="form"
         :template-id="templateId"
         @next="onFormDone"
-        @back="goBack('templates')"
+        @back="goTo('templates', `zoonkan.com/templates/`)"
       />
-      <StepEmail v-else-if="step === 'email'" key="email" @next="onEmailDone" />
-      <StepOtp
-        v-else-if="step === 'otp'"
-        key="otp"
-        :email="email"
-        @next="onOtpDone"
-        @resend="onResend"
-      />
-      <StepSuccess
-        v-else-if="step === 'success'"
-        key="success"
-        :template-id="templateId"
-        @close="reset"
-      />
+    </Transition>
+
+    <!-- Modal overlay — email, otp, success all layer on top of form -->
+    <Transition name="cf-modal">
+      <div v-if="modal" class="cf__overlay" @click.self="() => {}">
+        <div class="cf__modal-wrap">
+          <Transition name="cf-modal-swap" mode="out-in">
+            <StepEmail
+              v-if="modal === 'email'"
+              key="email"
+              @next="onEmailDone"
+            />
+            <StepOtp
+              v-else-if="modal === 'otp'"
+              key="otp"
+              :email="email"
+              @next="onOtpDone"
+              @resend="onResend"
+            />
+            <StepSuccess
+              v-else-if="modal === 'success'"
+              key="success"
+              :template-id="templateId"
+              @close="reset"
+            />
+          </Transition>
+        </div>
+      </div>
     </Transition>
   </div>
 </template>
@@ -41,47 +56,43 @@ import StepSuccess from "./StepSuccess.vue";
 
 const emit = defineEmits(["url-change"]);
 
+// "step" controls the background (templates | form)
+// "modal" controls the overlay (null | email | otp | success)
 const step = ref("templates");
+const modal = ref(null);
 const templateId = ref("NDA");
 const email = ref("");
-const transitionName = ref("cf-fade");
 
-const urlMap = {
-  templates: "zoonkan.com/templates/",
-  form: "zoonkan.com/ccreate/NDA",
-  email: "zoonkan.com/create/NDA/send",
-  otp: "zoonkan.com/create/NDA/confirm",
-  success: "zoonkan.com/create/NDA/success",
-};
-
-function goTo(newStep, url) {
-  transitionName.value = "cf-fade";
-  step.value = newStep;
-  emit("url-change", url ?? urlMap[newStep]);
+function emitUrl(url) {
+  emit("url-change", url);
 }
 
-function goBack(newStep) {
-  transitionName.value = "cf-fade";
+function goTo(newStep, url) {
   step.value = newStep;
-  emit("url-change", urlMap[newStep]);
+  modal.value = null;
+  emitUrl(url);
 }
 
 function onTemplateSelected(id) {
   templateId.value = id;
-  goTo("form", `zoonkan.com/ccreate/${id}`);
+  step.value = "form";
+  emitUrl(`zoonkan.com/ccreate/${id}`);
 }
 
 function onFormDone() {
-  goTo("email", `zoonkan.com/create/${templateId.value}/send`);
+  modal.value = "email";
+  emitUrl(`zoonkan.com/create/${templateId.value}/send`);
 }
 
 function onEmailDone(val) {
   email.value = val;
-  goTo("otp", `zoonkan.com/create/${templateId.value}/confirm`);
+  modal.value = "otp";
+  emitUrl(`zoonkan.com/create/${templateId.value}/confirm`);
 }
 
 function onOtpDone() {
-  goTo("success", `zoonkan.com/create/${templateId.value}/success`);
+  modal.value = "success";
+  emitUrl(`zoonkan.com/create/${templateId.value}/success`);
 }
 
 function onResend() {}
@@ -89,7 +100,9 @@ function onResend() {}
 function reset() {
   templateId.value = "NDA";
   email.value = "";
-  goBack("templates");
+  modal.value = null;
+  step.value = "templates";
+  emitUrl("zoonkan.com/templates/");
 }
 </script>
 
@@ -149,5 +162,24 @@ function reset() {
 .cf-back-leave-to {
   opacity: 0;
   transform: translateX(-20px);
+}
+// ── Modal overlay ─────────────────────────────────────────────────
+.cf__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: rgba(52, 64, 84, 0.55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: rem(24);
+}
+
+.cf__modal-wrap {
+  width: 100%;
+  max-width: rem(400);
+  position: relative;
 }
 </style>
