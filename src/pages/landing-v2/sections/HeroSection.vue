@@ -1,6 +1,5 @@
 <template>
   <section class="hero" ref="sectionRef">
-    <!-- Floating document icons -->
     <div class="hero__icons" aria-hidden="true">
       <img
         src="@/assets/images/landing/float-icon-1.svg?url"
@@ -54,7 +53,6 @@
       />
     </div>
 
-    <!-- Above-fold content -->
     <div class="lv2-container">
       <div class="hero__content">
         <div class="hero__badge" v-bind="anim(1)">
@@ -104,13 +102,9 @@
             aria-hidden="true"
           />
         </div>
-        <BrowserMockup
-          url="zoonkan.com/template/NDA"
-          src="https://zoonkan.com/template/NDA"
-          iframe-title="نمایش زنده زونکن"
-          height="41rem"
-          theme="light"
-        />
+        <BrowserMockup :url="currentUrl" theme="light" height="41rem">
+          <ContractFlow @url-change="currentUrl = $event" />
+        </BrowserMockup>
       </div>
     </div>
   </section>
@@ -121,13 +115,15 @@ import { ref } from "vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 import EmailForm from "../components/EmailForm.vue";
 import BrowserMockup from "@/components/base/BrowserMockup.vue";
+import ContractFlow from "../components/ContractFlow/ContractFlow.vue";
 
 const sectionRef = ref(null);
 const { reveal } = useScrollAnimation(sectionRef, 0);
-
 function anim(n) {
   return reveal(n);
 }
+
+const currentUrl = ref("zoonkan.com/templates/");
 </script>
 
 <style lang="scss" scoped>
@@ -142,7 +138,6 @@ function anim(n) {
   position: relative;
   overflow: hidden;
 
-  // ── Floating icons ────────────────────────────────────────────────
   &__icons {
     position: absolute;
     inset: 0;
@@ -151,6 +146,7 @@ function anim(n) {
     margin-right: auto;
     pointer-events: none;
     z-index: 0;
+    overflow: hidden;
   }
 
   &__icon {
@@ -158,74 +154,72 @@ function anim(n) {
     --sz: 60px;
     width: var(--sz);
     height: var(--sz);
-    animation: lv2-float 18s infinite ease-in-out; // was 20s
+    animation: lv2-float 18s infinite ease-in-out;
 
     &--1 {
       top: 12%;
       left: 11%;
-      animation-duration: 30s; // was 36s
+      animation-duration: 30s;
       animation-delay: -4s;
     }
     &--2 {
       top: 25%;
       left: 7%;
-      animation-duration: 38s; // was 46s
+      animation-duration: 38s;
       animation-delay: -16s;
     }
     &--3 {
       top: 18%;
       left: 17%;
-      animation-duration: 32s; // was 38s
+      animation-duration: 32s;
       animation-delay: -28s;
     }
     &--4 {
       top: 9%;
       left: 22%;
-      animation-duration: 42s; // was 50s
+      animation-duration: 42s;
       animation-delay: -10s;
     }
     &--5 {
       top: 9%;
       right: 20%;
-      animation-duration: 34s; // was 42s
+      animation-duration: 34s;
       animation-delay: -22s;
     }
     &--6 {
       top: 19%;
       right: 18%;
-      animation-duration: 44s; // was 54s
+      animation-duration: 44s;
       animation-delay: -34s;
       --rotation: -14deg;
     }
     &--7 {
       top: 29%;
       right: 22%;
-      animation-duration: 36s; // was 44s
+      animation-duration: 36s;
       animation-delay: -6s;
     }
     &--8 {
       top: 13%;
       right: 9%;
-      animation-duration: 48s; // was 58s
+      animation-duration: 48s;
       animation-delay: -40s;
       --rotation: -18deg;
     }
     &--9 {
       top: 26%;
       right: 8%;
-      animation-duration: 28s; // was 34s
+      animation-duration: 28s;
       animation-delay: -14s;
       --rotation: 16deg;
     }
     &--10 {
       top: 29%;
       left: 21%;
-      animation-duration: 32s; // was 40s
+      animation-duration: 32s;
       animation-delay: -26s;
     }
   }
-
-  // ── Content block ──────────────────────────────────────────────────
 
   &__content {
     position: relative;
@@ -234,8 +228,6 @@ function anim(n) {
     max-width: rem(760);
     margin: 0 auto;
   }
-
-  // ── Badge ─────────────────────────────────────────────────────────
 
   &__badge {
     display: inline-flex;
@@ -261,13 +253,13 @@ function anim(n) {
     font-size: $font-size-xs;
     font-weight: $font-weight-medium;
   }
+
   &__badge-dot {
     width: rem(10);
     height: rem(10);
     display: block;
     animation: badge-pulse 2.2s ease-in-out infinite;
   }
-  // ── Title ────────────────────────────────────────────────────────────
 
   &__title {
     font-size: clamp(rem(36), 6vw, rem(64));
@@ -278,8 +270,6 @@ function anim(n) {
     margin-bottom: $spacing-md;
   }
 
-  // ── Description ───────────────────────────────────────────────────
-
   &__description {
     font-size: $font-size-lg;
     line-height: 1.8;
@@ -287,32 +277,20 @@ function anim(n) {
     margin-bottom: rem(28);
   }
 
-  // ── Note ──────────────────────────────────────────────────────────────
-
   &__note {
     font-size: $font-size-sm;
     color: $color-text-tertiary;
     margin-top: rem(14);
   }
 
-  // ── Demo ──────────────────────────────────────────────────────────────
-
   &__demo {
     position: relative;
     z-index: 1;
     margin-top: rem(50);
     width: rem(1100);
-    height: rem(744);
-    max-width: 100%; // never overflow on smaller screens
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-  }
-
-  &__browser-wrap {
-    display: block;
-    // width: rem(1100);
-    max-width: calc(100% - rem(48));
-    margin: 0 auto;
   }
 
   &__demo-label {
@@ -333,89 +311,10 @@ function anim(n) {
     flex-shrink: 0;
     display: block;
   }
-
-  &__browser {
-    border-radius: $radius-lg;
-    overflow: hidden;
-    border: 1px solid $color-border-medium;
-    background: $color-bg-elevated;
-    box-shadow:
-      0 rem(32) rem(80) rgba(0, 0, 0, 0.6),
-      0 0 0 1px $color-border-subtle;
-  }
-
-  &__browser-bar {
-    display: flex;
-    align-items: center;
-    gap: rem(8);
-    padding: rem(12) rem(16);
-    background: $color-bg-tertiary;
-    border-bottom: 1px solid $color-border-subtle;
-  }
-
-  &__dot {
-    width: rem(12);
-    height: rem(12);
-    border-radius: $radius-full;
-    flex-shrink: 0;
-    &--red {
-      background: #ff5f57;
-    }
-    &--yellow {
-      background: #ffbd2e;
-    }
-    &--green {
-      background: #28ca42;
-    }
-  }
-
-  &__browser-url {
-    display: flex;
-    align-items: center;
-    gap: rem(5);
-    flex: 1;
-    justify-content: center;
-    max-width: rem(280);
-    margin: 0 auto;
-    padding: rem(4) rem(12);
-    background: $color-bg-secondary;
-    border: 1px solid $color-border-subtle;
-    border-radius: $radius-sm;
-    color: $color-text-tertiary;
-    font-size: $font-size-xs;
-  }
-
-  &__browser-actions {
-    display: flex;
-    gap: rem(10);
-    color: $color-text-muted;
-    opacity: 0.6;
-    margin-right: auto;
-  }
-
-  &__browser-content {
-    position: relative;
-    width: 100%;
-    height: rem(540);
-    background: #f5f5f5;
-  }
-
-  &__iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
 }
-
-// ── Responsive ─────────────────────────────────────────────────────────────
 
 @include respond-to(lg) {
   .hero {
-    &__browser-content {
-      height: rem(440);
-    }
     &__icon {
       --sz: 54px;
     }
@@ -427,9 +326,6 @@ function anim(n) {
     padding-top: rem(100);
     &__demo {
       margin-top: $spacing-2xl;
-    }
-    &__browser-content {
-      height: rem(360);
     }
     &__demo-label {
       font-size: $font-size-xl;
@@ -467,28 +363,18 @@ function anim(n) {
     &__demo-icon {
       height: rem(28);
     }
-    &__browser-content {
-      height: rem(260);
-    }
-    &__browser-actions {
-      display: none;
-    }
-
-    // icons hidden via md rule above
   }
 }
-// Animation dot
+
 @keyframes badge-pulse {
   0% {
     transform: scale(1);
     filter: drop-shadow(0 0 0 rgba(23, 178, 106, 0.4));
   }
-
   50% {
     transform: scale(1.15);
     filter: drop-shadow(0 0 6px rgba(23, 178, 106, 0.6));
   }
-
   100% {
     transform: scale(1);
     filter: drop-shadow(0 0 0 rgba(23, 178, 106, 0.4));
