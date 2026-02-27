@@ -369,7 +369,7 @@ function onBrowserNavigate(url) {
       font-size: $font-size-md;
     }
     &__demo {
-      margin-top: $spacing-xl;
+      margin-top: $spacing-2xl;
     }
     &__demo-label {
       font-size: $font-size-md;
