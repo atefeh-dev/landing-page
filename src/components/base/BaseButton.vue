@@ -95,14 +95,13 @@ defineProps({
     }
   }
 
-  // Ghost — no background, no border, just text + icon
-  // Used for back/tertiary actions
   &--ghost {
     background: none;
     border: none;
     color: #667085;
-    padding-inline: 0;
+    padding: 0;
     font-weight: $font-weight-semibold;
+    font-size: $font-size-sm;
 
     &:hover:not(:disabled) {
       color: #344054;
