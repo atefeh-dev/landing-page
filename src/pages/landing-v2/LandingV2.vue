@@ -117,6 +117,15 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
 @include respond-to(md) {
   .lv2-topbar {
     padding: rem(20) rem(24);
+
+    // Tablet: solid dark + blur — safe because bg is always dark here
+    &::after {
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      height: 100%;
+    }
+
     &__logo img {
       width: rem(28);
     }
@@ -130,6 +139,14 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
 @include respond-to(sm) {
   .lv2-topbar {
     padding: rem(16) rem(16);
+
+    &::after {
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(1px);
+      -webkit-backdrop-filter: blur(12px);
+      height: 100%;
+    }
+
     &__logo img {
       width: rem(24);
     }
