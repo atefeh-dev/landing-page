@@ -62,31 +62,30 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   justify-content: space-between;
   padding: rem(30);
   pointer-events: none;
-  background-color: $color-bg-primary;
+  background: none;
 
-  // At top: gradient so content underneath blends
-  background: linear-gradient(
-    to bottom,
-    rgba(10, 10, 10, 0.88) 0%,
-    rgba(10, 10, 10, 0) 100%
-  );
-
-  // Only fade the background — no movement, no hide
-  transition:
-    background 0.3s ease,
-    backdrop-filter 0.3s ease,
-    padding 0.3s ease;
-
-  // Scrolled: solid frosted glass
-  &--scrolled {
-    padding: rem(30) rem(30);
-    // background: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-    // border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  // A single div behind everything — just a gradient, no blur
+  // This is the only honest solution: backdrop-filter cannot be masked
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    // Tall enough to fade naturally, but clipped by overflow
+    height: rem(120);
+    background: linear-gradient(
+      to bottom,
+      #0a0a0a 0%,
+      rgba(10, 10, 10, 0) 100%
+    );
+    pointer-events: none;
+    z-index: 0;
   }
 
-  // ── Logo ─────────────────────────────────────────────────
+  &__logo,
+  &__tagline {
+    position: relative;
+    z-index: 1;
+  }
 
   &__logo {
     pointer-events: auto;
@@ -99,8 +98,6 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
       height: auto;
     }
   }
-
-  // ── Tagline: 123×60 on desktop ────────────────────────────
 
   &__tagline {
     pointer-events: auto;
@@ -117,15 +114,9 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   }
 }
 
-// ── Responsive ────────────────────────────────────────────────
-
 @include respond-to(md) {
   .lv2-topbar {
     padding: rem(20) rem(24);
-    &--scrolled {
-      padding: rem(14) rem(24);
-    }
-
     &__logo img {
       width: rem(28);
     }
@@ -139,10 +130,6 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
 @include respond-to(sm) {
   .lv2-topbar {
     padding: rem(16) rem(16);
-    &--scrolled {
-      padding: rem(12) rem(16);
-    }
-
     &__logo img {
       width: rem(24);
     }
