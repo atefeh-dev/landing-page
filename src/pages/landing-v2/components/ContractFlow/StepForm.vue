@@ -2,7 +2,7 @@
   <div class="sf">
     <!-- Header — outside the card, top of page -->
     <div class="sf__page-header">
-      <h2 class="sf__title">اطلاعات {{ templateName }} را وارد کنید.</h2>
+      <h2 class="sf__title">اطلاعات {{ templateName }} را وارد کنید</h2>
       <p class="sf__sub">اطلاعات زیر برای تنظیم نسخه نهایی استفاده می‌شود.</p>
     </div>
 
@@ -339,7 +339,6 @@ const allFilled = computed(() =>
 <style lang="scss" scoped>
 @use "@/styles/global/functions" as *;
 @use "@/styles/global/tokens" as *;
-
 $color-title: #181d27;
 $color-subtitle: #535862;
 $color-lable: #414651;
@@ -461,6 +460,61 @@ $color-lable: #414651;
     transition: color 0.15s ease;
     &:hover {
       color: #344054;
+    }
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────────────
+@media (max-width: 600px) {
+  .sf {
+    &__page-header {
+      padding: rem(14) rem(16) rem(10);
+    }
+    &__title {
+      font-size: rem(14);
+    }
+    &__sub {
+      font-size: rem(12);
+    }
+    &__card {
+      margin: 0 rem(12) rem(10);
+      border-radius: rem(8);
+    }
+    &__fields {
+      padding: rem(14) rem(14);
+      gap: rem(10);
+    }
+    &__footer {
+      padding: rem(8) rem(12) rem(10);
+    }
+  }
+}
+
+// ── Responsive ─────────────────────────────────────────────────────
+@media (max-width: 600px) {
+  .sf {
+    &__page-header {
+      padding: rem(12) rem(16) rem(10);
+    }
+    &__title {
+      font-size: rem(14);
+    }
+    &__sub {
+      font-size: rem(12);
+    }
+    &__card {
+      margin: 0 rem(12) rem(10);
+      border-radius: rem(8);
+    }
+    &__fields {
+      padding: rem(12) rem(14);
+      gap: rem(8);
+    }
+    &__footer {
+      padding: rem(6) rem(12) rem(10);
+    }
+    &__label {
+      font-size: rem(11);
     }
   }
 }

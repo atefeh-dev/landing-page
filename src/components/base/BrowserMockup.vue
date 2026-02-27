@@ -12,34 +12,49 @@
 
         <SidebarIcon class="bm__icon bm__icon--sidebar" />
 
-        <BackIcon class="bm__icon bm__icon--back" />
+        <button
+          class="bm__nav-btn"
+          :disabled="!canGoBack"
+          :class="{ 'bm__nav-btn--disabled': !canGoBack }"
+          @click="goBack"
+        >
+          <BackIcon class="bm__icon bm__icon--back" />
+        </button>
 
-        <ForwardIcon class="bm__icon bm__icon--dimmed" />
+        <button
+          class="bm__nav-btn"
+          :disabled="!canGoForward"
+          :class="{ 'bm__nav-btn--disabled': !canGoForward }"
+          @click="goForward"
+        >
+          <ForwardIcon class="bm__icon bm__icon--forward" />
+        </button>
       </div>
 
       <!-- CENTER: absolutely positioned — URL always truly centered -->
       <div class="bm__center">
         <ShieldIcon class="bm__shield" />
 
-        <!-- URL bar: 300px wide, 28px tall, #f2f2f2 -->
         <div class="bm__url">
           <div class="bm__url-inner">
             <LockIcon class="bm__url-lock" />
-            <span class="bm__url-text">{{ url }}</span>
+            <span class="bm__url-text">{{ currentUrl }}</span>
           </div>
 
-          <ReloadIcon class="bm__url-reload" />
+          <button class="bm__reload-btn" @click="reload">
+            <ReloadIcon
+              class="bm__url-reload"
+              :class="{ 'bm__url-reload--spin': reloading }"
+            />
+          </button>
         </div>
       </div>
 
       <!-- RIGHT: download + new tab + copy -->
       <div class="bm__right">
         <DownloadIcon class="bm__icon" />
-
         <ShareIcon class="bm__icon" />
-
         <PlusIcon class="bm__icon" />
-
         <CopyIcon class="bm__icon" />
       </div>
     </div>
@@ -61,7 +76,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import SidebarIcon from "@/assets/icons/icon-sidebar-toggle.svg?component";
 import BackIcon from "@/assets/icons/icon-arrow-back.svg?component";
 import ForwardIcon from "@/assets/icons/icon-arrow-forward.svg?component";
@@ -80,6 +95,48 @@ const props = defineProps({
   height: { type: String, default: "520px" },
   theme: { type: String, default: "light" },
 });
+
+const emit = defineEmits(["navigate"]);
+
+// ── History stack ─────────────────────────────────────────────────
+const history = ref([props.url]);
+const historyIdx = ref(0);
+const reloading = ref(false);
+
+const currentUrl = computed(() => history.value[historyIdx.value]);
+const canGoBack = computed(() => historyIdx.value > 0);
+const canGoForward = computed(
+  () => historyIdx.value < history.value.length - 1,
+);
+
+// When ContractFlow emits url-change → push to history
+watch(
+  () => props.url,
+  (newUrl) => {
+    if (newUrl === currentUrl.value) return;
+    history.value = history.value.slice(0, historyIdx.value + 1);
+    history.value.push(newUrl);
+    historyIdx.value = history.value.length - 1;
+  },
+);
+
+function goBack() {
+  if (!canGoBack.value) return;
+  historyIdx.value--;
+  emit("navigate", currentUrl.value);
+}
+
+function goForward() {
+  if (!canGoForward.value) return;
+  historyIdx.value++;
+  emit("navigate", currentUrl.value);
+}
+
+async function reload() {
+  reloading.value = true;
+  await new Promise((r) => setTimeout(r, 600));
+  reloading.value = false;
+}
 
 const contentStyle = computed(() => ({
   height: props.height === "auto" ? "auto" : props.height,
@@ -152,6 +209,7 @@ $dark-body-bg: #111111;
     align-items: center;
     flex-shrink: 0;
     z-index: 1;
+    gap: rem(2);
   }
 
   &__lights {
@@ -177,6 +235,29 @@ $dark-body-bg: #111111;
     &--green {
       background: #28c840;
       box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  // ── Nav buttons (back / forward) ──────────────────────────────────
+  &__nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: rem(12);
+    border-radius: rem(4);
+    cursor: pointer;
+    line-height: 0;
+    transition: opacity 0.15s ease;
+
+    &--disabled {
+      opacity: 0.3;
+      cursor: default;
+      pointer-events: none;
+    }
+    &:hover:not(&--disabled) {
+      opacity: 0.65;
     }
   }
 
@@ -254,10 +335,28 @@ $dark-body-bg: #111111;
   &__url-lock {
     flex-shrink: 0;
   }
+
+  &__reload-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    flex-shrink: 0;
+    line-height: 0;
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
   &__url-reload {
     flex-shrink: 0;
     opacity: 0.5;
-    margin-left: auto;
+    &--spin {
+      animation: bm-spin 0.6s linear;
+    }
   }
 
   &--light &__url-lock,
@@ -319,8 +418,18 @@ $dark-body-bg: #111111;
     border: none;
     border-radius: 0;
   }
+
+  @keyframes bm-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }
 
+// ── Tablet ─────────────────────────────────────────────────────────
 @include respond-to(md) {
   .bm {
     &__chrome {
@@ -361,25 +470,23 @@ $dark-body-bg: #111111;
   }
 }
 
+// ── Mobile ─────────────────────────────────────────────────────────
 @include respond-to(sm) {
   .bm {
     &__chrome {
-      height: rem(40);
+      height: rem(38);
       padding: 0 rem(10);
     }
-    &__icon {
-      &--sidebar {
-        display: none;
-      }
-      &--back {
-        display: none;
-      }
-      &--dimmed {
-        display: none;
-      }
-    }
     &__lights {
-      margin-right: rem(8);
+      gap: rem(5);
+      margin-right: rem(6);
+    }
+    &__light {
+      width: rem(9);
+      height: rem(9);
+    }
+    &__icon--sidebar {
+      display: none;
     }
     &__right {
       display: none;
@@ -387,22 +494,28 @@ $dark-body-bg: #111111;
     &__shield {
       display: none;
     }
+    &__nav-btn {
+      display: none;
+    }
 
-    // Right side gone — switch center from absolute to flex so URL fills the gap
+    // URL bar fills space when right side is hidden
     &__center {
       position: static;
       transform: none;
       flex: 1;
       justify-content: flex-start;
+      margin: 0 rem(8);
+      gap: rem(6);
     }
     &__url {
       width: 100%;
+      height: rem(24);
     }
-    &__url-reload {
+    &__reload-btn {
       display: none;
     }
     &__url-text {
-      font-size: rem(11);
+      font-size: rem(10);
     }
   }
 }

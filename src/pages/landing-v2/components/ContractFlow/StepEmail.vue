@@ -153,5 +153,34 @@ async function submit() {
   .se-err-leave-to {
     opacity: 0;
   }
+
+  @media (max-width: 600px) {
+    .se {
+      padding: rem(20) rem(16) rem(16);
+      &__title {
+        font-size: rem(15);
+      }
+      &__sub {
+        font-size: rem(12);
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .se {
+      padding: rem(18) rem(16) rem(16);
+      &__title {
+        font-size: rem(14);
+      }
+      &__sub {
+        font-size: rem(12);
+        margin-bottom: rem(12);
+      }
+      &__input {
+        font-size: rem(13);
+        padding: rem(8) rem(12);
+      }
+    }
+  }
 }
 </style>

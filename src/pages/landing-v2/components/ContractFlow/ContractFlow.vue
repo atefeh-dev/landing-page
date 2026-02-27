@@ -105,6 +105,37 @@ function reset() {
   step.value = "templates";
   emitUrl("zoonkan.com/templates/");
 }
+
+// ── Back/forward navigation from BrowserMockup ───────────────────
+function navigateTo(url) {
+  const createMatch = url.match(/zoonkan\.com\/create\/(\w+)$/);
+  const sendMatch = url.match(/zoonkan\.com\/create\/(\w+)\/send/);
+  const confirmMatch = url.match(/zoonkan\.com\/create\/(\w+)\/confirm/);
+  const successMatch = url.match(/zoonkan\.com\/create\/(\w+)\/success/);
+
+  if (url === "zoonkan.com/templates/") {
+    step.value = "templates";
+    modal.value = null;
+  } else if (createMatch) {
+    templateId.value = createMatch[1];
+    step.value = "form";
+    modal.value = null;
+  } else if (sendMatch) {
+    templateId.value = sendMatch[1];
+    step.value = "form";
+    modal.value = "email";
+  } else if (confirmMatch) {
+    templateId.value = confirmMatch[1];
+    step.value = "form";
+    modal.value = "otp";
+  } else if (successMatch) {
+    templateId.value = successMatch[1];
+    step.value = "form";
+    modal.value = "success";
+  }
+}
+
+defineExpose({ navigateTo });
 </script>
 
 <style lang="scss" scoped>

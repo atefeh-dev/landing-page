@@ -145,6 +145,7 @@ function anim(n) {
     padding: rem(60) 0;
     &__grid {
       grid-template-columns: repeat(2, 1fr);
+      gap: 0;
     }
     &__card:last-child {
       grid-column: 1 / -1;
@@ -160,9 +161,10 @@ function anim(n) {
 
 @include respond-to(sm) {
   .ap {
-    padding: rem(48) 0;
+    padding: rem(16) 0;
     &__grid {
       grid-template-columns: 1fr;
+      gap: rem(2);
     }
     &__card:last-child {
       grid-column: auto;

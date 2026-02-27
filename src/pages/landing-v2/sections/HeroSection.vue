@@ -102,8 +102,16 @@
             aria-hidden="true"
           />
         </div>
-        <BrowserMockup :url="currentUrl" theme="light" height="41rem">
-          <ContractFlow @url-change="currentUrl = $event" />
+        <BrowserMockup
+          :url="currentUrl"
+          theme="light"
+          height="41rem"
+          @navigate="onBrowserNavigate"
+        >
+          <ContractFlow
+            ref="contractFlowRef"
+            @url-change="currentUrl = $event"
+          />
         </BrowserMockup>
       </div>
     </div>
@@ -124,6 +132,12 @@ function anim(n) {
 }
 
 const currentUrl = ref("zoonkan.com/templates/");
+const contractFlowRef = ref(null);
+
+function onBrowserNavigate(url) {
+  currentUrl.value = url;
+  contractFlowRef.value?.navigateTo?.(url);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -346,7 +360,7 @@ const currentUrl = ref("zoonkan.com/templates/");
 
     &__content {
       max-width: 100%;
-      margin-top: rem(30);
+      margin-top: rem(40);
     }
     &__title {
       font-size: clamp(rem(28), 8vw, rem(44));

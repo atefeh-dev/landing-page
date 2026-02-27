@@ -1,6 +1,6 @@
 <template>
   <div class="so">
-    <h2 class="so__title">کد تأیید را وارد کنید.</h2>
+    <h2 class="so__title">کد تأیید را وارد کنید</h2>
     <p class="so__sub">
       کد ارسال‌شده به
       <span class="so__email" dir="ltr">{{ email }}</span>
@@ -154,19 +154,19 @@ function onResend() {
   }
 
   &__digit {
-    width: 5rem;
-    height: 5rem;
-    border: 2px solid #d0d5dd;
-    border-radius: 0.75rem;
-
-    text-align: center;
-    font-size: 3.125rem;
-    font-weight: 800;
+    width: rem(52);
+    height: rem(60);
+    border: 1.5px solid #d0d5dd;
+    border-radius: rem(10);
+    font-size: rem(26);
+    font-weight: $font-weight-extrabold;
     color: $color-accent-primary;
-
-    padding: 0;
-    line-height: 5rem;
-    box-sizing: border-box;
+    text-align: center;
+    background: #fff;
+    font-family: inherit;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
 
     &:focus {
       outline: none;
@@ -224,15 +224,59 @@ function onResend() {
     cursor: pointer;
     padding: 0;
     margin-right: rem(4);
-
     &:hover:not(:disabled) {
       text-decoration: underline;
       text-underline-offset: 4px;
     }
-
     &:disabled {
       opacity: 0.4;
       cursor: default;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .so {
+      padding: rem(20) rem(16) rem(16);
+      &__title {
+        font-size: rem(15);
+      }
+      &__sub {
+        font-size: rem(12);
+      }
+      &__digit {
+        width: rem(44);
+        height: rem(52);
+        font-size: rem(22);
+      }
+      &__otp {
+        gap: rem(8);
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .so {
+      padding: rem(18) rem(16) rem(16);
+      &__title {
+        font-size: rem(14);
+      }
+      &__sub {
+        font-size: rem(12);
+        margin-bottom: rem(12);
+      }
+      &__digit {
+        width: 3.5rem;
+        height: 3.5rem;
+        font-size: rem(26);
+        border-radius: rem(10);
+      }
+      &__otp {
+        gap: rem(8);
+        margin-bottom: rem(8);
+      }
+      &__resend {
+        font-size: rem(11);
+      }
     }
   }
 }

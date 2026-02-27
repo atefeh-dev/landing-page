@@ -51,7 +51,7 @@
       class="ss__cta"
       @click="$emit('close')"
     >
-      از نو شروع کنید
+      بستن
     </BaseButton>
   </div>
 </template>
@@ -172,6 +172,39 @@ const templateName = names[props.templateId] ?? "قرارداد";
 @keyframes ss-draw {
   to {
     stroke-dashoffset: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .ss {
+    padding: rem(24) rem(16) rem(20);
+    &__title {
+      font-size: rem(15);
+    }
+    &__sub {
+      font-size: rem(12);
+    }
+    &__pdfs {
+      margin-top: rem(24);
+      margin-bottom: rem(16);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .ss {
+    padding: rem(24) rem(16) rem(18);
+    width: 100%;
+    &__title {
+      font-size: rem(14);
+    }
+    &__sub {
+      font-size: rem(12);
+    }
+    &__pdfs {
+      margin-top: rem(20);
+      margin-bottom: rem(20);
+    }
   }
 }
 </style>
