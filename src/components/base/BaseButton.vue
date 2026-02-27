@@ -27,7 +27,7 @@ defineProps({
   variant: {
     type: String,
     default: "primary",
-    validator: (v) => ["primary", "secondary"].includes(v),
+    validator: (v) => ["primary", "secondary", "ghost"].includes(v),
   },
   size: {
     type: String,
@@ -92,6 +92,23 @@ defineProps({
     &:hover:not(:disabled) {
       opacity: 0.9;
       background-color: #f2f2f233;
+    }
+  }
+
+  // Ghost — no background, no border, just text + icon
+  // Used for back/tertiary actions
+  &--ghost {
+    background: none;
+    border: none;
+    color: #667085;
+    padding-inline: 0;
+    font-weight: $font-weight-semibold;
+
+    &:hover:not(:disabled) {
+      color: #344054;
+    }
+    &:active:not(:disabled) {
+      transform: translateY(1px);
     }
   }
 

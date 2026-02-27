@@ -62,10 +62,10 @@
       >
         تنظیم قرارداد
       </BaseButton>
-      <button class="sf__back" type="button" @click="$emit('back')">
-        بازگشت به مرحله‌ی قبل
+      <BaseButton variant="ghost" size="md" @click="$emit('back')">
         <RightArrowIcon />
-      </button>
+        بازگشت به مرحله‌ی قبل
+      </BaseButton>
     </div>
   </div>
 </template>
