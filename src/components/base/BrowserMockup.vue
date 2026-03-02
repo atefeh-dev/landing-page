@@ -29,12 +29,11 @@
         >
           <ForwardIcon class="bm__icon bm__icon--forward" />
         </button>
+        <ShieldIcon class="bm__shield" />
       </div>
 
       <!-- CENTER: absolutely positioned — URL always truly centered -->
       <div class="bm__center">
-        <ShieldIcon class="bm__shield" />
-
         <div class="bm__url">
           <div class="bm__url-inner">
             <LockIcon class="bm__url-lock" />
@@ -291,6 +290,11 @@ $dark-body-bg: #111111;
   &__shield {
     flex-shrink: 0;
     display: block;
+    position: absolute;
+    top: 50%;
+    left: calc(50% - #{rem(300)}); // adjust based on URL width
+    transform: translateY(-50%);
+    z-index: 1;
   }
   &--light &__shield {
     color: $light-url-sub;
@@ -299,8 +303,7 @@ $dark-body-bg: #111111;
     color: $dark-url-sub;
   }
 
-  // Truly centered via absolute positioning
-  // pointer-events: none so it NEVER blocks left nav buttons underneath
+  // ── CENTER: absolutely positioned — URL always truly centered ──────
   &__center {
     position: absolute;
     left: 50%;
@@ -322,15 +325,17 @@ $dark-body-bg: #111111;
     pointer-events: auto;
   }
 
+  // ── URL bar: centered, wider than before ─────────────────────────
   &__url {
     display: flex;
     align-items: center;
-    width: rem(417);
+    width: rem(550); // ← was rem(417), now wider as per guideline
     height: rem(28);
     padding: 0 rem(10);
     border-radius: rem(6);
     border: 1px solid;
   }
+
   &__url-inner {
     display: flex;
     align-items: center;
@@ -472,7 +477,7 @@ $dark-body-bg: #111111;
       }
     }
     &__url {
-      width: rem(240);
+      width: rem(340);
     }
     &__url-text {
       font-size: rem(12);
@@ -524,7 +529,6 @@ $dark-body-bg: #111111;
       gap: rem(6);
     }
     &__url {
-      width: 100%;
       height: rem(24);
     }
     &__reload-btn {

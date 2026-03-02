@@ -6,7 +6,8 @@
       aria-label="سربرگ"
     >
       <a href="#" class="lv2-topbar__logo" aria-label="صفحه اصلی زونکن">
-        <img src="@/assets/brand/logo-dark-mode.svg?url" alt="زونکن" />
+        <!-- <img src="@/assets/brand/logo-dark-mode.svg?url" alt="زونکن" /> -->
+        <LogoSvg />
       </a>
       <span class="lv2-topbar__tagline">
         <img
@@ -32,6 +33,7 @@ import HeroSection from "./sections/HeroSection.vue";
 import ApproachSection from "./sections/ApproachSection.vue";
 import CtaSection from "./sections/CtaSection.vue";
 import FooterSection from "./sections/FooterSection.vue";
+import LogoSvg from "@/assets/brand/subtract.svg";
 
 const scrolled = ref(false);
 
@@ -94,7 +96,7 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
     display: block;
     flex-shrink: 0;
 
-    img {
+    svg {
       display: block;
       width: rem(28);
       height: auto;
