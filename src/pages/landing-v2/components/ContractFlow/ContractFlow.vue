@@ -116,10 +116,6 @@ function navigateTo(url) {
   if (url === "zoonkan.com/templates/") {
     step.value = "templates";
     modal.value = null;
-  } else if (createMatch) {
-    templateId.value = createMatch[1];
-    step.value = "form";
-    modal.value = null;
   } else if (sendMatch) {
     templateId.value = sendMatch[1];
     step.value = "form";
@@ -132,7 +128,12 @@ function navigateTo(url) {
     templateId.value = successMatch[1];
     step.value = "form";
     modal.value = "success";
+  } else if (createMatch) {
+    templateId.value = createMatch[1];
+    step.value = "form";
+    modal.value = null;
   }
+  // Do NOT emitUrl here — onBrowserNavigate in HeroSection handles historyUrl directly
 }
 
 defineExpose({ navigateTo });

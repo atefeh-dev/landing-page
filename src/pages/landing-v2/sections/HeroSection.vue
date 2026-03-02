@@ -91,8 +91,8 @@
     </div>
 
     <!-- Demo browser -->
-    <div class="lv2-container">
-      <div class="hero__demo" v-bind="anim(6)">
+    <div class="hero__demo-wrap">
+      <div class="hero__demo" ref="demoRef" v-bind="anim(6)">
         <div class="hero__demo-label">
           <span>قرارداد شما، مرحله به مرحله</span>
           <img
@@ -103,15 +103,13 @@
           />
         </div>
         <BrowserMockup
-          :url="currentUrl"
+          :url="historyUrl"
+          :display-url="displayUrl"
           theme="light"
           height="41rem"
           @navigate="onBrowserNavigate"
         >
-          <ContractFlow
-            ref="contractFlowRef"
-            @url-change="currentUrl = $event"
-          />
+          <ContractFlow ref="contractFlowRef" @url-change="onUrlChange" />
         </BrowserMockup>
       </div>
     </div>
@@ -119,7 +117,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch, onMounted, onUnmounted } from "vue";
 import { useScrollAnimation } from "@/composables/useScrollAnimation";
 import EmailForm from "../components/EmailForm.vue";
 import BrowserMockup from "@/components/base/BrowserMockup.vue";
@@ -131,13 +129,67 @@ function anim(n) {
   return reveal(n);
 }
 
-const currentUrl = ref("zoonkan.com/templates/");
+// ── Two separate refs — this is the key ──────────────────────────
+// historyUrl: the real URL, drives BrowserMockup history stack
+// displayUrl: what shows in the URL bar (may be mid-type)
+// They are only connected via explicit assignment, never via watch loop
+const historyUrl = ref("zoonkan.com/templates/");
+const displayUrl = ref("");
 const contractFlowRef = ref(null);
+const demoRef = ref(null);
 
+// ── Typing animation ──────────────────────────────────────────────
+let typeTimer = null;
+function typeUrl(target) {
+  clearTimeout(typeTimer);
+  displayUrl.value = "";
+  let i = 0;
+  const tick = () => {
+    displayUrl.value = target.slice(0, i);
+    i++;
+    if (i <= target.length) {
+      typeTimer = setTimeout(tick, 38 + Math.random() * 22);
+    }
+  };
+  typeTimer = setTimeout(tick, 300);
+}
+
+// ── Forward navigation (ContractFlow advances) ────────────────────
+// ContractFlow emits @url-change → update historyUrl (drives history)
+// then type the new URL in the bar
+function onUrlChange(url) {
+  historyUrl.value = url;
+  typeUrl(url);
+}
+
+// ── Back/Forward navigation (browser chrome buttons) ──────────────
+// BrowserMockup emits @navigate → set displayUrl instantly (no typing)
+// tell ContractFlow to go to that step, but do NOT update historyUrl
+// (BrowserMockup already has the correct history position)
 function onBrowserNavigate(url) {
-  currentUrl.value = url;
+  clearTimeout(typeTimer);
+  displayUrl.value = url; // instant — no typing on back/forward
+  historyUrl.value = url; // keep in sync so forward nav works
   contractFlowRef.value?.navigateTo?.(url);
 }
+
+// ── Initial type on viewport enter ───────────────────────────────
+let hasTyped = false;
+
+onMounted(() => {
+  // Type URL once when demo enters viewport
+  const obs = new IntersectionObserver(
+    ([e]) => {
+      if (e.isIntersecting && !hasTyped) {
+        hasTyped = true;
+        typeUrl(historyUrl.value);
+      }
+    },
+    { threshold: 0.1 },
+  );
+  if (demoRef.value) obs.observe(demoRef.value);
+  onUnmounted(() => obs.disconnect());
+});
 </script>
 
 <style lang="scss" scoped>
@@ -147,10 +199,10 @@ function onBrowserNavigate(url) {
 
 .hero {
   padding-top: rem(145);
-  padding-bottom: rem(30);
+  // padding-bottom: rem(30);
   background: $color-bg-primary;
   position: relative;
-  overflow: hidden;
+  overflow: clip;
 
   &__icons {
     position: absolute;
@@ -160,7 +212,7 @@ function onBrowserNavigate(url) {
     margin-right: auto;
     pointer-events: none;
     z-index: 0;
-    overflow: hidden;
+    overflow: hidden; // keeps float icons clipped, hero itself is visible
   }
 
   &__icon {
@@ -297,14 +349,32 @@ function onBrowserNavigate(url) {
     margin-top: rem(14);
   }
 
-  &__demo {
+  // Tall scroll container — gives scroll-timeline room to animate
+  &__demo-wrap {
     position: relative;
+    // Extra height creates the scroll distance for the animation
+    // padding-bottom: rem(60);
+    margin-top: rem(55);
+  }
+
+  &__demo {
+    position: sticky;
+    top: rem(60);
     z-index: 1;
-    margin-top: rem(50);
-    width: rem(1100);
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+    transform-origin: 50% 0%;
+    will-change: transform;
+
+    // Scroll-driven: expand on enter, contract on exit
+    animation: demo-scale linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+
+    :deep(.bm) {
+      animation: demo-radius linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
   }
 
   &__demo-label {
@@ -355,12 +425,12 @@ function onBrowserNavigate(url) {
 
 @include respond-to(sm) {
   .hero {
-    padding-top: rem(80);
-    padding-bottom: rem(48);
+    padding-top: rem(90);
+    padding-bottom: rem(10);
 
     &__content {
       max-width: 100%;
-      margin-top: rem(40);
+      margin-top: rem(30);
     }
     &__title {
       font-size: clamp(rem(28), 8vw, rem(44));
@@ -369,7 +439,7 @@ function onBrowserNavigate(url) {
       font-size: $font-size-md;
     }
     &__demo {
-      margin-top: $spacing-2xl;
+      margin-top: $spacing-xl;
     }
     &__demo-label {
       font-size: $font-size-md;
@@ -377,6 +447,36 @@ function onBrowserNavigate(url) {
     &__demo-icon {
       height: rem(28);
     }
+  }
+}
+
+@keyframes demo-scale {
+  0% {
+    transform: scale(0.78);
+  } // entering — small
+  40% {
+    transform: scale(1);
+  } // fully in view — full width
+  60% {
+    transform: scale(1);
+  } // hold full width while centered
+  100% {
+    transform: scale(0.78);
+  } // leaving — back to small
+}
+
+@keyframes demo-radius {
+  0% {
+    border-radius: rem(20);
+  }
+  40% {
+    border-radius: 0;
+  }
+  60% {
+    border-radius: 0;
+  }
+  100% {
+    border-radius: rem(20);
   }
 }
 

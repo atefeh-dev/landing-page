@@ -63,15 +63,17 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   padding: rem(30);
   pointer-events: none;
   background: none;
+  // No height set — topbar is only as tall as logo content
+  // This prevents it from covering the mockup chrome below
 
-  // A single div behind everything — just a gradient, no blur
-  // This is the only honest solution: backdrop-filter cannot be masked
   &::after {
     content: "";
     position: absolute;
-    inset: 0;
-    // Tall enough to fade naturally, but clipped by overflow
-    height: rem(120);
+    top: 0;
+    left: 0;
+    right: 0;
+    // Gradient overflows visually but pointer-events:none = never blocks
+    height: rem(130);
     background: linear-gradient(
       to bottom,
       #0a0a0a 0%,
@@ -140,9 +142,10 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   .lv2-topbar {
     padding: rem(16) rem(16);
 
+    // Mobile: solid dark + strong blur — content scrolls under, blur hides it cleanly
     &::after {
       background: rgba(10, 10, 10, 0.9);
-      backdrop-filter: blur(1px);
+      backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       height: 100%;
     }

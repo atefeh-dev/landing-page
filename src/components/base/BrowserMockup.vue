@@ -1,7 +1,7 @@
 <template>
   <div class="bm" :class="`bm--${theme}`" dir="ltr">
     <!-- ── Chrome bar ──────────────────────────────────────────── -->
-    <div class="bm__chrome" aria-hidden="true">
+    <div class="bm__chrome">
       <!-- LEFT: traffic lights + sidebar + back/forward -->
       <div class="bm__left">
         <div class="bm__lights">
@@ -38,7 +38,9 @@
         <div class="bm__url">
           <div class="bm__url-inner">
             <LockIcon class="bm__url-lock" />
-            <span class="bm__url-text">{{ currentUrl }}</span>
+            <span class="bm__url-text">{{
+              props.displayUrl || currentUrl
+            }}</span>
           </div>
 
           <button class="bm__reload-btn" @click="reload">
@@ -90,6 +92,7 @@ import ShareIcon from "@/assets/icons/icon-share.svg?component";
 
 const props = defineProps({
   url: { type: String, default: "zoonkan.com/template/NDA" },
+  displayUrl: { type: String, default: "" },
   src: { type: String, default: "" },
   iframeTitle: { type: String, default: "نمایش زونکن" },
   height: { type: String, default: "520px" },
@@ -102,6 +105,7 @@ const emit = defineEmits(["navigate"]);
 const history = ref([props.url]);
 const historyIdx = ref(0);
 const reloading = ref(false);
+let internalNav = false;
 
 const currentUrl = computed(() => history.value[historyIdx.value]);
 const canGoBack = computed(() => historyIdx.value > 0);
@@ -123,12 +127,14 @@ watch(
 function goBack() {
   if (!canGoBack.value) return;
   historyIdx.value--;
+  internalNav = true;
   emit("navigate", currentUrl.value);
 }
 
 function goForward() {
   if (!canGoForward.value) return;
   historyIdx.value++;
+  internalNav = true;
   emit("navigate", currentUrl.value);
 }
 
@@ -294,6 +300,7 @@ $dark-body-bg: #111111;
   }
 
   // Truly centered via absolute positioning
+  // pointer-events: none so it NEVER blocks left nav buttons underneath
   &__center {
     position: absolute;
     left: 50%;
@@ -304,6 +311,15 @@ $dark-body-bg: #111111;
     gap: rem(11);
     justify-content: center;
     z-index: 0;
+    pointer-events: none;
+  }
+
+  // Restore pointer-events on interactive children only
+  &__url {
+    pointer-events: auto;
+  }
+  &__reload-btn {
+    pointer-events: auto;
   }
 
   &__url {
