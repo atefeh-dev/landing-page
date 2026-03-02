@@ -462,10 +462,10 @@ onMounted(() => {
     border-radius: rem(20);
   }
   40% {
-    border-radius: 0;
+    border-radius: rem(20);
   }
   60% {
-    border-radius: 0;
+    border-radius: rem(20);
   }
   100% {
     border-radius: rem(20);
