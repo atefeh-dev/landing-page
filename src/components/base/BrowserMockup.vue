@@ -530,6 +530,7 @@ $dark-body-bg: #111111;
     }
     &__url {
       height: rem(24);
+      width: 100%;
     }
     &__reload-btn {
       display: none;
