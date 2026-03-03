@@ -174,7 +174,7 @@ $dark-url-sub: rgba(255, 255, 255, 0.45);
 $dark-body-bg: #111111;
 
 .bm {
-  border-radius: rem(12);
+  border-radius: var(--bm-radius, rem(12)); // controlled by parent via CSS var
   overflow: hidden;
 
   &--light {
@@ -286,7 +286,6 @@ $dark-body-bg: #111111;
   &--dark &__icon {
     color: $dark-icon-color;
   }
-
   &__shield {
     flex-shrink: 0;
     display: block;
@@ -303,7 +302,8 @@ $dark-body-bg: #111111;
     color: $dark-url-sub;
   }
 
-  // ── CENTER: absolutely positioned — URL always truly centered ──────
+  // Truly centered via absolute positioning
+  // pointer-events: none so it NEVER blocks left nav buttons underneath
   &__center {
     position: absolute;
     left: 50%;
@@ -325,7 +325,6 @@ $dark-body-bg: #111111;
     pointer-events: auto;
   }
 
-  // ── URL bar: centered, wider than before ─────────────────────────
   &__url {
     display: flex;
     align-items: center;
@@ -335,7 +334,6 @@ $dark-body-bg: #111111;
     border-radius: rem(6);
     border: 1px solid;
   }
-
   &__url-inner {
     display: flex;
     align-items: center;
@@ -529,6 +527,7 @@ $dark-body-bg: #111111;
       gap: rem(6);
     }
     &__url {
+      width: 100%;
       height: rem(24);
       width: 100%;
     }

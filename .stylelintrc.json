@@ -1,0 +1,15 @@
+{
+  "rules": {
+    "property-no-unknown": [
+      true,
+      {
+        "ignoreProperties": [
+          "animation-timeline",
+          "animation-range",
+          "scroll-timeline",
+          "view-timeline"
+        ]
+      }
+    ]
+  }
+}

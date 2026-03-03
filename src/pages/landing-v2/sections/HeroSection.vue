@@ -142,9 +142,8 @@ function typeUrl(target) {
   const tick = () => {
     displayUrl.value = target.slice(0, i);
     i++;
-    if (i <= target.length) {
+    if (i <= target.length)
       typeTimer = setTimeout(tick, 38 + Math.random() * 22);
-    }
   };
   typeTimer = setTimeout(tick, 300);
 }
@@ -162,7 +161,6 @@ function onBrowserNavigate(url) {
 }
 
 let hasTyped = false;
-
 onMounted(() => {
   const obs = new IntersectionObserver(
     ([e]) => {
@@ -334,9 +332,14 @@ onMounted(() => {
     margin-top: rem(14);
   }
 
+  // Wrap controls the max-width — demo itself is always 100% of wrap
   &__demo-wrap {
     position: relative;
     margin-top: rem(55);
+    // Desktop: 90vw centered
+    max-width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   &__demo {
@@ -348,23 +351,14 @@ onMounted(() => {
     will-change: transform;
 
     /* stylelint-disable property-no-unknown */
-    max-width: 90vw;
-    margin-left: auto;
-    margin-right: auto;
-
-    /* stylelint-disable property-no-unknown */
     animation: demo-scale linear both;
     animation-timeline: view();
     animation-range: entry 0% exit 100%;
     /* stylelint-enable property-no-unknown */
 
-    :deep(.bm) {
-      /* stylelint-disable property-no-unknown */
-      animation: demo-radius linear both;
-      animation-timeline: view();
-      animation-range: entry 0% exit 100%;
-      /* stylelint-enable property-no-unknown */
-    }
+    // Set --bm-radius on the element — BrowserMockup reads it via var()
+    // Desktop & tablet: fixed, no animation
+    --bm-radius: #{rem(12)};
   }
 
   &__demo-label {
@@ -398,9 +392,9 @@ onMounted(() => {
 @include respond-to(md) {
   .hero {
     padding-top: rem(100);
-    &__demo {
-      margin-top: $spacing-2xl;
-      max-width: 100%;
+
+    &__demo-wrap {
+      max-width: 95vw;
     }
     &__demo-label {
       font-size: $font-size-xl;
@@ -419,6 +413,25 @@ onMounted(() => {
     padding-top: rem(90);
     padding-bottom: rem(10);
 
+    // Mobile: 100vw, radius animates 12px → 0 → 12px with scroll
+    &__demo-wrap {
+      max-width: 100vw;
+      margin-left: calc(-50vw + 50%); // pull to true edges
+      margin-right: calc(-50vw + 50%);
+    }
+
+    &__demo {
+      /* stylelint-disable property-no-unknown */
+      animation:
+        demo-scale linear both,
+        demo-radius-mobile linear both;
+      animation-timeline: view(), view();
+      animation-range:
+        entry 0% exit 100%,
+        entry 0% exit 100%;
+      /* stylelint-enable property-no-unknown */
+    }
+
     &__content {
       max-width: 100%;
       margin-top: rem(30);
@@ -429,10 +442,6 @@ onMounted(() => {
     &__description {
       font-size: $font-size-md;
     }
-    &__demo {
-      margin-top: $spacing-xl;
-      max-width: 100%;
-    }
     &__demo-label {
       font-size: $font-size-md;
     }
@@ -440,6 +449,13 @@ onMounted(() => {
       height: rem(28);
     }
   }
+}
+
+// Register --bm-radius as animatable length type
+@property --bm-radius {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 12px;
 }
 
 @keyframes demo-scale {
@@ -457,18 +473,19 @@ onMounted(() => {
   }
 }
 
-@keyframes demo-radius {
+// Mobile only — animates --bm-radius which BrowserMockup reads via var()
+@keyframes demo-radius-mobile {
   0% {
-    border-radius: rem(20);
+    --bm-radius: #{rem(12)};
   }
   40% {
-    border-radius: rem(20);
+    --bm-radius: 0px;
   }
   60% {
-    border-radius: rem(20);
+    --bm-radius: 0px;
   }
   100% {
-    border-radius: rem(20);
+    --bm-radius: #{rem(12)};
   }
 }
 
