@@ -385,6 +385,70 @@ onMounted(() => {
   .hero {
     &__icon {
       --sz: 54px;
+      opacity: 0.5;
+      &--1 {
+        top: 14%;
+        left: 6%;
+        animation-duration: 30s;
+        animation-delay: -4s;
+      }
+      &--2 {
+        top: 25%;
+        left: 4%;
+        animation-duration: 38s;
+        animation-delay: -16s;
+      }
+      &--3 {
+        top: 20%;
+        left: 12%;
+        animation-duration: 32s;
+        animation-delay: -28s;
+      }
+      &--4 {
+        top: 12%;
+        left: 22%;
+        animation-duration: 42s;
+        animation-delay: -10s;
+      }
+      &--5 {
+        top: 12%;
+        right: 19%;
+        animation-duration: 34s;
+        animation-delay: -22s;
+      }
+      &--6 {
+        top: 22%;
+        right: 14%;
+        animation-duration: 44s;
+        animation-delay: -34s;
+        --rotation: -14deg;
+      }
+      &--7 {
+        top: 30%;
+        right: 13%;
+        animation-duration: 36s;
+        animation-delay: -6s;
+      }
+      &--8 {
+        top: 16%;
+        right: 8%;
+        animation-duration: 48s;
+        animation-delay: -40s;
+        --rotation: -18deg;
+      }
+      &--9 {
+        top: 25%;
+        right: 5%;
+        animation-duration: 28s;
+        animation-delay: -14s;
+        --rotation: 16deg;
+      }
+      &--10 {
+        top: 29%;
+        left: 14%;
+        animation-duration: 32s;
+        animation-delay: -26s;
+      }
     }
   }
 }

@@ -117,6 +117,16 @@ const { reveal } = useScrollAnimation(sectionRef);
     }
   }
 }
+@include respond-to(lg) {
+  .foot {
+    padding: rem(32) 0 rem(32);
+  }
+}
+@include respond-to(md) {
+  .foot {
+    padding: rem(32) 0 rem(32);
+  }
+}
 
 @include respond-to(sm) {
   .foot {

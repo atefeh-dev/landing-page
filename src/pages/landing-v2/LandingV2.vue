@@ -130,8 +130,8 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
       height: 100%;
     }
 
-    &__logo img {
-      width: rem(28);
+    &__logo svg {
+      width: rem(26);
     }
     &__tagline img {
       width: rem(100);
@@ -152,8 +152,8 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
       height: 100%;
     }
 
-    &__logo img {
-      width: rem(24);
+    &__logo svg {
+      width: rem(19);
     }
     &__tagline img {
       width: rem(80);
