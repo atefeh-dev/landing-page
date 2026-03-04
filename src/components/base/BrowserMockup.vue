@@ -10,7 +10,7 @@
           <span class="bm__light bm__light--green"></span>
         </div>
 
-        <SidebarIcon class="bm__icon bm__icon--sidebar" />
+        <!-- <SidebarIcon class="bm__icon bm__icon--sidebar" /> -->
 
         <button
           class="bm__nav-btn"
@@ -29,8 +29,10 @@
         >
           <ForwardIcon class="bm__icon bm__icon--forward" />
         </button>
-        <ShieldIcon class="bm__shield" />
       </div>
+
+      <!-- Shield: absolutely positioned just left of the URL bar -->
+      <ShieldIcon class="bm__shield" />
 
       <!-- CENTER: absolutely positioned — URL always truly centered -->
       <div class="bm__center">
@@ -51,10 +53,8 @@
         </div>
       </div>
 
-      <!-- RIGHT: download + new tab + copy -->
+      <!-- RIGHT: new tab + copy -->
       <div class="bm__right">
-        <DownloadIcon class="bm__icon" />
-        <ShareIcon class="bm__icon" />
         <PlusIcon class="bm__icon" />
         <CopyIcon class="bm__icon" />
       </div>
@@ -100,7 +100,6 @@ const props = defineProps({
 
 const emit = defineEmits(["navigate"]);
 
-// ── History stack ─────────────────────────────────────────────────
 const history = ref([props.url]);
 const historyIdx = ref(0);
 const reloading = ref(false);
@@ -112,7 +111,6 @@ const canGoForward = computed(
   () => historyIdx.value < history.value.length - 1,
 );
 
-// When ContractFlow emits url-change → push to history
 watch(
   () => props.url,
   (newUrl) => {
@@ -161,7 +159,6 @@ $light-url-border: #bfbfbf;
 $light-url-text: #1b1b1b;
 $light-url-sub: #6e6e6e;
 $light-body-bg: #f2f2f2;
-
 $url-text-size: rem(13);
 
 $dark-chrome-bg: #2c2c2e;
@@ -173,8 +170,28 @@ $dark-url-text: rgba(255, 255, 255, 0.85);
 $dark-url-sub: rgba(255, 255, 255, 0.45);
 $dark-body-bg: #111111;
 
+// ─────────────────────────────────────────────────────────────────
+// CENTERING STRATEGY
+// __center uses position:absolute + left:50% + translateX(-50%).
+// For the URL to appear visually centered, both sides MUST be equal.
+//
+// ≥ 1198px (full desktop):
+//   __left  = lights + 2×nav-btn  ≈ 171px
+//   __right min-width mirrors __left → both equal → perfect center
+//
+// < 1198px:
+//   nav-btns hidden → __left = lights-only ≈ 55px
+//   __right min-width set to 55px → still equal → still centered
+//   URL bar is fluid between min(405px) and max(550px)
+//
+// < 640px (mobile):
+//   __right hidden, __center goes static, URL fills remaining space
+// ─────────────────────────────────────────────────────────────────
+$chrome-left-desktop: rem(171); // lights + 2×nav-btn
+$chrome-h-pad: rem(17);
+
 .bm {
-  border-radius: var(--bm-radius, rem(12)); // controlled by parent via CSS var
+  border-radius: var(--bm-radius, rem(12));
   overflow: hidden;
 
   &--light {
@@ -196,10 +213,9 @@ $dark-body-bg: #111111;
     display: flex;
     align-items: center;
     height: rem(48);
-    padding: rem(10) rem(17);
+    padding: rem(10) $chrome-h-pad;
     border-bottom: 1px solid;
   }
-
   &--light &__chrome {
     background: $light-chrome-bg;
     border-bottom-color: $light-chrome-border;
@@ -209,6 +225,7 @@ $dark-body-bg: #111111;
     border-bottom-color: $dark-chrome-border;
   }
 
+  // ── Left ────────────────────────────────────────────────────────
   &__left {
     display: flex;
     align-items: center;
@@ -243,7 +260,6 @@ $dark-body-bg: #111111;
     }
   }
 
-  // ── Nav buttons (back / forward) ──────────────────────────────────
   &__nav-btn {
     display: flex;
     align-items: center;
@@ -286,14 +302,19 @@ $dark-body-bg: #111111;
   &--dark &__icon {
     color: $dark-icon-color;
   }
+
+  // Shield: absolutely positioned just to the left of the URL bar.
+  // left = 50% (chrome center) - half of url width - shield width - gap
+  // URL bar max-width is rem(550), so half = rem(275)
   &__shield {
-    flex-shrink: 0;
-    display: block;
     position: absolute;
     top: 50%;
-    left: calc(50% - #{rem(300)}); // adjust based on URL width
     transform: translateY(-50%);
+    left: calc(50% - #{rem(275)} - #{rem(20)} - #{rem(6)});
+    flex-shrink: 0;
+    display: block;
     z-index: 1;
+    pointer-events: none;
   }
   &--light &__shield {
     color: $light-url-sub;
@@ -302,22 +323,25 @@ $dark-body-bg: #111111;
     color: $dark-url-sub;
   }
 
-  // Truly centered via absolute positioning
-  // pointer-events: none so it NEVER blocks left nav buttons underneath
+  // ── Center ──────────────────────────────────────────────────────
+  // Absolutely centered. pointer-events:none so it never blocks
+  // the left nav buttons that sit below it in z-order.
   &__center {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    // max-width = 100% minus both equal side sections minus padding on each side
+    // This makes the URL bar fluid at mid-sizes instead of overflowing
+    max-width: calc(100% - #{$chrome-left-desktop * 2} - #{$chrome-h-pad * 2});
+    width: 100%;
     display: flex;
     align-items: center;
-    gap: rem(11);
     justify-content: center;
     z-index: 0;
     pointer-events: none;
   }
 
-  // Restore pointer-events on interactive children only
   &__url {
     pointer-events: auto;
   }
@@ -325,10 +349,12 @@ $dark-body-bg: #111111;
     pointer-events: auto;
   }
 
+  // ── URL bar ─────────────────────────────────────────────────────
   &__url {
     display: flex;
     align-items: center;
-    width: rem(550); // ← was rem(417), now wider as per guideline
+    width: 100%; // fluid — fills __center which is already constrained
+    max-width: rem(550); // caps growth on very wide screens
     height: rem(28);
     padding: 0 rem(10);
     border-radius: rem(6);
@@ -395,15 +421,6 @@ $dark-body-bg: #111111;
     color: $dark-url-text;
   }
 
-  &__right {
-    display: flex;
-    align-items: center;
-    gap: rem(18);
-    flex-shrink: 0;
-    margin-left: auto;
-    z-index: 1;
-  }
-
   &__url-text {
     font-size: rem(13);
     font-weight: 400;
@@ -416,6 +433,21 @@ $dark-body-bg: #111111;
     top: 2px;
   }
 
+  // ── Right ────────────────────────────────────────────────────────
+  // min-width mirrors the left section so both sides are equal width,
+  // guaranteeing the absolutely-centered URL bar is visually centered.
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: rem(18);
+    flex-shrink: 0;
+    margin-left: auto;
+    min-width: $chrome-left-desktop; // ← mirrors __left width for true centering
+    justify-content: flex-end;
+    z-index: 1;
+  }
+
+  // ── Body ────────────────────────────────────────────────────────
   &__body {
     position: relative;
     width: 100%;
@@ -448,7 +480,38 @@ $dark-body-bg: #111111;
   }
 }
 
-// ── Tablet ─────────────────────────────────────────────────────────
+// ── Below 1198px: hide nav-btns, shield stays in url-inner so no issue ─
+// Left becomes lights-only (~55px). Right min-width mirrors that.
+// URL bar is fluid and perfectly centered with equal sides.
+@media (max-width: 1198px) {
+  .bm {
+    &__nav-btn {
+      display: none;
+    }
+    &__shield {
+      display: none;
+    }
+
+    // Left is now lights-only. Mirror that on the right for true centering.
+    &__right {
+      min-width: rem(55);
+      gap: rem(12);
+    }
+
+    // Recalculate __center safe zone based on smaller equal sides
+    &__center {
+      max-width: calc(100% - #{rem(55) * 2} - #{rem(17) * 2});
+    }
+
+    &__url {
+      width: 100%;
+      min-width: rem(405);
+      max-width: rem(550);
+    }
+  }
+}
+
+// ── Tablet  ≤ 844px ──────────────────────────────────────────────
 @include respond-to(md) {
   .bm {
     &__chrome {
@@ -463,33 +526,14 @@ $dark-body-bg: #111111;
       width: rem(11);
       height: rem(11);
     }
-    &__icon {
-      &--sidebar {
-        margin-left: rem(24);
-      }
-      &--back {
-        margin-left: rem(16);
-      }
-      &--dimmed {
-        margin-left: rem(16);
-      }
-    }
-    &__url {
-      width: rem(340);
-    }
     &__url-text {
       font-size: rem(12);
-    }
-    &__right {
-      gap: rem(8);
-    }
-    &__shield {
-      display: none;
     }
   }
 }
 
-// ── Mobile ─────────────────────────────────────────────────────────
+// ── Mobile  ≤ 640px ──────────────────────────────────────────────
+// Drop absolute centering — right hidden, URL bar fills remaining space.
 @include respond-to(sm) {
   .bm {
     &__chrome {
@@ -504,32 +548,27 @@ $dark-body-bg: #111111;
       width: rem(9);
       height: rem(9);
     }
-    &__icon--sidebar {
-      display: none;
-    }
+
     &__right {
       display: none;
     }
     &__shield {
       display: none;
     }
-    &__nav-btn {
-      display: none;
-    }
 
-    // URL bar fills space when right side is hidden
     &__center {
       position: static;
       transform: none;
       flex: 1;
+      max-width: none;
       justify-content: flex-start;
       margin: 0 rem(8);
-      gap: rem(6);
     }
     &__url {
       width: 100%;
+      min-width: 0;
+      max-width: none;
       height: rem(24);
-      width: 100%;
     }
     &__reload-btn {
       display: none;
