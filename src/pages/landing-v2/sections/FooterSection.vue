@@ -2,7 +2,7 @@
   <footer class="foot" ref="sectionRef">
     <div class="lv2-container">
       <div class="foot__inner">
-        <p class="foot__tagline">با افتخار ساخت ایران</p>
+        <p class="foot__tagline">طراحی شده برای ایران</p>
         <a href="#" class="foot__logo">
           <img src="@/assets/brand/footer-logo.svg?url" alt="زونکن" />
         </a>
